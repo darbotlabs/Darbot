@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AbstractAvatar } from "@/components/agents/abstract-avatar";
+import { AgentAvatar } from "@/components/agents/agent-avatar";
 import {
   Empty,
   EmptyDescription,
@@ -138,11 +138,7 @@ export function HandoffPanel({ agentId }: { agentId: string }) {
           {candidates.map((candidate) => (
             <Item key={candidate.id} size="sm" variant="muted">
               <ItemMedia>
-                <AbstractAvatar
-                  name={candidate.name}
-                  seed={candidate.avatarSeed}
-                  size={28}
-                />
+                <AgentAvatar agent={candidate} size={28} />
               </ItemMedia>
               <ItemContent>
                 <ItemTitle>{candidate.name}</ItemTitle>

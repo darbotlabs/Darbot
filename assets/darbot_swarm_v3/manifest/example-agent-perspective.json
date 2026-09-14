@@ -1,0 +1,74 @@
+{
+  "agent_id": "agent-threat-modeling",
+  "display_name": "Mint Shield",
+  "domain": "Threat modeling",
+  "role": "Security analysis",
+  "perspective": "Map trust boundaries, plausible abuse paths and mitigations.",
+  "group": "trust",
+  "binding_kind": "proposed-domain-role",
+  "framework_reference": null,
+  "requested": false,
+  "local_index": 61,
+  "swarm_index": 125,
+  "identity_code": "DSW-MO-125",
+  "palette_index": 46,
+  "semantic_path": "darbot.swarm.mint-opal.agent-threat-modeling",
+  "name_semantics": {
+    "family": "Mint",
+    "role_term": "Shield",
+    "intent": "Fresh, legible, constructive domain expertise; a Darbot naming convention, not a vendor claim."
+  },
+  "visual": {
+    "palette_token": "DSW-MO-P46",
+    "fallback_hex": "#69CFC2",
+    "color": {
+      "hex": "#69CFC2",
+      "rgb": {
+        "r": 105,
+        "g": 207,
+        "b": 194
+      },
+      "argb_hex": "#FF69CFC2",
+      "hsl": {
+        "h": 172.3529,
+        "s": 51.5152,
+        "l": 61.1765
+      },
+      "oklab": [
+        0.7895376087554937,
+        -0.09737182044292383,
+        -0.0077865671392420045
+      ],
+      "terminal": {
+        "unicode_swatch": "\u25a0",
+        "codepoint": "U+25A0",
+        "ansi_foreground": "\u001b[38;2;105;207;194m",
+        "ansi_background": "\u001b[48;2;105;207;194m",
+        "reset": "\u001b[0m",
+        "xterm_256_index": 80,
+        "xterm_256_hex": "#5FD7D7",
+        "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+      }
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 1.0,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  "assets": {
+    "token_2048": "tokens/png_2048/125_agent-threat-modeling.png",
+    "agent_2048_black": "agents/png_2048_black/125_agent-threat-modeling.png",
+    "token_1024": "tokens/png_1024/125_agent-threat-modeling.png",
+    "agent_1024_black": "agents/png_1024_black/125_agent-threat-modeling.png",
+    "agent_1024_transparent": "agents/png_1024_transparent/125_agent-threat-modeling.png",
+    "token_512": "tokens/png_512/125_agent-threat-modeling.png",
+    "agent_512_black": "agents/png_512_black/125_agent-threat-modeling.png",
+    "agent_512_transparent": "agents/png_512_transparent/125_agent-threat-modeling.png",
+    "token_256": "tokens/png_256/125_agent-threat-modeling.png",
+    "agent_256_transparent": "agents/png_256_transparent/125_agent-threat-modeling.png",
+    "token_svg_raster_backed": "tokens/svg_raster_backed/125_agent-threat-modeling.svg"
+  }
+}

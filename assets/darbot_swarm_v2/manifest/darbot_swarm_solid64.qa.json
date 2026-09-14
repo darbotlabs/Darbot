@@ -1,0 +1,39 @@
+{
+  "variant_count": 64,
+  "unique_hex_count": 64,
+  "token_alpha_mismatch_variants": 0,
+  "token_alpha_max_delta": 0,
+  "token_geometry_drift_pixels": 0,
+  "source_token_alpha_bbox_xyxy": [
+    96,
+    65,
+    1952,
+    1983
+  ],
+  "source_token_alpha_nonzero_pixels": 2100732,
+  "source_token_alpha_opaque_pixels": 2029234,
+  "source_token_alpha_levels": 256,
+  "agent_chest_token_placement": {
+    "canvas": [
+      2048,
+      2048
+    ],
+    "x": 768,
+    "y": 984,
+    "width": 512,
+    "height": 529,
+    "bbox_xyxy": [
+      768,
+      984,
+      1280,
+      1513
+    ]
+  },
+  "status_dots_preserved": true,
+  "visor_interior_preserved": true,
+  "solid_rgb_policy": "Every nontransparent token pixel stores the assigned exact RGB triplet; edge smoothing is encoded only in alpha.",
+  "palette_interpolation_space": "OKLab",
+  "adjacent_oklab_distance_min": 0.016685,
+  "adjacent_oklab_distance_max": 0.051557,
+  "all_assets_share_one_token_alpha_source": true
+}

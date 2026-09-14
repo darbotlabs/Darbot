@@ -1,0 +1,14 @@
+{
+  "schema_validation": "PASS",
+  "agent_count": 64,
+  "unique_agent_ids": 64,
+  "unique_identity_codes": 64,
+  "unique_fallback_hex": 64,
+  "asset_paths_verified": 704,
+  "token_2048_alpha_mismatch_pixels_total": 0,
+  "agent_1024_alpha_mismatch_pixels_total": 0,
+  "hsl_to_rgb_mismatches": 0,
+  "master_checksum_mismatches": [],
+  "source_alpha_raw_sha256": "1a686cb71734e319caa39a160ef0159e901ffdf10ba3c4e8dd13dad244f00376",
+  "note": "Independent reopened-file checks. Color similarity and vendor-affiliation claims are not inferred from these tests."
+}

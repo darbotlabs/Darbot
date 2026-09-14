@@ -1,0 +1,14 @@
+DARBot Swarm GPT Cowork Handoff v1
+
+PROMPT_GPT_COWORK_DARBOT_SWARM_INTEGRATION.md	12754 bytes
+README.md	1823 bytes
+integration-context.json	1702 bytes
+cohorts/darbot_swarm_solid64_v2_full.zip	98432967 bytes
+cohorts/darbot_swarm_mint_opal64_v3_compact.zip	114377798 bytes
+canonical/darbot_logo_approved_2048.png	2249671 bytes
+canonical/darbot_token_master_2048_transparent.png	2213162 bytes
+canonical/darbot_token_raster.svg	592645 bytes
+canonical/darbot_token_mask_safe_dark.png	1751034 bytes
+canonical/opal_lightning_reference.png	94492 bytes
+context/darbot_updated_logo_context_profile.v1.json	15320 bytes
+context/darbot_updated_logo_asset_spec_list.v1.md	10470 bytes

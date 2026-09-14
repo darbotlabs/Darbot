@@ -1,0 +1,131 @@
+:root {
+  --darbot-swarm-01: #00CFFF; /* DSW64-01 · azure_architect */
+  --darbot-swarm-02: #00C0F6; /* DSW64-02 · entra_identity */
+  --darbot-swarm-03: #00B0ED; /* DSW64-03 · teams_collaboration */
+  --darbot-swarm-04: #00A1E3; /* DSW64-04 · power_platform_maker */
+  --darbot-swarm-05: #0092DA; /* DSW64-05 · power_apps_creator */
+  --darbot-swarm-06: #0083D1; /* DSW64-06 · power_automate_orchestrator */
+  --darbot-swarm-07: #0074C7; /* DSW64-07 · power_bi_analyst */
+  --darbot-swarm-08: #0066BE; /* DSW64-08 · power_pages_portal */
+  --darbot-swarm-09: #0056B5; /* DSW64-09 · m365_strategist */
+  --darbot-swarm-10: #0047AB; /* DSW64-10 · copilot_studio_agent_builder */
+  --darbot-swarm-11: #394AB0; /* DSW64-11 · powerpoint_storyteller */
+  --darbot-swarm-12: #574BB4; /* DSW64-12 · excel_modeler */
+  --darbot-swarm-13: #714CB9; /* DSW64-13 · word_writer */
+  --darbot-swarm-14: #894ABE; /* DSW64-14 · outlook_communicator */
+  --darbot-swarm-15: #A147C2; /* DSW64-15 · sharepoint_knowledge */
+  --darbot-swarm-16: #B942C7; /* DSW64-16 · onedrive_sync */
+  --darbot-swarm-17: #D039CB; /* DSW64-17 · edge_browser */
+  --darbot-swarm-18: #E72AD0; /* DSW64-18 · windows_os */
+  --darbot-swarm-19: #FF00D4; /* DSW64-19 · dataverse_modeler */
+  --darbot-swarm-20: #FE24C4; /* DSW64-20 · fabric_data_engineer */
+  --darbot-swarm-21: #FE34B4; /* DSW64-21 · azure_ai_foundry */
+  --darbot-swarm-22: #FE3EA3; /* DSW64-22 · apim_integration */
+  --darbot-swarm-23: #FE4692; /* DSW64-23 · designer_creator */
+  --darbot-swarm-24: #FE4C80; /* DSW64-24 · github_engineer */
+  --darbot-swarm-25: #FE516D; /* DSW64-25 · vscode_developer */
+  --darbot-swarm-26: #FE5557; /* DSW64-26 · devops_release */
+  --darbot-swarm-27: #FF583C; /* DSW64-27 · aks_platform */
+  --darbot-swarm-28: #FF5A00; /* DSW64-28 · functions_serverless */
+  --darbot-swarm-29: #F85402; /* DSW64-29 · cosmosdb_global */
+  --darbot-swarm-30: #F24E04; /* DSW64-30 · sql_database */
+  --darbot-swarm-31: #EC4705; /* DSW64-31 · graph_connector */
+  --darbot-swarm-32: #E54107; /* DSW64-32 · defender_security */
+  --darbot-swarm-33: #DF3A08; /* DSW64-33 · sentinel_soc */
+  --darbot-swarm-34: #D83309; /* DSW64-34 · purview_governance */
+  --darbot-swarm-35: #D22C0A; /* DSW64-35 · intune_endpoint */
+  --darbot-swarm-36: #CB230A; /* DSW64-36 · viva_employee_experience */
+  --darbot-swarm-37: #C51A0B; /* DSW64-37 · loop_workflows */
+  --darbot-swarm-38: #CE3C10; /* DSW64-38 · planner_coordination */
+  --darbot-swarm-39: #D65514; /* DSW64-39 · dynamics_customer */
+  --darbot-swarm-40: #DE6B19; /* DSW64-40 · finance_ops */
+  --darbot-swarm-41: #E57F1D; /* DSW64-41 · healthcare_clinical */
+  --darbot-swarm-42: #EB9322; /* DSW64-42 · retail_personalization */
+  --darbot-swarm-43: #F1A727; /* DSW64-43 · manufacturing_iot */
+  --darbot-swarm-44: #F6BA2B; /* DSW64-44 · sustainability_greenops */
+  --darbot-swarm-45: #FBCE30; /* DSW64-45 · privacy_trust */
+  --darbot-swarm-46: #FFE135; /* DSW64-46 · research_scientist */
+  --darbot-swarm-47: #FFD030; /* DSW64-47 · principal_architect */
+  --darbot-swarm-48: #FFBE2B; /* DSW64-48 · executive_briefing */
+  --darbot-swarm-49: #FFAC25; /* DSW64-49 · agent_swarm_orchestrator */
+  --darbot-swarm-50: #FF9A20; /* DSW64-50 · red_team_adversary */
+  --darbot-swarm-51: #FF871A; /* DSW64-51 · compliance_auditor */
+  --darbot-swarm-52: #FF7214; /* DSW64-52 · education_learning */
+  --darbot-swarm-53: #FF5B0E; /* DSW64-53 · legal_contracts */
+  --darbot-swarm-54: #FF3F06; /* DSW64-54 · marketing_growth */
+  --darbot-swarm-55: #FF0800; /* DSW64-55 · sales_enablement */
+  --darbot-swarm-56: #FF4535; /* DSW64-56 · support_triage */
+  --darbot-swarm-57: #FF6553; /* DSW64-57 · observability_sre */
+  --darbot-swarm-58: #FF7E6D; /* DSW64-58 · storage_scale */
+  --darbot-swarm-59: #FF9586; /* DSW64-59 · network_edge */
+  --darbot-swarm-60: #FFAB9E; /* DSW64-60 · robotics_embodied */
+  --darbot-swarm-61: #FFBFB6; /* DSW64-61 · quantum_experiment */
+  --darbot-swarm-62: #FFD4CE; /* DSW64-62 · blockchain_decentralized */
+  --darbot-swarm-63: #FBE7E7; /* DSW64-63 · prompt_engineer */
+  --darbot-swarm-64: #F4FBFF; /* DSW64-64 · graphite_reviewer */
+}
+
+.darbot-agent-azure_architect { color: var(--darbot-swarm-01); }
+.darbot-agent-entra_identity { color: var(--darbot-swarm-02); }
+.darbot-agent-teams_collaboration { color: var(--darbot-swarm-03); }
+.darbot-agent-power_platform_maker { color: var(--darbot-swarm-04); }
+.darbot-agent-power_apps_creator { color: var(--darbot-swarm-05); }
+.darbot-agent-power_automate_orchestrator { color: var(--darbot-swarm-06); }
+.darbot-agent-power_bi_analyst { color: var(--darbot-swarm-07); }
+.darbot-agent-power_pages_portal { color: var(--darbot-swarm-08); }
+.darbot-agent-m365_strategist { color: var(--darbot-swarm-09); }
+.darbot-agent-copilot_studio_agent_builder { color: var(--darbot-swarm-10); }
+.darbot-agent-powerpoint_storyteller { color: var(--darbot-swarm-11); }
+.darbot-agent-excel_modeler { color: var(--darbot-swarm-12); }
+.darbot-agent-word_writer { color: var(--darbot-swarm-13); }
+.darbot-agent-outlook_communicator { color: var(--darbot-swarm-14); }
+.darbot-agent-sharepoint_knowledge { color: var(--darbot-swarm-15); }
+.darbot-agent-onedrive_sync { color: var(--darbot-swarm-16); }
+.darbot-agent-edge_browser { color: var(--darbot-swarm-17); }
+.darbot-agent-windows_os { color: var(--darbot-swarm-18); }
+.darbot-agent-dataverse_modeler { color: var(--darbot-swarm-19); }
+.darbot-agent-fabric_data_engineer { color: var(--darbot-swarm-20); }
+.darbot-agent-azure_ai_foundry { color: var(--darbot-swarm-21); }
+.darbot-agent-apim_integration { color: var(--darbot-swarm-22); }
+.darbot-agent-designer_creator { color: var(--darbot-swarm-23); }
+.darbot-agent-github_engineer { color: var(--darbot-swarm-24); }
+.darbot-agent-vscode_developer { color: var(--darbot-swarm-25); }
+.darbot-agent-devops_release { color: var(--darbot-swarm-26); }
+.darbot-agent-aks_platform { color: var(--darbot-swarm-27); }
+.darbot-agent-functions_serverless { color: var(--darbot-swarm-28); }
+.darbot-agent-cosmosdb_global { color: var(--darbot-swarm-29); }
+.darbot-agent-sql_database { color: var(--darbot-swarm-30); }
+.darbot-agent-graph_connector { color: var(--darbot-swarm-31); }
+.darbot-agent-defender_security { color: var(--darbot-swarm-32); }
+.darbot-agent-sentinel_soc { color: var(--darbot-swarm-33); }
+.darbot-agent-purview_governance { color: var(--darbot-swarm-34); }
+.darbot-agent-intune_endpoint { color: var(--darbot-swarm-35); }
+.darbot-agent-viva_employee_experience { color: var(--darbot-swarm-36); }
+.darbot-agent-loop_workflows { color: var(--darbot-swarm-37); }
+.darbot-agent-planner_coordination { color: var(--darbot-swarm-38); }
+.darbot-agent-dynamics_customer { color: var(--darbot-swarm-39); }
+.darbot-agent-finance_ops { color: var(--darbot-swarm-40); }
+.darbot-agent-healthcare_clinical { color: var(--darbot-swarm-41); }
+.darbot-agent-retail_personalization { color: var(--darbot-swarm-42); }
+.darbot-agent-manufacturing_iot { color: var(--darbot-swarm-43); }
+.darbot-agent-sustainability_greenops { color: var(--darbot-swarm-44); }
+.darbot-agent-privacy_trust { color: var(--darbot-swarm-45); }
+.darbot-agent-research_scientist { color: var(--darbot-swarm-46); }
+.darbot-agent-principal_architect { color: var(--darbot-swarm-47); }
+.darbot-agent-executive_briefing { color: var(--darbot-swarm-48); }
+.darbot-agent-agent_swarm_orchestrator { color: var(--darbot-swarm-49); }
+.darbot-agent-red_team_adversary { color: var(--darbot-swarm-50); }
+.darbot-agent-compliance_auditor { color: var(--darbot-swarm-51); }
+.darbot-agent-education_learning { color: var(--darbot-swarm-52); }
+.darbot-agent-legal_contracts { color: var(--darbot-swarm-53); }
+.darbot-agent-marketing_growth { color: var(--darbot-swarm-54); }
+.darbot-agent-sales_enablement { color: var(--darbot-swarm-55); }
+.darbot-agent-support_triage { color: var(--darbot-swarm-56); }
+.darbot-agent-observability_sre { color: var(--darbot-swarm-57); }
+.darbot-agent-storage_scale { color: var(--darbot-swarm-58); }
+.darbot-agent-network_edge { color: var(--darbot-swarm-59); }
+.darbot-agent-robotics_embodied { color: var(--darbot-swarm-60); }
+.darbot-agent-quantum_experiment { color: var(--darbot-swarm-61); }
+.darbot-agent-blockchain_decentralized { color: var(--darbot-swarm-62); }
+.darbot-agent-prompt_engineer { color: var(--darbot-swarm-63); }
+.darbot-agent-graphite_reviewer { color: var(--darbot-swarm-64); }

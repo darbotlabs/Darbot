@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { type ReactNode, useState } from "react";
-import { AbstractAvatar } from "@/components/agents/abstract-avatar";
+import { AgentAvatar } from "@/components/agents/agent-avatar";
 import { AgentDialog } from "@/components/agents/agent-dialog";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -69,11 +69,7 @@ export function AgentProfile({ agentId }: { agentId: string }) {
   return (
     <div className="flex w-full flex-col gap-6 p-8">
       <header className="flex flex-col items-center gap-3 text-center">
-        <AbstractAvatar
-          name={profile.name}
-          seed={profile.avatarSeed}
-          size={80}
-        />
+        <AgentAvatar agent={profile} size={80} />
         <div className="flex w-full flex-col items-center gap-0.5">
           <h1 className="w-full text-balance text-2xl font-semibold leading-tight tracking-tight">
             {profile.name}

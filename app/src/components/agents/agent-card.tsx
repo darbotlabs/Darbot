@@ -1,13 +1,25 @@
-import Avatar from "boring-avatars";
+import { AgentAvatar } from "@/components/agents/agent-avatar";
+import { resolveAgentIcon } from "@/lib/agents/icons";
 import type { AgentProfile } from "@/lib/agents/queries";
 
 export function AgentCard({ agent }: { agent: AgentProfile }) {
+  const hasIcon = Boolean(resolveAgentIcon(agent));
+
   return (
     <div className="h-[180px] bg-foreground/10 rounded-2xl w-[144px] relative overflow-hidden">
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Avatar name={agent.avatarSeed} size={250} />
+      <div
+        aria-hidden="true"
+        className={
+          hasIcon
+            ? "absolute left-1/2 top-1 -translate-x-1/2"
+            : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        }
+      >
+        <AgentAvatar agent={agent} size={hasIcon ? 80 : 250} />
       </div>
-      <div className="absolute top-0 left-0 w-full h-full bg-background/40 dark:bg-background/50" />
+      {hasIcon ? null : (
+        <div className="absolute top-0 left-0 w-full h-full bg-background/40 dark:bg-background/50" />
+      )}
       <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-end p-3 gap-2">
         <span className="text-sm font-medium line-clamp-1">{agent.name}</span>
         <span className="text-xs text-foreground dark:text-foreground/80 line-clamp-3">

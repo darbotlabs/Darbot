@@ -1,0 +1,426 @@
+{
+  "schema": "darbot.logo_context_profile.v1",
+  "profile_version": "1.0.0",
+  "created_utc_date": "2026-06-15",
+  "asset_name": "Darbot Ghost — Updated Core Emblem",
+  "canonical_id": "darbot-ghost-core-emblem-v1",
+  "source_image": {
+    "filename": "50fb8f74-9e75-4dc4-a22a-62bab0a6917a.png",
+    "conversation_file_id": "file_000000001548720c86549c7ac4c683c0",
+    "local_path": "/mnt/data/50fb8f74-9e75-4dc4-a22a-62bab0a6917a.png",
+    "sha256": "c888224ba1bd3a961794f34896cd31fcb325d892b768abd2b64e76c0f314cc44",
+    "format": "PNG",
+    "mode": "RGBA",
+    "pixel_size": {
+      "width": 2048,
+      "height": 2048,
+      "aspect_ratio": "1:1"
+    },
+    "alpha_channel": "present but fully opaque in the supplied raster",
+    "background": "solid near-black / black"
+  },
+  "brand_context": {
+    "brand_family": "darbot",
+    "logo_role": "primary mascot/application icon with integrated core emblem",
+    "submarks": [
+      "ghost mascot outline",
+      "browser/agent visor",
+      "three status-light dots",
+      "segmented globe/circuit disc",
+      "diagonal lightning bolt"
+    ],
+    "personality_keywords": [
+      "autonomous",
+      "agentic",
+      "cybernetic",
+      "friendly",
+      "high-energy",
+      "secure",
+      "internet-scale",
+      "futuristic",
+      "playful but technical"
+    ],
+    "do_not_confuse_with": [
+      "generic ghost icon without visor",
+      "plain globe icon",
+      "standalone lightning icon",
+      "horror/spooky ghost mark",
+      "flat monochrome bot avatar"
+    ]
+  },
+  "visual_summary": "A centered black-background neon ghost mascot with a thick magenta-to-cyan glowing outline. The face is a rounded browser-like visor with dark indigo fill and three colored status dots. The chest contains the updated core emblem: a segmented globe/circuit disc crossed by a sharp diagonal lightning bolt, rendered in a matching magenta-purple-blue-cyan gradient.",
+  "composition": {
+    "canvas": {
+      "width_px": 2048,
+      "height_px": 2048,
+      "coordinate_origin": "top-left"
+    },
+    "detected_visible_bounds_px": {
+      "x_min": 351,
+      "y_min": 225,
+      "x_max": 1702,
+      "y_max": 1778,
+      "width": 1352,
+      "height": 1554
+    },
+    "detected_visible_bounds_normalized": {
+      "x_min": 0.171,
+      "y_min": 0.11,
+      "x_max": 0.831,
+      "y_max": 0.868,
+      "width": 0.66,
+      "height": 0.759
+    },
+    "center_of_mass_estimate_normalized": {
+      "x": 0.502,
+      "y": 0.534
+    },
+    "safe_area": {
+      "recommended_min_clearspace": "12% of canvas width on all sides for app icons and social avatars",
+      "minimum_clearspace": "8% of canvas width when space constrained",
+      "notes": "Do not crop the lower wave tips or top arch. The silhouette is taller than it is wide, so square icon placements need vertical breathing room."
+    },
+    "major_regions_px": {
+      "ghost_outer_silhouette": {
+        "x": 351,
+        "y": 225,
+        "width": 1352,
+        "height": 1554
+      },
+      "visor": {
+        "x": 641,
+        "y": 522,
+        "width": 777,
+        "height": 379
+      },
+      "left_status_dot_red": {
+        "center_x": 769,
+        "center_y": 628,
+        "diameter_px": 52
+      },
+      "middle_status_dot_cyan": {
+        "center_x": 851,
+        "center_y": 628,
+        "diameter_px": 52
+      },
+      "right_status_dot_green": {
+        "center_x": 935,
+        "center_y": 628,
+        "diameter_px": 51
+      },
+      "updated_core_emblem": {
+        "x": 773,
+        "y": 983,
+        "width": 500,
+        "height": 543
+      },
+      "globe_disc": {
+        "center_x": 1024,
+        "center_y": 1250,
+        "estimated_diameter_px": 500
+      },
+      "lightning_bolt": {
+        "orientation": "diagonal upper-right to lower-left",
+        "estimated_bounds_px": {
+          "x": 922,
+          "y": 985,
+          "width": 326,
+          "height": 538
+        }
+      }
+    }
+  },
+  "color_system": {
+    "intended_background": {
+      "name": "Void Black",
+      "hex": "#000000",
+      "usage": "primary background"
+    },
+    "observed_palette": [
+      {
+        "name": "Neon Magenta",
+        "hex": "#F00EF4",
+        "rgb": [
+          240,
+          14,
+          244
+        ],
+        "usage": "left ghost outline, left emblem segments"
+      },
+      {
+        "name": "Electric Cyan",
+        "hex": "#12D5FB",
+        "rgb": [
+          18,
+          213,
+          251
+        ],
+        "usage": "right ghost outline, right emblem segments"
+      },
+      {
+        "name": "Core Purple",
+        "hex": "#9634F9",
+        "rgb": [
+          150,
+          52,
+          249
+        ],
+        "usage": "lightning bolt and gradient transitions"
+      },
+      {
+        "name": "Agent Blue",
+        "hex": "#0FA4F8",
+        "rgb": [
+          15,
+          164,
+          248
+        ],
+        "usage": "lower-right emblem and right-side gradients"
+      },
+      {
+        "name": "Deep Indigo Fill",
+        "hex": "#100050",
+        "rgb": [
+          16,
+          0,
+          80
+        ],
+        "usage": "visor fill and subtle interior glow"
+      },
+      {
+        "name": "Status Red",
+        "hex": "#F0144F",
+        "rgb": [
+          240,
+          20,
+          79
+        ],
+        "usage": "left visor dot"
+      },
+      {
+        "name": "Status Cyan",
+        "hex": "#02ACF0",
+        "rgb": [
+          2,
+          172,
+          240
+        ],
+        "usage": "middle visor dot"
+      },
+      {
+        "name": "Status Green",
+        "hex": "#1DC46A",
+        "rgb": [
+          29,
+          196,
+          106
+        ],
+        "usage": "right visor dot"
+      }
+    ],
+    "gradient_recipe": {
+      "primary_stroke": "linear/sweep blend from #F00EF4 at left to #9634F9 through center to #12D5FB at right",
+      "emblem": "magenta and blue segmented globe with a purple lightning bolt; maintain black negative-space cuts between segments",
+      "glow": "soft outer bloom in the local stroke color, strongest around cyan/magenta edges, never overpowering the linework"
+    },
+    "contrast_notes": "The full-color mark is optimized for black and very dark backgrounds. For light backgrounds, use a dark tile, an outlined container, or a dedicated light-mode variant."
+  },
+  "geometry_and_style": {
+    "line_quality": "thick rounded neon vector strokes with soft bloom and crisp inner edges",
+    "silhouette": "friendly ghost body with tall rounded arch, tapering sides, and three rounded wave lobes along the bottom edge",
+    "visor": "rounded rectangular browser/AR visor with concave lower center notch and three small circular controls",
+    "core_emblem": "segmented globe/circuit disc with diagonal lightning bolt overlay; black negative-space gaps define the internal cuts",
+    "depth_model": "mostly flat vector mark with glow and gentle inner shading; avoid realistic 3D materials unless creating a separate 3D variant",
+    "edge_rules": [
+      "Preserve smooth rounded ghost outline.",
+      "Preserve clean black negative-space channels inside the core emblem.",
+      "Do not thicken the lightning bolt until it merges with globe segments.",
+      "Do not reduce dot contrast; they communicate active agent status."
+    ]
+  },
+  "semantic_prompt_profile": {
+    "short_prompt": "Neon darbot ghost mascot on black, browser visor, three status dots, cyber globe lightning emblem on chest, magenta-purple-cyan gradient, crisp vector glow.",
+    "full_generation_prompt": "Create a clean futuristic logo on a pitch-black square canvas: a friendly ghost-shaped autonomous agent mascot with a thick glowing neon outline. The outline transitions from hot magenta on the left through purple to electric cyan on the right. The face is a dark indigo rounded browser/AR visor with three small status dots in red, cyan, and green. Centered on the chest is the updated core emblem: a segmented globe/circuit disc crossed by a sharp diagonal lightning bolt, using the same magenta-purple-blue-cyan gradient and black negative-space cuts. Style is polished vector, crisp edges, soft neon bloom, high contrast, no text.",
+    "negative_prompt": "No words, no letters, no watermark, no extra mascots, no horror ghost, no skull, no messy gradients, no photographic texture, no flat gray background, no clutter, no low-resolution pixelation, no asymmetric accidental warping, no cropped outline, no overblown glow hiding the emblem.",
+    "alt_text": "Neon Darbot ghost mascot with a browser visor and a glowing globe lightning emblem on its chest.",
+    "caption": "Darbot updated ghost logo with the Cypherdyne-style lightning globe core emblem."
+  },
+  "usage_rules": {
+    "preferred_use": [
+      "dark-mode product icon",
+      "AI agent avatar",
+      "GitHub or Discord community avatar",
+      "app splash screen",
+      "presentation title slide",
+      "website hero mark",
+      "animated agent idle/loading mark"
+    ],
+    "avoid": [
+      "placing full-color mark directly on white without a dark container",
+      "compressing vertically or horizontally",
+      "cropping bottom ghost waves",
+      "adding text inside the silhouette",
+      "replacing the core emblem with unrelated symbols",
+      "using the full mascot below 64 px when the chest emblem must remain legible"
+    ],
+    "minimum_sizes": {
+      "full_logo_digital": "64 px tall minimum; 128 px preferred",
+      "full_logo_print": "0.75 in tall minimum; 1.25 in preferred",
+      "core_emblem_only_digital": "24 px minimum; 48 px preferred",
+      "favicon": "use simplified emblem-only or ghost-head variant at 16/32 px"
+    },
+    "accessibility": {
+      "primary_alt_text": "Neon Darbot ghost with visor and lightning globe emblem",
+      "decorative_usage": "Mark as decorative only when adjacent text already names Darbot.",
+      "motion_safety": "Animated glow should be subtle; avoid rapid flashing or high-frequency pulsing."
+    }
+  },
+  "variant_system": {
+    "required_variants": [
+      "full_color_black_background",
+      "full_color_transparent_background",
+      "emblem_only_full_color",
+      "ghost_only_without_chest_emblem",
+      "monochrome_light_on_dark",
+      "monochrome_dark_on_light",
+      "flat_no_glow",
+      "small_size_simplified",
+      "animated_glow_loop",
+      "print_safe_cmyk"
+    ],
+    "variant_notes": {
+      "small_size_simplified": "Reduce internal globe cuts and simplify glow at 16–48 px.",
+      "transparent_background": "Keep enough dark interior/outline contrast or export with a subtle dark halo; never rely on glow alone over busy imagery.",
+      "print_safe_cmyk": "Neon RGB colors will compress in print. Use a dedicated proofed CMYK approximation or spot-color treatment."
+    }
+  },
+  "asset_inventory_spec": {
+    "naming_convention": "darbot-ghost-core-v1--{variant}--{size}.{ext}",
+    "recommended_directory_structure": [
+      "brand/darbot/logo/source/",
+      "brand/darbot/logo/svg/",
+      "brand/darbot/logo/png/",
+      "brand/darbot/logo/app-icons/",
+      "brand/darbot/logo/social/",
+      "brand/darbot/logo/print/",
+      "brand/darbot/logo/motion/",
+      "brand/darbot/logo/docs/"
+    ],
+    "exports": [
+      {
+        "asset": "master_raster",
+        "filename": "darbot-ghost-core-v1--master--2048.png",
+        "format": "PNG",
+        "size": "2048x2048",
+        "background": "black",
+        "purpose": "canonical raster reference"
+      },
+      {
+        "asset": "vector_master",
+        "filename": "darbot-ghost-core-v1--master.svg",
+        "format": "SVG",
+        "size": "scalable",
+        "background": "transparent plus optional black rectangle layer",
+        "purpose": "editable vector source"
+      },
+      {
+        "asset": "transparent_png",
+        "filename": "darbot-ghost-core-v1--transparent--2048.png",
+        "format": "PNG",
+        "size": "2048x2048",
+        "background": "transparent",
+        "purpose": "dark UI placement"
+      },
+      {
+        "asset": "flat_png",
+        "filename": "darbot-ghost-core-v1--flat-no-glow--1024.png",
+        "format": "PNG",
+        "size": "1024x1024",
+        "background": "transparent",
+        "purpose": "small UI and performance-sensitive rendering"
+      },
+      {
+        "asset": "emblem_only_svg",
+        "filename": "darbot-core-emblem-v1--full-color.svg",
+        "format": "SVG",
+        "size": "scalable",
+        "background": "transparent",
+        "purpose": "favicon, badge, loading state"
+      },
+      {
+        "asset": "favicon_set",
+        "filename": "favicon-16.png, favicon-32.png, favicon-48.png, favicon.ico",
+        "format": "PNG/ICO",
+        "size": "16/32/48",
+        "background": "transparent or black tile",
+        "purpose": "browser tab icon"
+      },
+      {
+        "asset": "web_manifest_icons",
+        "filename": "icon-192.png, icon-512.png",
+        "format": "PNG",
+        "size": "192x192, 512x512",
+        "background": "black",
+        "purpose": "PWA install icons"
+      },
+      {
+        "asset": "ios_app_icon",
+        "filename": "darbot-ios-app-icon-1024.png",
+        "format": "PNG",
+        "size": "1024x1024",
+        "background": "black",
+        "purpose": "iOS app icon source"
+      },
+      {
+        "asset": "android_adaptive_icon",
+        "filename": "foreground-432.png, background-432.png",
+        "format": "PNG/XML",
+        "size": "432x432 layers",
+        "background": "separate black background layer",
+        "purpose": "Android adaptive icon"
+      },
+      {
+        "asset": "social_avatar",
+        "filename": "darbot-ghost-core-v1--avatar--1080.png",
+        "format": "PNG",
+        "size": "1080x1080",
+        "background": "black",
+        "purpose": "social/community avatar"
+      },
+      {
+        "asset": "presentation_logo",
+        "filename": "darbot-ghost-core-v1--deck--1024.png",
+        "format": "PNG",
+        "size": "1024x1024",
+        "background": "transparent",
+        "purpose": "PowerPoint/Keynote decks"
+      },
+      {
+        "asset": "print_pdf",
+        "filename": "darbot-ghost-core-v1--print-cmyk.pdf",
+        "format": "PDF",
+        "size": "vector",
+        "background": "transparent/black variants",
+        "purpose": "print handoff"
+      },
+      {
+        "asset": "motion_loop",
+        "filename": "darbot-ghost-core-v1--glow-loop.lottie",
+        "format": "Lottie/JSON",
+        "size": "scalable",
+        "background": "transparent or black",
+        "purpose": "subtle animated agent state"
+      }
+    ]
+  },
+  "quality_assurance_checklist": [
+    "Confirm vector source exactly matches the supplied raster silhouette, visor, and core emblem.",
+    "Verify black negative-space cuts inside the globe and lightning remain clean at 128 px and 64 px.",
+    "Check app icon safe-area crop on iOS, Android, GitHub, Discord, X, LinkedIn, and browser favicon contexts.",
+    "Run dark-mode and light-mode background tests.",
+    "Export 1x, 2x, and 4x raster sets from vector source instead of scaling small PNGs upward.",
+    "Validate SVG gradients and filters in Chromium, Safari, Firefox, and embedded WebView renderers.",
+    "Compress PNGs losslessly after export; do not use lossy compression for master or app icons.",
+    "Keep a changelog entry for the emblem replacement and version number."
+  ]
+}

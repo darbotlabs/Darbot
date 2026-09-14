@@ -1,0 +1,61 @@
+{
+  "handoff_schema": "darbot.swarm.integration-handoff.v1",
+  "target": {
+    "repository": "github.com/darbotlabs/darbot",
+    "expected_local_root": "E:\\Darbot",
+    "preferred_asset_root": "E:\\Darbot\\assets\\darbot-swarm",
+    "local_repo_is_source_of_truth": true
+  },
+  "cohorts": [
+    {
+      "id": "solid64",
+      "series": 1,
+      "version": "2.0.0",
+      "identity_count": 64,
+      "package": "cohorts/darbot_swarm_solid64_v2_full.zip",
+      "status": "approved-source-locked"
+    },
+    {
+      "id": "mint-opal64",
+      "series": 2,
+      "version": "3.0.0",
+      "identity_count": 64,
+      "swarm_index_range": [65, 128],
+      "package": "cohorts/darbot_swarm_mint_opal64_v3_compact.zip",
+      "status": "approved-source-locked",
+      "mint_green": "#50E6C2",
+      "opal_lightning_fallback": "#69CFC2",
+      "full_resolution_note": "Use included deterministic build tools when 2048 PNG or raster-backed SVG outputs are required."
+    }
+  ],
+  "required_framework_agent_ids": [
+    "agent-adk",
+    "agent-ag2",
+    "agent-agno",
+    "agent-bot",
+    "agent-claude-sdk",
+    "agent-computer",
+    "agent-crewai",
+    "agent-langgraph",
+    "agent-langgraph-agui",
+    "agent-langroid",
+    "agent-llamaindex",
+    "agent-mastra",
+    "agent-microsoft",
+    "agent-pydantic-ai",
+    "agent-strands"
+  ],
+  "visual_contract": {
+    "source_locked": true,
+    "no_redraw": true,
+    "no_contour_tracing": true,
+    "no_geometry_morphology": true,
+    "preserve_visor": true,
+    "preserve_status_dots": true,
+    "preserve_segmented_lightning_token": true,
+    "compare_transforms_to_canonical_source": true
+  },
+  "superseded": [
+    "darbot_swarm_color_variations_v1"
+  ]
+}

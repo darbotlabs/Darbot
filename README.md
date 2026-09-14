@@ -266,6 +266,24 @@ endpoints; keep them private and do not use them to bypass the gateway.
 
 More detail: [docs/architecture.md](docs/architecture.md).
 
+### Agent icons
+
+The coworker picker, profiles, handoff roster, and onboarding share the 15
+Mint/Opal icons from `assets/darbot_swarm_v3` (identities 065-079). Only their
+256px transparent PNGs are bundled in `app/src/assets/agents`; the full design
+archive is not needed to build or serve the app.
+
+Icons resolve from a canonical `avatar_seed` first, then the agent ID, a
+canonical endpoint hostname such as `agent-adk`, and finally an exact framework
+label or Mint alias. Custom coworkers keep their generated avatars. No match is
+inferred from an endpoint port or a substring in a coworker's name.
+
+To bind an icon to an arbitrarily named coworker, set its tenant-package entry's
+`avatar_seed`, for example `avatar_seed: agent-adk`. The two LangGraph identities
+remain distinct: `agent-langgraph` is Mint Branch; `agent-langgraph-agui` is Mint
+Stream and matches the desktop harness labelled "LangGraph". These bindings affect
+appearance only, not names, endpoints, permissions, or which agents are running.
+
 ## Sign in
 
 `.env.example` ships `darbot_SINGLE_USER=true`, which is one administrator and no sign-in: how a

@@ -1,0 +1,14 @@
+{
+  "engine": "Chromium 144.0.7559.96",
+  "cards": 64,
+  "required_cohort_filter": 15,
+  "opal_filter": 17,
+  "solid_filter": 47,
+  "langgraph_search_results": 2,
+  "detail_dialog_pass": true,
+  "view_toggle_pass": true,
+  "mobile_horizontal_overflow": false,
+  "javascript_errors": [],
+  "external_network_requests": [],
+  "limitations": "HTML loaded via Playwright set_content because this container blocks file URL navigation. Behavior tested in installed Chromium only; not separately tested in Safari or Firefox."
+}

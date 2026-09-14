@@ -11,7 +11,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import type { ZodType } from "zod";
-import { AbstractAvatar } from "@/components/agents/abstract-avatar";
+import { AgentAvatar } from "@/components/agents/agent-avatar";
 import { CallbackTokenPanel } from "@/components/agents/callback-token-panel";
 import { HandoffPanel } from "@/components/agents/handoff-panel";
 import { RoutinesList } from "@/components/routines/routines-list";
@@ -147,11 +147,7 @@ function AgentDialogBody({ agentId }: { agentId: string }) {
         <Sidebar className="hidden md:flex" collapsible="none">
           {/* Who this dialog is about, said once here rather than repeated per section. */}
           <SidebarHeader className="flex-row items-center gap-3 p-4">
-            <AbstractAvatar
-              name={profile.name}
-              seed={profile.avatarSeed}
-              size={36}
-            />
+            <AgentAvatar agent={profile} size={36} />
             <div className="flex min-w-0 flex-col">
               <span className="truncate text-sm font-medium">
                 {profile.name}
@@ -190,11 +186,7 @@ function AgentDialogBody({ agentId }: { agentId: string }) {
            */}
           <div className="flex shrink-0 flex-col gap-2 border-b border-border p-3 pr-12 md:hidden">
             <div className="flex items-center gap-2">
-              <AbstractAvatar
-                name={profile.name}
-                seed={profile.avatarSeed}
-                size={28}
-              />
+              <AgentAvatar agent={profile} size={28} />
               <span className="truncate text-sm font-medium">
                 {profile.name}
               </span>

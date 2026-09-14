@@ -1,0 +1,4999 @@
+{
+  "$schema": "./darbot_swarm_agent_perspectives.schema.json",
+  "schema_id": "darbot.swarm.agent_perspectives.solid64.v2",
+  "version": "2.0.0",
+  "title": "Darbot Swarm Solid64 Agent Perspectives",
+  "description": "64 source-locked Darbot agent assets, each mapped to one unique solid color token and one domain-specific agent perspective.",
+  "source_lock": {
+    "full_logo_file": "source/darbot_full_logo_canonical_2048.png",
+    "full_logo_sha256": "c888224ba1bd3a961794f34896cd31fcb325d892b768abd2b64e76c0f314cc44",
+    "token_master_file": "source/darbot_token_canonical_2048_transparent.png",
+    "token_master_sha256": "f177188e829b54313f6b502f6769aa9f6ab93bdf92a54ffd0b5e065d319858d2",
+    "token_alpha_file": "source/darbot_token_alpha_mask_2048.png",
+    "token_alpha_sha256": "85b34e4b08a648f642520d745a0834c0bd95ff807b4564d18f515501438fd133",
+    "token_canvas": [
+      2048,
+      2048
+    ],
+    "token_alpha_bbox_xyxy": [
+      96,
+      65,
+      1952,
+      1983
+    ],
+    "token_alpha_unique_values": 256,
+    "token_policy": "RGB replaced only; alpha copied exactly at 2048; no geometry operations.",
+    "agent_policy": "Ghost and visor geometry are source-derived raster masks; exact token alpha is placed at the shared chest bbox.",
+    "token_placement": {
+      "canvas": [
+        2048,
+        2048
+      ],
+      "x": 768,
+      "y": 984,
+      "width": 512,
+      "height": 529,
+      "bbox_xyxy": [
+        768,
+        984,
+        1280,
+        1513
+      ]
+    },
+    "agent_template": {
+      "visor_mask_bbox": [
+        680,
+        561,
+        1380,
+        862
+      ],
+      "visor_mask_pixels": 182421,
+      "line_mask_bbox": [
+        348,
+        221,
+        1706,
+        1782
+      ],
+      "line_mask_nonzero_pixels": 336284,
+      "line_mask_opaque_pixels": 278250,
+      "status_dot_centers": [
+        [
+          769,
+          628
+        ],
+        [
+          851,
+          628
+        ],
+        [
+          935,
+          628
+        ]
+      ],
+      "status_dot_radius": 36
+    }
+  },
+  "palette_model": {
+    "count": 64,
+    "solid_color_only": true,
+    "interpolation_space": "OKLab",
+    "anchor_count": 8,
+    "intervals_per_segment": 9,
+    "anchor_indices_1_based": [
+      1,
+      10,
+      19,
+      28,
+      37,
+      46,
+      55,
+      64
+    ],
+    "anchors": [
+      {
+        "slug": "nitrous_blue",
+        "name": "Nitrous Blue",
+        "hex": "#00CFFF",
+        "index": 1
+      },
+      {
+        "slug": "cobalt_blue",
+        "name": "Cobalt Blue",
+        "hex": "#0047AB",
+        "index": 10
+      },
+      {
+        "slug": "magenta",
+        "name": "Magenta",
+        "hex": "#FF00D4",
+        "index": 19
+      },
+      {
+        "slug": "competition_orange",
+        "name": "Competition Orange",
+        "hex": "#FF5A00",
+        "index": 28
+      },
+      {
+        "slug": "lava",
+        "name": "Lava",
+        "hex": "#C51A0B",
+        "index": 37
+      },
+      {
+        "slug": "banana_yellow",
+        "name": "Banana Yellow",
+        "hex": "#FFE135",
+        "index": 46
+      },
+      {
+        "slug": "candyapple_red",
+        "name": "Candyapple Red",
+        "hex": "#FF0800",
+        "index": 55
+      },
+      {
+        "slug": "frost_white",
+        "name": "Frost White",
+        "hex": "#F4FBFF",
+        "index": 64
+      }
+    ],
+    "naming_note": "Names are Darbot canonical palette tokens, not claims of official Microsoft or automotive paint specifications."
+  },
+  "unicode_and_terminal_color": {
+    "note": "Unicode does not encode arbitrary RGB colors. Exact terminal swatches pair a Unicode square (U+25A0) with ANSI/VT truecolor escape sequences.",
+    "foreground_pattern": "\\u001b[38;2;R;G;Bm",
+    "background_pattern": "\\u001b[48;2;R;G;Bm",
+    "reset": "\\u001b[0m"
+  },
+  "qa": {
+    "variant_count": 64,
+    "unique_hex_count": 64,
+    "token_alpha_mismatch_variants": 0,
+    "token_alpha_max_delta": 0,
+    "token_geometry_drift_pixels": 0,
+    "source_token_alpha_bbox_xyxy": [
+      96,
+      65,
+      1952,
+      1983
+    ],
+    "source_token_alpha_nonzero_pixels": 2100732,
+    "source_token_alpha_opaque_pixels": 2029234,
+    "source_token_alpha_levels": 256,
+    "agent_chest_token_placement": {
+      "canvas": [
+        2048,
+        2048
+      ],
+      "x": 768,
+      "y": 984,
+      "width": 512,
+      "height": 529,
+      "bbox_xyxy": [
+        768,
+        984,
+        1280,
+        1513
+      ]
+    },
+    "status_dots_preserved": true,
+    "visor_interior_preserved": true,
+    "solid_rgb_policy": "Every nontransparent token pixel stores the assigned exact RGB triplet; edge smoothing is encoded only in alpha.",
+    "palette_interpolation_space": "OKLab",
+    "adjacent_oklab_distance_min": 0.016685,
+    "adjacent_oklab_distance_max": 0.051557,
+    "all_assets_share_one_token_alpha_source": true
+  },
+  "agents": [
+    {
+      "agent": {
+        "index": 1,
+        "agent_id": "azure_architect",
+        "domain": "Azure",
+        "persona": "Cloud Architect",
+        "perspective": "Landing zones, resiliency, platform architecture",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 1,
+        "zero_based_index": 0,
+        "token_id": "DSW64-01",
+        "slug": "nitrous_blue",
+        "display_name": "Nitrous Blue",
+        "anchor": "nitrous_blue",
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 0,
+          "intervals": 9,
+          "t": 0.0
+        },
+        "hex": "#00CFFF",
+        "rgb": {
+          "r": 0,
+          "g": 207,
+          "b": 255
+        },
+        "argb_hex": "#FF00CFFF",
+        "uint24": 53247,
+        "hsl": {
+          "h": 191.294,
+          "s": 50.0,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.792564,
+          "c": 0.147019,
+          "h": 222.5
+        },
+        "contrast": {
+          "against_black": 11.369,
+          "against_frost_white": 1.767,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-01)",
+        "power_fx": "ColorValue(\"#00CFFF\")",
+        "dotnet": "Color.FromArgb(255, 0, 207, 255)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;207;255m",
+          "ansi_truecolor_background": "\u001b[48;2;0;207;255m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 160,
+          "xterm_256_hex": "#D70000"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/01_azure_architect_00CFFF_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/01_azure_architect_00CFFF_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/01_azure_architect_00CFFF_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/01_azure_architect_00CFFF_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/01_azure_architect_00CFFF_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/01_azure_architect_00CFFF_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/01_azure_architect_00CFFF_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/01_azure_architect_00CFFF_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/01_azure_architect_00CFFF_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/01_azure_architect_00CFFF.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 2,
+        "agent_id": "entra_identity",
+        "domain": "Microsoft Entra",
+        "persona": "Identity Guardian",
+        "perspective": "Zero Trust identity, conditional access, lifecycle governance",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 2,
+        "zero_based_index": 1,
+        "token_id": "DSW64-02",
+        "slug": "nitrous_blue-to-cobalt_blue-01",
+        "display_name": "Nitrous Blue → Cobalt Blue 1/9",
+        "anchor": null,
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 1,
+          "intervals": 9,
+          "t": 0.111111
+        },
+        "hex": "#00C0F6",
+        "rgb": {
+          "r": 0,
+          "g": 192,
+          "b": 246
+        },
+        "argb_hex": "#FF00C0F6",
+        "uint24": 49398,
+        "hsl": {
+          "h": 193.171,
+          "s": 48.235,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.753428,
+          "c": 0.145599,
+          "h": 227.094
+        },
+        "contrast": {
+          "against_black": 9.871,
+          "against_frost_white": 2.035,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-02)",
+        "power_fx": "ColorValue(\"#00C0F6\")",
+        "dotnet": "Color.FromArgb(255, 0, 192, 246)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;192;246m",
+          "ansi_truecolor_background": "\u001b[48;2;0;192;246m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 160,
+          "xterm_256_hex": "#D70000"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/02_entra_identity_00C0F6_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/02_entra_identity_00C0F6_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/02_entra_identity_00C0F6_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/02_entra_identity_00C0F6_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/02_entra_identity_00C0F6_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/02_entra_identity_00C0F6_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/02_entra_identity_00C0F6_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/02_entra_identity_00C0F6_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/02_entra_identity_00C0F6_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/02_entra_identity_00C0F6.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 3,
+        "agent_id": "teams_collaboration",
+        "domain": "Microsoft Teams",
+        "persona": "Collaboration Conductor",
+        "perspective": "Meetings, channels, teamwork patterns, real-time collaboration",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 3,
+        "zero_based_index": 2,
+        "token_id": "DSW64-03",
+        "slug": "nitrous_blue-to-cobalt_blue-02",
+        "display_name": "Nitrous Blue → Cobalt Blue 2/9",
+        "anchor": null,
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 2,
+          "intervals": 9,
+          "t": 0.222222
+        },
+        "hex": "#00B0ED",
+        "rgb": {
+          "r": 0,
+          "g": 176,
+          "b": 237
+        },
+        "argb_hex": "#FF00B0ED",
+        "uint24": 45293,
+        "hsl": {
+          "h": 195.443,
+          "s": 46.471,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.711633,
+          "c": 0.145864,
+          "h": 232.382
+        },
+        "contrast": {
+          "against_black": 8.433,
+          "against_frost_white": 2.382,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-03)",
+        "power_fx": "ColorValue(\"#00B0ED\")",
+        "dotnet": "Color.FromArgb(255, 0, 176, 237)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;176;237m",
+          "ansi_truecolor_background": "\u001b[48;2;0;176;237m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 178,
+          "xterm_256_hex": "#D7AF00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/03_teams_collaboration_00B0ED_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/03_teams_collaboration_00B0ED_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/03_teams_collaboration_00B0ED_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/03_teams_collaboration_00B0ED_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/03_teams_collaboration_00B0ED_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/03_teams_collaboration_00B0ED_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/03_teams_collaboration_00B0ED_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/03_teams_collaboration_00B0ED_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/03_teams_collaboration_00B0ED_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/03_teams_collaboration_00B0ED.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 4,
+        "agent_id": "power_platform_maker",
+        "domain": "Power Platform",
+        "persona": "Fusion Maker",
+        "perspective": "Low-code strategy, app portfolios, maker enablement",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 4,
+        "zero_based_index": 3,
+        "token_id": "DSW64-04",
+        "slug": "nitrous_blue-to-cobalt_blue-03",
+        "display_name": "Nitrous Blue → Cobalt Blue 3/9",
+        "anchor": null,
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 3,
+          "intervals": 9,
+          "t": 0.333333
+        },
+        "hex": "#00A1E3",
+        "rgb": {
+          "r": 0,
+          "g": 161,
+          "b": 227
+        },
+        "argb_hex": "#FF00A1E3",
+        "uint24": 41443,
+        "hsl": {
+          "h": 197.445,
+          "s": 44.51,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.671359,
+          "c": 0.145916,
+          "h": 236.693
+        },
+        "contrast": {
+          "against_black": 7.207,
+          "against_frost_white": 2.787,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-04)",
+        "power_fx": "ColorValue(\"#00A1E3\")",
+        "dotnet": "Color.FromArgb(255, 0, 161, 227)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;161;227m",
+          "ansi_truecolor_background": "\u001b[48;2;0;161;227m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 178,
+          "xterm_256_hex": "#D7AF00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/04_power_platform_maker_00A1E3_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/04_power_platform_maker_00A1E3_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/04_power_platform_maker_00A1E3_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/04_power_platform_maker_00A1E3_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/04_power_platform_maker_00A1E3_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/04_power_platform_maker_00A1E3_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/04_power_platform_maker_00A1E3_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/04_power_platform_maker_00A1E3_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/04_power_platform_maker_00A1E3_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/04_power_platform_maker_00A1E3.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 5,
+        "agent_id": "power_apps_creator",
+        "domain": "Power Apps",
+        "persona": "App Creator",
+        "perspective": "Canvas apps, model-driven apps, UX patterns",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 5,
+        "zero_based_index": 4,
+        "token_id": "DSW64-05",
+        "slug": "nitrous_blue-to-cobalt_blue-04",
+        "display_name": "Nitrous Blue → Cobalt Blue 4/9",
+        "anchor": null,
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 4,
+          "intervals": 9,
+          "t": 0.444444
+        },
+        "hex": "#0092DA",
+        "rgb": {
+          "r": 0,
+          "g": 146,
+          "b": 218
+        },
+        "argb_hex": "#FF0092DA",
+        "uint24": 37594,
+        "hsl": {
+          "h": 199.817,
+          "s": 42.745,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.631302,
+          "c": 0.148088,
+          "h": 241.364
+        },
+        "contrast": {
+          "against_black": 6.124,
+          "against_frost_white": 3.28,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-05)",
+        "power_fx": "ColorValue(\"#0092DA\")",
+        "dotnet": "Color.FromArgb(255, 0, 146, 218)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;146;218m",
+          "ansi_truecolor_background": "\u001b[48;2;0;146;218m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 172,
+          "xterm_256_hex": "#D78700"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/05_power_apps_creator_0092DA_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/05_power_apps_creator_0092DA_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/05_power_apps_creator_0092DA_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/05_power_apps_creator_0092DA_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/05_power_apps_creator_0092DA_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/05_power_apps_creator_0092DA_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/05_power_apps_creator_0092DA_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/05_power_apps_creator_0092DA_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/05_power_apps_creator_0092DA_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/05_power_apps_creator_0092DA.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 6,
+        "agent_id": "power_automate_orchestrator",
+        "domain": "Power Automate",
+        "persona": "Flow Orchestrator",
+        "perspective": "Workflow automation, approvals, event-driven operations",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 6,
+        "zero_based_index": 5,
+        "token_id": "DSW64-06",
+        "slug": "nitrous_blue-to-cobalt_blue-05",
+        "display_name": "Nitrous Blue → Cobalt Blue 5/9",
+        "anchor": null,
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 5,
+          "intervals": 9,
+          "t": 0.555556
+        },
+        "hex": "#0083D1",
+        "rgb": {
+          "r": 0,
+          "g": 131,
+          "b": 209
+        },
+        "argb_hex": "#FF0083D1",
+        "uint24": 33745,
+        "hsl": {
+          "h": 202.392,
+          "s": 40.98,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.591019,
+          "c": 0.151478,
+          "h": 245.848
+        },
+        "contrast": {
+          "against_black": 5.167,
+          "against_frost_white": 3.888,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-06)",
+        "power_fx": "ColorValue(\"#0083D1\")",
+        "dotnet": "Color.FromArgb(255, 0, 131, 209)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;131;209m",
+          "ansi_truecolor_background": "\u001b[48;2;0;131;209m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 172,
+          "xterm_256_hex": "#D78700"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/06_power_automate_orchestrator_0083D1_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/06_power_automate_orchestrator_0083D1_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/06_power_automate_orchestrator_0083D1_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/06_power_automate_orchestrator_0083D1_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/06_power_automate_orchestrator_0083D1_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/06_power_automate_orchestrator_0083D1_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/06_power_automate_orchestrator_0083D1_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/06_power_automate_orchestrator_0083D1_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/06_power_automate_orchestrator_0083D1_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/06_power_automate_orchestrator_0083D1.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 7,
+        "agent_id": "power_bi_analyst",
+        "domain": "Power BI",
+        "persona": "Insight Analyst",
+        "perspective": "Metrics, semantic models, executive dashboards",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 7,
+        "zero_based_index": 6,
+        "token_id": "DSW64-07",
+        "slug": "nitrous_blue-to-cobalt_blue-06",
+        "display_name": "Nitrous Blue → Cobalt Blue 6/9",
+        "anchor": null,
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 6,
+          "intervals": 9,
+          "t": 0.666667
+        },
+        "hex": "#0074C7",
+        "rgb": {
+          "r": 0,
+          "g": 116,
+          "b": 199
+        },
+        "argb_hex": "#FF0074C7",
+        "uint24": 29895,
+        "hsl": {
+          "h": 205.025,
+          "s": 39.02,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.549931,
+          "c": 0.154775,
+          "h": 249.782
+        },
+        "contrast": {
+          "against_black": 4.323,
+          "against_frost_white": 4.647,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-07)",
+        "power_fx": "ColorValue(\"#0074C7\")",
+        "dotnet": "Color.FromArgb(255, 0, 116, 199)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;116;199m",
+          "ansi_truecolor_background": "\u001b[48;2;0;116;199m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 172,
+          "xterm_256_hex": "#D78700"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/07_power_bi_analyst_0074C7_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/07_power_bi_analyst_0074C7_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/07_power_bi_analyst_0074C7_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/07_power_bi_analyst_0074C7_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/07_power_bi_analyst_0074C7_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/07_power_bi_analyst_0074C7_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/07_power_bi_analyst_0074C7_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/07_power_bi_analyst_0074C7_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/07_power_bi_analyst_0074C7_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/07_power_bi_analyst_0074C7.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 8,
+        "agent_id": "power_pages_portal",
+        "domain": "Power Pages",
+        "persona": "Portal Maker",
+        "perspective": "Secure portals, external users, citizen services",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 8,
+        "zero_based_index": 7,
+        "token_id": "DSW64-08",
+        "slug": "nitrous_blue-to-cobalt_blue-07",
+        "display_name": "Nitrous Blue → Cobalt Blue 7/9",
+        "anchor": null,
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 7,
+          "intervals": 9,
+          "t": 0.777778
+        },
+        "hex": "#0066BE",
+        "rgb": {
+          "r": 0,
+          "g": 102,
+          "b": 190
+        },
+        "argb_hex": "#FF0066BE",
+        "uint24": 26302,
+        "hsl": {
+          "h": 207.789,
+          "s": 37.255,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.511691,
+          "c": 0.159107,
+          "h": 253.268
+        },
+        "contrast": {
+          "against_black": 3.644,
+          "against_frost_white": 5.513,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-08)",
+        "power_fx": "ColorValue(\"#0066BE\")",
+        "dotnet": "Color.FromArgb(255, 0, 102, 190)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;102;190m",
+          "ansi_truecolor_background": "\u001b[48;2;0;102;190m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 166,
+          "xterm_256_hex": "#D75F00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/08_power_pages_portal_0066BE_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/08_power_pages_portal_0066BE_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/08_power_pages_portal_0066BE_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/08_power_pages_portal_0066BE_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/08_power_pages_portal_0066BE_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/08_power_pages_portal_0066BE_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/08_power_pages_portal_0066BE_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/08_power_pages_portal_0066BE_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/08_power_pages_portal_0066BE_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/08_power_pages_portal_0066BE.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 9,
+        "agent_id": "m365_strategist",
+        "domain": "Microsoft 365",
+        "persona": "Productivity Strategist",
+        "perspective": "Work orchestration across mail, files, meetings, and knowledge",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 9,
+        "zero_based_index": 8,
+        "token_id": "DSW64-09",
+        "slug": "nitrous_blue-to-cobalt_blue-08",
+        "display_name": "Nitrous Blue → Cobalt Blue 8/9",
+        "anchor": null,
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 8,
+          "intervals": 9,
+          "t": 0.888889
+        },
+        "hex": "#0056B5",
+        "rgb": {
+          "r": 0,
+          "g": 86,
+          "b": 181
+        },
+        "argb_hex": "#FF0056B5",
+        "uint24": 22197,
+        "hsl": {
+          "h": 211.492,
+          "s": 35.49,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.4691,
+          "c": 0.166573,
+          "h": 257.009
+        },
+        "contrast": {
+          "against_black": 2.998,
+          "against_frost_white": 6.7,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-09)",
+        "power_fx": "ColorValue(\"#0056B5\")",
+        "dotnet": "Color.FromArgb(255, 0, 86, 181)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;86;181m",
+          "ansi_truecolor_background": "\u001b[48;2;0;86;181m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 250,
+          "xterm_256_hex": "#BCBCBC"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/09_m365_strategist_0056B5_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/09_m365_strategist_0056B5_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/09_m365_strategist_0056B5_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/09_m365_strategist_0056B5_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/09_m365_strategist_0056B5_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/09_m365_strategist_0056B5_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/09_m365_strategist_0056B5_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/09_m365_strategist_0056B5_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/09_m365_strategist_0056B5_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/09_m365_strategist_0056B5.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 10,
+        "agent_id": "copilot_studio_agent_builder",
+        "domain": "Copilot Studio",
+        "persona": "Agent Builder",
+        "perspective": "Agent design, topics, actions, evaluation, governance",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 10,
+        "zero_based_index": 9,
+        "token_id": "DSW64-10",
+        "slug": "cobalt_blue",
+        "display_name": "Cobalt Blue",
+        "anchor": "cobalt_blue",
+        "segment": {
+          "from": "nitrous_blue",
+          "to": "cobalt_blue",
+          "step": 9,
+          "intervals": 9,
+          "t": 1.0
+        },
+        "hex": "#0047AB",
+        "rgb": {
+          "r": 0,
+          "g": 71,
+          "b": 171
+        },
+        "argb_hex": "#FF0047AB",
+        "uint24": 18347,
+        "hsl": {
+          "h": 215.088,
+          "s": 33.529,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.428418,
+          "c": 0.172015,
+          "h": 259.702
+        },
+        "contrast": {
+          "against_black": 2.489,
+          "against_frost_white": 8.07,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-10)",
+        "power_fx": "ColorValue(\"#0047AB\")",
+        "dotnet": "Color.FromArgb(255, 0, 71, 171)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;0;71;171m",
+          "ansi_truecolor_background": "\u001b[48;2;0;71;171m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 193,
+          "xterm_256_hex": "#D7FFAF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/10_copilot_studio_agent_builder_0047AB_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/10_copilot_studio_agent_builder_0047AB_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/10_copilot_studio_agent_builder_0047AB_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/10_copilot_studio_agent_builder_0047AB_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/10_copilot_studio_agent_builder_0047AB_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/10_copilot_studio_agent_builder_0047AB_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/10_copilot_studio_agent_builder_0047AB_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/10_copilot_studio_agent_builder_0047AB_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/10_copilot_studio_agent_builder_0047AB_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/10_copilot_studio_agent_builder_0047AB.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 11,
+        "agent_id": "powerpoint_storyteller",
+        "domain": "PowerPoint",
+        "persona": "Storytelling Expert",
+        "perspective": "Executive narrative, presentation design, visual hierarchy",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 11,
+        "zero_based_index": 10,
+        "token_id": "DSW64-11",
+        "slug": "cobalt_blue-to-magenta-01",
+        "display_name": "Cobalt Blue → Magenta 1/9",
+        "anchor": null,
+        "segment": {
+          "from": "cobalt_blue",
+          "to": "magenta",
+          "step": 1,
+          "intervals": 9,
+          "t": 0.111111
+        },
+        "hex": "#394AB0",
+        "rgb": {
+          "r": 57,
+          "g": 74,
+          "b": 176
+        },
+        "argb_hex": "#FF394AB0",
+        "uint24": 3754672,
+        "hsl": {
+          "h": 231.429,
+          "s": 45.686,
+          "l": 51.073
+        },
+        "oklch": {
+          "l": 0.457097,
+          "c": 0.16263,
+          "h": 271.28
+        },
+        "contrast": {
+          "against_black": 2.78,
+          "against_frost_white": 7.225,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-11)",
+        "power_fx": "ColorValue(\"#394AB0\")",
+        "dotnet": "Color.FromArgb(255, 57, 74, 176)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;57;74;176m",
+          "ansi_truecolor_background": "\u001b[48;2;57;74;176m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 205,
+          "xterm_256_hex": "#FF5FAF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/11_powerpoint_storyteller_394AB0_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/11_powerpoint_storyteller_394AB0_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/11_powerpoint_storyteller_394AB0_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/11_powerpoint_storyteller_394AB0_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/11_powerpoint_storyteller_394AB0_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/11_powerpoint_storyteller_394AB0_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/11_powerpoint_storyteller_394AB0_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/11_powerpoint_storyteller_394AB0_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/11_powerpoint_storyteller_394AB0_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/11_powerpoint_storyteller_394AB0.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 12,
+        "agent_id": "excel_modeler",
+        "domain": "Excel",
+        "persona": "Modeling Expert",
+        "perspective": "Financial models, analysis grids, formulas, scenario planning",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 12,
+        "zero_based_index": 11,
+        "token_id": "DSW64-12",
+        "slug": "cobalt_blue-to-magenta-02",
+        "display_name": "Cobalt Blue → Magenta 2/9",
+        "anchor": null,
+        "segment": {
+          "from": "cobalt_blue",
+          "to": "magenta",
+          "step": 2,
+          "intervals": 9,
+          "t": 0.222222
+        },
+        "hex": "#574BB4",
+        "rgb": {
+          "r": 87,
+          "g": 75,
+          "b": 180
+        },
+        "argb_hex": "#FF574BB4",
+        "uint24": 5721012,
+        "hsl": {
+          "h": 246.857,
+          "s": 50.0,
+          "l": 41.176
+        },
+        "oklch": {
+          "l": 0.48335,
+          "c": 0.160308,
+          "h": 283.824
+        },
+        "contrast": {
+          "against_black": 3.071,
+          "against_frost_white": 6.542,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-12)",
+        "power_fx": "ColorValue(\"#574BB4\")",
+        "dotnet": "Color.FromArgb(255, 87, 75, 180)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;87;75;180m",
+          "ansi_truecolor_background": "\u001b[48;2;87;75;180m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 61,
+          "xterm_256_hex": "#5F5FAF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/12_excel_modeler_574BB4_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/12_excel_modeler_574BB4_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/12_excel_modeler_574BB4_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/12_excel_modeler_574BB4_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/12_excel_modeler_574BB4_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/12_excel_modeler_574BB4_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/12_excel_modeler_574BB4_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/12_excel_modeler_574BB4_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/12_excel_modeler_574BB4_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/12_excel_modeler_574BB4.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 13,
+        "agent_id": "word_writer",
+        "domain": "Word",
+        "persona": "Technical Writer",
+        "perspective": "Docs, proposals, contracts, specs, narrative clarity",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 13,
+        "zero_based_index": 12,
+        "token_id": "DSW64-13",
+        "slug": "cobalt_blue-to-magenta-03",
+        "display_name": "Cobalt Blue → Magenta 3/9",
+        "anchor": null,
+        "segment": {
+          "from": "cobalt_blue",
+          "to": "magenta",
+          "step": 3,
+          "intervals": 9,
+          "t": 0.333333
+        },
+        "hex": "#714CB9",
+        "rgb": {
+          "r": 113,
+          "g": 76,
+          "b": 185
+        },
+        "argb_hex": "#FF714CB9",
+        "uint24": 7425209,
+        "hsl": {
+          "h": 260.367,
+          "s": 51.176,
+          "l": 43.775
+        },
+        "oklch": {
+          "l": 0.51267,
+          "c": 0.164998,
+          "h": 295.663
+        },
+        "contrast": {
+          "against_black": 3.436,
+          "against_frost_white": 5.846,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-13)",
+        "power_fx": "ColorValue(\"#714CB9\")",
+        "dotnet": "Color.FromArgb(255, 113, 76, 185)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;113;76;185m",
+          "ansi_truecolor_background": "\u001b[48;2;113;76;185m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 58,
+          "xterm_256_hex": "#5F5F00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/13_word_writer_714CB9_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/13_word_writer_714CB9_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/13_word_writer_714CB9_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/13_word_writer_714CB9_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/13_word_writer_714CB9_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/13_word_writer_714CB9_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/13_word_writer_714CB9_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/13_word_writer_714CB9_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/13_word_writer_714CB9_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/13_word_writer_714CB9.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 14,
+        "agent_id": "outlook_communicator",
+        "domain": "Outlook / Exchange",
+        "persona": "Comms Strategist",
+        "perspective": "Email flow, calendaring, inbox intelligence, stakeholder comms",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 14,
+        "zero_based_index": 13,
+        "token_id": "DSW64-14",
+        "slug": "cobalt_blue-to-magenta-04",
+        "display_name": "Cobalt Blue → Magenta 4/9",
+        "anchor": null,
+        "segment": {
+          "from": "cobalt_blue",
+          "to": "magenta",
+          "step": 4,
+          "intervals": 9,
+          "t": 0.444444
+        },
+        "hex": "#894ABE",
+        "rgb": {
+          "r": 137,
+          "g": 74,
+          "b": 190
+        },
+        "argb_hex": "#FF894ABE",
+        "uint24": 8997566,
+        "hsl": {
+          "h": 272.586,
+          "s": 51.765,
+          "l": 47.154
+        },
+        "oklch": {
+          "l": 0.539065,
+          "c": 0.178377,
+          "h": 306.346
+        },
+        "contrast": {
+          "against_black": 3.787,
+          "against_frost_white": 5.305,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-14)",
+        "power_fx": "ColorValue(\"#894ABE\")",
+        "dotnet": "Color.FromArgb(255, 137, 74, 190)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;137;74;190m",
+          "ansi_truecolor_background": "\u001b[48;2;137;74;190m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 94,
+          "xterm_256_hex": "#875F00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/14_outlook_communicator_894ABE_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/14_outlook_communicator_894ABE_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/14_outlook_communicator_894ABE_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/14_outlook_communicator_894ABE_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/14_outlook_communicator_894ABE_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/14_outlook_communicator_894ABE_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/14_outlook_communicator_894ABE_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/14_outlook_communicator_894ABE_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/14_outlook_communicator_894ABE_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/14_outlook_communicator_894ABE.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 15,
+        "agent_id": "sharepoint_knowledge",
+        "domain": "SharePoint",
+        "persona": "Knowledge Architect",
+        "perspective": "Intranets, content services, metadata, search, knowledge hubs",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 15,
+        "zero_based_index": 14,
+        "token_id": "DSW64-15",
+        "slug": "cobalt_blue-to-magenta-05",
+        "display_name": "Cobalt Blue → Magenta 5/9",
+        "anchor": null,
+        "segment": {
+          "from": "cobalt_blue",
+          "to": "magenta",
+          "step": 5,
+          "intervals": 9,
+          "t": 0.555556
+        },
+        "hex": "#A147C2",
+        "rgb": {
+          "r": 161,
+          "g": 71,
+          "b": 194
+        },
+        "argb_hex": "#FFA147C2",
+        "uint24": 10569666,
+        "hsl": {
+          "h": 283.902,
+          "s": 51.961,
+          "l": 50.204
+        },
+        "oklch": {
+          "l": 0.56686,
+          "c": 0.195124,
+          "h": 315.796
+        },
+        "contrast": {
+          "against_black": 4.196,
+          "against_frost_white": 4.788,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-15)",
+        "power_fx": "ColorValue(\"#A147C2\")",
+        "dotnet": "Color.FromArgb(255, 161, 71, 194)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;161;71;194m",
+          "ansi_truecolor_background": "\u001b[48;2;161;71;194m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 154,
+          "xterm_256_hex": "#AFFF00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/15_sharepoint_knowledge_A147C2_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/15_sharepoint_knowledge_A147C2_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/15_sharepoint_knowledge_A147C2_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/15_sharepoint_knowledge_A147C2_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/15_sharepoint_knowledge_A147C2_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/15_sharepoint_knowledge_A147C2_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/15_sharepoint_knowledge_A147C2_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/15_sharepoint_knowledge_A147C2_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/15_sharepoint_knowledge_A147C2_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/15_sharepoint_knowledge_A147C2.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 16,
+        "agent_id": "onedrive_sync",
+        "domain": "OneDrive",
+        "persona": "File Sync Expert",
+        "perspective": "File lifecycle, personal storage, sync reliability, collaboration",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 16,
+        "zero_based_index": 15,
+        "token_id": "DSW64-16",
+        "slug": "cobalt_blue-to-magenta-06",
+        "display_name": "Cobalt Blue → Magenta 6/9",
+        "anchor": null,
+        "segment": {
+          "from": "cobalt_blue",
+          "to": "magenta",
+          "step": 6,
+          "intervals": 9,
+          "t": 0.666667
+        },
+        "hex": "#B942C7",
+        "rgb": {
+          "r": 185,
+          "g": 66,
+          "b": 199
+        },
+        "argb_hex": "#FFB942C7",
+        "uint24": 12141255,
+        "hsl": {
+          "h": 293.684,
+          "s": 51.961,
+          "l": 54.286
+        },
+        "oklch": {
+          "l": 0.596092,
+          "c": 0.216804,
+          "h": 323.345
+        },
+        "contrast": {
+          "against_black": 4.667,
+          "against_frost_white": 4.305,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-16)",
+        "power_fx": "ColorValue(\"#B942C7\")",
+        "dotnet": "Color.FromArgb(255, 185, 66, 199)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;185;66;199m",
+          "ansi_truecolor_background": "\u001b[48;2;185;66;199m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 10,
+          "xterm_256_hex": "#00FF00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/16_onedrive_sync_B942C7_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/16_onedrive_sync_B942C7_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/16_onedrive_sync_B942C7_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/16_onedrive_sync_B942C7_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/16_onedrive_sync_B942C7_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/16_onedrive_sync_B942C7_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/16_onedrive_sync_B942C7_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/16_onedrive_sync_B942C7_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/16_onedrive_sync_B942C7_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/16_onedrive_sync_B942C7.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 17,
+        "agent_id": "edge_browser",
+        "domain": "Edge",
+        "persona": "Browser Specialist",
+        "perspective": "Web productivity, secure browsing, enterprise browser controls",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 17,
+        "zero_based_index": 16,
+        "token_id": "DSW64-17",
+        "slug": "cobalt_blue-to-magenta-07",
+        "display_name": "Cobalt Blue → Magenta 7/9",
+        "anchor": null,
+        "segment": {
+          "from": "cobalt_blue",
+          "to": "magenta",
+          "step": 7,
+          "intervals": 9,
+          "t": 0.777778
+        },
+        "hex": "#D039CB",
+        "rgb": {
+          "r": 208,
+          "g": 57,
+          "b": 203
+        },
+        "argb_hex": "#FFD039CB",
+        "uint24": 13646283,
+        "hsl": {
+          "h": 301.987,
+          "s": 51.961,
+          "l": 61.633
+        },
+        "oklch": {
+          "l": 0.622895,
+          "c": 0.241075,
+          "h": 329.45
+        },
+        "contrast": {
+          "against_black": 5.13,
+          "against_frost_white": 3.916,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-17)",
+        "power_fx": "ColorValue(\"#D039CB\")",
+        "dotnet": "Color.FromArgb(255, 208, 57, 203)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;208;57;203m",
+          "ansi_truecolor_background": "\u001b[48;2;208;57;203m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 10,
+          "xterm_256_hex": "#00FF00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/17_edge_browser_D039CB_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/17_edge_browser_D039CB_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/17_edge_browser_D039CB_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/17_edge_browser_D039CB_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/17_edge_browser_D039CB_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/17_edge_browser_D039CB_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/17_edge_browser_D039CB_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/17_edge_browser_D039CB_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/17_edge_browser_D039CB_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/17_edge_browser_D039CB.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 18,
+        "agent_id": "windows_os",
+        "domain": "Windows",
+        "persona": "Endpoint Platform Expert",
+        "perspective": "OS experience, enterprise endpoints, shell, device UX",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 18,
+        "zero_based_index": 17,
+        "token_id": "DSW64-18",
+        "slug": "cobalt_blue-to-magenta-08",
+        "display_name": "Cobalt Blue → Magenta 8/9",
+        "anchor": null,
+        "segment": {
+          "from": "cobalt_blue",
+          "to": "magenta",
+          "step": 8,
+          "intervals": 9,
+          "t": 0.888889
+        },
+        "hex": "#E72AD0",
+        "rgb": {
+          "r": 231,
+          "g": 42,
+          "b": 208
+        },
+        "argb_hex": "#FFE72AD0",
+        "uint24": 15149776,
+        "hsl": {
+          "h": 307.302,
+          "s": 53.529,
+          "l": 79.747
+        },
+        "oklch": {
+          "l": 0.65032,
+          "c": 0.268136,
+          "h": 334.11
+        },
+        "contrast": {
+          "against_black": 5.64,
+          "against_frost_white": 3.562,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-18)",
+        "power_fx": "ColorValue(\"#E72AD0\")",
+        "dotnet": "Color.FromArgb(255, 231, 42, 208)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;231;42;208m",
+          "ansi_truecolor_background": "\u001b[48;2;231;42;208m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 10,
+          "xterm_256_hex": "#00FF00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/18_windows_os_E72AD0_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/18_windows_os_E72AD0_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/18_windows_os_E72AD0_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/18_windows_os_E72AD0_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/18_windows_os_E72AD0_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/18_windows_os_E72AD0_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/18_windows_os_E72AD0_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/18_windows_os_E72AD0_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/18_windows_os_E72AD0_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/18_windows_os_E72AD0.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 19,
+        "agent_id": "dataverse_modeler",
+        "domain": "Dataverse",
+        "persona": "Data Modeler",
+        "perspective": "Tables, relationships, ALM, security roles, business data",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 19,
+        "zero_based_index": 18,
+        "token_id": "DSW64-19",
+        "slug": "magenta",
+        "display_name": "Magenta",
+        "anchor": "magenta",
+        "segment": {
+          "from": "cobalt_blue",
+          "to": "magenta",
+          "step": 9,
+          "intervals": 9,
+          "t": 1.0
+        },
+        "hex": "#FF00D4",
+        "rgb": {
+          "r": 255,
+          "g": 0,
+          "b": 212
+        },
+        "argb_hex": "#FFFF00D4",
+        "uint24": 16711892,
+        "hsl": {
+          "h": 310.118,
+          "s": 50.0,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.67837,
+          "c": 0.296978,
+          "h": 338.327
+        },
+        "contrast": {
+          "against_black": 6.203,
+          "against_frost_white": 3.239,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-19)",
+        "power_fx": "ColorValue(\"#FF00D4\")",
+        "dotnet": "Color.FromArgb(255, 255, 0, 212)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;0;212m",
+          "ansi_truecolor_background": "\u001b[48;2;255;0;212m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 234,
+          "xterm_256_hex": "#1C1C1C"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/19_dataverse_modeler_FF00D4_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/19_dataverse_modeler_FF00D4_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/19_dataverse_modeler_FF00D4_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/19_dataverse_modeler_FF00D4_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/19_dataverse_modeler_FF00D4_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/19_dataverse_modeler_FF00D4_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/19_dataverse_modeler_FF00D4_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/19_dataverse_modeler_FF00D4_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/19_dataverse_modeler_FF00D4_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/19_dataverse_modeler_FF00D4.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 20,
+        "agent_id": "fabric_data_engineer",
+        "domain": "Microsoft Fabric",
+        "persona": "Data Engineer",
+        "perspective": "Lakehouses, pipelines, warehousing, analytics fabric",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 20,
+        "zero_based_index": 19,
+        "token_id": "DSW64-20",
+        "slug": "magenta-to-competition_orange-01",
+        "display_name": "Magenta → Competition Orange 1/9",
+        "anchor": null,
+        "segment": {
+          "from": "magenta",
+          "to": "competition_orange",
+          "step": 1,
+          "intervals": 9,
+          "t": 0.111111
+        },
+        "hex": "#FE24C4",
+        "rgb": {
+          "r": 254,
+          "g": 36,
+          "b": 196
+        },
+        "argb_hex": "#FFFE24C4",
+        "uint24": 16655556,
+        "hsl": {
+          "h": 315.963,
+          "s": 56.863,
+          "l": 99.091
+        },
+        "oklch": {
+          "l": 0.67775,
+          "c": 0.275832,
+          "h": 342.599
+        },
+        "contrast": {
+          "against_black": 6.264,
+          "against_frost_white": 3.207,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-20)",
+        "power_fx": "ColorValue(\"#FE24C4\")",
+        "dotnet": "Color.FromArgb(255, 254, 36, 196)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;254;36;196m",
+          "ansi_truecolor_background": "\u001b[48;2;254;36;196m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 10,
+          "xterm_256_hex": "#00FF00"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/20_fabric_data_engineer_FE24C4_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/20_fabric_data_engineer_FE24C4_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/20_fabric_data_engineer_FE24C4_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/20_fabric_data_engineer_FE24C4_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/20_fabric_data_engineer_FE24C4_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/20_fabric_data_engineer_FE24C4_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/20_fabric_data_engineer_FE24C4_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/20_fabric_data_engineer_FE24C4_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/20_fabric_data_engineer_FE24C4_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/20_fabric_data_engineer_FE24C4.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 21,
+        "agent_id": "azure_ai_foundry",
+        "domain": "Azure AI Foundry",
+        "persona": "AI Foundry Engineer",
+        "perspective": "Models, evaluations, prompt flows, agentic AI lifecycle",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 21,
+        "zero_based_index": 20,
+        "token_id": "DSW64-21",
+        "slug": "magenta-to-competition_orange-02",
+        "display_name": "Magenta → Competition Orange 2/9",
+        "anchor": null,
+        "segment": {
+          "from": "magenta",
+          "to": "competition_orange",
+          "step": 2,
+          "intervals": 9,
+          "t": 0.222222
+        },
+        "hex": "#FE34B4",
+        "rgb": {
+          "r": 254,
+          "g": 52,
+          "b": 180
+        },
+        "argb_hex": "#FFFE34B4",
+        "uint24": 16659636,
+        "hsl": {
+          "h": 321.98,
+          "s": 60.0,
+          "l": 99.02
+        },
+        "oklch": {
+          "l": 0.679046,
+          "c": 0.256527,
+          "h": 347.681
+        },
+        "contrast": {
+          "against_black": 6.364,
+          "against_frost_white": 3.157,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-21)",
+        "power_fx": "ColorValue(\"#FE34B4\")",
+        "dotnet": "Color.FromArgb(255, 254, 52, 180)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;254;52;180m",
+          "ansi_truecolor_background": "\u001b[48;2;254;52;180m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 255,
+          "xterm_256_hex": "#EEEEEE"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/21_azure_ai_foundry_FE34B4_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/21_azure_ai_foundry_FE34B4_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/21_azure_ai_foundry_FE34B4_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/21_azure_ai_foundry_FE34B4_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/21_azure_ai_foundry_FE34B4_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/21_azure_ai_foundry_FE34B4_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/21_azure_ai_foundry_FE34B4_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/21_azure_ai_foundry_FE34B4_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/21_azure_ai_foundry_FE34B4_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/21_azure_ai_foundry_FE34B4.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 22,
+        "agent_id": "apim_integration",
+        "domain": "Azure API Management",
+        "persona": "Integration Expert",
+        "perspective": "APIs, policies, gateways, developer portals, governance",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 22,
+        "zero_based_index": 21,
+        "token_id": "DSW64-22",
+        "slug": "magenta-to-competition_orange-03",
+        "display_name": "Magenta → Competition Orange 3/9",
+        "anchor": null,
+        "segment": {
+          "from": "magenta",
+          "to": "competition_orange",
+          "step": 3,
+          "intervals": 9,
+          "t": 0.333333
+        },
+        "hex": "#FE3EA3",
+        "rgb": {
+          "r": 254,
+          "g": 62,
+          "b": 163
+        },
+        "argb_hex": "#FFFE3EA3",
+        "uint24": 16662179,
+        "hsl": {
+          "h": 328.438,
+          "s": 61.961,
+          "l": 98.969
+        },
+        "oklch": {
+          "l": 0.679356,
+          "c": 0.239943,
+          "h": 353.646
+        },
+        "contrast": {
+          "against_black": 6.432,
+          "against_frost_white": 3.123,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-22)",
+        "power_fx": "ColorValue(\"#FE3EA3\")",
+        "dotnet": "Color.FromArgb(255, 254, 62, 163)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;254;62;163m",
+          "ansi_truecolor_background": "\u001b[48;2;254;62;163m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 49,
+          "xterm_256_hex": "#00FFAF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/22_apim_integration_FE3EA3_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/22_apim_integration_FE3EA3_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/22_apim_integration_FE3EA3_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/22_apim_integration_FE3EA3_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/22_apim_integration_FE3EA3_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/22_apim_integration_FE3EA3_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/22_apim_integration_FE3EA3_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/22_apim_integration_FE3EA3_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/22_apim_integration_FE3EA3_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/22_apim_integration_FE3EA3.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 23,
+        "agent_id": "designer_creator",
+        "domain": "Designer",
+        "persona": "Visual Creator",
+        "perspective": "Concept art, brand assets, creative production workflows",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 23,
+        "zero_based_index": 22,
+        "token_id": "DSW64-23",
+        "slug": "magenta-to-competition_orange-04",
+        "display_name": "Magenta → Competition Orange 4/9",
+        "anchor": null,
+        "segment": {
+          "from": "magenta",
+          "to": "competition_orange",
+          "step": 4,
+          "intervals": 9,
+          "t": 0.444444
+        },
+        "hex": "#FE4692",
+        "rgb": {
+          "r": 254,
+          "g": 70,
+          "b": 146
+        },
+        "argb_hex": "#FFFE4692",
+        "uint24": 16664210,
+        "hsl": {
+          "h": 335.217,
+          "s": 63.529,
+          "l": 98.925
+        },
+        "oklch": {
+          "l": 0.680111,
+          "c": 0.225823,
+          "h": 0.229
+        },
+        "contrast": {
+          "against_black": 6.505,
+          "against_frost_white": 3.088,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-23)",
+        "power_fx": "ColorValue(\"#FE4692\")",
+        "dotnet": "Color.FromArgb(255, 254, 70, 146)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;254;70;146m",
+          "ansi_truecolor_background": "\u001b[48;2;254;70;146m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 48,
+          "xterm_256_hex": "#00FF87"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/23_designer_creator_FE4692_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/23_designer_creator_FE4692_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/23_designer_creator_FE4692_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/23_designer_creator_FE4692_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/23_designer_creator_FE4692_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/23_designer_creator_FE4692_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/23_designer_creator_FE4692_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/23_designer_creator_FE4692_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/23_designer_creator_FE4692_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/23_designer_creator_FE4692.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 24,
+        "agent_id": "github_engineer",
+        "domain": "GitHub",
+        "persona": "Software Engineer",
+        "perspective": "Repos, pull requests, Actions, Copilot coding workflows",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 24,
+        "zero_based_index": 23,
+        "token_id": "DSW64-24",
+        "slug": "magenta-to-competition_orange-05",
+        "display_name": "Magenta → Competition Orange 5/9",
+        "anchor": null,
+        "segment": {
+          "from": "magenta",
+          "to": "competition_orange",
+          "step": 5,
+          "intervals": 9,
+          "t": 0.555556
+        },
+        "hex": "#FE4C80",
+        "rgb": {
+          "r": 254,
+          "g": 76,
+          "b": 128
+        },
+        "argb_hex": "#FFFE4C80",
+        "uint24": 16665728,
+        "hsl": {
+          "h": 342.472,
+          "s": 64.706,
+          "l": 98.889
+        },
+        "oklch": {
+          "l": 0.680401,
+          "c": 0.215202,
+          "h": 7.556
+        },
+        "contrast": {
+          "against_black": 6.56,
+          "against_frost_white": 3.063,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-24)",
+        "power_fx": "ColorValue(\"#FE4C80\")",
+        "dotnet": "Color.FromArgb(255, 254, 76, 128)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;254;76;128m",
+          "ansi_truecolor_background": "\u001b[48;2;254;76;128m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/24_github_engineer_FE4C80_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/24_github_engineer_FE4C80_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/24_github_engineer_FE4C80_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/24_github_engineer_FE4C80_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/24_github_engineer_FE4C80_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/24_github_engineer_FE4C80_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/24_github_engineer_FE4C80_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/24_github_engineer_FE4C80_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/24_github_engineer_FE4C80_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/24_github_engineer_FE4C80.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 25,
+        "agent_id": "vscode_developer",
+        "domain": "Visual Studio Code",
+        "persona": "Developer Tools Expert",
+        "perspective": "Extensions, debugging, local dev, AI-assisted coding",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 25,
+        "zero_based_index": 24,
+        "token_id": "DSW64-25",
+        "slug": "magenta-to-competition_orange-06",
+        "display_name": "Magenta → Competition Orange 6/9",
+        "anchor": null,
+        "segment": {
+          "from": "magenta",
+          "to": "competition_orange",
+          "step": 6,
+          "intervals": 9,
+          "t": 0.666667
+        },
+        "hex": "#FE516D",
+        "rgb": {
+          "r": 254,
+          "g": 81,
+          "b": 109
+        },
+        "argb_hex": "#FFFE516D",
+        "uint24": 16666989,
+        "hsl": {
+          "h": 350.289,
+          "s": 65.686,
+          "l": 98.857
+        },
+        "oklch": {
+          "l": 0.680821,
+          "c": 0.208092,
+          "h": 15.381
+        },
+        "contrast": {
+          "against_black": 6.612,
+          "against_frost_white": 3.038,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-25)",
+        "power_fx": "ColorValue(\"#FE516D\")",
+        "dotnet": "Color.FromArgb(255, 254, 81, 109)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;254;81;109m",
+          "ansi_truecolor_background": "\u001b[48;2;254;81;109m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/25_vscode_developer_FE516D_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/25_vscode_developer_FE516D_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/25_vscode_developer_FE516D_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/25_vscode_developer_FE516D_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/25_vscode_developer_FE516D_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/25_vscode_developer_FE516D_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/25_vscode_developer_FE516D_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/25_vscode_developer_FE516D_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/25_vscode_developer_FE516D_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/25_vscode_developer_FE516D.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 26,
+        "agent_id": "devops_release",
+        "domain": "Azure DevOps",
+        "persona": "Release Engineer",
+        "perspective": "Backlogs, pipelines, releases, environments, delivery governance",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 26,
+        "zero_based_index": 25,
+        "token_id": "DSW64-26",
+        "slug": "magenta-to-competition_orange-07",
+        "display_name": "Magenta → Competition Orange 7/9",
+        "anchor": null,
+        "segment": {
+          "from": "magenta",
+          "to": "competition_orange",
+          "step": 7,
+          "intervals": 9,
+          "t": 0.777778
+        },
+        "hex": "#FE5557",
+        "rgb": {
+          "r": 254,
+          "g": 85,
+          "b": 87
+        },
+        "argb_hex": "#FFFE5557",
+        "uint24": 16667991,
+        "hsl": {
+          "h": 359.29,
+          "s": 66.471,
+          "l": 98.83
+        },
+        "oklch": {
+          "l": 0.680929,
+          "c": 0.205096,
+          "h": 23.771
+        },
+        "contrast": {
+          "against_black": 6.651,
+          "against_frost_white": 3.02,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-26)",
+        "power_fx": "ColorValue(\"#FE5557\")",
+        "dotnet": "Color.FromArgb(255, 254, 85, 87)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;254;85;87m",
+          "ansi_truecolor_background": "\u001b[48;2;254;85;87m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/26_devops_release_FE5557_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/26_devops_release_FE5557_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/26_devops_release_FE5557_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/26_devops_release_FE5557_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/26_devops_release_FE5557_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/26_devops_release_FE5557_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/26_devops_release_FE5557_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/26_devops_release_FE5557_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/26_devops_release_FE5557_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/26_devops_release_FE5557.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 27,
+        "agent_id": "aks_platform",
+        "domain": "Azure Kubernetes Service",
+        "persona": "Platform Engineer",
+        "perspective": "Clusters, ingress, scaling, service mesh, workload operations",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 27,
+        "zero_based_index": 26,
+        "token_id": "DSW64-27",
+        "slug": "magenta-to-competition_orange-08",
+        "display_name": "Magenta → Competition Orange 8/9",
+        "anchor": null,
+        "segment": {
+          "from": "magenta",
+          "to": "competition_orange",
+          "step": 8,
+          "intervals": 9,
+          "t": 0.888889
+        },
+        "hex": "#FF583C",
+        "rgb": {
+          "r": 255,
+          "g": 88,
+          "b": 60
+        },
+        "argb_hex": "#FFFF583C",
+        "uint24": 16734268,
+        "hsl": {
+          "h": 8.615,
+          "s": 61.765,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.682286,
+          "c": 0.207542,
+          "h": 32.009
+        },
+        "contrast": {
+          "against_black": 6.713,
+          "against_frost_white": 2.993,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-27)",
+        "power_fx": "ColorValue(\"#FF583C\")",
+        "dotnet": "Color.FromArgb(255, 255, 88, 60)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;88;60m",
+          "ansi_truecolor_background": "\u001b[48;2;255;88;60m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/27_aks_platform_FF583C_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/27_aks_platform_FF583C_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/27_aks_platform_FF583C_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/27_aks_platform_FF583C_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/27_aks_platform_FF583C_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/27_aks_platform_FF583C_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/27_aks_platform_FF583C_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/27_aks_platform_FF583C_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/27_aks_platform_FF583C_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/27_aks_platform_FF583C.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 28,
+        "agent_id": "functions_serverless",
+        "domain": "Azure Functions",
+        "persona": "Serverless Builder",
+        "perspective": "Event handlers, triggers, bindings, lightweight integration",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 28,
+        "zero_based_index": 27,
+        "token_id": "DSW64-28",
+        "slug": "competition_orange",
+        "display_name": "Competition Orange",
+        "anchor": "competition_orange",
+        "segment": {
+          "from": "magenta",
+          "to": "competition_orange",
+          "step": 9,
+          "intervals": 9,
+          "t": 1.0
+        },
+        "hex": "#FF5A00",
+        "rgb": {
+          "r": 255,
+          "g": 90,
+          "b": 0
+        },
+        "argb_hex": "#FFFF5A00",
+        "uint24": 16734720,
+        "hsl": {
+          "h": 21.176,
+          "s": 50.0,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.681414,
+          "c": 0.213594,
+          "h": 40.061
+        },
+        "contrast": {
+          "against_black": 6.714,
+          "against_frost_white": 2.992,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-28)",
+        "power_fx": "ColorValue(\"#FF5A00\")",
+        "dotnet": "Color.FromArgb(255, 255, 90, 0)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;90;0m",
+          "ansi_truecolor_background": "\u001b[48;2;255;90;0m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/28_functions_serverless_FF5A00_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/28_functions_serverless_FF5A00_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/28_functions_serverless_FF5A00_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/28_functions_serverless_FF5A00_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/28_functions_serverless_FF5A00_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/28_functions_serverless_FF5A00_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/28_functions_serverless_FF5A00_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/28_functions_serverless_FF5A00_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/28_functions_serverless_FF5A00_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/28_functions_serverless_FF5A00.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 29,
+        "agent_id": "cosmosdb_global",
+        "domain": "Azure Cosmos DB",
+        "persona": "Global Data Expert",
+        "perspective": "Distributed data, partitioning, consistency, global scale",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 29,
+        "zero_based_index": 28,
+        "token_id": "DSW64-29",
+        "slug": "competition_orange-to-lava-01",
+        "display_name": "Competition Orange → Lava 1/9",
+        "anchor": null,
+        "segment": {
+          "from": "competition_orange",
+          "to": "lava",
+          "step": 1,
+          "intervals": 9,
+          "t": 0.111111
+        },
+        "hex": "#F85402",
+        "rgb": {
+          "r": 248,
+          "g": 84,
+          "b": 2
+        },
+        "argb_hex": "#FFF85402",
+        "uint24": 16274434,
+        "hsl": {
+          "h": 20.0,
+          "s": 49.02,
+          "l": 98.4
+        },
+        "oklch": {
+          "l": 0.66355,
+          "c": 0.21157,
+          "h": 39.085
+        },
+        "contrast": {
+          "against_black": 6.26,
+          "against_frost_white": 3.209,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-29)",
+        "power_fx": "ColorValue(\"#F85402\")",
+        "dotnet": "Color.FromArgb(255, 248, 84, 2)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;248;84;2m",
+          "ansi_truecolor_background": "\u001b[48;2;248;84;2m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 237,
+          "xterm_256_hex": "#3A3A3A"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/29_cosmosdb_global_F85402_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/29_cosmosdb_global_F85402_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/29_cosmosdb_global_F85402_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/29_cosmosdb_global_F85402_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/29_cosmosdb_global_F85402_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/29_cosmosdb_global_F85402_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/29_cosmosdb_global_F85402_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/29_cosmosdb_global_F85402_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/29_cosmosdb_global_F85402_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/29_cosmosdb_global_F85402.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 30,
+        "agent_id": "sql_database",
+        "domain": "Azure SQL / SQL Server",
+        "persona": "Database Expert",
+        "perspective": "Relational modeling, query performance, data integrity",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 30,
+        "zero_based_index": 29,
+        "token_id": "DSW64-30",
+        "slug": "competition_orange-to-lava-02",
+        "display_name": "Competition Orange → Lava 2/9",
+        "anchor": null,
+        "segment": {
+          "from": "competition_orange",
+          "to": "lava",
+          "step": 2,
+          "intervals": 9,
+          "t": 0.222222
+        },
+        "hex": "#F24E04",
+        "rgb": {
+          "r": 242,
+          "g": 78,
+          "b": 4
+        },
+        "argb_hex": "#FFF24E04",
+        "uint24": 15879684,
+        "hsl": {
+          "h": 18.655,
+          "s": 48.235,
+          "l": 96.748
+        },
+        "oklch": {
+          "l": 0.647352,
+          "c": 0.210468,
+          "h": 38.008
+        },
+        "contrast": {
+          "against_black": 5.867,
+          "against_frost_white": 3.424,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-30)",
+        "power_fx": "ColorValue(\"#F24E04\")",
+        "dotnet": "Color.FromArgb(255, 242, 78, 4)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;242;78;4m",
+          "ansi_truecolor_background": "\u001b[48;2;242;78;4m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 237,
+          "xterm_256_hex": "#3A3A3A"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/30_sql_database_F24E04_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/30_sql_database_F24E04_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/30_sql_database_F24E04_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/30_sql_database_F24E04_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/30_sql_database_F24E04_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/30_sql_database_F24E04_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/30_sql_database_F24E04_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/30_sql_database_F24E04_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/30_sql_database_F24E04_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/30_sql_database_F24E04.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 31,
+        "agent_id": "graph_connector",
+        "domain": "Microsoft Graph",
+        "persona": "Connector Expert",
+        "perspective": "Unified API, identity, mail, calendar, files, Teams integration",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 31,
+        "zero_based_index": 30,
+        "token_id": "DSW64-31",
+        "slug": "competition_orange-to-lava-03",
+        "display_name": "Competition Orange → Lava 3/9",
+        "anchor": null,
+        "segment": {
+          "from": "competition_orange",
+          "to": "lava",
+          "step": 3,
+          "intervals": 9,
+          "t": 0.333333
+        },
+        "hex": "#EC4705",
+        "rgb": {
+          "r": 236,
+          "g": 71,
+          "b": 5
+        },
+        "argb_hex": "#FFEC4705",
+        "uint24": 15484677,
+        "hsl": {
+          "h": 17.143,
+          "s": 47.255,
+          "l": 95.851
+        },
+        "oklch": {
+          "l": 0.630215,
+          "c": 0.210163,
+          "h": 36.763
+        },
+        "contrast": {
+          "against_black": 5.47,
+          "against_frost_white": 3.673,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-31)",
+        "power_fx": "ColorValue(\"#EC4705\")",
+        "dotnet": "Color.FromArgb(255, 236, 71, 5)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;236;71;5m",
+          "ansi_truecolor_background": "\u001b[48;2;236;71;5m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 50,
+          "xterm_256_hex": "#00FFD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/31_graph_connector_EC4705_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/31_graph_connector_EC4705_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/31_graph_connector_EC4705_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/31_graph_connector_EC4705_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/31_graph_connector_EC4705_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/31_graph_connector_EC4705_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/31_graph_connector_EC4705_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/31_graph_connector_EC4705_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/31_graph_connector_EC4705_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/31_graph_connector_EC4705.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 32,
+        "agent_id": "defender_security",
+        "domain": "Microsoft Defender",
+        "persona": "Threat Protection Expert",
+        "perspective": "Security posture, endpoint protection, threat investigation",
+        "group": "security_governance_trust"
+      },
+      "color": {
+        "index": 32,
+        "zero_based_index": 31,
+        "token_id": "DSW64-32",
+        "slug": "competition_orange-to-lava-04",
+        "display_name": "Competition Orange → Lava 4/9",
+        "anchor": null,
+        "segment": {
+          "from": "competition_orange",
+          "to": "lava",
+          "step": 4,
+          "intervals": 9,
+          "t": 0.444444
+        },
+        "hex": "#E54107",
+        "rgb": {
+          "r": 229,
+          "g": 65,
+          "b": 7
+        },
+        "argb_hex": "#FFE54107",
+        "uint24": 15024391,
+        "hsl": {
+          "h": 15.676,
+          "s": 46.275,
+          "l": 94.068
+        },
+        "oklch": {
+          "l": 0.612565,
+          "c": 0.208027,
+          "h": 35.774
+        },
+        "contrast": {
+          "against_black": 5.091,
+          "against_frost_white": 3.946,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-32)",
+        "power_fx": "ColorValue(\"#E54107\")",
+        "dotnet": "Color.FromArgb(255, 229, 65, 7)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;229;65;7m",
+          "ansi_truecolor_background": "\u001b[48;2;229;65;7m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 50,
+          "xterm_256_hex": "#00FFD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/32_defender_security_E54107_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/32_defender_security_E54107_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/32_defender_security_E54107_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/32_defender_security_E54107_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/32_defender_security_E54107_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/32_defender_security_E54107_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/32_defender_security_E54107_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/32_defender_security_E54107_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/32_defender_security_E54107_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/32_defender_security_E54107.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 33,
+        "agent_id": "sentinel_soc",
+        "domain": "Microsoft Sentinel",
+        "persona": "SOC Analyst",
+        "perspective": "SIEM, SOAR, detections, incidents, hunting",
+        "group": "security_governance_trust"
+      },
+      "color": {
+        "index": 33,
+        "zero_based_index": 32,
+        "token_id": "DSW64-33",
+        "slug": "competition_orange-to-lava-05",
+        "display_name": "Competition Orange → Lava 5/9",
+        "anchor": null,
+        "segment": {
+          "from": "competition_orange",
+          "to": "lava",
+          "step": 5,
+          "intervals": 9,
+          "t": 0.555556
+        },
+        "hex": "#DF3A08",
+        "rgb": {
+          "r": 223,
+          "g": 58,
+          "b": 8
+        },
+        "argb_hex": "#FFDF3A08",
+        "uint24": 14629384,
+        "hsl": {
+          "h": 13.953,
+          "s": 45.294,
+          "l": 93.074
+        },
+        "oklch": {
+          "l": 0.5958,
+          "c": 0.207538,
+          "h": 34.583
+        },
+        "contrast": {
+          "against_black": 4.746,
+          "against_frost_white": 4.233,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-33)",
+        "power_fx": "ColorValue(\"#DF3A08\")",
+        "dotnet": "Color.FromArgb(255, 223, 58, 8)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;223;58;8m",
+          "ansi_truecolor_background": "\u001b[48;2;223;58;8m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 50,
+          "xterm_256_hex": "#00FFD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/33_sentinel_soc_DF3A08_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/33_sentinel_soc_DF3A08_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/33_sentinel_soc_DF3A08_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/33_sentinel_soc_DF3A08_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/33_sentinel_soc_DF3A08_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/33_sentinel_soc_DF3A08_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/33_sentinel_soc_DF3A08_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/33_sentinel_soc_DF3A08_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/33_sentinel_soc_DF3A08_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/33_sentinel_soc_DF3A08.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 34,
+        "agent_id": "purview_governance",
+        "domain": "Microsoft Purview",
+        "persona": "Governance Officer",
+        "perspective": "Data governance, compliance, classification, risk controls",
+        "group": "security_governance_trust"
+      },
+      "color": {
+        "index": 34,
+        "zero_based_index": 33,
+        "token_id": "DSW64-34",
+        "slug": "competition_orange-to-lava-06",
+        "display_name": "Competition Orange → Lava 6/9",
+        "anchor": null,
+        "segment": {
+          "from": "competition_orange",
+          "to": "lava",
+          "step": 6,
+          "intervals": 9,
+          "t": 0.666667
+        },
+        "hex": "#D83309",
+        "rgb": {
+          "r": 216,
+          "g": 51,
+          "b": 9
+        },
+        "argb_hex": "#FFD83309",
+        "uint24": 14168841,
+        "hsl": {
+          "h": 12.174,
+          "s": 44.118,
+          "l": 92.0
+        },
+        "oklch": {
+          "l": 0.577544,
+          "c": 0.20596,
+          "h": 33.489
+        },
+        "contrast": {
+          "against_black": 4.397,
+          "against_frost_white": 4.569,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-34)",
+        "power_fx": "ColorValue(\"#D83309\")",
+        "dotnet": "Color.FromArgb(255, 216, 51, 9)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;216;51;9m",
+          "ansi_truecolor_background": "\u001b[48;2;216;51;9m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 50,
+          "xterm_256_hex": "#00FFD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/34_purview_governance_D83309_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/34_purview_governance_D83309_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/34_purview_governance_D83309_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/34_purview_governance_D83309_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/34_purview_governance_D83309_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/34_purview_governance_D83309_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/34_purview_governance_D83309_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/34_purview_governance_D83309_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/34_purview_governance_D83309_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/34_purview_governance_D83309.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 35,
+        "agent_id": "intune_endpoint",
+        "domain": "Microsoft Intune",
+        "persona": "Endpoint Manager",
+        "perspective": "Device compliance, app protection, endpoint fleet management",
+        "group": "security_governance_trust"
+      },
+      "color": {
+        "index": 35,
+        "zero_based_index": 34,
+        "token_id": "DSW64-35",
+        "slug": "competition_orange-to-lava-07",
+        "display_name": "Competition Orange → Lava 7/9",
+        "anchor": null,
+        "segment": {
+          "from": "competition_orange",
+          "to": "lava",
+          "step": 7,
+          "intervals": 9,
+          "t": 0.777778
+        },
+        "hex": "#D22C0A",
+        "rgb": {
+          "r": 210,
+          "g": 44,
+          "b": 10
+        },
+        "argb_hex": "#FFD22C0A",
+        "uint24": 13773834,
+        "hsl": {
+          "h": 10.2,
+          "s": 43.137,
+          "l": 90.909
+        },
+        "oklch": {
+          "l": 0.561351,
+          "c": 0.205081,
+          "h": 32.395
+        },
+        "contrast": {
+          "against_black": 4.105,
+          "against_frost_white": 4.894,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-35)",
+        "power_fx": "ColorValue(\"#D22C0A\")",
+        "dotnet": "Color.FromArgb(255, 210, 44, 10)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;210;44;10m",
+          "ansi_truecolor_background": "\u001b[48;2;210;44;10m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 50,
+          "xterm_256_hex": "#00FFD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/35_intune_endpoint_D22C0A_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/35_intune_endpoint_D22C0A_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/35_intune_endpoint_D22C0A_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/35_intune_endpoint_D22C0A_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/35_intune_endpoint_D22C0A_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/35_intune_endpoint_D22C0A_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/35_intune_endpoint_D22C0A_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/35_intune_endpoint_D22C0A_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/35_intune_endpoint_D22C0A_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/35_intune_endpoint_D22C0A.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 36,
+        "agent_id": "viva_employee_experience",
+        "domain": "Microsoft Viva",
+        "persona": "Employee Experience Expert",
+        "perspective": "Engagement, learning, insights, internal comms",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 36,
+        "zero_based_index": 35,
+        "token_id": "DSW64-36",
+        "slug": "competition_orange-to-lava-08",
+        "display_name": "Competition Orange → Lava 8/9",
+        "anchor": null,
+        "segment": {
+          "from": "competition_orange",
+          "to": "lava",
+          "step": 8,
+          "intervals": 9,
+          "t": 0.888889
+        },
+        "hex": "#CB230A",
+        "rgb": {
+          "r": 203,
+          "g": 35,
+          "b": 10
+        },
+        "argb_hex": "#FFCB230A",
+        "uint24": 13312778,
+        "hsl": {
+          "h": 7.772,
+          "s": 41.765,
+          "l": 90.61
+        },
+        "oklch": {
+          "l": 0.542355,
+          "c": 0.204227,
+          "h": 31.188
+        },
+        "contrast": {
+          "against_black": 3.784,
+          "against_frost_white": 5.309,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-36)",
+        "power_fx": "ColorValue(\"#CB230A\")",
+        "dotnet": "Color.FromArgb(255, 203, 35, 10)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;203;35;10m",
+          "ansi_truecolor_background": "\u001b[48;2;203;35;10m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 50,
+          "xterm_256_hex": "#00FFD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/36_viva_employee_experience_CB230A_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/36_viva_employee_experience_CB230A_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/36_viva_employee_experience_CB230A_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/36_viva_employee_experience_CB230A_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/36_viva_employee_experience_CB230A_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/36_viva_employee_experience_CB230A_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/36_viva_employee_experience_CB230A_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/36_viva_employee_experience_CB230A_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/36_viva_employee_experience_CB230A_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/36_viva_employee_experience_CB230A.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 37,
+        "agent_id": "loop_workflows",
+        "domain": "Microsoft Loop",
+        "persona": "Fluid Collaboration Expert",
+        "perspective": "Components, collaborative planning, shared workspaces",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 37,
+        "zero_based_index": 36,
+        "token_id": "DSW64-37",
+        "slug": "lava",
+        "display_name": "Lava",
+        "anchor": "lava",
+        "segment": {
+          "from": "competition_orange",
+          "to": "lava",
+          "step": 9,
+          "intervals": 9,
+          "t": 1.0
+        },
+        "hex": "#C51A0B",
+        "rgb": {
+          "r": 197,
+          "g": 26,
+          "b": 11
+        },
+        "argb_hex": "#FFC51A0B",
+        "uint24": 12917259,
+        "hsl": {
+          "h": 4.839,
+          "s": 40.784,
+          "l": 89.423
+        },
+        "oklch": {
+          "l": 0.526043,
+          "c": 0.203531,
+          "h": 30.031
+        },
+        "contrast": {
+          "against_black": 3.527,
+          "against_frost_white": 5.696,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-37)",
+        "power_fx": "ColorValue(\"#C51A0B\")",
+        "dotnet": "Color.FromArgb(255, 197, 26, 11)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;197;26;11m",
+          "ansi_truecolor_background": "\u001b[48;2;197;26;11m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 44,
+          "xterm_256_hex": "#00D7D7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/37_loop_workflows_C51A0B_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/37_loop_workflows_C51A0B_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/37_loop_workflows_C51A0B_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/37_loop_workflows_C51A0B_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/37_loop_workflows_C51A0B_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/37_loop_workflows_C51A0B_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/37_loop_workflows_C51A0B_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/37_loop_workflows_C51A0B_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/37_loop_workflows_C51A0B_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/37_loop_workflows_C51A0B.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 38,
+        "agent_id": "planner_coordination",
+        "domain": "Planner / To Do",
+        "persona": "Work Coordinator",
+        "perspective": "Task boards, priorities, ownership, execution cadence",
+        "group": "power_platform_and_apps"
+      },
+      "color": {
+        "index": 38,
+        "zero_based_index": 37,
+        "token_id": "DSW64-38",
+        "slug": "lava-to-banana_yellow-01",
+        "display_name": "Lava → Banana Yellow 1/9",
+        "anchor": null,
+        "segment": {
+          "from": "lava",
+          "to": "banana_yellow",
+          "step": 1,
+          "intervals": 9,
+          "t": 0.111111
+        },
+        "hex": "#CE3C10",
+        "rgb": {
+          "r": 206,
+          "g": 60,
+          "b": 16
+        },
+        "argb_hex": "#FFCE3C10",
+        "uint24": 13515792,
+        "hsl": {
+          "h": 13.895,
+          "s": 43.529,
+          "l": 85.586
+        },
+        "oklch": {
+          "l": 0.568545,
+          "c": 0.189323,
+          "h": 35.4
+        },
+        "contrast": {
+          "against_black": 4.278,
+          "against_frost_white": 4.696,
+          "recommended_chip_text": "#FFFFFF"
+        },
+        "css": "var(--darbot-swarm-38)",
+        "power_fx": "ColorValue(\"#CE3C10\")",
+        "dotnet": "Color.FromArgb(255, 206, 60, 16)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;206;60;16m",
+          "ansi_truecolor_background": "\u001b[48;2;206;60;16m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 50,
+          "xterm_256_hex": "#00FFD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/38_planner_coordination_CE3C10_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/38_planner_coordination_CE3C10_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/38_planner_coordination_CE3C10_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/38_planner_coordination_CE3C10_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/38_planner_coordination_CE3C10_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/38_planner_coordination_CE3C10_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/38_planner_coordination_CE3C10_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/38_planner_coordination_CE3C10_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/38_planner_coordination_CE3C10_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/38_planner_coordination_CE3C10.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 39,
+        "agent_id": "dynamics_customer",
+        "domain": "Dynamics 365",
+        "persona": "Customer Systems Expert",
+        "perspective": "CRM, ERP, customer journeys, operational processes",
+        "group": "platform_foundation"
+      },
+      "color": {
+        "index": 39,
+        "zero_based_index": 38,
+        "token_id": "DSW64-39",
+        "slug": "lava-to-banana_yellow-02",
+        "display_name": "Lava → Banana Yellow 2/9",
+        "anchor": null,
+        "segment": {
+          "from": "lava",
+          "to": "banana_yellow",
+          "step": 2,
+          "intervals": 9,
+          "t": 0.222222
+        },
+        "hex": "#D65514",
+        "rgb": {
+          "r": 214,
+          "g": 85,
+          "b": 20
+        },
+        "argb_hex": "#FFD65514",
+        "uint24": 14046484,
+        "hsl": {
+          "h": 20.103,
+          "s": 45.882,
+          "l": 82.906
+        },
+        "oklch": {
+          "l": 0.61107,
+          "c": 0.176237,
+          "h": 41.981
+        },
+        "contrast": {
+          "against_black": 5.169,
+          "against_frost_white": 3.887,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-39)",
+        "power_fx": "ColorValue(\"#D65514\")",
+        "dotnet": "Color.FromArgb(255, 214, 85, 20)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;214;85;20m",
+          "ansi_truecolor_background": "\u001b[48;2;214;85;20m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 26,
+          "xterm_256_hex": "#005FD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/39_dynamics_customer_D65514_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/39_dynamics_customer_D65514_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/39_dynamics_customer_D65514_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/39_dynamics_customer_D65514_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/39_dynamics_customer_D65514_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/39_dynamics_customer_D65514_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/39_dynamics_customer_D65514_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/39_dynamics_customer_D65514_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/39_dynamics_customer_D65514_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/39_dynamics_customer_D65514.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 40,
+        "agent_id": "finance_ops",
+        "domain": "Finance Operations",
+        "persona": "Finance Strategist",
+        "perspective": "Forecasting, controls, billing, reporting, investment decisions",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 40,
+        "zero_based_index": 39,
+        "token_id": "DSW64-40",
+        "slug": "lava-to-banana_yellow-03",
+        "display_name": "Lava → Banana Yellow 3/9",
+        "anchor": null,
+        "segment": {
+          "from": "lava",
+          "to": "banana_yellow",
+          "step": 3,
+          "intervals": 9,
+          "t": 0.333333
+        },
+        "hex": "#DE6B19",
+        "rgb": {
+          "r": 222,
+          "g": 107,
+          "b": 25
+        },
+        "argb_hex": "#FFDE6B19",
+        "uint24": 14576409,
+        "hsl": {
+          "h": 24.975,
+          "s": 48.431,
+          "l": 79.757
+        },
+        "oklch": {
+          "l": 0.654393,
+          "c": 0.166273,
+          "h": 49.209
+        },
+        "contrast": {
+          "against_black": 6.223,
+          "against_frost_white": 3.228,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-40)",
+        "power_fx": "ColorValue(\"#DE6B19\")",
+        "dotnet": "Color.FromArgb(255, 222, 107, 25)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;222;107;25m",
+          "ansi_truecolor_background": "\u001b[48;2;222;107;25m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 26,
+          "xterm_256_hex": "#005FD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/40_finance_ops_DE6B19_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/40_finance_ops_DE6B19_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/40_finance_ops_DE6B19_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/40_finance_ops_DE6B19_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/40_finance_ops_DE6B19_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/40_finance_ops_DE6B19_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/40_finance_ops_DE6B19_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/40_finance_ops_DE6B19_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/40_finance_ops_DE6B19_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/40_finance_ops_DE6B19.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 41,
+        "agent_id": "healthcare_clinical",
+        "domain": "Healthcare",
+        "persona": "Clinical AI Advisor",
+        "perspective": "Care workflows, clinical documentation, patient safety",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 41,
+        "zero_based_index": 40,
+        "token_id": "DSW64-41",
+        "slug": "lava-to-banana_yellow-04",
+        "display_name": "Lava → Banana Yellow 4/9",
+        "anchor": null,
+        "segment": {
+          "from": "lava",
+          "to": "banana_yellow",
+          "step": 4,
+          "intervals": 9,
+          "t": 0.444444
+        },
+        "hex": "#E57F1D",
+        "rgb": {
+          "r": 229,
+          "g": 127,
+          "b": 29
+        },
+        "argb_hex": "#FFE57F1D",
+        "uint24": 15040285,
+        "hsl": {
+          "h": 29.4,
+          "s": 50.588,
+          "l": 79.365
+        },
+        "oklch": {
+          "l": 0.695823,
+          "c": 0.159554,
+          "h": 57.04
+        },
+        "contrast": {
+          "against_black": 7.385,
+          "against_frost_white": 2.72,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-41)",
+        "power_fx": "ColorValue(\"#E57F1D\")",
+        "dotnet": "Color.FromArgb(255, 229, 127, 29)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;229;127;29m",
+          "ansi_truecolor_background": "\u001b[48;2;229;127;29m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 32,
+          "xterm_256_hex": "#0087D7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/41_healthcare_clinical_E57F1D_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/41_healthcare_clinical_E57F1D_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/41_healthcare_clinical_E57F1D_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/41_healthcare_clinical_E57F1D_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/41_healthcare_clinical_E57F1D_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/41_healthcare_clinical_E57F1D_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/41_healthcare_clinical_E57F1D_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/41_healthcare_clinical_E57F1D_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/41_healthcare_clinical_E57F1D_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/41_healthcare_clinical_E57F1D.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 42,
+        "agent_id": "retail_personalization",
+        "domain": "Retail",
+        "persona": "Personalization Expert",
+        "perspective": "Customer segmentation, offers, recommendations, operations",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 42,
+        "zero_based_index": 41,
+        "token_id": "DSW64-42",
+        "slug": "lava-to-banana_yellow-05",
+        "display_name": "Lava → Banana Yellow 5/9",
+        "anchor": null,
+        "segment": {
+          "from": "lava",
+          "to": "banana_yellow",
+          "step": 5,
+          "intervals": 9,
+          "t": 0.555556
+        },
+        "hex": "#EB9322",
+        "rgb": {
+          "r": 235,
+          "g": 147,
+          "b": 34
+        },
+        "argb_hex": "#FFEB9322",
+        "uint24": 15438626,
+        "hsl": {
+          "h": 33.731,
+          "s": 52.745,
+          "l": 83.402
+        },
+        "oklch": {
+          "l": 0.737769,
+          "c": 0.15528,
+          "h": 65.777
+        },
+        "contrast": {
+          "against_black": 8.729,
+          "against_frost_white": 2.301,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-42)",
+        "power_fx": "ColorValue(\"#EB9322\")",
+        "dotnet": "Color.FromArgb(255, 235, 147, 34)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;235;147;34m",
+          "ansi_truecolor_background": "\u001b[48;2;235;147;34m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 33,
+          "xterm_256_hex": "#0087FF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/42_retail_personalization_EB9322_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/42_retail_personalization_EB9322_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/42_retail_personalization_EB9322_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/42_retail_personalization_EB9322_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/42_retail_personalization_EB9322_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/42_retail_personalization_EB9322_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/42_retail_personalization_EB9322_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/42_retail_personalization_EB9322_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/42_retail_personalization_EB9322_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/42_retail_personalization_EB9322.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 43,
+        "agent_id": "manufacturing_iot",
+        "domain": "Manufacturing / IoT",
+        "persona": "Industrial IoT Expert",
+        "perspective": "Telemetry, digital twins, factories, predictive maintenance",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 43,
+        "zero_based_index": 42,
+        "token_id": "DSW64-43",
+        "slug": "lava-to-banana_yellow-06",
+        "display_name": "Lava → Banana Yellow 6/9",
+        "anchor": null,
+        "segment": {
+          "from": "lava",
+          "to": "banana_yellow",
+          "step": 6,
+          "intervals": 9,
+          "t": 0.666667
+        },
+        "hex": "#F1A727",
+        "rgb": {
+          "r": 241,
+          "g": 167,
+          "b": 39
+        },
+        "argb_hex": "#FFF1A727",
+        "uint24": 15836967,
+        "hsl": {
+          "h": 38.02,
+          "s": 54.902,
+          "l": 87.826
+        },
+        "oklch": {
+          "l": 0.781092,
+          "c": 0.155139,
+          "h": 74.746
+        },
+        "contrast": {
+          "against_black": 10.297,
+          "against_frost_white": 1.951,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-43)",
+        "power_fx": "ColorValue(\"#F1A727\")",
+        "dotnet": "Color.FromArgb(255, 241, 167, 39)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;241;167;39m",
+          "ansi_truecolor_background": "\u001b[48;2;241;167;39m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 39,
+          "xterm_256_hex": "#00AFFF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/43_manufacturing_iot_F1A727_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/43_manufacturing_iot_F1A727_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/43_manufacturing_iot_F1A727_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/43_manufacturing_iot_F1A727_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/43_manufacturing_iot_F1A727_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/43_manufacturing_iot_F1A727_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/43_manufacturing_iot_F1A727_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/43_manufacturing_iot_F1A727_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/43_manufacturing_iot_F1A727_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/43_manufacturing_iot_F1A727.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 44,
+        "agent_id": "sustainability_greenops",
+        "domain": "Sustainability",
+        "persona": "GreenOps Advisor",
+        "perspective": "Carbon, efficiency, power, circular systems, environmental impact",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 44,
+        "zero_based_index": 43,
+        "token_id": "DSW64-44",
+        "slug": "lava-to-banana_yellow-07",
+        "display_name": "Lava → Banana Yellow 7/9",
+        "anchor": null,
+        "segment": {
+          "from": "lava",
+          "to": "banana_yellow",
+          "step": 7,
+          "intervals": 9,
+          "t": 0.777778
+        },
+        "hex": "#F6BA2B",
+        "rgb": {
+          "r": 246,
+          "g": 186,
+          "b": 43
+        },
+        "argb_hex": "#FFF6BA2B",
+        "uint24": 16169515,
+        "hsl": {
+          "h": 42.266,
+          "s": 56.667,
+          "l": 91.855
+        },
+        "oklch": {
+          "l": 0.822378,
+          "c": 0.158801,
+          "h": 83.273
+        },
+        "contrast": {
+          "against_black": 11.977,
+          "against_frost_white": 1.677,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-44)",
+        "power_fx": "ColorValue(\"#F6BA2B\")",
+        "dotnet": "Color.FromArgb(255, 246, 186, 43)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;246;186;43m",
+          "ansi_truecolor_background": "\u001b[48;2;246;186;43m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 12,
+          "xterm_256_hex": "#0000FF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/44_sustainability_greenops_F6BA2B_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/44_sustainability_greenops_F6BA2B_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/44_sustainability_greenops_F6BA2B_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/44_sustainability_greenops_F6BA2B_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/44_sustainability_greenops_F6BA2B_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/44_sustainability_greenops_F6BA2B_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/44_sustainability_greenops_F6BA2B_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/44_sustainability_greenops_F6BA2B_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/44_sustainability_greenops_F6BA2B_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/44_sustainability_greenops_F6BA2B.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 45,
+        "agent_id": "privacy_trust",
+        "domain": "Privacy / Trust",
+        "persona": "Trust Architect",
+        "perspective": "Privacy engineering, safety, responsible AI, trust boundaries",
+        "group": "security_governance_trust"
+      },
+      "color": {
+        "index": 45,
+        "zero_based_index": 44,
+        "token_id": "DSW64-45",
+        "slug": "lava-to-banana_yellow-08",
+        "display_name": "Lava → Banana Yellow 8/9",
+        "anchor": null,
+        "segment": {
+          "from": "lava",
+          "to": "banana_yellow",
+          "step": 8,
+          "intervals": 9,
+          "t": 0.888889
+        },
+        "hex": "#FBCE30",
+        "rgb": {
+          "r": 251,
+          "g": 206,
+          "b": 48
+        },
+        "argb_hex": "#FFFBCE30",
+        "uint24": 16502320,
+        "hsl": {
+          "h": 46.7,
+          "s": 58.627,
+          "l": 96.209
+        },
+        "oklch": {
+          "l": 0.866376,
+          "c": 0.166031,
+          "h": 91.477
+        },
+        "contrast": {
+          "against_black": 13.973,
+          "against_frost_white": 1.438,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-45)",
+        "power_fx": "ColorValue(\"#FBCE30\")",
+        "dotnet": "Color.FromArgb(255, 251, 206, 48)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;251;206;48m",
+          "ansi_truecolor_background": "\u001b[48;2;251;206;48m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 12,
+          "xterm_256_hex": "#0000FF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/45_privacy_trust_FBCE30_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/45_privacy_trust_FBCE30_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/45_privacy_trust_FBCE30_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/45_privacy_trust_FBCE30_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/45_privacy_trust_FBCE30_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/45_privacy_trust_FBCE30_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/45_privacy_trust_FBCE30_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/45_privacy_trust_FBCE30_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/45_privacy_trust_FBCE30_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/45_privacy_trust_FBCE30.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 46,
+        "agent_id": "research_scientist",
+        "domain": "Research",
+        "persona": "Research Scientist",
+        "perspective": "Hypotheses, experiments, papers, evaluation methodology",
+        "group": "frontier_swarm_personas"
+      },
+      "color": {
+        "index": 46,
+        "zero_based_index": 45,
+        "token_id": "DSW64-46",
+        "slug": "banana_yellow",
+        "display_name": "Banana Yellow",
+        "anchor": "banana_yellow",
+        "segment": {
+          "from": "lava",
+          "to": "banana_yellow",
+          "step": 9,
+          "intervals": 9,
+          "t": 1.0
+        },
+        "hex": "#FFE135",
+        "rgb": {
+          "r": 255,
+          "g": 225,
+          "b": 53
+        },
+        "argb_hex": "#FFFFE135",
+        "uint24": 16769333,
+        "hsl": {
+          "h": 51.089,
+          "s": 60.392,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.908032,
+          "c": 0.175664,
+          "h": 98.539
+        },
+        "contrast": {
+          "against_black": 16.073,
+          "against_frost_white": 1.25,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-46)",
+        "power_fx": "ColorValue(\"#FFE135\")",
+        "dotnet": "Color.FromArgb(255, 255, 225, 53)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;225;53m",
+          "ansi_truecolor_background": "\u001b[48;2;255;225;53m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 235,
+          "xterm_256_hex": "#262626"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/46_research_scientist_FFE135_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/46_research_scientist_FFE135_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/46_research_scientist_FFE135_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/46_research_scientist_FFE135_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/46_research_scientist_FFE135_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/46_research_scientist_FFE135_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/46_research_scientist_FFE135_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/46_research_scientist_FFE135_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/46_research_scientist_FFE135_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/46_research_scientist_FFE135.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 47,
+        "agent_id": "principal_architect",
+        "domain": "Architecture",
+        "persona": "Principal Architect",
+        "perspective": "System design, trade-offs, roadmaps, executive-ready options",
+        "group": "frontier_swarm_personas"
+      },
+      "color": {
+        "index": 47,
+        "zero_based_index": 46,
+        "token_id": "DSW64-47",
+        "slug": "banana_yellow-to-candyapple_red-01",
+        "display_name": "Banana Yellow → Candyapple Red 1/9",
+        "anchor": null,
+        "segment": {
+          "from": "banana_yellow",
+          "to": "candyapple_red",
+          "step": 1,
+          "intervals": 9,
+          "t": 0.111111
+        },
+        "hex": "#FFD030",
+        "rgb": {
+          "r": 255,
+          "g": 208,
+          "b": 48
+        },
+        "argb_hex": "#FFFFD030",
+        "uint24": 16764976,
+        "hsl": {
+          "h": 46.377,
+          "s": 59.412,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.8742,
+          "c": 0.167763,
+          "h": 90.876
+        },
+        "contrast": {
+          "against_black": 14.317,
+          "against_frost_white": 1.403,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-47)",
+        "power_fx": "ColorValue(\"#FFD030\")",
+        "dotnet": "Color.FromArgb(255, 255, 208, 48)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;208;48m",
+          "ansi_truecolor_background": "\u001b[48;2;255;208;48m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 12,
+          "xterm_256_hex": "#0000FF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/47_principal_architect_FFD030_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/47_principal_architect_FFD030_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/47_principal_architect_FFD030_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/47_principal_architect_FFD030_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/47_principal_architect_FFD030_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/47_principal_architect_FFD030_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/47_principal_architect_FFD030_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/47_principal_architect_FFD030_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/47_principal_architect_FFD030_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/47_principal_architect_FFD030.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 48,
+        "agent_id": "executive_briefing",
+        "domain": "Executive Strategy",
+        "persona": "Executive Briefer",
+        "perspective": "Concise strategy, value framing, decision memos, stakeholder alignment",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 48,
+        "zero_based_index": 47,
+        "token_id": "DSW64-48",
+        "slug": "banana_yellow-to-candyapple_red-02",
+        "display_name": "Banana Yellow → Candyapple Red 2/9",
+        "anchor": null,
+        "segment": {
+          "from": "banana_yellow",
+          "to": "candyapple_red",
+          "step": 2,
+          "intervals": 9,
+          "t": 0.222222
+        },
+        "hex": "#FFBE2B",
+        "rgb": {
+          "r": 255,
+          "g": 190,
+          "b": 43
+        },
+        "argb_hex": "#FFFFBE2B",
+        "uint24": 16760363,
+        "hsl": {
+          "h": 41.604,
+          "s": 58.431,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.839463,
+          "c": 0.163187,
+          "h": 81.844
+        },
+        "contrast": {
+          "against_black": 12.652,
+          "against_frost_white": 1.588,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-48)",
+        "power_fx": "ColorValue(\"#FFBE2B\")",
+        "dotnet": "Color.FromArgb(255, 255, 190, 43)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;190;43m",
+          "ansi_truecolor_background": "\u001b[48;2;255;190;43m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 12,
+          "xterm_256_hex": "#0000FF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/48_executive_briefing_FFBE2B_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/48_executive_briefing_FFBE2B_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/48_executive_briefing_FFBE2B_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/48_executive_briefing_FFBE2B_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/48_executive_briefing_FFBE2B_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/48_executive_briefing_FFBE2B_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/48_executive_briefing_FFBE2B_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/48_executive_briefing_FFBE2B_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/48_executive_briefing_FFBE2B_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/48_executive_briefing_FFBE2B.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 49,
+        "agent_id": "agent_swarm_orchestrator",
+        "domain": "Agent Swarm",
+        "persona": "Swarm Orchestrator",
+        "perspective": "Multi-agent planning, handoffs, consensus, control planes",
+        "group": "frontier_swarm_personas"
+      },
+      "color": {
+        "index": 49,
+        "zero_based_index": 48,
+        "token_id": "DSW64-49",
+        "slug": "banana_yellow-to-candyapple_red-03",
+        "display_name": "Banana Yellow → Candyapple Red 3/9",
+        "anchor": null,
+        "segment": {
+          "from": "banana_yellow",
+          "to": "candyapple_red",
+          "step": 3,
+          "intervals": 9,
+          "t": 0.333333
+        },
+        "hex": "#FFAC25",
+        "rgb": {
+          "r": 255,
+          "g": 172,
+          "b": 37
+        },
+        "argb_hex": "#FFFFAC25",
+        "uint24": 16755749,
+        "hsl": {
+          "h": 37.156,
+          "s": 57.255,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.806057,
+          "c": 0.163614,
+          "h": 72.459
+        },
+        "contrast": {
+          "against_black": 11.18,
+          "against_frost_white": 1.797,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-49)",
+        "power_fx": "ColorValue(\"#FFAC25\")",
+        "dotnet": "Color.FromArgb(255, 255, 172, 37)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;172;37m",
+          "ansi_truecolor_background": "\u001b[48;2;255;172;37m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 254,
+          "xterm_256_hex": "#E4E4E4"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/49_agent_swarm_orchestrator_FFAC25_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/49_agent_swarm_orchestrator_FFAC25_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/49_agent_swarm_orchestrator_FFAC25_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/49_agent_swarm_orchestrator_FFAC25_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/49_agent_swarm_orchestrator_FFAC25_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/49_agent_swarm_orchestrator_FFAC25_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/49_agent_swarm_orchestrator_FFAC25_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/49_agent_swarm_orchestrator_FFAC25_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/49_agent_swarm_orchestrator_FFAC25_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/49_agent_swarm_orchestrator_FFAC25.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 50,
+        "agent_id": "red_team_adversary",
+        "domain": "Red Team",
+        "persona": "Adversarial Tester",
+        "perspective": "Threat modeling, jailbreaks, abuse testing, control validation",
+        "group": "security_governance_trust"
+      },
+      "color": {
+        "index": 50,
+        "zero_based_index": 49,
+        "token_id": "DSW64-50",
+        "slug": "banana_yellow-to-candyapple_red-04",
+        "display_name": "Banana Yellow → Candyapple Red 4/9",
+        "anchor": null,
+        "segment": {
+          "from": "banana_yellow",
+          "to": "candyapple_red",
+          "step": 4,
+          "intervals": 9,
+          "t": 0.444444
+        },
+        "hex": "#FF9A20",
+        "rgb": {
+          "r": 255,
+          "g": 154,
+          "b": 32
+        },
+        "argb_hex": "#FFFF9A20",
+        "uint24": 16751136,
+        "hsl": {
+          "h": 32.825,
+          "s": 56.275,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.774399,
+          "c": 0.168512,
+          "h": 63.225
+        },
+        "contrast": {
+          "against_black": 9.895,
+          "against_frost_white": 2.03,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-50)",
+        "power_fx": "ColorValue(\"#FF9A20\")",
+        "dotnet": "Color.FromArgb(255, 255, 154, 32)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;154;32m",
+          "ansi_truecolor_background": "\u001b[48;2;255;154;32m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 32,
+          "xterm_256_hex": "#0087D7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/50_red_team_adversary_FF9A20_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/50_red_team_adversary_FF9A20_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/50_red_team_adversary_FF9A20_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/50_red_team_adversary_FF9A20_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/50_red_team_adversary_FF9A20_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/50_red_team_adversary_FF9A20_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/50_red_team_adversary_FF9A20_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/50_red_team_adversary_FF9A20_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/50_red_team_adversary_FF9A20_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/50_red_team_adversary_FF9A20.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 51,
+        "agent_id": "compliance_auditor",
+        "domain": "Compliance",
+        "persona": "Compliance Auditor",
+        "perspective": "Policy mapping, evidence, controls, audit readiness",
+        "group": "security_governance_trust"
+      },
+      "color": {
+        "index": 51,
+        "zero_based_index": 50,
+        "token_id": "DSW64-51",
+        "slug": "banana_yellow-to-candyapple_red-05",
+        "display_name": "Banana Yellow → Candyapple Red 5/9",
+        "anchor": null,
+        "segment": {
+          "from": "banana_yellow",
+          "to": "candyapple_red",
+          "step": 5,
+          "intervals": 9,
+          "t": 0.555556
+        },
+        "hex": "#FF871A",
+        "rgb": {
+          "r": 255,
+          "g": 135,
+          "b": 26
+        },
+        "argb_hex": "#FFFF871A",
+        "uint24": 16746266,
+        "hsl": {
+          "h": 28.559,
+          "s": 55.098,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.743224,
+          "c": 0.178492,
+          "h": 54.477
+        },
+        "contrast": {
+          "against_black": 8.733,
+          "against_frost_white": 2.301,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-51)",
+        "power_fx": "ColorValue(\"#FF871A\")",
+        "dotnet": "Color.FromArgb(255, 255, 135, 26)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;135;26m",
+          "ansi_truecolor_background": "\u001b[48;2;255;135;26m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 32,
+          "xterm_256_hex": "#0087D7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/51_compliance_auditor_FF871A_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/51_compliance_auditor_FF871A_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/51_compliance_auditor_FF871A_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/51_compliance_auditor_FF871A_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/51_compliance_auditor_FF871A_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/51_compliance_auditor_FF871A_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/51_compliance_auditor_FF871A_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/51_compliance_auditor_FF871A_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/51_compliance_auditor_FF871A_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/51_compliance_auditor_FF871A.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 52,
+        "agent_id": "education_learning",
+        "domain": "Education",
+        "persona": "Learning Designer",
+        "perspective": "Curriculum, tutoring, assessment, learner support",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 52,
+        "zero_based_index": 51,
+        "token_id": "DSW64-52",
+        "slug": "banana_yellow-to-candyapple_red-06",
+        "display_name": "Banana Yellow → Candyapple Red 6/9",
+        "anchor": null,
+        "segment": {
+          "from": "banana_yellow",
+          "to": "candyapple_red",
+          "step": 6,
+          "intervals": 9,
+          "t": 0.666667
+        },
+        "hex": "#FF7214",
+        "rgb": {
+          "r": 255,
+          "g": 114,
+          "b": 20
+        },
+        "argb_hex": "#FFFF7214",
+        "uint24": 16740884,
+        "hsl": {
+          "h": 24.0,
+          "s": 53.922,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.712103,
+          "c": 0.193384,
+          "h": 46.369
+        },
+        "contrast": {
+          "against_black": 7.669,
+          "against_frost_white": 2.62,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-52)",
+        "power_fx": "ColorValue(\"#FF7214\")",
+        "dotnet": "Color.FromArgb(255, 255, 114, 20)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;114;20m",
+          "ansi_truecolor_background": "\u001b[48;2;255;114;20m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 26,
+          "xterm_256_hex": "#005FD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/52_education_learning_FF7214_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/52_education_learning_FF7214_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/52_education_learning_FF7214_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/52_education_learning_FF7214_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/52_education_learning_FF7214_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/52_education_learning_FF7214_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/52_education_learning_FF7214_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/52_education_learning_FF7214_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/52_education_learning_FF7214_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/52_education_learning_FF7214.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 53,
+        "agent_id": "legal_contracts",
+        "domain": "Legal",
+        "persona": "Contracts Expert",
+        "perspective": "Clause analysis, negotiation, legal operations, risk review",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 53,
+        "zero_based_index": 52,
+        "token_id": "DSW64-53",
+        "slug": "banana_yellow-to-candyapple_red-07",
+        "display_name": "Banana Yellow → Candyapple Red 7/9",
+        "anchor": null,
+        "segment": {
+          "from": "banana_yellow",
+          "to": "candyapple_red",
+          "step": 7,
+          "intervals": 9,
+          "t": 0.777778
+        },
+        "hex": "#FF5B0E",
+        "rgb": {
+          "r": 255,
+          "g": 91,
+          "b": 14
+        },
+        "argb_hex": "#FFFF5B0E",
+        "uint24": 16734990,
+        "hsl": {
+          "h": 19.17,
+          "s": 52.745,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.682852,
+          "c": 0.211849,
+          "h": 39.56
+        },
+        "contrast": {
+          "against_black": 6.755,
+          "against_frost_white": 2.974,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-53)",
+        "power_fx": "ColorValue(\"#FF5B0E\")",
+        "dotnet": "Color.FromArgb(255, 255, 91, 14)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;91;14m",
+          "ansi_truecolor_background": "\u001b[48;2;255;91;14m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/53_legal_contracts_FF5B0E_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/53_legal_contracts_FF5B0E_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/53_legal_contracts_FF5B0E_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/53_legal_contracts_FF5B0E_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/53_legal_contracts_FF5B0E_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/53_legal_contracts_FF5B0E_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/53_legal_contracts_FF5B0E_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/53_legal_contracts_FF5B0E_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/53_legal_contracts_FF5B0E_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/53_legal_contracts_FF5B0E.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 54,
+        "agent_id": "marketing_growth",
+        "domain": "Marketing",
+        "persona": "Growth Strategist",
+        "perspective": "Campaigns, positioning, audience, messaging, measurement",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 54,
+        "zero_based_index": 53,
+        "token_id": "DSW64-54",
+        "slug": "banana_yellow-to-candyapple_red-08",
+        "display_name": "Banana Yellow → Candyapple Red 8/9",
+        "anchor": null,
+        "segment": {
+          "from": "banana_yellow",
+          "to": "candyapple_red",
+          "step": 8,
+          "intervals": 9,
+          "t": 0.888889
+        },
+        "hex": "#FF3F06",
+        "rgb": {
+          "r": 255,
+          "g": 63,
+          "b": 6
+        },
+        "argb_hex": "#FFFF3F06",
+        "uint24": 16727814,
+        "hsl": {
+          "h": 13.735,
+          "s": 51.176,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.655256,
+          "c": 0.23316,
+          "h": 34.032
+        },
+        "contrast": {
+          "against_black": 5.966,
+          "against_frost_white": 3.368,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-54)",
+        "power_fx": "ColorValue(\"#FF3F06\")",
+        "dotnet": "Color.FromArgb(255, 255, 63, 6)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;63;6m",
+          "ansi_truecolor_background": "\u001b[48;2;255;63;6m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 50,
+          "xterm_256_hex": "#00FFD7"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/54_marketing_growth_FF3F06_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/54_marketing_growth_FF3F06_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/54_marketing_growth_FF3F06_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/54_marketing_growth_FF3F06_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/54_marketing_growth_FF3F06_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/54_marketing_growth_FF3F06_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/54_marketing_growth_FF3F06_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/54_marketing_growth_FF3F06_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/54_marketing_growth_FF3F06_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/54_marketing_growth_FF3F06.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 55,
+        "agent_id": "sales_enablement",
+        "domain": "Sales",
+        "persona": "Sales Enablement Expert",
+        "perspective": "Account planning, objections, demos, value narratives",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 55,
+        "zero_based_index": 54,
+        "token_id": "DSW64-55",
+        "slug": "candyapple_red",
+        "display_name": "Candyapple Red",
+        "anchor": "candyapple_red",
+        "segment": {
+          "from": "banana_yellow",
+          "to": "candyapple_red",
+          "step": 9,
+          "intervals": 9,
+          "t": 1.0
+        },
+        "hex": "#FF0800",
+        "rgb": {
+          "r": 255,
+          "g": 8,
+          "b": 0
+        },
+        "argb_hex": "#FFFF0800",
+        "uint24": 16713728,
+        "hsl": {
+          "h": 1.882,
+          "s": 50.0,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.629342,
+          "c": 0.256359,
+          "h": 29.477
+        },
+        "contrast": {
+          "against_black": 5.287,
+          "against_frost_white": 3.8,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-55)",
+        "power_fx": "ColorValue(\"#FF0800\")",
+        "dotnet": "Color.FromArgb(255, 255, 8, 0)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;8;0m",
+          "ansi_truecolor_background": "\u001b[48;2;255;8;0m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 7,
+          "xterm_256_hex": "#C0C0C0"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/55_sales_enablement_FF0800_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/55_sales_enablement_FF0800_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/55_sales_enablement_FF0800_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/55_sales_enablement_FF0800_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/55_sales_enablement_FF0800_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/55_sales_enablement_FF0800_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/55_sales_enablement_FF0800_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/55_sales_enablement_FF0800_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/55_sales_enablement_FF0800_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/55_sales_enablement_FF0800.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 56,
+        "agent_id": "support_triage",
+        "domain": "Support",
+        "persona": "Triage Specialist",
+        "perspective": "Case routing, symptoms, knowledge retrieval, resolution paths",
+        "group": "business_industry_experts"
+      },
+      "color": {
+        "index": 56,
+        "zero_based_index": 55,
+        "token_id": "DSW64-56",
+        "slug": "candyapple_red-to-frost_white-01",
+        "display_name": "Candyapple Red → Frost White 1/9",
+        "anchor": null,
+        "segment": {
+          "from": "candyapple_red",
+          "to": "frost_white",
+          "step": 1,
+          "intervals": 9,
+          "t": 0.111111
+        },
+        "hex": "#FF4535",
+        "rgb": {
+          "r": 255,
+          "g": 69,
+          "b": 53
+        },
+        "argb_hex": "#FFFF4535",
+        "uint24": 16729397,
+        "hsl": {
+          "h": 4.752,
+          "s": 60.392,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.662812,
+          "c": 0.22428,
+          "h": 29.359
+        },
+        "contrast": {
+          "against_black": 6.155,
+          "against_frost_white": 3.264,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-56)",
+        "power_fx": "ColorValue(\"#FF4535\")",
+        "dotnet": "Color.FromArgb(255, 255, 69, 53)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;69;53m",
+          "ansi_truecolor_background": "\u001b[48;2;255;69;53m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 14,
+          "xterm_256_hex": "#00FFFF"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/56_support_triage_FF4535_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/56_support_triage_FF4535_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/56_support_triage_FF4535_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/56_support_triage_FF4535_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/56_support_triage_FF4535_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/56_support_triage_FF4535_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/56_support_triage_FF4535_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/56_support_triage_FF4535_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/56_support_triage_FF4535_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/56_support_triage_FF4535.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 57,
+        "agent_id": "observability_sre",
+        "domain": "Observability / SRE",
+        "persona": "Reliability Engineer",
+        "perspective": "Telemetry, incidents, SLOs, RCA, production operations",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 57,
+        "zero_based_index": 56,
+        "token_id": "DSW64-57",
+        "slug": "candyapple_red-to-frost_white-02",
+        "display_name": "Candyapple Red → Frost White 2/9",
+        "anchor": null,
+        "segment": {
+          "from": "candyapple_red",
+          "to": "frost_white",
+          "step": 2,
+          "intervals": 9,
+          "t": 0.222222
+        },
+        "hex": "#FF6553",
+        "rgb": {
+          "r": 255,
+          "g": 101,
+          "b": 83
+        },
+        "argb_hex": "#FFFF6553",
+        "uint24": 16737619,
+        "hsl": {
+          "h": 6.279,
+          "s": 66.275,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.700204,
+          "c": 0.191189,
+          "h": 29.409
+        },
+        "contrast": {
+          "against_black": 7.238,
+          "against_frost_white": 2.775,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-57)",
+        "power_fx": "ColorValue(\"#FF6553\")",
+        "dotnet": "Color.FromArgb(255, 255, 101, 83)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;101;83m",
+          "ansi_truecolor_background": "\u001b[48;2;255;101;83m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/57_observability_sre_FF6553_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/57_observability_sre_FF6553_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/57_observability_sre_FF6553_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/57_observability_sre_FF6553_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/57_observability_sre_FF6553_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/57_observability_sre_FF6553_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/57_observability_sre_FF6553_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/57_observability_sre_FF6553_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/57_observability_sre_FF6553_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/57_observability_sre_FF6553.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 58,
+        "agent_id": "storage_scale",
+        "domain": "Storage at Scale",
+        "persona": "Storage Architect",
+        "perspective": "Capacity, throughput, durability, cost, power-aware infrastructure",
+        "group": "frontier_swarm_personas"
+      },
+      "color": {
+        "index": 58,
+        "zero_based_index": 57,
+        "token_id": "DSW64-58",
+        "slug": "candyapple_red-to-frost_white-03",
+        "display_name": "Candyapple Red → Frost White 3/9",
+        "anchor": null,
+        "segment": {
+          "from": "candyapple_red",
+          "to": "frost_white",
+          "step": 3,
+          "intervals": 9,
+          "t": 0.333333
+        },
+        "hex": "#FF7E6D",
+        "rgb": {
+          "r": 255,
+          "g": 126,
+          "b": 109
+        },
+        "argb_hex": "#FFFF7E6D",
+        "uint24": 16744045,
+        "hsl": {
+          "h": 6.986,
+          "s": 71.373,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.737904,
+          "c": 0.160383,
+          "h": 29.18
+        },
+        "contrast": {
+          "against_black": 8.457,
+          "against_frost_white": 2.375,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-58)",
+        "power_fx": "ColorValue(\"#FF7E6D\")",
+        "dotnet": "Color.FromArgb(255, 255, 126, 109)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;126;109m",
+          "ansi_truecolor_background": "\u001b[48;2;255;126;109m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/58_storage_scale_FF7E6D_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/58_storage_scale_FF7E6D_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/58_storage_scale_FF7E6D_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/58_storage_scale_FF7E6D_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/58_storage_scale_FF7E6D_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/58_storage_scale_FF7E6D_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/58_storage_scale_FF7E6D_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/58_storage_scale_FF7E6D_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/58_storage_scale_FF7E6D_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/58_storage_scale_FF7E6D.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 59,
+        "agent_id": "network_edge",
+        "domain": "Networking / Edge",
+        "persona": "Network Architect",
+        "perspective": "Traffic flow, gateways, latency, peering, edge topology",
+        "group": "cloud_ai_data_dev"
+      },
+      "color": {
+        "index": 59,
+        "zero_based_index": 58,
+        "token_id": "DSW64-59",
+        "slug": "candyapple_red-to-frost_white-04",
+        "display_name": "Candyapple Red → Frost White 4/9",
+        "anchor": null,
+        "segment": {
+          "from": "candyapple_red",
+          "to": "frost_white",
+          "step": 4,
+          "intervals": 9,
+          "t": 0.444444
+        },
+        "hex": "#FF9586",
+        "rgb": {
+          "r": 255,
+          "g": 149,
+          "b": 134
+        },
+        "argb_hex": "#FFFF9586",
+        "uint24": 16749958,
+        "hsl": {
+          "h": 7.438,
+          "s": 76.275,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.777857,
+          "c": 0.130322,
+          "h": 28.93
+        },
+        "contrast": {
+          "against_black": 9.895,
+          "against_frost_white": 2.03,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-59)",
+        "power_fx": "ColorValue(\"#FF9586\")",
+        "dotnet": "Color.FromArgb(255, 255, 149, 134)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;149;134m",
+          "ansi_truecolor_background": "\u001b[48;2;255;149;134m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/59_network_edge_FF9586_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/59_network_edge_FF9586_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/59_network_edge_FF9586_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/59_network_edge_FF9586_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/59_network_edge_FF9586_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/59_network_edge_FF9586_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/59_network_edge_FF9586_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/59_network_edge_FF9586_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/59_network_edge_FF9586_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/59_network_edge_FF9586.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 60,
+        "agent_id": "robotics_embodied",
+        "domain": "Robotics",
+        "persona": "Embodied Systems Expert",
+        "perspective": "Sensors, autonomy, production systems, human-robot workflows",
+        "group": "frontier_swarm_personas"
+      },
+      "color": {
+        "index": 60,
+        "zero_based_index": 59,
+        "token_id": "DSW64-60",
+        "slug": "candyapple_red-to-frost_white-05",
+        "display_name": "Candyapple Red → Frost White 5/9",
+        "anchor": null,
+        "segment": {
+          "from": "candyapple_red",
+          "to": "frost_white",
+          "step": 5,
+          "intervals": 9,
+          "t": 0.555556
+        },
+        "hex": "#FFAB9E",
+        "rgb": {
+          "r": 255,
+          "g": 171,
+          "b": 158
+        },
+        "argb_hex": "#FFFFAB9E",
+        "uint24": 16755614,
+        "hsl": {
+          "h": 8.041,
+          "s": 80.98,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.819653,
+          "c": 0.101489,
+          "h": 29.111
+        },
+        "contrast": {
+          "against_black": 11.571,
+          "against_frost_white": 1.736,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-60)",
+        "power_fx": "ColorValue(\"#FFAB9E\")",
+        "dotnet": "Color.FromArgb(255, 255, 171, 158)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;171;158m",
+          "ansi_truecolor_background": "\u001b[48;2;255;171;158m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 238,
+          "xterm_256_hex": "#444444"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/60_robotics_embodied_FFAB9E_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/60_robotics_embodied_FFAB9E_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/60_robotics_embodied_FFAB9E_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/60_robotics_embodied_FFAB9E_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/60_robotics_embodied_FFAB9E_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/60_robotics_embodied_FFAB9E_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/60_robotics_embodied_FFAB9E_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/60_robotics_embodied_FFAB9E_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/60_robotics_embodied_FFAB9E_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/60_robotics_embodied_FFAB9E.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 61,
+        "agent_id": "quantum_experiment",
+        "domain": "Quantum / Advanced Research",
+        "persona": "Quantum Experimenter",
+        "perspective": "Novel algorithms, experimental design, uncertainty, frontier systems",
+        "group": "frontier_swarm_personas"
+      },
+      "color": {
+        "index": 61,
+        "zero_based_index": 60,
+        "token_id": "DSW64-61",
+        "slug": "candyapple_red-to-frost_white-06",
+        "display_name": "Candyapple Red → Frost White 6/9",
+        "anchor": null,
+        "segment": {
+          "from": "candyapple_red",
+          "to": "frost_white",
+          "step": 6,
+          "intervals": 9,
+          "t": 0.666667
+        },
+        "hex": "#FFBFB6",
+        "rgb": {
+          "r": 255,
+          "g": 191,
+          "b": 182
+        },
+        "argb_hex": "#FFFFBFB6",
+        "uint24": 16760758,
+        "hsl": {
+          "h": 7.397,
+          "s": 85.686,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.860503,
+          "c": 0.075338,
+          "h": 27.808
+        },
+        "contrast": {
+          "against_black": 13.38,
+          "against_frost_white": 1.501,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-61)",
+        "power_fx": "ColorValue(\"#FFBFB6\")",
+        "dotnet": "Color.FromArgb(255, 255, 191, 182)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;191;182m",
+          "ansi_truecolor_background": "\u001b[48;2;255;191;182m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 0,
+          "xterm_256_hex": "#000000"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/61_quantum_experiment_FFBFB6_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/61_quantum_experiment_FFBFB6_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/61_quantum_experiment_FFBFB6_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/61_quantum_experiment_FFBFB6_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/61_quantum_experiment_FFBFB6_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/61_quantum_experiment_FFBFB6_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/61_quantum_experiment_FFBFB6_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/61_quantum_experiment_FFBFB6_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/61_quantum_experiment_FFBFB6_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/61_quantum_experiment_FFBFB6.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 62,
+        "agent_id": "blockchain_decentralized",
+        "domain": "Decentralized Systems",
+        "persona": "Crypto / Web3 Architect",
+        "perspective": "Consensus, storage proofs, decentralized identity, resilient networks",
+        "group": "frontier_swarm_personas"
+      },
+      "color": {
+        "index": 62,
+        "zero_based_index": 61,
+        "token_id": "DSW64-62",
+        "slug": "candyapple_red-to-frost_white-07",
+        "display_name": "Candyapple Red → Frost White 7/9",
+        "anchor": null,
+        "segment": {
+          "from": "candyapple_red",
+          "to": "frost_white",
+          "step": 7,
+          "intervals": 9,
+          "t": 0.777778
+        },
+        "hex": "#FFD4CE",
+        "rgb": {
+          "r": 255,
+          "g": 212,
+          "b": 206
+        },
+        "argb_hex": "#FFFFD4CE",
+        "uint24": 16766158,
+        "hsl": {
+          "h": 7.347,
+          "s": 90.392,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.904968,
+          "c": 0.049247,
+          "h": 27.383
+        },
+        "contrast": {
+          "against_black": 15.561,
+          "against_frost_white": 1.291,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-62)",
+        "power_fx": "ColorValue(\"#FFD4CE\")",
+        "dotnet": "Color.FromArgb(255, 255, 212, 206)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;255;212;206m",
+          "ansi_truecolor_background": "\u001b[48;2;255;212;206m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 233,
+          "xterm_256_hex": "#121212"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/62_blockchain_decentralized_FFD4CE_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/62_blockchain_decentralized_FFD4CE_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/62_blockchain_decentralized_FFD4CE_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/62_blockchain_decentralized_FFD4CE_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/62_blockchain_decentralized_FFD4CE_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/62_blockchain_decentralized_FFD4CE_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/62_blockchain_decentralized_FFD4CE_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/62_blockchain_decentralized_FFD4CE_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/62_blockchain_decentralized_FFD4CE_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/62_blockchain_decentralized_FFD4CE.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 63,
+        "agent_id": "prompt_engineer",
+        "domain": "Prompt Engineering",
+        "persona": "Prompt Systems Expert",
+        "perspective": "Instructions, evals, tool behavior, prompt architecture",
+        "group": "frontier_swarm_personas"
+      },
+      "color": {
+        "index": 63,
+        "zero_based_index": 62,
+        "token_id": "DSW64-63",
+        "slug": "candyapple_red-to-frost_white-08",
+        "display_name": "Candyapple Red → Frost White 8/9",
+        "anchor": null,
+        "segment": {
+          "from": "candyapple_red",
+          "to": "frost_white",
+          "step": 8,
+          "intervals": 9,
+          "t": 0.888889
+        },
+        "hex": "#FBE7E7",
+        "rgb": {
+          "r": 251,
+          "g": 231,
+          "b": 231
+        },
+        "argb_hex": "#FFFBE7E7",
+        "uint24": 16508903,
+        "hsl": {
+          "h": 0.0,
+          "s": 94.51,
+          "l": 71.429
+        },
+        "oklch": {
+          "l": 0.943982,
+          "c": 0.02188,
+          "h": 17.547
+        },
+        "contrast": {
+          "against_black": 17.686,
+          "against_frost_white": 1.136,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-63)",
+        "power_fx": "ColorValue(\"#FBE7E7\")",
+        "dotnet": "Color.FromArgb(255, 251, 231, 231)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;251;231;231m",
+          "ansi_truecolor_background": "\u001b[48;2;251;231;231m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 236,
+          "xterm_256_hex": "#303030"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/63_prompt_engineer_FBE7E7_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/63_prompt_engineer_FBE7E7_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/63_prompt_engineer_FBE7E7_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/63_prompt_engineer_FBE7E7_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/63_prompt_engineer_FBE7E7_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/63_prompt_engineer_FBE7E7_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/63_prompt_engineer_FBE7E7_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/63_prompt_engineer_FBE7E7_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/63_prompt_engineer_FBE7E7_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/63_prompt_engineer_FBE7E7.svg"
+      }
+    },
+    {
+      "agent": {
+        "index": 64,
+        "agent_id": "graphite_reviewer",
+        "domain": "Neutral Review",
+        "persona": "Sober Second-Opinion Reviewer",
+        "perspective": "Clarity, critique, risk surfacing, quality gates",
+        "group": "security_governance_trust"
+      },
+      "color": {
+        "index": 64,
+        "zero_based_index": 63,
+        "token_id": "DSW64-64",
+        "slug": "frost_white",
+        "display_name": "Frost White",
+        "anchor": "frost_white",
+        "segment": {
+          "from": "candyapple_red",
+          "to": "frost_white",
+          "step": 9,
+          "intervals": 9,
+          "t": 1.0
+        },
+        "hex": "#F4FBFF",
+        "rgb": {
+          "r": 244,
+          "g": 251,
+          "b": 255
+        },
+        "argb_hex": "#FFF4FBFF",
+        "uint24": 16055295,
+        "hsl": {
+          "h": 201.818,
+          "s": 97.843,
+          "l": 100.0
+        },
+        "oklch": {
+          "l": 0.983977,
+          "c": 0.009155,
+          "h": 232.361
+        },
+        "contrast": {
+          "against_black": 20.089,
+          "against_frost_white": 1.0,
+          "recommended_chip_text": "#000000"
+        },
+        "css": "var(--darbot-swarm-64)",
+        "power_fx": "ColorValue(\"#F4FBFF\")",
+        "dotnet": "Color.FromArgb(255, 244, 251, 255)",
+        "terminal": {
+          "unicode_swatch": "■",
+          "unicode_codepoint": "U+25A0",
+          "ansi_truecolor_foreground": "\u001b[38;2;244;251;255m",
+          "ansi_truecolor_background": "\u001b[48;2;244;251;255m",
+          "ansi_reset": "\u001b[0m",
+          "xterm_256_index": 237,
+          "xterm_256_hex": "#3A3A3A"
+        }
+      },
+      "assets": {
+        "token_png_2048_transparent": "tokens/png_2048_transparent/64_graphite_reviewer_F4FBFF_2048_transparent.png",
+        "token_png_1024_transparent": "tokens/png_1024_transparent/64_graphite_reviewer_F4FBFF_1024_transparent.png",
+        "token_png_512_transparent": "tokens/png_512_transparent/64_graphite_reviewer_F4FBFF_512_transparent.png",
+        "token_png_256_transparent": "tokens/png_256_transparent/64_graphite_reviewer_F4FBFF_256_transparent.png",
+        "token_png_1024_dark": "tokens/png_1024_dark/64_graphite_reviewer_F4FBFF_1024_dark.png",
+        "agent_png_2048_dark": "agents/png_2048_dark/64_graphite_reviewer_F4FBFF_2048_dark.png",
+        "agent_png_1024_dark": "agents/png_1024_dark/64_graphite_reviewer_F4FBFF_1024_dark.png",
+        "agent_png_1024_transparent": "agents/png_1024_transparent/64_graphite_reviewer_F4FBFF_1024_transparent.png",
+        "agent_png_512_dark": "agents/png_512_dark/64_graphite_reviewer_F4FBFF_512_dark.png",
+        "token_svg_exact_raster_mask": "tokens/svg_exact_raster_mask/64_graphite_reviewer_F4FBFF.svg"
+      }
+    }
+  ],
+  "indexes": {
+    "agent_id_to_color_token": {
+      "azure_architect": "DSW64-01",
+      "entra_identity": "DSW64-02",
+      "teams_collaboration": "DSW64-03",
+      "power_platform_maker": "DSW64-04",
+      "power_apps_creator": "DSW64-05",
+      "power_automate_orchestrator": "DSW64-06",
+      "power_bi_analyst": "DSW64-07",
+      "power_pages_portal": "DSW64-08",
+      "m365_strategist": "DSW64-09",
+      "copilot_studio_agent_builder": "DSW64-10",
+      "powerpoint_storyteller": "DSW64-11",
+      "excel_modeler": "DSW64-12",
+      "word_writer": "DSW64-13",
+      "outlook_communicator": "DSW64-14",
+      "sharepoint_knowledge": "DSW64-15",
+      "onedrive_sync": "DSW64-16",
+      "edge_browser": "DSW64-17",
+      "windows_os": "DSW64-18",
+      "dataverse_modeler": "DSW64-19",
+      "fabric_data_engineer": "DSW64-20",
+      "azure_ai_foundry": "DSW64-21",
+      "apim_integration": "DSW64-22",
+      "designer_creator": "DSW64-23",
+      "github_engineer": "DSW64-24",
+      "vscode_developer": "DSW64-25",
+      "devops_release": "DSW64-26",
+      "aks_platform": "DSW64-27",
+      "functions_serverless": "DSW64-28",
+      "cosmosdb_global": "DSW64-29",
+      "sql_database": "DSW64-30",
+      "graph_connector": "DSW64-31",
+      "defender_security": "DSW64-32",
+      "sentinel_soc": "DSW64-33",
+      "purview_governance": "DSW64-34",
+      "intune_endpoint": "DSW64-35",
+      "viva_employee_experience": "DSW64-36",
+      "loop_workflows": "DSW64-37",
+      "planner_coordination": "DSW64-38",
+      "dynamics_customer": "DSW64-39",
+      "finance_ops": "DSW64-40",
+      "healthcare_clinical": "DSW64-41",
+      "retail_personalization": "DSW64-42",
+      "manufacturing_iot": "DSW64-43",
+      "sustainability_greenops": "DSW64-44",
+      "privacy_trust": "DSW64-45",
+      "research_scientist": "DSW64-46",
+      "principal_architect": "DSW64-47",
+      "executive_briefing": "DSW64-48",
+      "agent_swarm_orchestrator": "DSW64-49",
+      "red_team_adversary": "DSW64-50",
+      "compliance_auditor": "DSW64-51",
+      "education_learning": "DSW64-52",
+      "legal_contracts": "DSW64-53",
+      "marketing_growth": "DSW64-54",
+      "sales_enablement": "DSW64-55",
+      "support_triage": "DSW64-56",
+      "observability_sre": "DSW64-57",
+      "storage_scale": "DSW64-58",
+      "network_edge": "DSW64-59",
+      "robotics_embodied": "DSW64-60",
+      "quantum_experiment": "DSW64-61",
+      "blockchain_decentralized": "DSW64-62",
+      "prompt_engineer": "DSW64-63",
+      "graphite_reviewer": "DSW64-64"
+    },
+    "color_token_to_agent_id": {
+      "DSW64-01": "azure_architect",
+      "DSW64-02": "entra_identity",
+      "DSW64-03": "teams_collaboration",
+      "DSW64-04": "power_platform_maker",
+      "DSW64-05": "power_apps_creator",
+      "DSW64-06": "power_automate_orchestrator",
+      "DSW64-07": "power_bi_analyst",
+      "DSW64-08": "power_pages_portal",
+      "DSW64-09": "m365_strategist",
+      "DSW64-10": "copilot_studio_agent_builder",
+      "DSW64-11": "powerpoint_storyteller",
+      "DSW64-12": "excel_modeler",
+      "DSW64-13": "word_writer",
+      "DSW64-14": "outlook_communicator",
+      "DSW64-15": "sharepoint_knowledge",
+      "DSW64-16": "onedrive_sync",
+      "DSW64-17": "edge_browser",
+      "DSW64-18": "windows_os",
+      "DSW64-19": "dataverse_modeler",
+      "DSW64-20": "fabric_data_engineer",
+      "DSW64-21": "azure_ai_foundry",
+      "DSW64-22": "apim_integration",
+      "DSW64-23": "designer_creator",
+      "DSW64-24": "github_engineer",
+      "DSW64-25": "vscode_developer",
+      "DSW64-26": "devops_release",
+      "DSW64-27": "aks_platform",
+      "DSW64-28": "functions_serverless",
+      "DSW64-29": "cosmosdb_global",
+      "DSW64-30": "sql_database",
+      "DSW64-31": "graph_connector",
+      "DSW64-32": "defender_security",
+      "DSW64-33": "sentinel_soc",
+      "DSW64-34": "purview_governance",
+      "DSW64-35": "intune_endpoint",
+      "DSW64-36": "viva_employee_experience",
+      "DSW64-37": "loop_workflows",
+      "DSW64-38": "planner_coordination",
+      "DSW64-39": "dynamics_customer",
+      "DSW64-40": "finance_ops",
+      "DSW64-41": "healthcare_clinical",
+      "DSW64-42": "retail_personalization",
+      "DSW64-43": "manufacturing_iot",
+      "DSW64-44": "sustainability_greenops",
+      "DSW64-45": "privacy_trust",
+      "DSW64-46": "research_scientist",
+      "DSW64-47": "principal_architect",
+      "DSW64-48": "executive_briefing",
+      "DSW64-49": "agent_swarm_orchestrator",
+      "DSW64-50": "red_team_adversary",
+      "DSW64-51": "compliance_auditor",
+      "DSW64-52": "education_learning",
+      "DSW64-53": "legal_contracts",
+      "DSW64-54": "marketing_growth",
+      "DSW64-55": "sales_enablement",
+      "DSW64-56": "support_triage",
+      "DSW64-57": "observability_sre",
+      "DSW64-58": "storage_scale",
+      "DSW64-59": "network_edge",
+      "DSW64-60": "robotics_embodied",
+      "DSW64-61": "quantum_experiment",
+      "DSW64-62": "blockchain_decentralized",
+      "DSW64-63": "prompt_engineer",
+      "DSW64-64": "graphite_reviewer"
+    },
+    "hex_to_agent_id": {
+      "#00CFFF": "azure_architect",
+      "#00C0F6": "entra_identity",
+      "#00B0ED": "teams_collaboration",
+      "#00A1E3": "power_platform_maker",
+      "#0092DA": "power_apps_creator",
+      "#0083D1": "power_automate_orchestrator",
+      "#0074C7": "power_bi_analyst",
+      "#0066BE": "power_pages_portal",
+      "#0056B5": "m365_strategist",
+      "#0047AB": "copilot_studio_agent_builder",
+      "#394AB0": "powerpoint_storyteller",
+      "#574BB4": "excel_modeler",
+      "#714CB9": "word_writer",
+      "#894ABE": "outlook_communicator",
+      "#A147C2": "sharepoint_knowledge",
+      "#B942C7": "onedrive_sync",
+      "#D039CB": "edge_browser",
+      "#E72AD0": "windows_os",
+      "#FF00D4": "dataverse_modeler",
+      "#FE24C4": "fabric_data_engineer",
+      "#FE34B4": "azure_ai_foundry",
+      "#FE3EA3": "apim_integration",
+      "#FE4692": "designer_creator",
+      "#FE4C80": "github_engineer",
+      "#FE516D": "vscode_developer",
+      "#FE5557": "devops_release",
+      "#FF583C": "aks_platform",
+      "#FF5A00": "functions_serverless",
+      "#F85402": "cosmosdb_global",
+      "#F24E04": "sql_database",
+      "#EC4705": "graph_connector",
+      "#E54107": "defender_security",
+      "#DF3A08": "sentinel_soc",
+      "#D83309": "purview_governance",
+      "#D22C0A": "intune_endpoint",
+      "#CB230A": "viva_employee_experience",
+      "#C51A0B": "loop_workflows",
+      "#CE3C10": "planner_coordination",
+      "#D65514": "dynamics_customer",
+      "#DE6B19": "finance_ops",
+      "#E57F1D": "healthcare_clinical",
+      "#EB9322": "retail_personalization",
+      "#F1A727": "manufacturing_iot",
+      "#F6BA2B": "sustainability_greenops",
+      "#FBCE30": "privacy_trust",
+      "#FFE135": "research_scientist",
+      "#FFD030": "principal_architect",
+      "#FFBE2B": "executive_briefing",
+      "#FFAC25": "agent_swarm_orchestrator",
+      "#FF9A20": "red_team_adversary",
+      "#FF871A": "compliance_auditor",
+      "#FF7214": "education_learning",
+      "#FF5B0E": "legal_contracts",
+      "#FF3F06": "marketing_growth",
+      "#FF0800": "sales_enablement",
+      "#FF4535": "support_triage",
+      "#FF6553": "observability_sre",
+      "#FF7E6D": "storage_scale",
+      "#FF9586": "network_edge",
+      "#FFAB9E": "robotics_embodied",
+      "#FFBFB6": "quantum_experiment",
+      "#FFD4CE": "blockchain_decentralized",
+      "#FBE7E7": "prompt_engineer",
+      "#F4FBFF": "graphite_reviewer"
+    }
+  }
+}

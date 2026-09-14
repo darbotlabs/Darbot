@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="2048" viewBox="0 0 2048 2048" role="img" aria-label="Darbot token azure_architect #00CFFF">
+  <title>Cloud Architect — #00CFFF</title>
+  <defs>
+    <mask id="darbot-token-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="2048" height="2048" style="mask-type:alpha">
+      <image href="../../source/darbot_token_alpha_mask_2048.png" x="0" y="0" width="2048" height="2048"/>
+    </mask>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" fill="#00CFFF" mask="url(#darbot-token-mask)"/>
+</svg>

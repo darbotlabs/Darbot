@@ -1,0 +1,61 @@
+{
+  "note": "Official framework context used to choose proposed perspectives. Names, artwork and assignments are Darbot-specific; no affiliation or vendor endorsement is implied. agent-bot and agent-computer are generic requested role IDs, not inferred third-party SDKs.",
+  "references": [
+    {
+      "agent_id": "agent-adk",
+      "url": "https://google.github.io/adk-docs/"
+    },
+    {
+      "agent_id": "agent-ag2",
+      "url": "https://docs.ag2.ai/docs/user-guide/network/overview/"
+    },
+    {
+      "agent_id": "agent-agno",
+      "url": "https://docs.agno.com/index"
+    },
+    {
+      "agent_id": "agent-claude-sdk",
+      "url": "https://code.claude.com/docs/en/agent-sdk"
+    },
+    {
+      "agent_id": "agent-crewai",
+      "url": "https://docs.crewai.com/"
+    },
+    {
+      "agent_id": "agent-langgraph",
+      "url": "https://www.langchain.com/langgraph"
+    },
+    {
+      "agent_id": "agent-langgraph-agui",
+      "url": "https://docs.ag-ui.com/introduction"
+    },
+    {
+      "agent_id": "agent-langroid",
+      "url": "https://langroid.github.io/"
+    },
+    {
+      "agent_id": "agent-llamaindex",
+      "url": "https://developers.llamaindex.ai/"
+    },
+    {
+      "agent_id": "agent-mastra",
+      "url": "https://mastra.ai/docs"
+    },
+    {
+      "agent_id": "agent-microsoft",
+      "url": "https://learn.microsoft.com/en-us/agent-framework/overview/"
+    },
+    {
+      "agent_id": "agent-pydantic-ai",
+      "url": "https://pydantic.dev/docs/ai/overview/"
+    },
+    {
+      "agent_id": "agent-strands",
+      "url": "https://strandsagents.com/docs/user-guide/quickstart/overview/"
+    }
+  ],
+  "ansi_reference": {
+    "user_supplied": "fnky/ANSI.md, RGB color and indexed-color sections",
+    "official": "https://invisible-island.net/xterm/ctlseqs/ctlseqs.html"
+  }
+}
