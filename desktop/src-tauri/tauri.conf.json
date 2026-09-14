@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "darbot",
+  "version": "0.0.0",
+  "identifier": "ai.darbotlm.darbot.desktop",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:3020",
+    "beforeDevCommand": "bun run dev",
+    "beforeBuildCommand": "bun run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "darbot",
+        "width": 900,
+        "height": 640,
+        "minWidth": 720,
+        "minHeight": 560,
+        "resizable": true
+      }
+    ],
+    "security": { "csp": null }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["dmg", "nsis", "appimage", "deb", "rpm"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "copyright": "darbotlm",
+    "category": "DeveloperTool",
+    "shortDescription": "Run darbot on your own machine",
+    "longDescription": "darbot Desktop installs the container engine, raises the stack, and keeps it running."
+  }
+}
