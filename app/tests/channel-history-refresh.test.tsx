@@ -4,7 +4,10 @@ import {
   type RunAgentInput,
   RunAgentInputSchema,
 } from "@ag-ui/core";
-import { darbotlmProvider, usedarbotlm } from "@darbotlm/react-core/v2";
+import {
+  CopilotKitProvider as DarbotProvider,
+  useCopilotKit,
+} from "@darbotlm/react-core/v2";
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { type InfiniteData, QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, render, waitFor } from "@testing-library/react";
@@ -64,10 +67,10 @@ let gatewaySnapshot: readonly Message[] = [];
 let runRequests: { path: string; input: RunAgentInput }[] = [];
 let activityRequests: ActivityRequest[] = [];
 let runEvents: (input: RunAgentInput) => unknown[];
-let core: ReturnType<typeof usedarbotlm>["darbotlm"] | undefined;
+let core: ReturnType<typeof useCopilotKit>["copilotkit"] | undefined;
 
 function CoreProbe() {
-  core = usedarbotlm().darbotlm;
+  core = useCopilotKit().copilotkit;
   return null;
 }
 function stored(messages: unknown[]) {
@@ -160,13 +163,13 @@ afterAll(() => {
 function tree(selected: AgentChannel, a2uiEnabled = false) {
   return (
     <QueryClientProvider client={queryClient}>
-      <darbotlmProvider
+      <DarbotProvider
         runtimeUrl="http://localhost/api/darbotlm"
         {...a2uiProviderOptions(a2uiEnabled)}
       >
         <CoreProbe />
         <ChannelChat channel={selected} runtimeAgentId="refresh-bot" />
-      </darbotlmProvider>
+      </DarbotProvider>
     </QueryClientProvider>
   );
 }

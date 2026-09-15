@@ -1,0 +1,154 @@
+{
+  "packages": [
+    {
+      "name": "@darbotlm/react-core",
+      "version": "1.70.1",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/react-core",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/runtime",
+      "version": "1.70.1",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/runtime",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/a2ui-renderer",
+      "version": "1.70.1",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/a2ui-renderer",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/core",
+      "version": "1.70.1",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/core",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/shared",
+      "version": "1.70.1",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/shared",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/runtime-client-gql",
+      "version": "1.70.1",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/runtime-client-gql",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/web-components",
+      "version": "1.70.1",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/web-components",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/web-inspector",
+      "version": "1.70.1",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/web-inspector",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/channels-core",
+      "version": "0.9.2",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/channels-core",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/channels-intelligence",
+      "version": "0.9.2",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/channels-intelligence",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/channels-ui",
+      "version": "0.9.2",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/channels-ui",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/channels-teams",
+      "version": "0.9.2",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/channels-teams",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/channels-slack",
+      "version": "0.9.2",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/channels-slack",
+      "license": "MIT"
+    },
+    {
+      "name": "tsconfig",
+      "version": "1.4.12",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/tsconfig",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/typescript-config",
+      "version": "1.55.0-next.8",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "revision": "78ae7eda27e86cb9cf625f55df6e91043e2d9ac0",
+      "sourcePath": "packages/typescript-config",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/aimock",
+      "version": "1.39.0",
+      "repository": "https://github.com/CopilotKit/aimock",
+      "revision": "9096f39ea31e0a3393817b6fa01e0adccf0940e5",
+      "sourcePath": ".",
+      "license": "MIT"
+    },
+    {
+      "name": "@darbotlm/license-verifier",
+      "version": "0.5.0",
+      "repository": "https://github.com/CopilotKit/CopilotKit",
+      "source": "MIT-licensed published JavaScript implementation",
+      "archiveSha256": "1a9b01aad1ab1a02ad3275e186439d5b5f9f417dc476c804a50fd970d7c9ff1e",
+      "license": "MIT"
+    }
+  ],
+  "changes": [
+    "Internal package scope changed to the local Darbot namespace.",
+    "Internal dependencies use workspace references; packages are private.",
+    "Production implementation and required build inputs retained; upstream test suites and publishing hooks are not imported.",
+    "Bun replaces the upstream package manager in build commands.",
+    "Original copyright and license notices are retained unchanged.",
+    "Source formatting follows the host Biome configuration; the legacy GraphQL resolvers retain their TypeScript parameter-decorator syntax.",
+    "Display text and documentation use plain labels; channel reaction mappings retain their original values as ASCII Unicode escapes.",
+    "Runtime type resolution uses package export maps instead of a declaration-file path alias, preventing Bun from executing declarations; schema generation keeps its CommonJS resolver.",
+    "Inspector CSS generation precedes bundling. Generated GraphQL, schema, and stylesheet outputs are rebuilt rather than checked in or hand-formatted.",
+    "GraphQL schema generation is serialized with client code generation for clean builds.",
+    "RxJS is unified at the existing protocol version; runtime provider development versions follow the pinned source lock.",
+    "Node-only ambient types isolate aimock from host Bun globals, and the legacy Zod converter uses its own input type contract."
+  ]
+}

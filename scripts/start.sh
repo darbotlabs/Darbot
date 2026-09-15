@@ -15,6 +15,9 @@ if [ ! -f "$ROOT/.env" ]; then
   exit 1
 fi
 
+printf '%s\n' "Building local SDK workspaces..."
+bun run build:sdk
+
 # The environment first, then .env, then the default. Compose and the API server both read .env, so a
 # port or token configured there is what this script must use as well.
 setting() {

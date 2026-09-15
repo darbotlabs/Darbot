@@ -1,4 +1,6 @@
-import { darbotlmIntelligence } from "@darbotlm/runtime/v2";
+// The real package export is `CopilotKitIntelligence`; the local `darbotlmIntelligence` binding
+// name is preserved everywhere it is used via this import alias rather than a package rename.
+import { CopilotKitIntelligence as darbotlmIntelligence } from "@darbotlm/runtime/v2";
 import type { IntelligenceSettings } from "./config";
 
 /**

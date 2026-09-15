@@ -1,0 +1,12 @@
+{
+  "extends": "@darbotlm/typescript-config/base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["es2022"],
+    "types": ["node"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "@darbotlm/channels-core"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["dist", "node_modules"]
+}

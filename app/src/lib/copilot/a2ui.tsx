@@ -3,7 +3,7 @@ import {
   Catalog,
   type ReactComponentImplementation,
 } from "@darbotlm/a2ui-renderer";
-import type { darbotlmProviderProps } from "@darbotlm/react-core/v2";
+import type { CopilotKitProviderProps as DarbotProviderProps } from "@darbotlm/react-core/v2";
 
 /**
  * Keep the SDK's schemas, data bindings and action handlers. The wrapper only supplies a stable
@@ -32,7 +32,7 @@ export const darbot_A2UI_CATALOG = new Catalog(
 );
 
 const A2UI_OPTIONS = { catalog: darbot_A2UI_CATALOG } satisfies NonNullable<
-  darbotlmProviderProps["a2ui"]
+  DarbotProviderProps["a2ui"]
 >;
 
 /** Prop presence activates the SDK, so an unresolved or disabled capability must omit it. */

@@ -4,7 +4,7 @@ import {
   CopilotChatConfigurationProvider,
   UseAgentUpdate,
   useAgent,
-  usedarbotlm,
+  useCopilotKit,
 } from "@darbotlm/react-core/v2";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -233,7 +233,7 @@ export function ChannelChat({
   runtimeAgentId: string;
 }) {
   // The core attaches the frontend tool registry; direct agent runs do not.
-  const { darbotlm } = usedarbotlm();
+  const { copilotkit: darbotlm } = useCopilotKit();
   // Mentions are scoped to the channel's permitted agents.
   const { data: agentProfiles } = useQuery(agentListQueryOptions());
   const channelAgentId = `channel:${channel.id}`;

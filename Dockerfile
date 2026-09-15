@@ -49,6 +49,8 @@ COPY tsconfig.base.json bunfig.toml ./
 COPY app/package.json app/package.json
 COPY server/package.json server/package.json
 COPY worker/package.json worker/package.json
+# Local SDK workspaces are part of the dependency graph, not registry packages.
+COPY packages packages
 RUN bun install --frozen-lockfile
 
 # The lockfile travels with the manifest, because `--frozen-lockfile` with no lockfile in the context
@@ -61,6 +63,7 @@ RUN cd agent-computer && bun install --frozen-lockfile
 
 # A second tree with the build-time dependencies left out, for the runtime stage to take. Vite,
 # biome and the test tooling are a gigabyte that nothing in a running container imports.
+COPY packages /prod/packages
 RUN mkdir -p /prod && cp package.json bun.lock /prod/ \
   && cp -r app/package.json /prod/app-package.json \
   && cd /prod && mkdir -p app server worker \
@@ -78,8 +81,14 @@ COPY shared shared
 # The server's source as well: the app's prebuild step reads the tenant package through
 # `server/src/tenant-package`, so the app cannot be built without it.
 COPY server server
+COPY worker worker
 COPY examples examples
-RUN bun run --cwd app build
+RUN bun run build
+# Keep compiled SDKs, but not this build stage's development dependency links.
+RUN mkdir -p /built-sdk \
+  && tar -C packages --exclude=node_modules -cf /tmp/darbot-sdk.tar . \
+  && tar -C /built-sdk -xf /tmp/darbot-sdk.tar \
+  && rm /tmp/darbot-sdk.tar
 
 
 FROM base AS runtime
@@ -109,8 +118,10 @@ WORKDIR /app
 COPY --from=deps /prod/node_modules node_modules
 COPY --from=deps /src/package.json package.json
 COPY --from=deps /src/bun.lock bun.lock
-COPY --from=deps /src/server/node_modules server/node_modules
+COPY --from=deps /prod/server/node_modules server/node_modules
 COPY --from=deps /src/agent-computer/node_modules agent-computer/node_modules
+COPY --from=deps /prod/packages packages
+COPY --from=app-build /built-sdk packages
 
 COPY server server
 COPY shared shared

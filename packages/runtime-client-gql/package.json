@@ -1,0 +1,74 @@
+{
+  "name": "@darbotlm/runtime-client-gql",
+  "version": "1.70.1",
+  "private": true,
+  "keywords": [
+    "ai",
+    "assistant",
+    "automation",
+    "copilot",
+    "copilotkit",
+    "javascript",
+    "nextjs",
+    "nodejs",
+    "react",
+    "textarea"
+  ],
+  "homepage": "https://github.com/CopilotKit/CopilotKit",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darbotlabs/Darbot.git",
+    "directory": "packages/runtime-client-gql"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "unpkg": "./dist/index.umd.js",
+  "jsdelivr": "./dist/index.umd.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "bun run --cwd ../runtime generate-graphql-schema && bun run graphql-codegen && tsdown",
+    "dev": "concurrently \"bun run graphql-codegen:watch\" \"tsdown --watch\"",
+    "check-types": "tsc --noEmit -p tsconfig.json",
+    "graphql-codegen": "graphql-codegen -c codegen.ts",
+    "graphql-codegen:watch": "graphql-codegen -c codegen.ts --watch",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@darbotlm/shared": "workspace:*",
+    "@urql/core": "^5.0.3",
+    "untruncate-json": "^0.0.1",
+    "urql": "^4.1.0"
+  },
+  "devDependencies": {
+    "@darbotlm/runtime": "workspace:*",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.6",
+    "@graphql-codegen/introspection": "^4.0.3",
+    "@graphql-codegen/typescript": "^4.0.7",
+    "@graphql-codegen/typescript-operations": "^4.2.1",
+    "@graphql-codegen/typescript-urql": "^4.0.0",
+    "@graphql-codegen/urql-introspection": "^3.0.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@parcel/watcher": "^2.4.1",
+    "@types/node": "^20.12.12",
+    "concurrently": "^8.2.2",
+    "esbuild": "^0.23.0",
+    "graphql": "^16.8.1",
+    "ts-node": "^10.9.2",
+    "tsdown": "^0.20.3",
+    "typescript": "^5.4.5",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19 || ^19.0.0-rc"
+  }
+}

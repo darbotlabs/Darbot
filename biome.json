@@ -8,6 +8,9 @@
       "!app/src/components/ui",
       "!app/src/lib/generated/application-config.ts",
       "!app/src/routeTree.gen.ts",
+      "!packages/runtime/__snapshots__/schema",
+      "!packages/runtime-client-gql/src/graphql/@generated",
+      "!packages/web-inspector/src/styles/generated.css",
       "!desktop/src-tauri/gen",
       "!**/target",
       "!server/drizzle"
@@ -26,6 +29,14 @@
     }
   },
   "overrides": [
+    {
+      "includes": ["packages/runtime/src/v1-deprecated/graphql/**/*.ts"],
+      "javascript": {
+        "parser": {
+          "unsafeParameterDecoratorsEnabled": true
+        }
+      }
+    },
     {
       "includes": ["**/tests/**", "**/*.test.ts", "**/*.test.tsx"],
       "linter": {

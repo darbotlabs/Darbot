@@ -1,10 +1,12 @@
 import type { BaseEvent, Message, RunAgentInput } from "@ag-ui/client";
 import { AbstractAgent, HttpAgent } from "@ag-ui/client";
 import type { BuiltInAgentConfiguration } from "@darbotlm/runtime/v2";
+// The real package export is `CopilotKitIntelligence`; the local `darbotlmIntelligence` binding
+// name is preserved everywhere it is used via this import alias rather than a package rename.
 import {
   BuiltInAgent,
-  darbotlmIntelligence,
   CopilotRuntime,
+  CopilotKitIntelligence as darbotlmIntelligence,
 } from "@darbotlm/runtime/v2";
 import { createCopilotHonoHandler } from "@darbotlm/runtime/v2/hono";
 import type { Observable } from "rxjs";

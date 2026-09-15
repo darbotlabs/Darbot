@@ -1,0 +1,77 @@
+{
+  "name": "@darbotlm/web-components",
+  "version": "1.70.1",
+  "private": true,
+  "description": "Framework-agnostic shadow-DOM web components for CopilotKit - includes the <copilotkit-threads-drawer> threads drawer element",
+  "keywords": [
+    "ai",
+    "copilotkit",
+    "custom-elements",
+    "drawer",
+    "lit",
+    "shadow-dom",
+    "threads",
+    "web-components"
+  ],
+  "homepage": "https://github.com/CopilotKit/CopilotKit",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darbotlabs/Darbot.git",
+    "directory": "packages/web-components"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "unpkg": "./dist/index.umd.js",
+  "jsdelivr": "./dist/index.umd.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./threads-drawer": {
+      "import": {
+        "types": "./dist/threads-drawer/index.d.mts",
+        "default": "./dist/threads-drawer/index.mjs"
+      },
+      "require": {
+        "types": "./dist/threads-drawer/index.d.cts",
+        "default": "./dist/threads-drawer/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "bun run gen:tokens && tsdown",
+    "gen:tokens": "tsx scripts/generate-tokens.ts",
+    "check-types": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "lit": "^3.3.2"
+  },
+  "devDependencies": {
+    "@darbotlm/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "jsdom": "^26.1.0",
+    "lit": "^3.3.2",
+    "tsdown": "^0.20.3",
+    "tsx": "^4.19.2",
+    "typescript": "5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

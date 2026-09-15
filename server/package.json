@@ -16,7 +16,7 @@
     "@ag-ui/mastra": "1.1.2",
     "@better-auth/drizzle-adapter": "^1.7.1",
     "@better-auth/sso": "^1.7.1",
-    "@darbotlm/runtime": "1.70.1",
+    "@darbotlm/runtime": "workspace:*",
     "@mastra/client-js": "^1.43.0",
     "@mastra/core": "^1.64.0",
     "@modelcontextprotocol/sdk": "^1.30.0",
@@ -32,7 +32,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@darbotlm/aimock": "1.39.0",
+    "@darbotlm/aimock": "workspace:*",
     "drizzle-kit": "^0.31.10"
   }
 }

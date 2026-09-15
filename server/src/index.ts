@@ -1,6 +1,8 @@
 import { randomUUID } from "node:crypto";
+// The real package export is `CopilotKitIntelligence`; the local `darbotlmIntelligence` binding
+// name is preserved everywhere it is used via this import alias rather than a package rename.
 import {
-  darbotlmIntelligence,
+  CopilotKitIntelligence as darbotlmIntelligence,
   IntelligenceAgentRunner,
 } from "@darbotlm/runtime/v2";
 import { serve } from "bun";
@@ -32,8 +34,6 @@ import { createAuth } from "./auth";
 import { DEV_ACTOR, initializeDevActorUser } from "./auth/dev-actor";
 import { createRoleRepository } from "./auth/guards";
 import { createIdentityProviderStore } from "./auth/identity-provider-store";
-import { createHostAccessBroker } from "./host-access/broker";
-import { hostAccessTools } from "./host-access/tools";
 import type { darbotRole } from "./auth/roles";
 import {
   loadAttachmentForTurn,
@@ -83,6 +83,8 @@ import {
 } from "./credentials";
 import { createDatabase } from "./db/client";
 import { intelligenceChannelMappings } from "./db/schema";
+import { createHostAccessBroker } from "./host-access/broker";
+import { hostAccessTools } from "./host-access/tools";
 import { createOnboardingStore } from "./people/onboarding";
 import { createPeopleStore } from "./people/store";
 import { useRoutineTools } from "./plugins/builtin-routines";
@@ -869,8 +871,7 @@ const copilotRuntime = mountCopilotRuntime(
    */
   (actorId) => async (botId, input) => {
     const from = readRunAssertion(
-      (input.forwardedProps as { darbotRun?: unknown } | undefined)
-        ?.darbotRun,
+      (input.forwardedProps as { darbotRun?: unknown } | undefined)?.darbotRun,
       config.keyEncryptionKey,
     );
     const run = {

@@ -1,0 +1,305 @@
+/**
+ * OpenAI Embeddings API support for aimock.
+ *
+ * Handles POST /v1/embeddings requests. Matches fixtures using the `inputText`
+ * field, and falls back to generating a deterministic embedding from the input
+ * text hash when no fixture matches.
+ */
+
+import type * as http from "node:http";
+import type {
+  ChatCompletionRequest,
+  Fixture,
+  HandlerDefaults,
+  RecordProviderKey,
+} from "./types.js";
+import {
+  isEmbeddingResponse,
+  isErrorResponse,
+  serializeErrorResponse,
+  generateDeterministicEmbedding,
+  buildEmbeddingResponse,
+  flattenHeaders,
+  getTestId,
+  resolveResponse,
+  resolveStrictMode,
+  strictOverrideField,
+  getContext,
+  strictNoMatchMessage,
+  strictNoMatchLogLine,
+} from "./helpers.js";
+import { matchFixtureDiagnostic } from "./router.js";
+import { writeErrorResponse } from "./sse-writer.js";
+import type { Journal } from "./journal.js";
+import { applyChaos } from "./chaos.js";
+import { proxyAndRecord } from "./recorder.js";
+
+// ─── Embeddings API request types ──────────────────────────────────────────
+
+interface EmbeddingRequest {
+  input: string | string[];
+  model: string;
+  encoding_format?: "float" | "base64";
+  dimensions?: number;
+  [key: string]: unknown;
+}
+
+// ─── Request handler ───────────────────────────────────────────────────────
+
+export async function handleEmbeddings(
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+  raw: string,
+  fixtures: Fixture[],
+  journal: Journal,
+  defaults: HandlerDefaults,
+  setCorsHeaders: (res: http.ServerResponse) => void,
+  providerKey: RecordProviderKey = "openai",
+): Promise<void> {
+  const { logger } = defaults;
+  setCorsHeaders(res);
+
+  let embeddingReq: EmbeddingRequest;
+  try {
+    embeddingReq = JSON.parse(raw) as EmbeddingRequest;
+  } catch (parseErr) {
+    const detail = parseErr instanceof Error ? parseErr.message : "unknown";
+    journal.add({
+      method: req.method ?? "POST",
+      path: req.url ?? "/v1/embeddings",
+      headers: flattenHeaders(req.headers),
+      body: null,
+      response: { status: 400, fixture: null },
+    });
+    writeErrorResponse(
+      res,
+      400,
+      JSON.stringify({
+        error: {
+          message: `Malformed JSON body: ${detail}`,
+          type: "invalid_request_error",
+          code: "invalid_json",
+        },
+      }),
+    );
+    return;
+  }
+
+  // Validate required input parameter
+  if (embeddingReq.input === undefined || embeddingReq.input === null) {
+    journal.add({
+      method: req.method ?? "POST",
+      path: req.url ?? "/v1/embeddings",
+      headers: flattenHeaders(req.headers),
+      body: null,
+      response: { status: 400, fixture: null },
+    });
+    writeErrorResponse(
+      res,
+      400,
+      JSON.stringify({
+        error: {
+          message: "Missing required parameter: 'input'",
+          type: "invalid_request_error",
+        },
+      }),
+    );
+    return;
+  }
+
+  // Normalize input to array of strings
+  const inputs: string[] = Array.isArray(embeddingReq.input)
+    ? embeddingReq.input
+    : [embeddingReq.input];
+
+  // Concatenate all inputs for matching purposes
+  const combinedInput = inputs.join(" ");
+
+  // Build a synthetic ChatCompletionRequest for the fixture router.
+  // We attach `embeddingInput` so the router's inputText matching can use it.
+  const syntheticReq: ChatCompletionRequest = {
+    model: embeddingReq.model,
+    messages: [],
+    embeddingInput: combinedInput,
+    _endpointType: "embedding",
+    _context: getContext(req),
+  };
+
+  const testId = getTestId(req);
+  const { fixture, skippedBySequenceOrTurn } = matchFixtureDiagnostic(
+    fixtures,
+    syntheticReq,
+    journal.getFixtureMatchCountsForTest(testId),
+    defaults.requestTransform,
+  );
+
+  if (fixture) {
+    journal.incrementFixtureMatchCount(fixture, fixtures, testId);
+    logger.debug(
+      `Fixture matched: ${JSON.stringify(fixture.match).slice(0, 120)}`,
+    );
+  } else {
+    logger.debug(`No fixture matched for request`);
+  }
+
+  if (
+    applyChaos(
+      res,
+      fixture,
+      defaults.chaos,
+      req.headers,
+      journal,
+      {
+        method: req.method ?? "POST",
+        path: req.url ?? "/v1/embeddings",
+        headers: flattenHeaders(req.headers),
+        body: syntheticReq,
+      },
+      fixture ? "fixture" : "proxy",
+      defaults.registry,
+      defaults.logger,
+    )
+  )
+    return;
+
+  if (fixture) {
+    const response = await resolveResponse(fixture, syntheticReq);
+
+    // Error response
+    if (isErrorResponse(response)) {
+      const status = response.status ?? 500;
+      journal.add({
+        method: req.method ?? "POST",
+        path: req.url ?? "/v1/embeddings",
+        headers: flattenHeaders(req.headers),
+        body: syntheticReq,
+        response: { status, fixture },
+      });
+      writeErrorResponse(res, status, serializeErrorResponse(response), {
+        retryAfter: response.retryAfter,
+      });
+      return;
+    }
+
+    // Embedding response — use the fixture's embedding for each input
+    if (isEmbeddingResponse(response)) {
+      journal.add({
+        method: req.method ?? "POST",
+        path: req.url ?? "/v1/embeddings",
+        headers: flattenHeaders(req.headers),
+        body: syntheticReq,
+        response: { status: 200, fixture },
+      });
+      const embeddings = inputs.map(() => [...response.embedding]);
+      const body = buildEmbeddingResponse(embeddings, embeddingReq.model);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(body));
+      return;
+    }
+
+    // Fixture matched but response type is not compatible with embeddings
+    journal.add({
+      method: req.method ?? "POST",
+      path: req.url ?? "/v1/embeddings",
+      headers: flattenHeaders(req.headers),
+      body: syntheticReq,
+      response: { status: 500, fixture },
+    });
+    writeErrorResponse(
+      res,
+      500,
+      JSON.stringify({
+        error: {
+          message:
+            "Fixture response did not match any known embedding type (must have embedding or error)",
+          type: "server_error",
+        },
+      }),
+    );
+    return;
+  }
+
+  // No fixture match — check strict mode first, then try proxy
+  if (resolveStrictMode(defaults.strict, req.headers)) {
+    const strictMessage = strictNoMatchMessage(skippedBySequenceOrTurn);
+    logger.error(
+      strictNoMatchLogLine(
+        req.method ?? "POST",
+        req.url ?? "/v1/embeddings",
+        skippedBySequenceOrTurn,
+      ),
+    );
+    journal.add({
+      method: req.method ?? "POST",
+      path: req.url ?? "/v1/embeddings",
+      headers: flattenHeaders(req.headers),
+      body: syntheticReq,
+      response: {
+        status: 503,
+        fixture: null,
+        ...strictOverrideField(defaults.strict, req.headers),
+      },
+    });
+    writeErrorResponse(
+      res,
+      503,
+      JSON.stringify({
+        error: {
+          message: strictMessage,
+          type: "invalid_request_error",
+          code: "no_fixture_match",
+        },
+      }),
+    );
+    return;
+  }
+
+  if (defaults.record) {
+    const outcome = await proxyAndRecord(
+      req,
+      res,
+      syntheticReq,
+      providerKey,
+      req.url ?? "/v1/embeddings",
+      fixtures,
+      defaults,
+      raw,
+    );
+    if (outcome === "handled_by_hook") return;
+    if (outcome !== "not_configured") {
+      journal.add({
+        method: req.method ?? "POST",
+        path: req.url ?? "/v1/embeddings",
+        headers: flattenHeaders(req.headers),
+        body: syntheticReq,
+        response: {
+          status: res.statusCode ?? 200,
+          fixture: null,
+          source: "proxy",
+        },
+      });
+      return;
+    }
+  }
+
+  // No fixture match — generate deterministic embeddings from input text
+  logger.warn(
+    `No embedding fixture matched for "${combinedInput.slice(0, 80)}" — returning deterministic fallback`,
+  );
+  const dimensions = embeddingReq.dimensions ?? 1536;
+  const embeddings = inputs.map((input) =>
+    generateDeterministicEmbedding(input, dimensions),
+  );
+
+  journal.add({
+    method: req.method ?? "POST",
+    path: req.url ?? "/v1/embeddings",
+    headers: flattenHeaders(req.headers),
+    body: syntheticReq,
+    response: { status: 200, fixture: null },
+  });
+
+  const body = buildEmbeddingResponse(embeddings, embeddingReq.model);
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify(body));
+}

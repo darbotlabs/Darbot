@@ -1,0 +1,36 @@
+{
+  "name": "@darbotlm/license-verifier",
+  "version": "0.5.0",
+  "description": "CopilotKit license verification",
+  "license": "MIT",
+  "author": "CopilotKit, Inc.",
+  "homepage": "https://copilotkit.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darbotlabs/Darbot.git",
+    "directory": "packages/license-verifier"
+  },
+  "main": "src/index.js",
+  "module": "src/index.mjs",
+  "types": "src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.mjs",
+      "require": "./src/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node --check src/index.mjs && node --check src/index.js",
+    "typecheck": "node --check src/index.mjs && node --check src/index.js"
+  },
+  "files": [
+    "src/index.js",
+    "src/index.mjs",
+    "src/index.d.ts",
+    "src/index.d.mts",
+    "LICENSE",
+    "README.md"
+  ],
+  "private": true
+}

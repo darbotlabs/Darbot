@@ -1,0 +1,202 @@
+{
+  "name": "@darbotlm/aimock",
+  "version": "1.39.0",
+  "description": "Mock infrastructure for AI application testing — LLM APIs, image generation, image editing, text-to-speech, transcription, audio translation, audio generation, video generation, embeddings, MCP tools, A2A agents, AG-UI event streams, vector databases, search, rerank, and moderation. One package, one port, zero dependencies.",
+  "license": "MIT",
+  "keywords": [
+    "mock",
+    "llm",
+    "openai",
+    "anthropic",
+    "claude",
+    "gemini",
+    "bedrock",
+    "azure-openai",
+    "ollama",
+    "cohere",
+    "vertex-ai",
+    "mcp",
+    "a2a",
+    "ag-ui",
+    "vector",
+    "pinecone",
+    "qdrant",
+    "chromadb",
+    "testing",
+    "fixtures",
+    "sse",
+    "streaming",
+    "websocket",
+    "record-replay",
+    "drift-detection",
+    "ai-testing",
+    "api-mock",
+    "http-mock",
+    "embeddings",
+    "copilotkit"
+  ],
+  "homepage": "https://aimock.copilotkit.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darbotlabs/Darbot.git",
+    "directory": "packages/aimock"
+  },
+  "engines": {
+    "node": ">=20.15.0"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./mcp": {
+      "import": {
+        "types": "./dist/mcp-stub.d.ts",
+        "default": "./dist/mcp-stub.js"
+      },
+      "require": {
+        "types": "./dist/mcp-stub.d.cts",
+        "default": "./dist/mcp-stub.cjs"
+      }
+    },
+    "./a2a": {
+      "import": {
+        "types": "./dist/a2a-stub.d.ts",
+        "default": "./dist/a2a-stub.js"
+      },
+      "require": {
+        "types": "./dist/a2a-stub.d.cts",
+        "default": "./dist/a2a-stub.cjs"
+      }
+    },
+    "./vector": {
+      "import": {
+        "types": "./dist/vector-stub.d.ts",
+        "default": "./dist/vector-stub.js"
+      },
+      "require": {
+        "types": "./dist/vector-stub.d.cts",
+        "default": "./dist/vector-stub.cjs"
+      }
+    },
+    "./agui": {
+      "import": {
+        "types": "./dist/agui-stub.d.ts",
+        "default": "./dist/agui-stub.js"
+      },
+      "require": {
+        "types": "./dist/agui-stub.d.cts",
+        "default": "./dist/agui-stub.cjs"
+      }
+    },
+    "./vitest": {
+      "import": {
+        "types": "./dist/vitest.d.ts",
+        "default": "./dist/vitest.js"
+      },
+      "require": {
+        "types": "./dist/vitest.d.cts",
+        "default": "./dist/vitest.cjs"
+      }
+    },
+    "./jest": {
+      "import": {
+        "types": "./dist/jest.d.ts",
+        "default": "./dist/jest.js"
+      },
+      "require": {
+        "types": "./dist/jest.d.cts",
+        "default": "./dist/jest.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "mcp": [
+        "./dist/mcp-stub.d.ts",
+        "./dist/mcp-stub.d.cts"
+      ],
+      "a2a": [
+        "./dist/a2a-stub.d.ts",
+        "./dist/a2a-stub.d.cts"
+      ],
+      "vector": [
+        "./dist/vector-stub.d.ts",
+        "./dist/vector-stub.d.cts"
+      ],
+      "agui": [
+        "./dist/agui-stub.d.ts",
+        "./dist/agui-stub.d.cts"
+      ],
+      "vitest": [
+        "./dist/vitest.d.ts",
+        "./dist/vitest.d.cts"
+      ],
+      "jest": [
+        "./dist/jest.d.ts",
+        "./dist/jest.d.cts"
+      ]
+    }
+  },
+  "bin": {
+    "aimock": "./dist/aimock-cli.js",
+    "llmock": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "fixtures",
+    ".claude-plugin",
+    "skills",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "jest": ">=29",
+    "vitest": ">=3"
+  },
+  "peerDependenciesMeta": {
+    "jest": {
+      "optional": true
+    },
+    "vitest": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@arethetypeswrong/cli": "^0.18.3",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@eslint/js": "^9.30.0",
+    "@google/genai": "^1.0.0",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.30.0",
+    "eslint-config-prettier": "^10.1.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "openai": "^4.0.0",
+    "pkg-pr-new": "0.0.86",
+    "prettier": "^3.6.2",
+    "publint": "^0.3.12",
+    "tsdown": "^0.12.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.35.1",
+    "vitest": "^3.2.1"
+  },
+  "private": true
+}

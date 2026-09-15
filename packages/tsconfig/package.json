@@ -1,0 +1,11 @@
+{
+  "name": "tsconfig",
+  "version": "1.4.12",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darbotlabs/Darbot.git",
+    "directory": "packages/tsconfig"
+  }
+}

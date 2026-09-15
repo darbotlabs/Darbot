@@ -1,0 +1,4 @@
+{
+  "name": "@darbotlm/runtime-client-gql",
+  "implicitDependencies": ["@darbotlm/runtime"]
+}

@@ -9,6 +9,9 @@ node_modules
 dist
 **/dist
 app/dist
+packages/runtime/__snapshots__/schema
+packages/runtime-client-gql/src/graphql/@generated
+packages/web-inspector/src/styles/generated.css
 .nx
 *.log
 .DS_Store

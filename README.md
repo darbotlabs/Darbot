@@ -59,6 +59,32 @@ A Bot is any endpoint speaking [AG-UI](https://github.com/ag-ui-protocol/ag-ui),
 - A darbotlm Intelligence project and license. A free plan is available, and Intelligence can be self-hosted.
 - A model key. The proof-of-concept Bot uses OpenAI; the LangGraph Bot can use OpenAI, Anthropic, or Google.
 
+### Local SDK workspaces
+
+`react-core`, `runtime`, `a2ui-renderer`, and `aimock` are implemented in this
+repository under `packages/`, together with their required supporting libraries.
+The app, API, and tests reference them as `@darbotlm/*` with `workspace:*`
+dependencies. They do not require published Darbot SDK packages or package aliases.
+
+Run `bun install`, then `bun run build` from the repository root. Bun builds the
+local libraries in dependency order before their app/API consumers. Use
+`bun run build:sdk` to rebuild only the SDK after editing its source.
+`bun run typecheck`, `bun run test`, and `bun run test:ci` prepare the local SDK
+before checking consumers. A direct `bun test <files>` invocation assumes the SDK
+has already been built.
+
+The GraphQL client generates its schema before code generation, so a clean build
+does not depend on a previous runtime build. Inspector styles are also generated
+before bundling. RxJS is pinned once at the root to
+keep AG-UI agents and SDK subscribers on the same implementation and types.
+
+Source revisions, the supporting verifier's archive checksum, and integration
+changes are recorded in `packages/source-provenance.json`. Each imported package
+retains its original license notice. The checked-in implementations and build
+inputs are used locally; publishing hooks and upstream test suites are not imported.
+The verifier retains its licensed JavaScript implementation and verification
+behavior; it is not a license-check bypass.
+
 ## Quick start
 
 > **Setting up with an AI assistant?** Paste [`prompt.txt`](prompt.txt) into it first. It carries the

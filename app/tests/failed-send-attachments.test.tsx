@@ -8,14 +8,17 @@ import {
 } from "bun:test";
 import type { Message, RunAgentInput } from "@ag-ui/core";
 import { RunAgentInputSchema } from "@ag-ui/core";
-import { darbotlmProvider, usedarbotlm } from "@darbotlm/react-core/v2";
+import {
+  CopilotKitProvider as DarbotProvider,
+  useCopilotKit,
+} from "@darbotlm/react-core/v2";
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { type InfiniteData, QueryClientProvider } from "@tanstack/react-query";
 import {
   cleanup,
   fireEvent,
-  render,
   type RenderResult,
+  render,
   waitFor,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -88,11 +91,11 @@ let uploads: string[];
  * rather than as a hang.
  */
 let runAnswers: ((input: RunAgentInput) => Promise<Response>)[];
-let core: ReturnType<typeof usedarbotlm>["darbotlm"] | undefined;
+let core: ReturnType<typeof useCopilotKit>["copilotkit"] | undefined;
 let originalFetch: typeof fetch;
 
 function CoreProbe() {
-  core = usedarbotlm().darbotlm;
+  core = useCopilotKit().copilotkit;
   return null;
 }
 
@@ -234,10 +237,10 @@ async function mounted() {
   cacheChannel();
   const view = render(
     <QueryClientProvider client={queryClient}>
-      <darbotlmProvider runtimeUrl="http://localhost/api/darbotlm">
+      <DarbotProvider runtimeUrl="http://localhost/api/darbotlm">
         <CoreProbe />
         <ChannelChat channel={channel} runtimeAgentId="failed-send-bot" />
-      </darbotlmProvider>
+      </DarbotProvider>
     </QueryClientProvider>,
   );
   await view.findByText(opening.content);

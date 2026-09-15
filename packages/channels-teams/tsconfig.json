@@ -1,0 +1,10 @@
+{
+  "extends": "@darbotlm/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "lib": ["es2023"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "node_modules", "examples"]
+}

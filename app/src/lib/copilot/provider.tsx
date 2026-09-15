@@ -1,4 +1,4 @@
-import { darbotlmProvider } from "@darbotlm/react-core/v2";
+import { CopilotKitProvider as DarbotProvider } from "@darbotlm/react-core/v2";
 import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { deploymentCapabilitiesQueryOptions } from "@/lib/deployment/queries";
@@ -32,7 +32,7 @@ export function CopilotProvider({ children }: { children: ReactNode }) {
   const { data: capabilities } = useQuery(deploymentCapabilitiesQueryOptions());
 
   return (
-    <darbotlmProvider
+    <DarbotProvider
       runtimeUrl="/api/darbotlm"
       credentials="include"
       {...a2uiProviderOptions(capabilities?.generativeUi)}
@@ -76,6 +76,6 @@ export function CopilotProvider({ children }: { children: ReactNode }) {
         <BotTools />
         {children}
       </ActiveBotProvider>
-    </darbotlmProvider>
+    </DarbotProvider>
   );
 }
