@@ -1,4 +1,5 @@
-import darbotIcon from "../src-tauri/icons/128x128.png";
+const darbotIcon = new URL("../src-tauri/icons/128x128.png", import.meta.url)
+  .href;
 
 export function BrandLockup() {
   return (

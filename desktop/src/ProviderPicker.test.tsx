@@ -41,7 +41,11 @@ let invokeHandler: Invoke = async () => {
   throw new Error("invoke handler was not installed");
 };
 
+const tauriCore = await import("@tauri-apps/api/core");
+const tauriEvent = await import("@tauri-apps/api/event");
+
 mock.module("@tauri-apps/api/core", () => ({
+  ...tauriCore,
   invoke: (command: string, args?: unknown) => {
     invokeCalls.push({ command, args });
     return invokeHandler(command, args);
@@ -49,6 +53,7 @@ mock.module("@tauri-apps/api/core", () => ({
 }));
 
 mock.module("@tauri-apps/api/event", () => ({
+  ...tauriEvent,
   listen: async () => () => {},
 }));
 

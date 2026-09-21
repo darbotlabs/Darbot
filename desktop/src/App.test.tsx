@@ -22,7 +22,11 @@ let invokeHandler: Invoke = async () => {
   throw new Error("invoke handler was not installed");
 };
 
+const tauriCore = await import("@tauri-apps/api/core");
+const tauriEvent = await import("@tauri-apps/api/event");
+
 mock.module("@tauri-apps/api/core", () => ({
+  ...tauriCore,
   invoke: (command: string, args?: unknown) => {
     invokeCalls.push({ command, args });
     return invokeHandler(command, args);
@@ -30,6 +34,7 @@ mock.module("@tauri-apps/api/core", () => ({
 }));
 
 mock.module("@tauri-apps/api/event", () => ({
+  ...tauriEvent,
   listen: async () => () => {},
 }));
 
@@ -264,7 +269,26 @@ function useRootConfigurationSetup(
   };
 }
 
-test("Windows detection failure blocks setup and displays its diagnostic", async () => {
+async function enterContainerReadiness(
+  view: Awaited<ReturnType<typeof renderApp>>,
+) {
+  const probed = () =>
+    invokeCalls.some((call) =>
+      ["detect_engine", "windows_blocker"].includes(call.command),
+    );
+  expect(probed()).toBe(false);
+  await userEvent.click(view.getByRole("button", { name: "Set up darbot" }));
+  await userEvent.click(await view.findByRole("button", { name: "Continue" }));
+  expect(probed()).toBe(false);
+  await userEvent.click(await view.findByRole("radio", { name: /OpenAI/ }));
+  await userEvent.type(
+    view.getByLabelText("OpenAI API key"),
+    "synthetic-model-key",
+  );
+  await userEvent.click(view.getByRole("button", { name: "Continue" }));
+}
+
+test("Windows detection failure blocks container installation but not provider selection", async () => {
   useRootConfigurationSetup("/tmp/darbot-windows-detection-test", async () =>
     emptyConfiguration(),
   );
@@ -279,6 +303,7 @@ test("Windows detection failure blocks setup and displays its diagnostic", async
   };
 
   const view = await renderApp();
+  await enterContainerReadiness(view);
   const alert = await view.findByRole("alert");
   expect(alert.textContent).toContain(problem.said);
   await userEvent.click(view.getByText("Technical details"));
@@ -306,6 +331,7 @@ test("a failed Windows blocker instruction is visible instead of an empty blocke
     return setupHandler(command, args);
   };
   const view = await renderApp();
+  await enterContainerReadiness(view);
   expect((await view.findByRole("alert")).textContent).toContain(
     "The blocker instruction could not be read.",
   );
@@ -325,12 +351,13 @@ test("a successfully detected missing WSL feature keeps its setup instruction", 
     return setupHandler(command, args);
   };
   const view = await renderApp();
+  await enterContainerReadiness(view);
   expect(await view.findByText(instruction)).toBeTruthy();
   expect(view.queryByRole("alert")).toBeNull();
   expect(view.queryByRole("button", { name: "Set up darbot" })).toBeNull();
 });
 
-test("disabled Virtual Machine Platform displays its feature-specific fix and blocks setup", async () => {
+test("disabled Virtual Machine Platform displays its fix only on the container install path", async () => {
   useRootConfigurationSetup("/tmp/darbot-vmp-detection-test", async () =>
     emptyConfiguration(),
   );
@@ -347,6 +374,7 @@ test("disabled Virtual Machine Platform displays its feature-specific fix and bl
     return setupHandler(command, args);
   };
   const view = await renderApp();
+  await enterContainerReadiness(view);
   expect(await view.findByText(instruction)).toBeTruthy();
   expect(
     view.getByRole("heading", {
@@ -850,9 +878,9 @@ for (const staleProbe of [false, true]) {
     );
     if (staleProbe) {
       await waitFor(() =>
-        expect(
-          invokeCalls.some((call) => call.command === "show_darbot"),
-        ).toBe(true),
+        expect(invokeCalls.some((call) => call.command === "show_darbot")).toBe(
+          true,
+        ),
       );
     }
     expect(view.getByRole("button", { name: "Set up darbot" })).toBeTruthy();
@@ -1159,9 +1187,7 @@ test.each([
         true,
       );
       expect(
-        view.queryByText(
-          /Connected to darbotlm|A saved darbotlm connection/,
-        ),
+        view.queryByText(/Connected to darbotlm|A saved darbotlm connection/),
       ).toBeNull();
       expect(view.getByLabelText("Project key")).toHaveProperty("value", "");
       expect(view.getByLabelText("API URL")).toHaveProperty(
@@ -1709,9 +1735,10 @@ for (const provider of [
     await userEvent.click(view.getByRole("button", { name: "Continue" }));
 
     await waitFor(() =>
-      expect(
-        view.getByRole("button", { name: "Start darbot" }),
-      ).toHaveProperty("disabled", false),
+      expect(view.getByRole("button", { name: "Start darbot" })).toHaveProperty(
+        "disabled",
+        false,
+      ),
     );
     await userEvent.click(view.getByRole("button", { name: "Start darbot" }));
 
@@ -1795,9 +1822,10 @@ for (const provider of [
         }),
       );
       await userEvent.click(view.getByRole("button", { name: "Continue" }));
-      expect(
-        view.getByRole("button", { name: "Start darbot" }),
-      ).toHaveProperty("disabled", true);
+      expect(view.getByRole("button", { name: "Start darbot" })).toHaveProperty(
+        "disabled",
+        true,
+      );
       await userEvent.click(
         view.getByRole("button", { name: "Use a saved connection" }),
       );
@@ -1814,9 +1842,7 @@ for (const provider of [
           /sign_in|start_stack|ask_the_bot/.test(call.command),
         ),
       ).toBe(false);
-      await userEvent.click(
-        view.getByRole("button", { name: "Start darbot" }),
-      );
+      await userEvent.click(view.getByRole("button", { name: "Start darbot" }));
       await view.findByText("Synthetic saved credential is unavailable.");
       expect(getStartStackPayload()).toMatchObject({
         apiKey: "",

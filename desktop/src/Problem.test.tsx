@@ -4,7 +4,10 @@ import { cleanup, render } from "@testing-library/react";
 
 let invokeCalls: Array<{ command: string; args?: unknown }> = [];
 
+const tauriCore = await import("@tauri-apps/api/core");
+
 mock.module("@tauri-apps/api/core", () => ({
+  ...tauriCore,
   invoke: (command: string, args?: unknown) => {
     invokeCalls.push({ command, args });
     return Promise.resolve(null);

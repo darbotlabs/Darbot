@@ -15,6 +15,10 @@
   late response cannot leave an untracked, already-loaded session behind.
 - Clear incomplete replay messages after a failed load and show an explicit
   conversation-opening failure instead of a misleading Ready status.
+- Repair the reusable release-workflow reference and native formatting gate,
+  align release-version metadata, and remove unused Windows-only build warnings.
+- Resolve the native brand image as an asset URL so setup tests do not parse
+  PNG bytes as JavaScript.
 
 ## 0.0.17
 

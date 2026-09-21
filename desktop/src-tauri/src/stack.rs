@@ -1528,11 +1528,6 @@ fn cleanup_result(stopped: usize, failures: Vec<Problem>) -> Result<usize, Probl
     Err(combined_cleanup_problem(failures))
 }
 
-#[cfg(not(unix))]
-fn taskkill_process_tree(pid: u32) -> Result<bool, Problem> {
-    taskkill_process_tree_with(Path::new("taskkill"), pid)
-}
-
 #[cfg(any(not(unix), test))]
 fn taskkill_process_tree_with(taskkill: &Path, pid: u32) -> Result<bool, Problem> {
     let operation = format!("{} /PID {pid} /T /F", taskkill.display());
@@ -4838,12 +4833,8 @@ fn main() {
         )];
         let processes = [live_process(8636, 7000, "20260909010101.000000-420")];
 
-        let found = super::verified_darbot_pids_listening_on(
-            listing,
-            &[3010, 3001],
-            &recorded,
-            &processes,
-        );
+        let found =
+            super::verified_darbot_pids_listening_on(listing, &[3010, 3001], &recorded, &processes);
 
         assert_eq!(found, vec![8636]);
     }
@@ -5337,9 +5328,7 @@ fn main() {
             },
             live_process(42, 0, "reused"),
         ] {
-            assert!(
-                verified_darbot_root_pids(std::slice::from_ref(&recorded), &[live]).is_empty()
-            );
+            assert!(verified_darbot_root_pids(std::slice::from_ref(&recorded), &[live]).is_empty());
         }
     }
 

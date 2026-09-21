@@ -13,7 +13,9 @@ writes over stdin, since PowerShell reading the console to the end has no buffer
 */
 
 use std::collections::BTreeMap;
-use std::io::{Read, Write};
+#[cfg(not(target_os = "windows"))]
+use std::io::Read;
+use std::io::Write;
 use std::path::{Path, PathBuf};
 
 use crate::problem::Problem;
