@@ -2660,10 +2660,11 @@ async fn copilot_history<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
     cwd: Option<String>,
+    request_id: Option<String>,
 ) -> Result<copilot::CopilotHistory, Problem> {
     let runtime = Arc::clone(&runtime);
     copilot_task("GitHub Copilot history could not be read", move || {
-        runtime.history(&app, cwd)
+        runtime.history(&app, cwd, request_id)
     })
     .await
 }

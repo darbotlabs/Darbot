@@ -34,6 +34,31 @@ A failed replay clears its incomplete display and reports that the conversation
 did not open. This improves timeout recovery in issue #6; it does not implement
 durable draft identities or change the CLI's empty-session persistence.
 
+### Agent conversation links and incremental history in desktop 0.0.18
+
+Importing agents now links existing conversations for those workspace agents and
+the built-in Copilot CLI. The same path is available as **Link existing
+conversations** in Settings and Profile. Import none still performs no history
+linking. Agents without recorded history remain empty rather than receiving
+invented sessions.
+
+Links contain only session IDs, recorded initial-agent attribution, titles,
+folders and timestamps. Existing references and the active conversation are
+preserved, duplicate session IDs are merged, and unavailable agent metadata is
+not guessed. No agent definitions, credentials, or transcript bodies are copied.
+
+History is indexed one ACP page at a time. Request-correlated batches of at most
+100 records reach the History dialog and the imported-agent sidebar before the
+complete index finishes. Results from an older request cannot overwrite the
+current view. Bounded metadata reads and the existing file-change-aware cache
+remain in use. Timings separately report connection, listing, metadata indexing,
+first batch and total duration without recording conversation content.
+
+Each sidebar group and canvas card previews up to five chats, retaining the
+active chat even when it falls outside that slice. **View all** opens History
+filtered to the corresponding agent; the underlying conversation references are
+not truncated. This bounds rendering when importing an entire agent catalog.
+
 ### Workspace surfaces in desktop 0.0.17
 
 **New agent** and **New chat** sit beside the Darbot mark at the top of the left
@@ -78,8 +103,9 @@ composer.
 
 The left sidebar groups workspace chats under their agents. **Import agents**
 adds references to existing personal definitions; it does not move or copy them,
-and does not import their entire conversation history. Existing CLI history
-remains available separately through **History**.
+and does not copy conversation transcripts. Starting with 0.0.18, recorded
+conversation references are linked for imported agents; complete CLI history
+also remains available through **History**.
 
 **New agent** writes a new `<name>.agent.md` under the effective Copilot home's
 `agents` directory, using standard name/description YAML frontmatter and Markdown

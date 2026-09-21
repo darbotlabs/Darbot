@@ -2,6 +2,12 @@
 
 ## 0.0.18
 
+- Link imported agents to their actual recorded conversations from first-run,
+  Settings, and Profile, with an explicit relink action and no copied transcripts.
+- Stream bounded, request-correlated history batches before indexing completes,
+  and expose separate connection/listing/metadata timings.
+- Keep large agent catalogs usable with five-chat previews, active-chat
+  visibility, and agent-filtered View all actions without discarding references.
 - Keep the queued first message visible while Copilot opens a conversation and
   explain that configured MCP servers can delay initialization.
 - Give conversation creation and replay a bounded five-minute startup budget.

@@ -142,6 +142,20 @@ export type CopilotHistory = {
   sessions: CopilotHistorySession[];
   agents: { id: string; name: string; conversationCount: number }[];
   warnings: string[];
+  timings?: {
+    connectionMs: number;
+    listingMs: number;
+    indexingMs: number;
+    firstPageMs: number | null;
+    totalMs: number;
+  };
+};
+
+export type CopilotHistoryProgress = {
+  requestId: string | null;
+  phase: "listing" | "indexing";
+  loaded: number;
+  sessions?: CopilotHistorySession[];
 };
 
 export type CopilotPermissionOption = {

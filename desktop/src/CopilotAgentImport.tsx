@@ -51,7 +51,9 @@ export function CopilotAgentImport({
         <Heading id="copilot-import-title">Import agents (optional)</Heading>
         <p className="hint">
           Choose personal Copilot agents for this workspace, or start with none.
-          Nothing is copied, moved, or deleted from your Copilot profile.
+          Selected agents and the built-in Copilot CLI will have their recorded
+          conversations linked. Definitions and message bodies stay with
+          Copilot; nothing is moved or deleted.
         </p>
       </header>
       <label htmlFor="copilot-import-search">Search agents</label>

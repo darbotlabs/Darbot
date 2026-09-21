@@ -1,8 +1,14 @@
 import { getVersion } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CopilotAgentImport } from "./CopilotAgentImport";
+import {
+  groupWorkspaceChats,
+  mergeHistoryBatch,
+  mergeLinkedConversations,
+  previewAgentChats,
+} from "./copilot-conversations";
 import {
   findConfigOption,
   isConfigValueDisabled,
@@ -12,6 +18,7 @@ import {
   type CopilotAvailableCommand,
   type CopilotInventory,
   type CopilotHistory,
+  type CopilotHistoryProgress,
   type CopilotHistorySession,
   type CopilotPermissionRequest,
   type CopilotPromptResult,
@@ -198,7 +205,13 @@ const WORKSPACE_SURFACES = [
 
 type WorkspaceSurface = (typeof WORKSPACE_SURFACES)[number]["id"];
 
-export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
+export function CopilotWorkspace({
+  onBack,
+  initialConversationAgentIds = [],
+}: {
+  onBack: () => void;
+  initialConversationAgentIds?: readonly string[];
+}) {
   const [surface, setSurface] = useState<WorkspaceSurface>("workspace");
   const [location, setLocation] = useState<CopilotWorkspaceLocation | null>(
     null,
@@ -218,6 +231,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
   );
   const [createdAgents, setCreatedAgents] = useState<CopilotAgentSummary[]>([]);
   const [chats, setChats] = useState(readWorkspaceChats);
+  const chatsByAgent = useMemo(() => groupWorkspaceChats(chats), [chats]);
   const [agentName, setAgentName] = useState("");
   const [agentDescription, setAgentDescription] = useState("");
   const [agentInstructions, setAgentInstructions] = useState("");
@@ -267,7 +281,11 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
   const [historySearch, setHistorySearch] = useState("");
   const [visibleHistoryCount, setVisibleHistoryCount] = useState(50);
   const [historyProgress, setHistoryProgress] = useState("");
-  const historyRequestRef = useRef(0);
+  const [linkingConversations, setLinkingConversations] = useState(false);
+  const [linkStatus, setLinkStatus] = useState("");
+  const historyRequestRef = useRef<string | null>(null);
+  const historyLinkAgentIdsRef = useRef<readonly string[] | null>(null);
+  const initialLinkStartedRef = useRef(false);
 
   /** The session whose events currently matter, set before invoking new/load so a load's replay
    * cannot arrive before the listener is ready to recognise it. */
@@ -297,6 +315,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     mountedRef.current = true;
     return () => {
       mountedRef.current = false;
+      historyRequestRef.current = null;
     };
   }, []);
 
@@ -315,6 +334,10 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     const next = [...new Set([...importedAgentIds, ...ids])];
     writeImportedAgentIds(next);
     setImportedAgentIds(next);
+    if (ids.length > 0) {
+      setSurface("canvas");
+      void fetchHistory(true, next);
+    }
   }
 
   function rememberChat(
@@ -645,12 +668,33 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     const runtimeErrors = listen<Problem>("copilot:runtime-error", (event) => {
       setFailure(event.payload);
     });
-    const historyUpdates = listen<{ phase: string; loaded: number }>(
+    const historyUpdates = listen<CopilotHistoryProgress>(
       "copilot:history-progress",
       (event) => {
+        if (
+          !listening ||
+          historyRequestRef.current === null ||
+          event.payload.requestId !== historyRequestRef.current
+        )
+          return;
         setHistoryProgress(
           `${event.payload.phase === "indexing" ? "Linking agents" : "Reading conversations"}: ${event.payload.loaded.toLocaleString()}`,
         );
+        const batch = event.payload.sessions;
+        if (batch?.length) {
+          setSessionsPage((current) => mergeHistoryBatch(current, batch));
+          const agentIds = historyLinkAgentIdsRef.current;
+          if (agentIds) {
+            setChats((current) =>
+              mergeLinkedConversations(
+                current,
+                batch,
+                agentIds,
+                sessionIdRef.current,
+              ),
+            );
+          }
+        }
       },
     );
     Promise.all([
@@ -935,24 +979,75 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     onBack();
   }
 
-  async function fetchHistory(allFolders: boolean) {
-    const request = ++historyRequestRef.current;
+  async function fetchHistory(
+    allFolders: boolean,
+    linkAgentIds?: readonly string[],
+  ) {
+    const request = crypto.randomUUID();
+    historyRequestRef.current = request;
+    historyLinkAgentIdsRef.current = linkAgentIds ?? null;
     setSessionsLoading(true);
+    setSessionsPage(null);
     setSessionsProblem(null);
     setHistoryProgress("Reading conversation history...");
     setVisibleHistoryCount(50);
+    if (linkAgentIds) {
+      setLinkingConversations(true);
+      setLinkStatus("");
+      setSessionsAllFolders(true);
+    }
     try {
       const page = await invoke<CopilotHistory>("copilot_history", {
         cwd: allFolders ? null : (location?.cwd ?? null),
+        requestId: request,
       });
       if (!mountedRef.current || request !== historyRequestRef.current) return;
       setSessionsPage(page);
+      if (linkAgentIds) {
+        setChats((current) =>
+          mergeLinkedConversations(
+            current,
+            page.sessions,
+            linkAgentIds,
+            sessionIdRef.current,
+          ),
+        );
+        const allowed = new Set(["", ...linkAgentIds]);
+        const linked = page.sessions.filter(
+          (item) =>
+            item.agentId !== "__unavailable__" && allowed.has(item.agentId),
+        );
+        const agentCount = new Set(linked.map((item) => item.agentId)).size;
+        setLinkStatus(
+          `Linked ${linked.length.toLocaleString()} conversations across ${agentCount.toLocaleString()} agents.${page.warnings.length ? " Some metadata is unavailable; see History." : ""}`,
+        );
+      }
     } catch (error) {
-      if (mountedRef.current && request === historyRequestRef.current)
+      if (mountedRef.current && request === historyRequestRef.current) {
         setSessionsProblem(asProblem(error));
+        if (linkAgentIds)
+          setLinkStatus(
+            "Conversation linking stopped. Existing links were kept; retry in Settings.",
+          );
+      }
     } finally {
-      if (mountedRef.current && request === historyRequestRef.current)
+      if (mountedRef.current && request === historyRequestRef.current) {
+        historyRequestRef.current = null;
+        historyLinkAgentIdsRef.current = null;
         setSessionsLoading(false);
+        setLinkingConversations(false);
+      }
+    }
+  }
+
+  function openAgentHistory(agentId: string) {
+    setHistoryAgent(agentId);
+    setHistorySearch("");
+    setVisibleHistoryCount(50);
+    setOpenDialog("conversations");
+    if (!sessionsLoading && (!sessionsPage || !sessionsAllFolders)) {
+      setSessionsAllFolders(true);
+      void fetchHistory(true);
     }
   }
 
@@ -966,8 +1061,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
   function openDialogFrom(kind: Exclude<DialogKind, null>) {
     if (kind === "create-agent") setAgentProblem(null);
     setOpenDialog(kind);
-    if (kind === "conversations") {
-      setSessionsPage(null);
+    if (kind === "conversations" && !sessionsLoading) {
       void fetchHistory(sessionsAllFolders);
     }
   }
@@ -1012,6 +1106,20 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     void resolveLocation(readStoredCwd());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (
+      !eventsReady ||
+      !location ||
+      initialLinkStartedRef.current ||
+      initialConversationAgentIds.length === 0
+    )
+      return;
+    initialLinkStartedRef.current = true;
+    setSurface("canvas");
+    void fetchHistory(true, initialConversationAgentIds);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventsReady, location, initialConversationAgentIds]);
 
   // main.tsx already applied this theme before first paint, but had no UI yet to show a failure
   // in. Re-applying the same value here is a harmless no-op on success and, on failure, gives the
@@ -1262,6 +1370,39 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
   const activityMessages = messages.filter(
     (message) => message.role === "activity",
   );
+  const agentManagement = (
+    <section>
+      <h3>Agents</h3>
+      <p>
+        Import personal agent references and link their existing conversations.
+        Definitions and message bodies stay with Copilot.
+      </p>
+      <div className="row">
+        <button
+          type="button"
+          className="quiet"
+          disabled={busy || sessionsLoading}
+          onClick={() => openDialogFrom("import")}
+        >
+          Import agents
+        </button>
+        <button
+          type="button"
+          className="quiet"
+          disabled={busy || sessionsLoading || !eventsReady}
+          onClick={() => void fetchHistory(true, importedAgentIds)}
+        >
+          Link existing conversations
+        </button>
+      </div>
+      {(linkingConversations || linkStatus) && (
+        <p className="hint" role="status">
+          {linkingConversations ? historyProgress : linkStatus}
+        </p>
+      )}
+      {sessionsProblem && <InlineFailure problem={sessionsProblem} />}
+    </section>
+  );
 
   return (
     <main className="copilot-main">
@@ -1292,13 +1433,20 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
           </header>
           <nav className="copilot-chat-navigation" aria-label="Workspace chats">
             <h2>Agents</h2>
+            {(linkingConversations || linkStatus) && (
+              <p className="copilot-chat-link-status" role="status">
+                {linkingConversations ? historyProgress : linkStatus}
+              </p>
+            )}
             <ul className="copilot-sidebar-groups">
               {sidebarAgents.map((agent) => {
-                const agentChats = chats.filter(
-                  (chat) => chat.agentId === agent.id,
+                const agentChats = chatsByAgent.get(agent.id) ?? [];
+                const preview = previewAgentChats(
+                  agentChats,
+                  session?.sessionId ?? null,
                 );
                 return (
-                  <li key={agent.id || "copilot-cli"}>
+                  <li key={agent.id || "copilot-cli"} data-agent-id={agent.id}>
                     <div className="copilot-sidebar-agent">
                       <button
                         type="button"
@@ -1324,7 +1472,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
                     </div>
                     {agentChats.length ? (
                       <ul className="copilot-sidebar-chats">
-                        {agentChats.map((chat) => (
+                        {preview.map((chat) => (
                           <li key={chat.sessionId}>
                             <button
                               ref={
@@ -1347,6 +1495,18 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
                             </button>
                           </li>
                         ))}
+                        {agentChats.length > preview.length && (
+                          <li>
+                            <button
+                              type="button"
+                              className="quiet"
+                              onClick={() => openAgentHistory(agent.id)}
+                            >
+                              View all {agentChats.length.toLocaleString()}{" "}
+                              chats
+                            </button>
+                          </li>
+                        )}
                       </ul>
                     ) : (
                       <p className="hint">No chats yet</p>
@@ -1525,14 +1685,21 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
                 </p>
               </div>
               <ul className="copilot-agent-canvas">
-                {sidebarAgents.map((agent) => (
-                  <li key={agent.id || "copilot-cli"}>
-                    <h3>{agent.name}</h3>
-                    <p>{agent.description || "Copilot agent"}</p>
-                    <ul className="copilot-canvas-chats">
-                      {chats
-                        .filter((chat) => chat.agentId === agent.id)
-                        .map((chat) => (
+                {sidebarAgents.map((agent) => {
+                  const agentChats = chatsByAgent.get(agent.id) ?? [];
+                  const preview = previewAgentChats(
+                    agentChats,
+                    session?.sessionId ?? null,
+                  );
+                  return (
+                    <li
+                      key={agent.id || "copilot-cli"}
+                      data-agent-id={agent.id}
+                    >
+                      <h3>{agent.name}</h3>
+                      <p>{agent.description || "Copilot agent"}</p>
+                      <ul className="copilot-canvas-chats">
+                        {preview.map((chat) => (
                           <li key={chat.sessionId}>
                             <button
                               type="button"
@@ -1544,18 +1711,31 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
                             </button>
                           </li>
                         ))}
-                    </ul>
-                    <button
-                      type="button"
-                      disabled={
-                        busy || !eventsReady || disabledAgentIds.has(agent.id)
-                      }
-                      onClick={() => void startSession(agent.id)}
-                    >
-                      New chat
-                    </button>
-                  </li>
-                ))}
+                      </ul>
+                      {agentChats.length === 0 && (
+                        <p className="hint">No linked conversations yet.</p>
+                      )}
+                      {agentChats.length > preview.length && (
+                        <button
+                          type="button"
+                          className="quiet"
+                          onClick={() => openAgentHistory(agent.id)}
+                        >
+                          View all {agentChats.length.toLocaleString()} chats
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        disabled={
+                          busy || !eventsReady || disabledAgentIds.has(agent.id)
+                        }
+                        onClick={() => void startSession(agent.id)}
+                      >
+                        New chat
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
             <div
@@ -1805,20 +1985,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
           </button>
         </div>
         <div className="copilot-dialog-body">
-          <section>
-            <h3>Agents</h3>
-            <p>
-              Import references to your existing Copilot agents without copying
-              their definitions.
-            </p>
-            <button
-              type="button"
-              className="quiet"
-              onClick={() => openDialogFrom("import")}
-            >
-              Import agents
-            </button>
-          </section>
+          {agentManagement}
           <section>
             <h3>Appearance</h3>
             <label htmlFor="copilot-theme">Theme</label>
@@ -1994,16 +2161,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
         </div>
         <div className="copilot-dialog-body">
           <p>Darbot desktop {appVersion ?? "version unavailable"}</p>
-          <section>
-            <h3>Agents</h3>
-            <button
-              type="button"
-              className="quiet"
-              onClick={() => openDialogFrom("import")}
-            >
-              Import agents
-            </button>
-          </section>
+          {agentManagement}
           <section>
             <h3>Model providers</h3>
             <h4 className="copilot-provider-label">
@@ -2201,7 +2359,6 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
             <select
               id="copilot-history-agent"
               value={historyAgent}
-              disabled={sessionsLoading}
               onChange={(event) => {
                 setHistoryAgent(event.target.value);
                 setVisibleHistoryCount(50);
@@ -2252,6 +2409,18 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
             <p className="hint">
               {filteredHistory.length.toLocaleString()} matching conversations
             </p>
+          )}
+          {sessionsPage?.timings && (
+            <details className="detail-of">
+              <summary>History indexing timings</summary>
+              <p>
+                Connection: {sessionsPage.timings.connectionMs} ms. Listing:{" "}
+                {sessionsPage.timings.listingMs} ms. Agent metadata:{" "}
+                {sessionsPage.timings.indexingMs} ms. First batch:{" "}
+                {sessionsPage.timings.firstPageMs ?? "no conversations"} ms.
+                Total: {sessionsPage.timings.totalMs} ms.
+              </p>
+            </details>
           )}
           <ul className="copilot-resource-list copilot-resource-list-plain">
             {filteredHistory.length === 0 && !sessionsLoading ? (

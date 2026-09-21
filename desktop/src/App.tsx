@@ -93,6 +93,8 @@ export function App() {
   const [importingAgents, setImportingAgents] = useState(
     () => readImportedAgentIds() === null,
   );
+  const [initialConversationAgentIds, setInitialConversationAgentIds] =
+    useState<string[]>([]);
   /** Model credentials a previous run already wrote, so the provider screen arrives filled in. */
   const [alreadyHeld, setAlreadyHeld] = useState<HeldConfiguration>({});
   /*
@@ -441,6 +443,7 @@ export function App() {
                 ]);
                 writeStoredAgentId("");
                 writeOpenCopilot(true);
+                setInitialConversationAgentIds(ids);
                 setImportingAgents(false);
               }}
               onBack={() => {
@@ -455,7 +458,9 @@ export function App() {
     }
     return (
       <CopilotWorkspace
+        initialConversationAgentIds={initialConversationAgentIds}
         onBack={() => {
+          setInitialConversationAgentIds([]);
           writeOpenCopilot(false);
           setCopilotMode(false);
           setStep("model");

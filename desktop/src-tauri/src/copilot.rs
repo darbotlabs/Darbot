@@ -12,7 +12,7 @@ use std::process::{Child, ChildStdin, Stdio};
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::mpsc::{self, Receiver, Sender};
 use std::sync::{Arc, Mutex, Weak};
-use std::time::{Duration, SystemTime};
+use std::time::{Duration, Instant, SystemTime};
 
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
@@ -28,6 +28,7 @@ const ACP_PROMPT_TIMEOUT: Duration = Duration::from_secs(30 * 60);
 const STDERR_TIMEOUT: Duration = Duration::from_secs(1);
 const DIAGNOSTIC_LIMIT: usize = 16 * 1024;
 const AGENT_METADATA_LIMIT: usize = 2 * 1024 * 1024;
+const HISTORY_BATCH_SIZE: usize = 100;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "kebab-case")]
@@ -174,6 +175,17 @@ pub struct CopilotHistory {
     pub sessions: Vec<CopilotHistorySession>,
     pub agents: Vec<CopilotHistoryAgent>,
     pub warnings: Vec<String>,
+    pub timings: CopilotHistoryTimings,
+}
+
+#[derive(Clone, Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CopilotHistoryTimings {
+    pub connection_ms: u128,
+    pub listing_ms: u128,
+    pub indexing_ms: u128,
+    pub first_page_ms: Option<u128>,
+    pub total_ms: u128,
 }
 
 #[derive(Clone)]
@@ -298,23 +310,113 @@ impl CopilotRuntimeState {
         &self,
         app: &AppHandle<R>,
         cwd: Option<String>,
+        request_id: Option<String>,
     ) -> Result<CopilotHistory, Problem> {
+        let started = Instant::now();
         let runtime = self.connected(app)?;
+        let connection_ms = started.elapsed().as_millis();
+        let mut listing_time = Duration::ZERO;
+        let mut indexing_time = Duration::ZERO;
+        let mut first_page_ms = None;
         let mut cursor = None;
         let mut cursors = HashSet::new();
         let mut seen = HashSet::new();
-        let mut sessions = Vec::new();
+        let mut root = None;
+        let mut agents = BTreeMap::<String, CopilotHistoryAgent>::new();
+        let mut history = Vec::new();
+        let mut unavailable = 0;
+        let mut warnings = Vec::new();
         loop {
+            let listing_started = Instant::now();
             let page = runtime.sessions(cursor, cwd.clone())?;
-            sessions.extend(
-                page.sessions
-                    .into_iter()
-                    .filter(|session| seen.insert(session.session_id.clone())),
-            );
+            listing_time += listing_started.elapsed();
             let _ = app.emit(
                 "copilot:history-progress",
-                json!({"phase": "listing", "loaded": sessions.len()}),
+                json!({
+                    "requestId": request_id,
+                    "phase": "listing",
+                    "loaded": history.len(),
+                }),
             );
+            let indexing_started = Instant::now();
+            if !page.sessions.is_empty() && root.is_none() {
+                root = Some(
+                    copilot_home()?
+                        .join("session-state")
+                        .canonicalize()
+                        .map_err(|error| {
+                            Problem::with(
+                                "Copilot session metadata could not be located.",
+                                error.to_string(),
+                            )
+                        })?,
+                );
+            }
+            let mut batch = Vec::new();
+            for session in page.sessions {
+                if !seen.insert(session.session_id.clone()) {
+                    continue;
+                }
+                let root = root.as_ref().ok_or_else(|| {
+                    Problem::plain("Copilot session metadata could not be located.")
+                })?;
+                let agent_id = match self.history_agent(root, &session.session_id) {
+                    Ok(agent) => agent.unwrap_or_default(),
+                    Err(problem) => {
+                        unavailable += 1;
+                        if warnings.len() < 3 && !warnings.contains(&problem.said) {
+                            warnings.push(problem.said);
+                        }
+                        "__unavailable__".into()
+                    }
+                };
+                let agent_name = match agent_id.as_str() {
+                    "" => "Copilot CLI".to_string(),
+                    "__unavailable__" => "Agent unavailable".to_string(),
+                    name => name.to_string(),
+                };
+                agents
+                    .entry(agent_id.clone())
+                    .or_insert_with(|| CopilotHistoryAgent {
+                        id: agent_id.clone(),
+                        name: agent_name.clone(),
+                        conversation_count: 0,
+                    })
+                    .conversation_count += 1;
+                let entry = CopilotHistorySession {
+                    session,
+                    agent_id,
+                    agent_name,
+                };
+                batch.push(entry.clone());
+                history.push(entry);
+                if batch.len() == HISTORY_BATCH_SIZE {
+                    first_page_ms.get_or_insert_with(|| started.elapsed().as_millis());
+                    let _ = app.emit(
+                        "copilot:history-progress",
+                        json!({
+                            "requestId": request_id,
+                            "phase": "indexing",
+                            "loaded": history.len(),
+                            "sessions": batch,
+                        }),
+                    );
+                    batch.clear();
+                }
+            }
+            if !batch.is_empty() {
+                first_page_ms.get_or_insert_with(|| started.elapsed().as_millis());
+                let _ = app.emit(
+                    "copilot:history-progress",
+                    json!({
+                        "requestId": request_id,
+                        "phase": "indexing",
+                        "loaded": history.len(),
+                        "sessions": batch,
+                    }),
+                );
+            }
+            indexing_time += indexing_started.elapsed();
             cursor = nonempty(page.next_cursor);
             let Some(next) = cursor.as_ref() else {
                 break;
@@ -325,60 +427,6 @@ impl CopilotRuntimeState {
                 ));
             }
         }
-        if sessions.is_empty() {
-            return Ok(CopilotHistory {
-                sessions: Vec::new(),
-                agents: Vec::new(),
-                warnings: Vec::new(),
-            });
-        }
-        let root = copilot_home()?.join("session-state");
-        let root = root.canonicalize().map_err(|error| {
-            Problem::with(
-                "Copilot session metadata could not be located.",
-                error.to_string(),
-            )
-        })?;
-        let mut agents = BTreeMap::<String, CopilotHistoryAgent>::new();
-        let mut history = Vec::with_capacity(sessions.len());
-        let mut unavailable = 0;
-        let mut warnings = Vec::new();
-        for session in sessions {
-            let agent_id = match self.history_agent(&root, &session.session_id) {
-                Ok(agent) => agent.unwrap_or_default(),
-                Err(problem) => {
-                    unavailable += 1;
-                    if warnings.len() < 3 && !warnings.contains(&problem.said) {
-                        warnings.push(problem.said);
-                    }
-                    "__unavailable__".into()
-                }
-            };
-            let agent_name = match agent_id.as_str() {
-                "" => "Copilot CLI".to_string(),
-                "__unavailable__" => "Agent unavailable".to_string(),
-                name => name.to_string(),
-            };
-            agents
-                .entry(agent_id.clone())
-                .or_insert_with(|| CopilotHistoryAgent {
-                    id: agent_id.clone(),
-                    name: agent_name.clone(),
-                    conversation_count: 0,
-                })
-                .conversation_count += 1;
-            history.push(CopilotHistorySession {
-                session,
-                agent_id,
-                agent_name,
-            });
-            if history.len() % 100 == 0 {
-                let _ = app.emit(
-                    "copilot:history-progress",
-                    json!({"phase": "indexing", "loaded": history.len()}),
-                );
-            }
-        }
         if unavailable > 0 {
             warnings.insert(0, format!(
                 "Agent metadata was unavailable for {unavailable} conversations. They are marked Agent unavailable rather than assigned to the wrong agent."
@@ -386,10 +434,23 @@ impl CopilotRuntimeState {
         }
         let mut agents: Vec<_> = agents.into_values().collect();
         agents.sort_by_key(|agent| (!agent.id.is_empty(), agent.name.to_ascii_lowercase()));
+        let timings = CopilotHistoryTimings {
+            connection_ms,
+            listing_ms: listing_time.as_millis(),
+            indexing_ms: indexing_time.as_millis(),
+            first_page_ms,
+            total_ms: started.elapsed().as_millis(),
+        };
+        eprintln!(
+            "Darbot Copilot history: {} conversations; connection {} ms, listing {} ms, metadata {} ms, first page {:?} ms, total {} ms.",
+            history.len(), timings.connection_ms, timings.listing_ms, timings.indexing_ms,
+            timings.first_page_ms, timings.total_ms
+        );
         Ok(CopilotHistory {
             sessions: history,
             agents,
             warnings,
+            timings,
         })
     }
 
