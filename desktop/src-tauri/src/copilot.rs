@@ -23,6 +23,7 @@ use crate::quiet;
 
 const ACP_TIMEOUT: Duration = Duration::from_secs(15);
 const ACP_SESSION_TIMEOUT: Duration = Duration::from_secs(120);
+const ACP_SESSION_OPEN_TIMEOUT: Duration = Duration::from_secs(5 * 60);
 const ACP_PROMPT_TIMEOUT: Duration = Duration::from_secs(30 * 60);
 const STDERR_TIMEOUT: Duration = Duration::from_secs(1);
 const DIAGNOSTIC_LIMIT: usize = 16 * 1024;
@@ -716,12 +717,26 @@ impl CopilotRuntime {
     }
 
     fn new_session(&self, cwd: String, agent: Option<String>) -> Result<CopilotSession, Problem> {
-        let result = self.core.request(
-            "session/new",
-            json!({"cwd": cwd, "mcpServers": []}),
-            ACP_SESSION_TIMEOUT,
-        )?;
+        let result = self.open_session("session/new", json!({"cwd": cwd, "mcpServers": []}))?;
         self.prepare_session(parse_session(result, cwd)?, agent)
+    }
+
+    fn open_session(&self, method: &str, params: Value) -> Result<Value, Problem> {
+        self.core
+            .request_with_timeout(method, params, ACP_SESSION_OPEN_TIMEOUT, || {
+                // The CLI can finish creating or loading a session after our deadline. Retire
+                // this owned runtime before returning, rather than orphaning an active session.
+                self.stop();
+                Problem::with(
+                    "Copilot took too long to open the conversation. Darbot closed its runtime \
+                     to prevent an untracked session. Your message was not sent. Check unavailable \
+                     MCP servers in Resources, then start or reopen the conversation.",
+                    format!(
+                        "ACP {method} exceeded {} seconds; the owned CLI runtime was stopped.",
+                        ACP_SESSION_OPEN_TIMEOUT.as_secs()
+                    ),
+                )
+            })
     }
 
     fn load_session(
@@ -761,10 +776,9 @@ impl CopilotRuntime {
     ) -> Result<CopilotSession, Problem> {
         let session_id = required_text(session_id, "session ID")?;
         let cwd = session_root(&cwd)?;
-        let result = self.core.request(
+        let result = self.open_session(
             method,
             json!({"sessionId": session_id, "cwd": cwd, "mcpServers": []}),
-            ACP_SESSION_TIMEOUT,
         )?;
         self.prepare_session(parse_session_setup(session_id, cwd, result)?, agent)
     }
@@ -953,6 +967,21 @@ impl Drop for CopilotRuntime {
 
 impl RuntimeCore {
     fn request(&self, method: &str, params: Value, timeout: Duration) -> Result<Value, Problem> {
+        self.request_with_timeout(method, params, timeout, || {
+            Problem::with(
+                "GitHub Copilot did not answer in time. Cancel the operation and try again.",
+                format!("ACP {method} exceeded {} seconds.", timeout.as_secs()),
+            )
+        })
+    }
+
+    fn request_with_timeout(
+        &self,
+        method: &str,
+        params: Value,
+        timeout: Duration,
+        on_timeout: impl FnOnce() -> Problem,
+    ) -> Result<Value, Problem> {
         if self.closed.load(Ordering::SeqCst) {
             return Err(self.closed_problem());
         }
@@ -969,17 +998,12 @@ impl RuntimeCore {
             self.pending.lock().unwrap().remove(&key);
             return Err(problem);
         }
-        receiver
-            .recv_timeout(timeout)
-            .map_err(|error| match error {
-                mpsc::RecvTimeoutError::Timeout => {
-                    self.pending.lock().unwrap().remove(&key);
-                    Problem::plain(
-                    "GitHub Copilot did not answer in time. Cancel the operation and try again.",
-                )
-                }
-                mpsc::RecvTimeoutError::Disconnected => self.closed_problem(),
-            })?
+        let result =
+            wait_for_runtime_response(receiver, timeout, on_timeout, || self.closed_problem());
+        if result.is_err() {
+            self.pending.lock().unwrap().remove(&key);
+        }
+        result
     }
 
     fn notify(&self, method: &str, params: Value) -> Result<(), Problem> {
@@ -1059,6 +1083,19 @@ impl RuntimeCore {
             "GitHub Copilot closed before it answered. Reconnect and try again.",
             self.stderr.lock().unwrap().clone(),
         )
+    }
+}
+
+fn wait_for_runtime_response(
+    receiver: Receiver<Result<Value, Problem>>,
+    timeout: Duration,
+    on_timeout: impl FnOnce() -> Problem,
+    on_disconnect: impl FnOnce() -> Problem,
+) -> Result<Value, Problem> {
+    match receiver.recv_timeout(timeout) {
+        Ok(response) => response,
+        Err(mpsc::RecvTimeoutError::Timeout) => Err(on_timeout()),
+        Err(mpsc::RecvTimeoutError::Disconnected) => Err(on_disconnect()),
     }
 }
 
@@ -2167,6 +2204,82 @@ fn nonempty(value: Option<String>) -> Option<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn session_open_budget_allows_slow_mcp_initialization_but_is_bounded() {
+        assert_eq!(ACP_SESSION_OPEN_TIMEOUT, Duration::from_secs(300));
+        assert!(ACP_SESSION_OPEN_TIMEOUT > ACP_SESSION_TIMEOUT);
+        assert!(ACP_SESSION_OPEN_TIMEOUT < ACP_PROMPT_TIMEOUT);
+    }
+
+    #[test]
+    fn runtime_timeout_runs_cleanup_before_returning_and_rejects_late_results() {
+        let (sender, receiver) = mpsc::channel();
+        let stopped = AtomicBool::new(false);
+        let problem = Problem::plain("The owned runtime was stopped.");
+        let result = wait_for_runtime_response(
+            receiver,
+            Duration::ZERO,
+            || {
+                stopped.store(true, Ordering::SeqCst);
+                problem.clone()
+            },
+            || panic!("A live sender must not be reported as disconnected."),
+        );
+        assert_eq!(result, Err(problem));
+        assert!(stopped.load(Ordering::SeqCst));
+        assert!(sender
+            .send(Ok(json!({"sessionId": "late-session"})))
+            .is_err());
+    }
+
+    #[test]
+    fn runtime_response_does_not_retire_a_healthy_connection() {
+        let (sender, receiver) = mpsc::channel();
+        let response = json!({"sessionId": "ready-session"});
+        sender.send(Ok(response.clone())).unwrap();
+        assert_eq!(
+            wait_for_runtime_response(
+                receiver,
+                Duration::ZERO,
+                || panic!("A ready response must not trigger timeout cleanup."),
+                || panic!("A ready response must not be reported as disconnected."),
+            ),
+            Ok(response)
+        );
+    }
+
+    #[test]
+    fn runtime_refusal_preserves_the_actual_problem_without_timeout_cleanup() {
+        let (sender, receiver) = mpsc::channel();
+        let problem = Problem::with("Copilot refused this request.", "Protocol rejection");
+        sender.send(Err(problem.clone())).unwrap();
+        assert_eq!(
+            wait_for_runtime_response(
+                receiver,
+                Duration::ZERO,
+                || panic!("A protocol refusal must not trigger timeout cleanup."),
+                || panic!("A protocol refusal must not be reported as disconnected."),
+            ),
+            Err(problem)
+        );
+    }
+
+    #[test]
+    fn runtime_disconnect_is_not_reported_as_a_timeout() {
+        let (sender, receiver) = mpsc::channel();
+        drop(sender);
+        let problem = Problem::plain("The Copilot connection closed.");
+        assert_eq!(
+            wait_for_runtime_response(
+                receiver,
+                Duration::ZERO,
+                || panic!("A disconnected channel must not trigger timeout cleanup."),
+                || problem.clone(),
+            ),
+            Err(problem)
+        );
+    }
 
     #[test]
     fn initialization_maps_only_negotiated_capabilities() {

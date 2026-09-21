@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.18
+
+- Keep the queued first message visible while Copilot opens a conversation and
+  explain that configured MCP servers can delay initialization.
+- Give conversation creation and replay a bounded five-minute startup budget.
+  On timeout, stop Darbot's owned CLI runtime before returning the error so a
+  late response cannot leave an untracked, already-loaded session behind.
+- Clear incomplete replay messages after a failed load and show an explicit
+  conversation-opening failure instead of a misleading Ready status.
+
 ## 0.0.17
 
 - Match the native workspace layout with stacked New agent/New chat actions,

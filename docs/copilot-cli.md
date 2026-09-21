@@ -16,6 +16,24 @@ The integration targets:
 
 ACP v2 is currently a draft and is not a release baseline.
 
+### Conversation opening in desktop 0.0.18
+
+Starting or loading a conversation can initialize the CLI's configured MCP
+servers. Slow or unavailable servers can exceed the previous two-minute
+deadline. These operations now have a bounded five-minute budget, separate from
+normal ACP requests and prompt execution. Darbot does not change MCP endpoints,
+disable integrations, or bypass their authentication.
+
+The first message remains visible in the disabled composer while opening. If
+the deadline expires, Darbot stops only its owned CLI runtime before returning
+an actionable error. A late session response cannot be reused accidentally or
+leave an already-loaded session in that connection. Retrying starts a fresh
+connection; there is no automatic retry or duplicate prompt submission.
+
+A failed replay clears its incomplete display and reports that the conversation
+did not open. This improves timeout recovery in issue #6; it does not implement
+durable draft identities or change the CLI's empty-session persistence.
+
 ### Workspace surfaces in desktop 0.0.17
 
 **New agent** and **New chat** sit beside the Darbot mark at the top of the left
@@ -45,9 +63,10 @@ The official GitHub Copilot mark is vendored from Primer Octicons under MIT;
 Profile includes its attribution and license. No private reference assets or
 implementation are included.
 
-Existing empty-session persistence and timed-out replay recovery remain tracked
-in [issue #6](https://github.com/darbotlabs/Darbot/issues/6). Moving between tabs
-avoids runtime reloads; it does not claim to fix those lifecycle problems.
+Empty-session persistence and the remaining conversation-lifecycle work remain
+tracked in [issue #6](https://github.com/darbotlabs/Darbot/issues/6). Moving between
+tabs avoids runtime reloads; the 0.0.18 timeout handling above does not implement
+durable drafts.
 
 ### Optional agent import in desktop 0.0.16
 

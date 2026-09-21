@@ -233,6 +233,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [prompt, setPrompt] = useState("");
   const [busy, setBusy] = useState(false);
+  const [openingSession, setOpeningSession] = useState(false);
   const [eventsReady, setEventsReady] = useState(false);
   const [statusText, setStatusText] = useState("Ready");
   const [failure, setFailure] = useState<Problem | null>(null);
@@ -700,7 +701,10 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     }
   }
 
-  async function startSession(agentId: string): Promise<CopilotSession | null> {
+  async function startSession(
+    agentId: string,
+    pendingPrompt?: string,
+  ): Promise<CopilotSession | null> {
     if (!location) return null;
     setSurface("workspace");
     setBusy(true);
@@ -708,6 +712,9 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     try {
       const closed = await closeSessionSafely();
       if (!closed) return null;
+      if (pendingPrompt !== undefined) setPrompt(pendingPrompt);
+      setOpeningSession(true);
+      setStatusText("Opening conversation");
       creatingSessionRef.current = true;
       initialUpdatesRef.current = [];
       const next = await invoke<CopilotSession>("copilot_session_new", {
@@ -726,12 +733,18 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
       setStatusText("Ready");
       return next;
     } catch (error) {
-      if (mountedRef.current) setFailure(asProblem(error));
+      if (mountedRef.current) {
+        setStatusText("Conversation not opened");
+        setFailure(asProblem(error));
+      }
       return null;
     } finally {
       creatingSessionRef.current = false;
       initialUpdatesRef.current = [];
-      if (mountedRef.current) setBusy(false);
+      if (mountedRef.current) {
+        setOpeningSession(false);
+        setBusy(false);
+      }
     }
   }
 
@@ -750,6 +763,8 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     try {
       const closed = await closeSessionSafely();
       if (!closed) return;
+      setOpeningSession(true);
+      setStatusText("Opening conversation");
       // Set before invoking so a replay burst starting mid-load is never missed.
       sessionIdRef.current = target.sessionId;
       // Cleared in `finally` below: replay for this sessionId only spans the invoke call.
@@ -770,10 +785,21 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
       setOpenDialog(null);
       setStatusText("Ready");
     } catch (error) {
-      if (mountedRef.current) setFailure(asProblem(error));
+      if (mountedRef.current) {
+        sessionIdRef.current = null;
+        setMessages([]);
+        setPermissions([]);
+        setAvailableCommands([]);
+        toolCallMessageIds.current.clear();
+        setStatusText("Conversation not opened");
+        setFailure(asProblem(error));
+      }
     } finally {
       replayingSessionIdRef.current = null;
-      if (mountedRef.current) setBusy(false);
+      if (mountedRef.current) {
+        setOpeningSession(false);
+        setBusy(false);
+      }
     }
   }
 
@@ -822,7 +848,8 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
   async function sendPrompt() {
     const text = prompt.trim();
     if (!text || busy || !eventsReady) return;
-    const activeSession = session ?? (await startSession(selectedAgentId));
+    const activeSession =
+      session ?? (await startSession(selectedAgentId, text));
     if (!activeSession) {
       setPrompt(text);
       return;
@@ -1420,7 +1447,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
                   </p>
                 </div>
                 <span className="copilot-runtime-state" aria-live="polite">
-                  {busy ? "Working" : statusText}
+                  {busy ? (openingSession ? "Opening" : "Working") : statusText}
                 </span>
               </div>
               <div className="copilot-messages-wrap">
@@ -1443,8 +1470,10 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
                           : `What should ${currentAgent.name} work on?`}
                       </h2>
                       <p>
-                        {currentAgent.description ||
-                          "Describe a task below. Your agents and chats stay in the sidebar."}
+                        {openingSession
+                          ? "Copilot is opening this conversation and initializing its configured tools. Slow MCP servers can delay this step; Darbot waits up to five minutes."
+                          : currentAgent.description ||
+                            "Describe a task below. Your agents and chats stay in the sidebar."}
                       </p>
                     </div>
                   ) : (
