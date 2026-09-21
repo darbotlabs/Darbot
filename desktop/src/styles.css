@@ -830,6 +830,7 @@ html[data-copilot-theme="dark"] {
 
 .copilot-canvas-chats {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.3rem;
   list-style: none;
   padding: 0;

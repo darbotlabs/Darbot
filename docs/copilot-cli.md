@@ -16,6 +16,16 @@ The integration targets:
 
 ACP v2 is currently a draft and is not a release baseline.
 
+### Canvas bounds in desktop 0.0.20
+
+Chat preview grids use a zero-minimum, bounded column so ellipsized titles do not
+stretch the canvas's internal scroll area. Native acceptance measures each
+surface's scroll width as well as the document width at compact and normal
+window sizes; document-only overflow checks are insufficient.
+
+Tool activity IDs are allocated before the React state updater, keeping updates
+repeatable if React retries an updater.
+
 ### Native review refinements in desktop 0.0.19
 
 Partial tool updates retain the action's original title and requested input

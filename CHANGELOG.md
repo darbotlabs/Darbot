@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.20
+
+- Bound the canvas chat grid's intrinsic column size so long, single-line titles
+  do not force horizontal scrolling inside the canvas.
+- Assign tool activity IDs outside React state updaters so updater retries do
+  not drop an activity row.
+
 ## 0.0.19
 
 - Preserve tool names, requested input and latest output when partial CLI

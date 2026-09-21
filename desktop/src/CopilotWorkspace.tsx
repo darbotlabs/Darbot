@@ -564,22 +564,22 @@ export function CopilotWorkspace({
     toolCallId: string,
     update: Partial<CopilotToolActivity>,
   ) {
+    const id =
+      toolCallMessageIds.current.get(toolCallId) ?? nextMessageId.current++;
+    toolCallMessageIds.current.set(toolCallId, id);
     setMessages((current) => {
-      const existingId = toolCallMessageIds.current.get(toolCallId);
-      const previous = current.find((message) => message.id === existingId);
+      const previous = current.find((message) => message.id === id);
       const activity = mergeToolActivity(previous?.toolActivity, update);
       const text = activity.status
         ? `${activity.title}: ${activity.status}`
         : activity.title;
-      if (existingId != null) {
+      if (previous) {
         return current.map((message) =>
-          message.id === existingId
+          message.id === id
             ? { ...message, text, raw: activity, toolActivity: activity }
             : message,
         );
       }
-      const id = nextMessageId.current++;
-      toolCallMessageIds.current.set(toolCallId, id);
       return [
         ...current,
         { id, role: "activity", text, raw: activity, toolActivity: activity },
