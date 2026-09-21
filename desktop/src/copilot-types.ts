@@ -185,3 +185,22 @@ export type CopilotAvailableCommand = {
 export type CopilotPromptResult = {
   stopReason: string;
 };
+
+export type CopilotToolActivity = {
+  title: string;
+  status?: string;
+  input?: unknown;
+  output?: unknown;
+};
+
+export function mergeToolActivity(
+  previous: CopilotToolActivity | undefined,
+  update: Partial<CopilotToolActivity>,
+): CopilotToolActivity {
+  return {
+    title: update.title?.trim() || previous?.title || "Tool call",
+    status: update.status ?? previous?.status,
+    input: update.input ?? previous?.input,
+    output: update.output ?? previous?.output,
+  };
+}

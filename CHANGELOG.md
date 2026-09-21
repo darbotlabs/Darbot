@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.19
+
+- Preserve tool names, requested input and latest output when partial CLI
+  activity updates arrive; completion no longer replaces the real action name
+  with a generic label.
+- Keep long conversation titles to one preview line on the canvas, with the full
+  title available on hover, so a large imported history does not stretch cards.
+
 ## 0.0.18
 
 - Link imported agents to their actual recorded conversations from first-run,

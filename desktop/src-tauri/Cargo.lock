@@ -650,7 +650,7 @@ checksum = "52560adf09603e58c9a7ee1fe1dcb95a16927b17c127f0ac02d6e768a0e25bc1"
 
 [[package]]
 name = "darbot-desktop"
-version = "0.0.18"
+version = "0.0.19"
 dependencies = [
  "base64 0.22.1",
  "flate2",

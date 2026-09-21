@@ -838,9 +838,11 @@ html[data-copilot-theme="dark"] {
 
 .copilot-canvas-chats button {
   width: 100%;
+  min-width: 0;
   text-align: left;
-  white-space: normal;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .copilot-cli-activity {

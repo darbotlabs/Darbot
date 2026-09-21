@@ -16,6 +16,17 @@ The integration targets:
 
 ACP v2 is currently a draft and is not a release baseline.
 
+### Native review refinements in desktop 0.0.19
+
+Partial tool updates retain the action's original title and requested input
+alongside its latest output. A completion-only update changes status rather than
+relabeling the action as an anonymous tool call. These details remain in the
+live conversation view; persisted chat references still contain metadata only.
+
+Canvas chat previews truncate long titles to one line and expose the complete
+title on hover. This complements the five-chat preview limit when an entire
+agent catalog is imported.
+
 ### Conversation opening in desktop 0.0.18
 
 Starting or loading a conversation can initialize the CLI's configured MCP

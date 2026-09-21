@@ -12,6 +12,7 @@ import {
 import {
   findConfigOption,
   isConfigValueDisabled,
+  mergeToolActivity,
   type ConfigOption,
   type ConfigOptionValue,
   type CopilotAgentSummary,
@@ -25,6 +26,7 @@ import {
   type CopilotSession,
   type CopilotSessionUpdate,
   type CopilotStatus,
+  type CopilotToolActivity,
   type CopilotWorkspaceLocation,
   type CopilotWorkspaceChat,
 } from "./copilot-types";
@@ -57,6 +59,7 @@ type Message = {
   /** Dedup key for one-shot activity notices (e.g. "thinking") so repeats don't pile up. */
   activityKey?: string;
   raw?: unknown;
+  toolActivity?: CopilotToolActivity;
 };
 
 type DialogKind =
@@ -559,21 +562,28 @@ export function CopilotWorkspace({
 
   function appendToolCallMessage(
     toolCallId: string,
-    title: string,
-    status: string | undefined,
-    raw: unknown,
+    update: Partial<CopilotToolActivity>,
   ) {
     setMessages((current) => {
-      const text = status ? `${title}: ${status}` : title;
       const existingId = toolCallMessageIds.current.get(toolCallId);
+      const previous = current.find((message) => message.id === existingId);
+      const activity = mergeToolActivity(previous?.toolActivity, update);
+      const text = activity.status
+        ? `${activity.title}: ${activity.status}`
+        : activity.title;
       if (existingId != null) {
         return current.map((message) =>
-          message.id === existingId ? { ...message, text, raw } : message,
+          message.id === existingId
+            ? { ...message, text, raw: activity, toolActivity: activity }
+            : message,
         );
       }
       const id = nextMessageId.current++;
       toolCallMessageIds.current.set(toolCallId, id);
-      return [...current, { id, role: "activity", text, raw }];
+      return [
+        ...current,
+        { id, role: "activity", text, raw: activity, toolActivity: activity },
+      ];
     });
   }
 
@@ -601,12 +611,12 @@ export function CopilotWorkspace({
       case "tool_call_update": {
         const toolCallId = String(update.toolCallId ?? "");
         if (!toolCallId) break;
-        const title = String(update.title ?? "Tool call");
-        const status =
-          typeof update.status === "string" ? update.status : undefined;
-        const raw =
-          update.content ?? update.rawOutput ?? update.rawInput ?? update;
-        appendToolCallMessage(toolCallId, title, status, raw);
+        appendToolCallMessage(toolCallId, {
+          title: typeof update.title === "string" ? update.title : undefined,
+          status: typeof update.status === "string" ? update.status : undefined,
+          input: update.rawInput,
+          output: update.content ?? update.rawOutput,
+        });
         break;
       }
       case "available_commands_update": {
@@ -1704,6 +1714,7 @@ export function CopilotWorkspace({
                             <button
                               type="button"
                               className="quiet"
+                              title={chat.title}
                               disabled={busy || !eventsReady}
                               onClick={() => void loadSession(chat)}
                             >
