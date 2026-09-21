@@ -16,12 +16,46 @@ The integration targets:
 
 ACP v2 is currently a draft and is not a release baseline.
 
-### Optional agent import and canvas in desktop 0.0.16
+### Workspace surfaces in desktop 0.0.17
+
+**New agent** and **New chat** sit beside the Darbot mark at the top of the left
+sidebar. Copilot CLI remains available as the built-in agent even when no custom
+agents are imported. The sidebar groups each agent's chats and keeps
+**Resources**, **History**, **Settings**, and **Profile** at the bottom.
+
+The keyboard-accessible main tabs are **Your workspace** for conversation text,
+**Your canvas** for the actual agents and saved chat references, and **Your CLI**
+for live tool activity and its output. Switching surfaces does not close the
+runtime, clear a draft, or interrupt a pending approval. The CLI surface is an
+activity viewer, not a terminal or arbitrary command execution interface.
+
+The composer stays available on all three surfaces. Enter submits the message;
+Shift+Enter inserts a newline. With no active session, sending first opens a real
+Copilot session. Adding a skill or command only inserts text and does not start
+or run a session.
+
+**Import agents** is available from Settings and Profile, not the sidebar.
+Profile's **Model providers** section describes the actual Copilot connection;
+model and reasoning settings remain runtime-negotiated in Settings. Other
+providers still require the separate container deployment setup. Profile-scoped
+multi-provider routing, lavamem, OneDrive/MSAL, and an independent terminal are
+not implemented by these UI tabs.
+
+The official GitHub Copilot mark is vendored from Primer Octicons under MIT;
+Profile includes its attribution and license. No private reference assets or
+implementation are included.
+
+Existing empty-session persistence and timed-out replay recovery remain tracked
+in [issue #6](https://github.com/darbotlabs/Darbot/issues/6). Moving between tabs
+avoids runtime reloads; it does not claim to fix those lifecycle problems.
+
+### Optional agent import in desktop 0.0.16
 
 The first-run GitHub path is provider readiness, optional personal-agent
 selection, then the chat canvas. Nothing is preselected. **Import none** completes
 setup with no imported agents or automatically loaded conversations. Copilot CLI
-itself remains available through **New Copilot chat**.
+itself remains available through the built-in **Copilot CLI** sidebar row and
+composer.
 
 The left sidebar groups workspace chats under their agents. **Import agents**
 adds references to existing personal definitions; it does not move or copy them,

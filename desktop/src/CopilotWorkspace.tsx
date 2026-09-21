@@ -41,6 +41,7 @@ import {
 } from "./copilot-preferences";
 import { asProblem, Failure, InlineFailure, type Problem } from "./Problem";
 import { BrandLockup } from "./Welcome";
+import copilotIconLicense from "./marks/copilot.LICENSE.txt?raw";
 
 type Message = {
   id: number;
@@ -189,7 +190,16 @@ type InsertableResource = {
   group: "Command" | "Skill";
 };
 
+const WORKSPACE_SURFACES = [
+  { id: "workspace", label: "Your workspace" },
+  { id: "canvas", label: "Your canvas" },
+  { id: "cli", label: "Your CLI" },
+] as const;
+
+type WorkspaceSurface = (typeof WORKSPACE_SURFACES)[number]["id"];
+
 export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
+  const [surface, setSurface] = useState<WorkspaceSurface>("workspace");
   const [location, setLocation] = useState<CopilotWorkspaceLocation | null>(
     null,
   );
@@ -692,6 +702,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
 
   async function startSession(agentId: string): Promise<CopilotSession | null> {
     if (!location) return null;
+    setSurface("workspace");
     setBusy(true);
     setFailure(null);
     try {
@@ -725,6 +736,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
   }
 
   async function loadSession(target: CopilotHistorySession) {
+    setSurface("workspace");
     if (target.sessionId === session?.sessionId) {
       setOpenDialog(null);
       activeChatRef.current?.scrollIntoView({
@@ -800,17 +812,22 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     });
   }
 
-  /** Starts a conversation first when none is active yet, then inserts; never runs the skill. */
+  /** Inserting a skill never creates a runtime session or submits a prompt. */
   async function insertMention(name: string) {
-    const activeSession = session ?? (await startSession(selectedAgentId));
-    if (!activeSession) return;
+    setSurface("workspace");
     insertTextAtCursor(`/${name} `);
     setOpenDialog(null);
   }
 
   async function sendPrompt() {
     const text = prompt.trim();
-    if (!session || !text || busy) return;
+    if (!text || busy || !eventsReady) return;
+    const activeSession = session ?? (await startSession(selectedAgentId));
+    if (!activeSession) {
+      setPrompt(text);
+      return;
+    }
+    setSurface("workspace");
     const optimisticId = nextMessageId.current++;
     setPrompt("");
     setBusy(true);
@@ -823,14 +840,16 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
       const result = await invoke<CopilotPromptResult>(
         "copilot_session_prompt",
         {
-          sessionId: session.sessionId,
+          sessionId: activeSession.sessionId,
           prompt: text,
-          agent: sessionAgentId || null,
+          agent:
+            findConfigOption(activeSession.configOptions, "agent")
+              ?.currentValue || null,
         },
       );
       if (mountedRef.current) {
         setStatusText(describeStopReason(result.stopReason));
-        draftsRef.current.delete(session.sessionId);
+        draftsRef.current.delete(activeSession.sessionId);
       }
     } catch (error) {
       if (mountedRef.current) {
@@ -1054,7 +1073,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
     const container = messagesRef.current;
     if (!container) return;
     container.scrollTop = container.scrollHeight;
-  }, [messages, autoScrollEnabled, stickToBottom]);
+  }, [messages, autoScrollEnabled, stickToBottom, surface]);
 
   if (!location) {
     return (
@@ -1153,7 +1172,7 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
       ? { id: effectiveAgentId, name: effectiveAgentId }
       : DEFAULT_AGENT_CHOICE);
   const sidebarAgents = [
-    ...new Set([...importedAgentIds, ...chats.map((chat) => chat.agentId)]),
+    ...new Set(["", ...importedAgentIds, ...chats.map((chat) => chat.agentId)]),
   ].map<CopilotAgentSummary>(
     (id) =>
       agentChoices.find((agent) => agent.id === id) ??
@@ -1210,110 +1229,106 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
             .includes(resourceFilterLower),
       )
     : insertableResources;
+  const conversationMessages = messages.filter(
+    (message) => message.role !== "activity",
+  );
+  const activityMessages = messages.filter(
+    (message) => message.role === "activity",
+  );
 
   return (
     <main className="copilot-main">
       <div className="copilot-workspace copilot-canvas-workspace">
         <aside className="copilot-sidebar" aria-label="Agents and chats">
-          <BrandLockup />
-          <div className="copilot-sidebar-actions">
-            <button
-              type="button"
-              disabled={busy || !eventsReady}
-              onClick={() => openDialogFrom("create-agent")}
-            >
-              New agent
-            </button>
-            <button
-              type="button"
-              className="quiet"
-              onClick={() => openDialogFrom("import")}
-            >
-              Import agents
-            </button>
-          </div>
+          <header className="copilot-sidebar-header">
+            <BrandLockup />
+            <div className="copilot-sidebar-actions">
+              <button
+                type="button"
+                disabled={busy || !eventsReady}
+                onClick={() => openDialogFrom("create-agent")}
+              >
+                New agent
+              </button>
+              <button
+                type="button"
+                className="quiet"
+                disabled={
+                  busy || !eventsReady || disabledAgentIds.has(effectiveAgentId)
+                }
+                onClick={() => void startSession(effectiveAgentId)}
+                title={`New chat with ${currentAgent.name}`}
+              >
+                New chat
+              </button>
+            </div>
+          </header>
           <nav className="copilot-chat-navigation" aria-label="Workspace chats">
             <h2>Agents</h2>
-            {sidebarAgents.length === 0 ? (
-              <p className="hint">
-                No agents imported. New agents and their chats appear here.
-              </p>
-            ) : (
-              <ul className="copilot-sidebar-groups">
-                {sidebarAgents.map((agent) => {
-                  const agentChats = chats.filter(
-                    (chat) => chat.agentId === agent.id,
-                  );
-                  return (
-                    <li key={agent.id || "copilot-cli"}>
-                      <div className="copilot-sidebar-agent">
-                        <button
-                          type="button"
-                          className="quiet"
-                          aria-pressed={effectiveAgentId === agent.id}
-                          disabled={busy}
-                          title={agent.description || agent.name}
-                          onClick={() => void selectWorkspaceAgent(agent.id)}
-                        >
-                          {agent.name}
-                        </button>
-                        <button
-                          type="button"
-                          className="quiet copilot-new-chat"
-                          aria-label={`New chat with ${agent.name}`}
-                          disabled={
-                            busy ||
-                            !eventsReady ||
-                            disabledAgentIds.has(agent.id)
-                          }
-                          onClick={() => void startSession(agent.id)}
-                        >
-                          New
-                        </button>
-                      </div>
-                      {agentChats.length ? (
-                        <ul className="copilot-sidebar-chats">
-                          {agentChats.map((chat) => (
-                            <li key={chat.sessionId}>
-                              <button
-                                ref={
-                                  chat.sessionId === session?.sessionId
-                                    ? activeChatRef
-                                    : null
-                                }
-                                type="button"
-                                className="quiet"
-                                aria-current={
-                                  chat.sessionId === session?.sessionId
-                                    ? "true"
-                                    : undefined
-                                }
-                                disabled={busy || !eventsReady}
-                                title={chat.title}
-                                onClick={() => void loadSession(chat)}
-                              >
-                                {chat.title}
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="hint">No chats yet</p>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
+            <ul className="copilot-sidebar-groups">
+              {sidebarAgents.map((agent) => {
+                const agentChats = chats.filter(
+                  (chat) => chat.agentId === agent.id,
+                );
+                return (
+                  <li key={agent.id || "copilot-cli"}>
+                    <div className="copilot-sidebar-agent">
+                      <button
+                        type="button"
+                        className="quiet"
+                        aria-pressed={effectiveAgentId === agent.id}
+                        disabled={busy}
+                        title={agent.description || agent.name}
+                        onClick={() => void selectWorkspaceAgent(agent.id)}
+                      >
+                        {agent.name}
+                      </button>
+                      <button
+                        type="button"
+                        className="quiet copilot-new-chat"
+                        aria-label={`New chat with ${agent.name}`}
+                        disabled={
+                          busy || !eventsReady || disabledAgentIds.has(agent.id)
+                        }
+                        onClick={() => void startSession(agent.id)}
+                      >
+                        New
+                      </button>
+                    </div>
+                    {agentChats.length ? (
+                      <ul className="copilot-sidebar-chats">
+                        {agentChats.map((chat) => (
+                          <li key={chat.sessionId}>
+                            <button
+                              ref={
+                                chat.sessionId === session?.sessionId
+                                  ? activeChatRef
+                                  : null
+                              }
+                              type="button"
+                              className="quiet"
+                              aria-current={
+                                chat.sessionId === session?.sessionId
+                                  ? "true"
+                                  : undefined
+                              }
+                              disabled={busy || !eventsReady}
+                              title={chat.title}
+                              onClick={() => void loadSession(chat)}
+                            >
+                              {chat.title}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="hint">No chats yet</p>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           </nav>
-          <button
-            type="button"
-            className="quiet"
-            disabled={busy || !eventsReady}
-            onClick={() => void startSession("")}
-          >
-            New Copilot chat
-          </button>
           <div className="copilot-sidebar-tools">
             <button
               type="button"
@@ -1343,184 +1358,282 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
             >
               Profile
             </button>
-            <button
-              type="button"
-              className="quiet"
-              disabled={busy}
-              onClick={() => void handleBack()}
-            >
-              Change AI connection
-            </button>
           </div>
         </aside>
-        <section className="copilot-canvas" aria-label="Chat canvas">
+        <section className="copilot-canvas" aria-label="Copilot workspace">
           <header className="copilot-canvas-header">
-            <div>
-              <p className="hint">GitHub Copilot</p>
-              <h1>{activeChat?.title ?? "Your workspace"}</h1>
+            <h1 className="sr-only">Darbot with GitHub Copilot</h1>
+            <div
+              className="copilot-surface-tabs"
+              role="tablist"
+              aria-label="Workspace surfaces"
+            >
+              {WORKSPACE_SURFACES.map((item, index) => (
+                <button
+                  key={item.id}
+                  id={`copilot-tab-${item.id}`}
+                  type="button"
+                  role="tab"
+                  className="quiet"
+                  aria-selected={surface === item.id}
+                  aria-controls={`copilot-panel-${item.id}`}
+                  tabIndex={surface === item.id ? 0 : -1}
+                  onClick={() => setSurface(item.id)}
+                  onKeyDown={(event) => {
+                    const nextIndex =
+                      event.key === "ArrowRight"
+                        ? (index + 1) % WORKSPACE_SURFACES.length
+                        : event.key === "ArrowLeft"
+                          ? (index + WORKSPACE_SURFACES.length - 1) %
+                            WORKSPACE_SURFACES.length
+                          : event.key === "Home"
+                            ? 0
+                            : event.key === "End"
+                              ? WORKSPACE_SURFACES.length - 1
+                              : null;
+                    if (nextIndex === null) return;
+                    event.preventDefault();
+                    const next = WORKSPACE_SURFACES[nextIndex];
+                    setSurface(next.id);
+                    document.getElementById(`copilot-tab-${next.id}`)?.focus();
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
             </div>
-            {session && (
-              <button
-                type="button"
-                className="quiet"
-                disabled={busy || !eventsReady}
-                onClick={() => void startSession(effectiveAgentId)}
-              >
-                New chat
-              </button>
-            )}
           </header>
           <section className="copilot-conversation">
-            {session ? (
-              <>
-                <div className="copilot-conversation-title">
-                  <div>
-                    <h2>{currentAgent.name}</h2>
-                    <p>
-                      {currentAgent.model
-                        ? `${currentAgent.model} - ${workspace.cwd}`
-                        : workspace.cwd}
-                    </p>
-                  </div>
-                  <span className="copilot-runtime-state" aria-live="polite">
-                    {statusText}
-                  </span>
+            <div
+              id="copilot-panel-workspace"
+              className="copilot-surface-panel copilot-chat-panel"
+              role="tabpanel"
+              aria-labelledby="copilot-tab-workspace"
+              hidden={surface !== "workspace"}
+              tabIndex={0}
+            >
+              <div className="copilot-conversation-title">
+                <div>
+                  <h2>{activeChat?.title ?? currentAgent.name}</h2>
+                  <p>
+                    {session ? currentAgent.name : "Start a new conversation"}
+                  </p>
                 </div>
-                <div className="copilot-messages-wrap">
-                  <div
-                    ref={messagesRef}
-                    className={
-                      busy || !snapScrollEnabled
-                        ? "copilot-messages copilot-no-snap"
-                        : "copilot-messages"
-                    }
-                    aria-live="polite"
-                    aria-busy={busy}
-                    onScroll={handleMessagesScroll}
-                  >
-                    {messages.length === 0 ? (
-                      <div className="copilot-empty">
-                        <h2>What should {currentAgent.name} work on?</h2>
-                        <p>{currentAgent.description}</p>
+                <span className="copilot-runtime-state" aria-live="polite">
+                  {busy ? "Working" : statusText}
+                </span>
+              </div>
+              <div className="copilot-messages-wrap">
+                <div
+                  ref={messagesRef}
+                  className={
+                    busy || !snapScrollEnabled
+                      ? "copilot-messages copilot-no-snap"
+                      : "copilot-messages"
+                  }
+                  aria-live="polite"
+                  aria-busy={busy}
+                  onScroll={handleMessagesScroll}
+                >
+                  {conversationMessages.length === 0 ? (
+                    <div className="copilot-empty">
+                      <h2>
+                        {busy
+                          ? "Opening your conversation..."
+                          : `What should ${currentAgent.name} work on?`}
+                      </h2>
+                      <p>
+                        {currentAgent.description ||
+                          "Describe a task below. Your agents and chats stay in the sidebar."}
+                      </p>
+                    </div>
+                  ) : (
+                    conversationMessages.map((message) => (
+                      <div
+                        key={message.id}
+                        className={`copilot-message ${message.role}`}
+                      >
+                        <strong>
+                          {message.role === "user" ? "You" : currentAgent.name}
+                        </strong>
+                        <p>{message.text}</p>
                       </div>
-                    ) : (
-                      messages.map((message) => (
-                        <div
-                          key={message.id}
-                          className={`copilot-message ${message.role}`}
-                        >
-                          <strong>
-                            {message.role === "user"
-                              ? "You"
-                              : message.role === "assistant"
-                                ? currentAgent.name
-                                : "Activity"}
-                          </strong>
-                          <p>{message.text}</p>
-                          {message.raw != null && (
-                            <details className="detail-of">
-                              <summary>Details</summary>
-                              <pre>{formatRawPayload(message.raw)}</pre>
-                            </details>
-                          )}
-                        </div>
-                      ))
-                    )}
-                  </div>
-                  {!stickToBottom && messages.length > 0 && (
-                    <button
-                      type="button"
-                      className="copilot-jump-latest"
-                      onClick={jumpToLatest}
-                    >
-                      Jump to latest
-                    </button>
+                    ))
                   )}
                 </div>
-                <div className="copilot-composer">
-                  <label htmlFor="copilot-prompt">
-                    Message {currentAgent.name}
-                  </label>
-                  <textarea
-                    ref={promptRef}
-                    id="copilot-prompt"
-                    value={prompt}
-                    onChange={(event) => setPrompt(event.target.value)}
-                    onKeyDown={(event) => {
-                      if (
-                        event.key === "Enter" &&
-                        !event.shiftKey &&
-                        !event.nativeEvent.isComposing
-                      ) {
-                        event.preventDefault();
-                        if (!busy) void sendPrompt();
-                      }
-                    }}
-                    disabled={busy}
-                    placeholder={`Ask ${currentAgent.name} anything`}
-                  />
-                  <div className="row">
-                    <button
-                      type="button"
-                      onClick={() => void sendPrompt()}
-                      disabled={busy || !prompt.trim()}
-                    >
-                      {busy ? `${currentAgent.name} is working` : "Send"}
-                    </button>
-                    {busy && (
-                      <button
-                        type="button"
-                        className="quiet"
-                        onClick={() => void cancelPrompt()}
-                      >
-                        Stop
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="copilot-empty">
-                <h2>
-                  {busy
-                    ? "Opening your chat..."
-                    : effectiveAgentId
-                      ? `Start with ${currentAgent.name}`
-                      : "Your canvas is ready"}
-                </h2>
-                <p>
-                  {busy
-                    ? "Copilot CLI is preparing the conversation."
-                    : effectiveAgentId
-                      ? currentAgent.description ||
-                        "Start a chat with this agent."
-                      : "Create an agent, import one later, or start a Copilot CLI chat. Your agents and chats stay in the left sidebar."}
-                </p>
-                {!busy && (
-                  <div className="copilot-empty-actions">
-                    <button
-                      type="button"
-                      disabled={!eventsReady}
-                      onClick={() =>
-                        effectiveAgentId
-                          ? void startSession(effectiveAgentId)
-                          : openDialogFrom("create-agent")
-                      }
-                    >
-                      {effectiveAgentId ? "Start chat" : "Create an agent"}
-                    </button>
-                    <button
-                      type="button"
-                      className="quiet"
-                      disabled={!eventsReady}
-                      onClick={() => void startSession("")}
-                    >
-                      Start with Copilot CLI
-                    </button>
-                  </div>
+                {!stickToBottom && conversationMessages.length > 0 && (
+                  <button
+                    type="button"
+                    className="copilot-jump-latest"
+                    onClick={jumpToLatest}
+                  >
+                    Jump to latest
+                  </button>
                 )}
               </div>
-            )}
+              {activityMessages.length > 0 && (
+                <button
+                  type="button"
+                  className="quiet copilot-activity-link"
+                  onClick={() => setSurface("cli")}
+                >
+                  View CLI activity ({activityMessages.length})
+                </button>
+              )}
+            </div>
+            <div
+              id="copilot-panel-canvas"
+              className="copilot-surface-panel"
+              role="tabpanel"
+              aria-labelledby="copilot-tab-canvas"
+              hidden={surface !== "canvas"}
+              tabIndex={0}
+            >
+              <div className="copilot-surface-heading">
+                <h2>Your agents and conversations</h2>
+                <p className="hint">
+                  Open a conversation or start a new task with an agent.
+                </p>
+              </div>
+              <ul className="copilot-agent-canvas">
+                {sidebarAgents.map((agent) => (
+                  <li key={agent.id || "copilot-cli"}>
+                    <h3>{agent.name}</h3>
+                    <p>{agent.description || "Copilot agent"}</p>
+                    <ul className="copilot-canvas-chats">
+                      {chats
+                        .filter((chat) => chat.agentId === agent.id)
+                        .map((chat) => (
+                          <li key={chat.sessionId}>
+                            <button
+                              type="button"
+                              className="quiet"
+                              disabled={busy || !eventsReady}
+                              onClick={() => void loadSession(chat)}
+                            >
+                              {chat.title}
+                            </button>
+                          </li>
+                        ))}
+                    </ul>
+                    <button
+                      type="button"
+                      disabled={
+                        busy || !eventsReady || disabledAgentIds.has(agent.id)
+                      }
+                      onClick={() => void startSession(agent.id)}
+                    >
+                      New chat
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div
+              id="copilot-panel-cli"
+              className="copilot-surface-panel"
+              role="tabpanel"
+              aria-labelledby="copilot-tab-cli"
+              hidden={surface !== "cli"}
+              tabIndex={0}
+            >
+              <div className="copilot-surface-heading">
+                <h2 className="copilot-provider-label">
+                  <span className="copilot-mark" aria-hidden="true" />
+                  GitHub Copilot CLI
+                </h2>
+                <p className="hint">
+                  Live tool activity for this conversation, separate from chat.
+                  This is an activity viewer, not an interactive shell.
+                </p>
+              </div>
+              {activityMessages.length === 0 ? (
+                <p className="copilot-empty">
+                  No tool activity in this conversation yet.
+                </p>
+              ) : (
+                <ol
+                  className="copilot-cli-activity"
+                  aria-label="CLI activity"
+                  aria-live="polite"
+                >
+                  {activityMessages.map((message) => (
+                    <li key={message.id}>
+                      <p>{message.text}</p>
+                      {message.raw != null && (
+                        <details className="detail-of">
+                          <summary>Tool output and details</summary>
+                          <pre>{formatRawPayload(message.raw)}</pre>
+                        </details>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
+            <div className="copilot-composer">
+              <label htmlFor="copilot-prompt">
+                Message {currentAgent.name}
+              </label>
+              <div className="copilot-composer-input">
+                <button
+                  type="button"
+                  className="quiet copilot-composer-add"
+                  aria-label="Add a skill or command"
+                  title="Add a skill or command"
+                  onClick={() => openDialogFrom("resources")}
+                  disabled={busy || !eventsReady}
+                >
+                  +
+                </button>
+                <textarea
+                  ref={promptRef}
+                  id="copilot-prompt"
+                  value={prompt}
+                  onChange={(event) => setPrompt(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (
+                      event.key === "Enter" &&
+                      !event.shiftKey &&
+                      !event.nativeEvent.isComposing
+                    ) {
+                      event.preventDefault();
+                      if (!busy) void sendPrompt();
+                    }
+                  }}
+                  disabled={busy || !eventsReady}
+                  placeholder="Describe what you want to do"
+                />
+              </div>
+              <div className="row">
+                <button
+                  type="button"
+                  className="quiet"
+                  onClick={() => openDialogFrom("settings")}
+                >
+                  Settings
+                </button>
+                <span className="copilot-composer-hint">
+                  Enter to send, Shift+Enter for a new line
+                </span>
+                <button
+                  type="button"
+                  onClick={() => void sendPrompt()}
+                  disabled={busy || !eventsReady || !prompt.trim()}
+                >
+                  Send
+                </button>
+                {busy && session && (
+                  <button
+                    type="button"
+                    className="quiet"
+                    onClick={() => void cancelPrompt()}
+                  >
+                    Stop
+                  </button>
+                )}
+              </div>
+            </div>
             {inventory && inventory.warnings.length > 0 && (
               <details className="copilot-runtime-warnings">
                 <summary>Copilot resource warnings</summary>
@@ -1663,6 +1776,20 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
           </button>
         </div>
         <div className="copilot-dialog-body">
+          <section>
+            <h3>Agents</h3>
+            <p>
+              Import references to your existing Copilot agents without copying
+              their definitions.
+            </p>
+            <button
+              type="button"
+              className="quiet"
+              onClick={() => openDialogFrom("import")}
+            >
+              Import agents
+            </button>
+          </section>
           <section>
             <h3>Appearance</h3>
             <label htmlFor="copilot-theme">Theme</label>
@@ -1838,39 +1965,69 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
         </div>
         <div className="copilot-dialog-body">
           <p>Darbot desktop {appVersion ?? "version unavailable"}</p>
-          {status ? (
-            <>
-              <p>
-                Copilot CLI {status.version} (protocol {status.protocolVersion})
-              </p>
-              <p>Authentication: {status.authentication}</p>
-              <h3>Copilot runtime capabilities</h3>
-              <ul className="copilot-capability-list">
-                {Object.entries(status.capabilities).map(([key, value]) => (
-                  <li key={key} className={value ? "good" : "bad"}>
-                    {CAPABILITY_LABELS[key] ?? key}:{" "}
-                    {value ? "Available" : "Not available"}
-                  </li>
-                ))}
-              </ul>
-              <p>
-                Known conversations: {status.sessionCount}
-                {status.hasMoreSessions ? "+" : ""}
-              </p>
-              {status.warnings.length > 0 && (
-                <details className="copilot-runtime-warnings">
-                  <summary>Warnings</summary>
-                  <ul>
-                    {status.warnings.map((warning, index) => (
-                      <li key={index}>{warning}</li>
-                    ))}
-                  </ul>
-                </details>
-              )}
-            </>
-          ) : (
-            <p>Reading Copilot status...</p>
-          )}
+          <section>
+            <h3>Agents</h3>
+            <button
+              type="button"
+              className="quiet"
+              onClick={() => openDialogFrom("import")}
+            >
+              Import agents
+            </button>
+          </section>
+          <section>
+            <h3>Model providers</h3>
+            <h4 className="copilot-provider-label">
+              <span className="copilot-mark" aria-hidden="true" />
+              GitHub Copilot
+            </h4>
+            <p>
+              Copilot CLI owns this connection and its authentication. Models
+              and reasoning options come from the current conversation.
+              Additional native provider connections are not available yet.
+            </p>
+            <button
+              type="button"
+              className="quiet"
+              onClick={() => openDialogFrom("settings")}
+            >
+              Conversation model settings
+            </button>
+            {status ? (
+              <>
+                <p>
+                  Copilot CLI {status.version} (protocol{" "}
+                  {status.protocolVersion})
+                </p>
+                <p>Authentication: {status.authentication}</p>
+                <h3>Copilot runtime capabilities</h3>
+                <ul className="copilot-capability-list">
+                  {Object.entries(status.capabilities).map(([key, value]) => (
+                    <li key={key} className={value ? "good" : "bad"}>
+                      {CAPABILITY_LABELS[key] ?? key}:{" "}
+                      {value ? "Available" : "Not available"}
+                    </li>
+                  ))}
+                </ul>
+                <p>
+                  Known conversations: {status.sessionCount}
+                  {status.hasMoreSessions ? "+" : ""}
+                </p>
+                {status.warnings.length > 0 && (
+                  <details className="copilot-runtime-warnings">
+                    <summary>Warnings</summary>
+                    <ul>
+                      {status.warnings.map((warning, index) => (
+                        <li key={index}>{warning}</li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+              </>
+            ) : (
+              <p>Reading Copilot status...</p>
+            )}
+          </section>
           <section>
             <h3>Current agent</h3>
             <p>
@@ -1879,6 +2036,25 @@ export function CopilotWorkspace({ onBack }: { onBack: () => void }) {
             </p>
             <p>{currentAgent.description || "No description provided."}</p>
           </section>
+          <section>
+            <h3>Other runtimes</h3>
+            <p>
+              Container-based deployments use their own setup and model
+              connections.
+            </p>
+            <button
+              type="button"
+              className="quiet"
+              disabled={busy}
+              onClick={() => void handleBack()}
+            >
+              Open deployment setup
+            </button>
+          </section>
+          <details className="detail-of">
+            <summary>GitHub Copilot icon license</summary>
+            <pre>{copilotIconLicense}</pre>
+          </details>
         </div>
       </dialog>
 

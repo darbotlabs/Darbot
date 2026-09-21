@@ -517,9 +517,12 @@ details > summary:hover {
 }
 
 .copilot-main {
+  height: 100dvh;
+  min-height: 0;
   padding: 1rem;
   align-items: stretch;
   background: var(--ground);
+  overflow: hidden;
 }
 
 /* Same token names as :root, reintroduced for dark and keyed off `data-copilot-theme`, which
@@ -541,7 +544,8 @@ html[data-copilot-theme="dark"] {
 
 .copilot-workspace {
   width: 100%;
-  height: calc(100vh - 2rem);
+  height: 100%;
+  min-height: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto minmax(0, 1fr);
@@ -554,7 +558,7 @@ html[data-copilot-theme="dark"] {
 }
 
 .copilot-workspace.copilot-canvas-workspace {
-  grid-template-columns: clamp(9.5rem, 24%, 17rem) minmax(0, 1fr);
+  grid-template-columns: clamp(8rem, 24%, 17rem) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
 }
 
@@ -572,6 +576,27 @@ html[data-copilot-theme="dark"] {
 .copilot-sidebar .lockup {
   margin: 0;
   min-width: 0;
+}
+
+.copilot-sidebar-header {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.copilot-sidebar-header .lockup span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.copilot-sidebar-header .brand-mark {
+  width: 2.25rem;
+  height: 2.25rem;
 }
 
 .copilot-sidebar-actions {
@@ -622,6 +647,7 @@ html[data-copilot-theme="dark"] {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  border-color: var(--hair);
 }
 
 .copilot-sidebar-agent .copilot-new-chat {
@@ -649,6 +675,11 @@ html[data-copilot-theme="dark"] {
   text-overflow: ellipsis;
   border-radius: 6px;
   font-size: 0.72rem;
+  border-color: var(--hair-soft);
+}
+
+.copilot-sidebar-chats li + li {
+  margin-top: 0.2rem;
 }
 
 .copilot-sidebar-chats button[aria-current="true"] {
@@ -669,8 +700,19 @@ html[data-copilot-theme="dark"] {
   padding: 0.3rem 0.2rem;
 }
 
-.copilot-sidebar-tools button:last-child {
-  grid-column: 1 / -1;
+.copilot-provider-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.copilot-mark {
+  display: inline-block;
+  flex: 0 0 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: currentColor;
+  mask: url("./marks/copilot.svg") center / contain no-repeat;
 }
 
 .copilot-canvas {
@@ -686,7 +728,7 @@ html[data-copilot-theme="dark"] {
   justify-content: space-between;
   gap: 0.6rem;
   border-bottom: 1px solid var(--hair);
-  padding: 0.75rem 1rem;
+  padding: 0.75rem;
 }
 
 .copilot-canvas-header > div {
@@ -701,14 +743,140 @@ html[data-copilot-theme="dark"] {
   text-overflow: ellipsis;
 }
 
-.copilot-canvas-header button {
-  flex-shrink: 0;
-  font-size: 0.75rem;
-  padding: 0.4rem 0.6rem;
+.copilot-surface-tabs {
+  display: flex;
+  flex: 1;
+  gap: 0.5rem;
+}
+
+.copilot-surface-tabs button {
+  flex: 0 1 11rem;
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+  border-color: var(--hair);
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.copilot-surface-tabs button[aria-selected="true"] {
+  background: var(--sunk);
+  color: var(--ink);
+  border-color: var(--focus);
 }
 
 .copilot-canvas > .copilot-conversation {
   flex: 1;
+}
+
+.copilot-surface-panel {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding-bottom: 0.75rem;
+  scrollbar-gutter: stable;
+}
+
+.copilot-surface-panel[hidden] {
+  display: none;
+}
+
+.copilot-chat-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.copilot-surface-heading {
+  margin-bottom: 1rem;
+}
+
+.copilot-surface-heading .hint {
+  margin-bottom: 0;
+}
+
+.copilot-agent-canvas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  align-items: start;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.copilot-agent-canvas > li {
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid var(--hair);
+  border-radius: var(--r-row);
+  background: var(--ground);
+  overflow-wrap: anywhere;
+}
+
+.copilot-agent-canvas h3 {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.copilot-agent-canvas p {
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+}
+
+.copilot-agent-canvas button {
+  font-size: 0.78rem;
+  padding: 0.4rem 0.65rem;
+}
+
+.copilot-canvas-chats {
+  display: grid;
+  gap: 0.3rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.6rem 0;
+}
+
+.copilot-canvas-chats button {
+  width: 100%;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.copilot-cli-activity {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.copilot-cli-activity > li {
+  min-width: 0;
+  border: 1px solid var(--hair);
+  border-radius: var(--r-row);
+  padding: 0.7rem;
+  background: var(--ground);
+}
+
+.copilot-cli-activity p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.78rem;
+  margin: 0;
+}
+
+.copilot-cli-activity .detail-of pre {
+  max-height: 20rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.copilot-activity-link {
+  align-self: flex-start;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.72rem;
 }
 
 .copilot-conversation > [role="alert"] {
@@ -1022,6 +1190,16 @@ html[data-copilot-theme="dark"] {
   align-items: flex-start;
   gap: 0.75rem;
   margin-bottom: 0.85rem;
+}
+
+.copilot-conversation-title > div {
+  min-width: 0;
+}
+
+.copilot-conversation-title h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .copilot-conversation h2 {
@@ -1421,8 +1599,28 @@ html[data-copilot-theme="dark"] {
 }
 
 .copilot-composer {
+  flex-shrink: 0;
   border-top: 1px solid var(--hair);
   padding-top: 0.85rem;
+}
+
+.copilot-composer-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--hair);
+  border-radius: var(--r-row);
+  padding: 0.35rem;
+}
+
+.copilot-composer-input:focus-within {
+  outline: 2px solid var(--focus);
+}
+
+.copilot-composer-add {
+  flex: 0 0 auto;
+  font-size: 1.3rem;
+  padding: 0.3rem 0.5rem;
 }
 
 .copilot-composer label {
@@ -1434,20 +1632,21 @@ html[data-copilot-theme="dark"] {
 }
 
 .copilot-composer textarea {
+  min-width: 0;
   width: 100%;
-  min-height: 5rem;
-  resize: vertical;
+  height: 4.25rem;
+  min-height: 2.6rem;
+  resize: none;
   font: inherit;
   color: var(--ink);
-  border: 1px solid var(--hair);
+  border: 0;
   border-radius: var(--r-row);
   background: var(--raised);
   padding: 0.75rem;
 }
 
 .copilot-composer textarea:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: none;
 }
 
 .copilot-composer .row {
@@ -1455,6 +1654,16 @@ html[data-copilot-theme="dark"] {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.65rem;
+  align-items: center;
+}
+
+.copilot-composer .row > button:first-child {
+  margin-right: auto;
+}
+
+.copilot-composer-hint {
+  color: var(--ink-faint);
+  font-size: 0.68rem;
 }
 
 .provider-actions {
@@ -1469,7 +1678,44 @@ html[data-copilot-theme="dark"] {
   }
 
   .copilot-workspace {
-    height: calc(100dvh - 1rem);
+    height: 100%;
+  }
+
+  .copilot-sidebar {
+    padding: 0.6rem 0.45rem;
+  }
+
+  .copilot-sidebar-header {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: 0.3rem;
+  }
+
+  .copilot-sidebar-header .brand-mark {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .copilot-sidebar-actions button {
+    font-size: 0.68rem;
+    padding-inline: 0.2rem;
+  }
+
+  .copilot-canvas-header {
+    padding: 0.5rem;
+  }
+
+  .copilot-surface-tabs {
+    gap: 0.3rem;
+  }
+
+  .copilot-surface-tabs button {
+    flex: 1;
+    padding: 0.5rem 0.35rem;
+    font-size: 0.75rem;
+  }
+
+  .copilot-composer-hint {
+    display: none;
   }
 
   .copilot-header {
@@ -1540,6 +1786,26 @@ html[data-copilot-theme="dark"] {
 }
 
 @media (max-height: 480px) {
+  .copilot-composer {
+    padding-top: 0.4rem;
+  }
+
+  .copilot-composer label {
+    margin-bottom: 0.25rem;
+  }
+
+  .copilot-composer textarea {
+    height: 2.6rem;
+  }
+
+  .copilot-composer .row {
+    margin-top: 0.3rem;
+  }
+
+  .copilot-composer .row button {
+    padding-block: 0.3rem;
+  }
+
   .copilot-conversation-title {
     margin-bottom: 0.35rem;
   }

@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.0.17
+
+- Match the native workspace layout with stacked New agent/New chat actions,
+  nested agent conversations, and Resources/History/Settings/Profile in the
+  sidebar footer.
+- Add keyboard-accessible Your workspace, Your canvas, and Your CLI tabs backed
+  by real chat, agent, and tool-activity data. Tool output is separate from chat;
+  changing tabs preserves the active session and unsent message.
+- Keep the composer available before a conversation starts and across surfaces.
+  Skill insertion only adds text; it no longer creates an empty CLI session.
+- Move Import agents into Settings and Profile and describe the real Copilot
+  connection under Model providers without claiming additional native providers.
+- Add the official MIT-licensed GitHub Copilot mark and its attribution in Profile.
+- Keep the sidebar and each surface independently scrollable in compact,
+  high-DPI native windows.
+
 ## 0.0.16
 
 - Add optional personal-agent selection after connecting GitHub Copilot. Nothing

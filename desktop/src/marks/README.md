@@ -1,7 +1,15 @@
 # Vendored brand marks
 
-From [`@lobehub/icons-static-svg`](https://github.com/lobehub/lobe-icons), MIT licensed, vendored
-rather than fetched because the setup window draws before it has any network guarantee.
+The provider and harness marks are from
+[`@lobehub/icons-static-svg`](https://github.com/lobehub/lobe-icons), MIT licensed,
+vendored rather than fetched because the setup window draws before it has any
+network guarantee.
+
+`copilot.svg` is the official
+[`copilot-24.svg` from Primer Octicons](https://github.com/primer/octicons/blob/main/icons/copilot-24.svg).
+Its unmodified geometry is used as a current-color mask in the native Copilot
+workspace. Source attribution and the full GitHub MIT notice are in
+`copilot.LICENSE.txt`, also available from Profile in the installed application.
 
 Renamed to the harness or provider id they belong to, so a row finds its mark by its own id and
 there is no second mapping to keep in step.
