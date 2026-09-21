@@ -4,7 +4,10 @@ import {
   type AgentIconId,
   type AgentIconIdentity,
   agentIcons,
+  getSwarmIdentity,
+  resolveAgentIdentity,
   resolveAgentIcon,
+  swarmIdentities,
 } from "@/lib/agents/icons";
 
 const custom: AgentIconIdentity = {
@@ -53,18 +56,23 @@ describe("shipped agent icons", () => {
   );
 
   test.each(expectedIds)(
-    "%s ships a real 256px PNG in the app bundle",
+    "%s resolves a byte-exact full avatar from the canonical asset destination",
     (id) => {
       const index = expectedIds.indexOf(id) + 65;
       const image = readFileSync(
-        new URL(
-          `../src/assets/agents/${String(index).padStart(3, "0")}_${id}.png`,
-          import.meta.url,
-        ),
+        new URL(`../../${agentIcons[id].src.slice(1)}`, import.meta.url),
       );
       expect(image.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
-      expect(image.readUInt32BE(16)).toBe(256);
-      expect(image.readUInt32BE(20)).toBe(256);
+      expect(image.readUInt32BE(16)).toBe(512);
+      expect(image.readUInt32BE(20)).toBe(512);
+      expect(image).toEqual(
+        readFileSync(
+          new URL(
+            `../../assets/darbot_swarm_v3/agents/png_512_black/${String(index).padStart(3, "0")}_${id}.png`,
+            import.meta.url,
+          ),
+        ),
+      );
     },
   );
 });
@@ -127,18 +135,37 @@ describe("coworker icon resolution", () => {
     );
   });
 
-  test("custom agents and proposed specialist identities keep their generated avatar", () => {
+  test("unknown custom agents and partial names keep their generated avatar", () => {
     expect(resolveAgentIcon(custom)).toBeUndefined();
     for (const name of [
       "My LangGraph assistant",
       "Microsoft Finance",
-      "agent-mcp",
+      "Cloud Architect",
       "constructor",
       "toString",
       "__proto__",
     ]) {
       expect(resolveAgentIcon({ ...custom, name })).toBeUndefined();
     }
+  });
+
+  test("all 128 semantic IDs and visual identity codes resolve without rewriting the stored keys", () => {
+    expect(swarmIdentities).toHaveLength(128);
+    for (const identity of swarmIdentities) {
+      expect(getSwarmIdentity(identity.agentId)).toBe(identity);
+      expect(getSwarmIdentity(identity.identityCode)).toBe(identity);
+      expect(
+        resolveAgentIdentity({ ...custom, avatarSeed: identity.agentId }),
+      ).toBe(identity);
+      expect(
+        resolveAgentIcon({ ...custom, id: identity.agentId })?.identity,
+      ).toBe(identity);
+    }
+    expect(getSwarmIdentity("azure_architect")?.agentId).toBe(
+      "azure_architect",
+    );
+    expect(getSwarmIdentity("agent-mcp")?.cohort).toBe("mint-opal64");
+    expect(getSwarmIdentity("#00CFFF")).toBeUndefined();
   });
 
   test("ports, paths, invalid endpoints, and vendor domains are not framework evidence", () => {

@@ -51,7 +51,11 @@ export function RecipientField({
             size="xs"
             variant="secondary"
           >
-            <ChannelAvatar participantIds={[recipient.id]} size={16} />
+            <ChannelAvatar
+              agents={profiles}
+              participantIds={[recipient.id]}
+              size={16}
+            />
             {recipient.name}
             <span aria-hidden>×</span>
             <span className="sr-only">Remove {recipient.name}</span>
@@ -88,7 +92,11 @@ export function RecipientField({
                 }}
                 type="button"
               >
-                <ChannelAvatar participantIds={[profile.id]} size={18} />
+                <ChannelAvatar
+                  agents={profiles}
+                  participantIds={[profile.id]}
+                  size={18}
+                />
                 <span>{profile.name}</span>
                 <span className="text-muted-foreground">{profile.title}</span>
               </button>

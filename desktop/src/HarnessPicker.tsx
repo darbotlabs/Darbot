@@ -1,7 +1,12 @@
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useState } from "react";
+import {
+  identityImageSource,
+  resolveAgentIdentity,
+} from "../../shared/swarm-identity";
 import { isHttpEndpointUrl } from "./http-endpoint-url";
 import { Mark } from "./Mark";
+import { asProblem, Failure, type Problem } from "./Problem";
 
 export type Harness = {
   id: string;
@@ -19,6 +24,36 @@ export type HarnessChoice = {
   id: string;
   agentUrl?: string;
 };
+
+/**
+ * The known-framework rows show their actual Swarm identity artwork in place of the vendor mark, so
+ * the same face that answers elsewhere in darbot is the one offered here. `row.image` is the
+ * adapter directory darbot already ships (an exact identity key, e.g. "agent-langgraph-agui" for
+ * the LangGraph row), so it is tried first; the row's display name is the fallback, matched against
+ * the same framework aliases the rest of darbot uses. A row that resolves to nothing — an
+ * unrecognised framework, or "address your own" — keeps the vendor Mark exactly as before.
+ *
+ * This only changes which picture is shown. It does not read, start, or configure anything: the
+ * row's id, radio state, and onChoose behavior are untouched.
+ */
+function HarnessMark({ row }: { row: Harness }) {
+  const identity = resolveAgentIdentity({
+    id: row.id,
+    name: row.name,
+    avatarSeed: row.image ?? row.id,
+    endpoint: null,
+  });
+  if (!identity) return <Mark id={row.mark} name={row.name} />;
+  return (
+    <div className="mark-tile">
+      <img
+        src={identityImageSource(identity, 32, "token")}
+        alt=""
+        aria-hidden="true"
+      />
+    </div>
+  );
+}
 
 /** What darbot sets up unless somebody says otherwise. David's call. */
 export const DEFAULT_HARNESS = "langgraph";
@@ -49,7 +84,8 @@ export function HarnessPicker({
   onBack: () => void;
 }) {
   const [rows, setRows] = useState<Harness[]>([]);
-  const [failure, setFailure] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [failure, setFailure] = useState<Problem | null>(null);
   // Open when the person has already chosen something other than the default, so coming back does
   // not hide the choice they made.
   const [open, setOpen] = useState(
@@ -57,9 +93,28 @@ export function HarnessPicker({
   );
 
   useEffect(() => {
+    let active = true;
     invoke<Harness[]>("harnesses")
-      .then(setRows)
-      .catch((error) => setFailure(String(error)));
+      .then((nextRows) => {
+        if (nextRows.length === 0) {
+          throw new Error("The harness catalog was empty.");
+        }
+        if (active) setRows(nextRows);
+      })
+      .catch((error) => {
+        if (!active) return;
+        const problem = asProblem(error);
+        setFailure({
+          said: "The list of Bots could not be read.",
+          detail: problem.detail ?? problem.said,
+        });
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
   const chosenId = chosen?.id ?? DEFAULT_HARNESS;
@@ -69,17 +124,6 @@ export function HarnessPicker({
     (byoAgentUrl.trim().startsWith("http://") ||
       byoAgentUrl.trim().startsWith("https://")) &&
     isHttpEndpointUrl(byoAgentUrl);
-
-  if (failure) {
-    return (
-      <div className="sheet">
-        <div className="blocker" role="alert">
-          <h2>The list of Bots could not be read</h2>
-          <p>{failure}</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="sheet">
@@ -94,73 +138,79 @@ export function HarnessPicker({
         applies to will read it.
       */}
       <p className="lede">
-        darbot sets this up for you. If you write code, you can choose the
-        agent framework below.
+        darbot sets this up for you. If you write code, you can choose the agent
+        framework below.
       </p>
 
-      <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
-        <summary>
-          {picked && picked.id !== DEFAULT_HARNESS
-            ? `Using ${picked.name}`
-            : "Choose the agent framework"}
-        </summary>
-        <p className="footnote" style={{ margin: "0.6rem 0 0" }}>
-          Any of these works with any AI provider. Only the last one asks you
-          for an address.
+      {loading && (
+        <p className="picker-status" role="status">
+          Loading agent frameworks…
         </p>
-        <fieldset className="picker">
-          <legend className="sr-only">Bot</legend>
-          {rows.map((row) => (
-            <label
-              key={row.id}
-              className={`tile${chosenId === row.id ? " chosen" : ""}`}
-            >
+      )}
+      {failure && <Failure problem={failure} />}
+      {!loading && !failure && (
+        <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
+          <summary>
+            {picked && picked.id !== DEFAULT_HARNESS
+              ? `Using ${picked.name}`
+              : "Choose the agent framework"}
+          </summary>
+          <p className="footnote" style={{ margin: "0.6rem 0 0" }}>
+            Any of these works with any AI provider. Only the last one asks you
+            for an address.
+          </p>
+          <fieldset className="picker">
+            <legend className="sr-only">Bot</legend>
+            {rows.map((row) => (
+              <label
+                key={row.id}
+                className={`tile${chosenId === row.id ? " chosen" : ""}`}
+              >
+                <input
+                  type="radio"
+                  name="harness"
+                  className="tile-input"
+                  value={row.id}
+                  checked={chosenId === row.id}
+                  onChange={() =>
+                    onChoose(
+                      row.id === "byo-url"
+                        ? { id: row.id, agentUrl: byoAgentUrl }
+                        : { id: row.id },
+                    )
+                  }
+                />
+                <HarnessMark row={row} />
+                <span className="tile-name">{row.name}</span>
+                <span className="tile-summary">{row.summary}</span>
+                {row.credential === "anthropic" && (
+                  <span className="tile-note">No API key needed</span>
+                )}
+                {row.credential === "their-endpoint" && (
+                  <span className="tile-note">Nothing is installed</span>
+                )}
+              </label>
+            ))}
+          </fieldset>
+          {chosenId === "byo-url" && (
+            <div className="field" style={{ marginTop: "0.75rem" }}>
+              <label htmlFor="agent-url">AG-UI endpoint</label>
               <input
-                type="radio"
-                name="harness"
-                className="tile-input"
-                value={row.id}
-                checked={chosenId === row.id}
-                onChange={() =>
-                  onChoose(
-                    row.id === "byo-url"
-                      ? { id: row.id, agentUrl: byoAgentUrl }
-                      : { id: row.id },
-                  )
+                id="agent-url"
+                value={byoAgentUrl}
+                onChange={(event) =>
+                  onChoose({
+                    id: "byo-url",
+                    agentUrl: event.target.value,
+                  })
                 }
+                placeholder="https://your-agent.example/ag-ui"
+                spellCheck={false}
               />
-              <Mark id={row.mark} name={row.name} />
-              {/* The name is on every row, mark or no mark, so a person who does not recognise a
-                  logo can still read it. */}
-              <span className="tile-name">{row.name}</span>
-              <span className="tile-summary">{row.summary}</span>
-              {row.credential === "anthropic" && (
-                <span className="tile-note">No API key needed</span>
-              )}
-              {row.credential === "their-endpoint" && (
-                <span className="tile-note">Nothing is installed</span>
-              )}
-            </label>
-          ))}
-        </fieldset>
-        {chosenId === "byo-url" && (
-          <div className="field" style={{ marginTop: "0.75rem" }}>
-            <label htmlFor="agent-url">AG-UI endpoint</label>
-            <input
-              id="agent-url"
-              value={byoAgentUrl}
-              onChange={(event) =>
-                onChoose({
-                  id: "byo-url",
-                  agentUrl: event.target.value,
-                })
-              }
-              placeholder="https://your-agent.example/ag-ui"
-              spellCheck={false}
-            />
-          </div>
-        )}
-      </details>
+            </div>
+          )}
+        </details>
+      )}
 
       <div className="row">
         <button type="button" className="quiet" onClick={onBack}>
@@ -168,7 +218,12 @@ export function HarnessPicker({
         </button>
         <button
           type="button"
-          disabled={chosenId === "byo-url" && !byoReady}
+          disabled={
+            loading ||
+            failure !== null ||
+            !picked ||
+            (chosenId === "byo-url" && !byoReady)
+          }
           onClick={onContinue}
         >
           Continue

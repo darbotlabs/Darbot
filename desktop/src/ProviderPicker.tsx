@@ -1,11 +1,12 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { useEffect, useRef, useState } from "react";
+import type { CopilotInventory, CopilotStatus } from "./copilot-types";
 import { isHttpEndpointUrl } from "./http-endpoint-url";
 import { Mark } from "./Mark";
-import { asProblem, InlineFailure, type Problem } from "./Problem";
+import { asProblem, Failure, InlineFailure, type Problem } from "./Problem";
 
-export type Login = "plan" | "api-key" | "endpoint";
+export type Login = "plan" | "api-key" | "endpoint" | "copilot";
 
 export type Provider = {
   id: string;
@@ -118,6 +119,8 @@ export function ProviderPicker({
       : null,
   );
   const [rows, setRows] = useState<Provider[]>([]);
+  const [loadingProviders, setLoadingProviders] = useState(true);
+  const [providerFailure, setProviderFailure] = useState<Problem | null>(null);
   const [open, setOpen] = useState<string | null>(
     initialChoice?.provider ?? null,
   );
@@ -161,11 +164,32 @@ export function ProviderPicker({
   // A problem, not a string: a sign-in failure carries the container's own output, and
   // stringifying it printed "[object Object]" where the diagnosis should have been.
   const [failure, setFailure] = useState<Problem | null>(null);
+  const [copilotStatus, setCopilotStatus] = useState<CopilotStatus | null>(
+    null,
+  );
+  const [copilotInventory, setCopilotInventory] =
+    useState<CopilotInventory | null>(null);
+  const [copilotLoading, setCopilotLoading] = useState(false);
   const openRef = useRef(open);
   const signInRunRef = useRef(0);
+  const selectedPanelRef = useRef<HTMLDivElement | null>(null);
+  const actionsRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     openRef.current = open;
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const frame = requestAnimationFrame(() => {
+      selectedPanelRef.current?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+        block: "start",
+      });
+    });
+    return () => cancelAnimationFrame(frame);
   }, [open]);
 
   /*
@@ -244,9 +268,28 @@ export function ProviderPicker({
   }
 
   useEffect(() => {
+    let active = true;
     invoke<Provider[]>("providers")
-      .then(setRows)
-      .catch(() => undefined);
+      .then((nextRows) => {
+        if (nextRows.length === 0) {
+          throw new Error("The provider catalog was empty.");
+        }
+        if (active) setRows(nextRows);
+      })
+      .catch((error) => {
+        if (!active) return;
+        const problem = asProblem(error);
+        setProviderFailure({
+          said: "The list of AI providers could not be read.",
+          detail: problem.detail ?? problem.said,
+        });
+      })
+      .finally(() => {
+        if (active) setLoadingProviders(false);
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
   // The same event the setup screen's step list is built from. Only the newest line is kept: this
@@ -262,6 +305,72 @@ export function ProviderPicker({
   }, []);
 
   const row = rows.find((r) => r.id === open) ?? null;
+
+  useEffect(() => {
+    if (open !== "github-copilot") {
+      setCopilotStatus(null);
+      setCopilotInventory(null);
+      setCopilotLoading(false);
+      return;
+    }
+
+    let active = true;
+    setCopilotLoading(true);
+    setFailure(null);
+    Promise.allSettled([
+      invoke<CopilotStatus>("copilot_status"),
+      invoke<CopilotInventory>("copilot_inventory"),
+    ])
+      .then(([statusResult, inventoryResult]) => {
+        if (!active) return;
+        if (statusResult.status === "fulfilled") {
+          setCopilotStatus(statusResult.value);
+        } else {
+          setCopilotStatus(null);
+          setFailure(asProblem(statusResult.reason));
+        }
+        if (inventoryResult.status === "fulfilled") {
+          setCopilotInventory(inventoryResult.value);
+        } else {
+          setCopilotInventory(null);
+        }
+      })
+      .finally(() => {
+        if (active) setCopilotLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (open !== "github-copilot" || copilotLoading) return;
+    const frame = requestAnimationFrame(() => {
+      actionsRef.current?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+        block: "end",
+      });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [open, copilotLoading]);
+
+  async function signInToCopilot() {
+    setBusy(true);
+    setFailure(null);
+    try {
+      const nextStatus = await invoke<CopilotStatus>("copilot_login");
+      setCopilotStatus(nextStatus);
+      setCopilotInventory(await invoke<CopilotInventory>("copilot_inventory"));
+    } catch (error) {
+      setFailure(asProblem(error));
+    } finally {
+      setBusy(false);
+    }
+  }
+
   const token = row ? (tokens[row.id] ?? "") : "";
   const savedPlan =
     row?.id === "openai" || row?.id === "anthropic"
@@ -295,7 +404,11 @@ export function ProviderPicker({
     (login === "endpoint" &&
       isHttpEndpointUrl(baseUrl) &&
       containerBaseUrlIsValid &&
-      model.trim().length > 0);
+      model.trim().length > 0) ||
+    (login === "copilot" &&
+      copilotStatus?.authentication === "ready" &&
+      copilotStatus.capabilities.listSessions &&
+      copilotStatus.capabilities.loadSession);
 
   function continueWithChoice() {
     if (!row || !login || !ready) return;
@@ -326,72 +439,83 @@ export function ProviderPicker({
 
   return (
     <div className="sheet">
-      <p className="steps-of">Step 2 of 2</p>
+      <p className="steps-of">
+        Step 2 of {open === "github-copilot" ? "3" : "2"}
+      </p>
       <h1>Connect your AI</h1>
       <p className="lede">
         Sign in to the plan you already pay for. No key needed.
       </p>
 
-      <fieldset className="picker providers">
-        <legend className="sr-only">Model provider</legend>
-        {rows.map((r) => (
-          <label
-            key={r.id}
-            className={`tile wide${open === r.id ? " chosen" : ""}`}
-          >
-            <input
-              type="radio"
-              name="provider"
-              className="tile-input"
-              value={r.id}
-              checked={open === r.id}
-              onChange={() => {
-                signInRunRef.current += 1;
-                setOpen(r.id);
-                // A failure belongs to the row that produced it. Left in place, a refused OpenAI
-                // sign-in stayed on screen under the endpoint row's fields, where it read as a
-                // complaint about the address just typed.
-                setFailure(null);
-                setSignInUrl(null);
-                setCode("");
-                setBusy(false);
-                setProgress(null);
-                // The first way in is the default, which is the plan wherever there is one.
-                setLogin(r.logins[0] ?? null);
-                // Fill from what is already on this machine, if anything.
-                const kept =
-                  r.id === "openai"
-                    ? held.OPENAI_API_KEY
-                    : r.id === "anthropic"
-                      ? held.ANTHROPIC_API_KEY
-                      : undefined;
-                setApiKey(kept ?? "");
-                setReuseEndpointKey(
-                  r.id === "openai-compatible" &&
-                    held.saved?.modelApiKeys?.compatible === true,
-                );
-                if (r.id === "openai-compatible" && held.OPENAI_BASE_URL) {
-                  setBaseUrl(held.OPENAI_BASE_URL);
-                  setContainerBaseUrl(held.OPENAI_CONTAINER_BASE_URL ?? "");
-                  setModel(held.BOT_MODEL ?? "");
-                } else {
-                  setBaseUrl("");
-                  setContainerBaseUrl("");
-                  setModel("");
-                }
-              }}
-            />
-            <Mark id={r.mark} name={r.name} />
-            <span className="tile-name">{r.name}</span>
-            <span className="tile-summary">{r.summary}</span>
-          </label>
-        ))}
-      </fieldset>
+      {loadingProviders && (
+        <p className="picker-status" role="status">
+          Loading AI providers…
+        </p>
+      )}
+      {providerFailure && <Failure problem={providerFailure} />}
+      {!loadingProviders && !providerFailure && (
+        <fieldset className="picker providers">
+          <legend className="sr-only">Model provider</legend>
+          {rows.map((r) => (
+            <label
+              key={r.id}
+              className={`tile wide${open === r.id ? " chosen" : ""}`}
+            >
+              <input
+                type="radio"
+                name="provider"
+                className="tile-input"
+                value={r.id}
+                checked={open === r.id}
+                onChange={() => {
+                  signInRunRef.current += 1;
+                  setOpen(r.id);
+                  // A failure belongs to the row that produced it. Left in place, a refused OpenAI
+                  // sign-in stayed on screen under the endpoint row's fields, where it read as a
+                  // complaint about the address just typed.
+                  setFailure(null);
+                  setSignInUrl(null);
+                  setCode("");
+                  setBusy(false);
+                  setProgress(null);
+                  // The first way in is the default, which is the plan wherever there is one.
+                  setLogin(r.logins[0] ?? null);
+                  // Fill from what is already on this machine, if anything.
+                  const kept =
+                    r.id === "openai"
+                      ? held.OPENAI_API_KEY
+                      : r.id === "anthropic"
+                        ? held.ANTHROPIC_API_KEY
+                        : undefined;
+                  setApiKey(kept ?? "");
+                  setReuseEndpointKey(
+                    r.id === "openai-compatible" &&
+                      held.saved?.modelApiKeys?.compatible === true,
+                  );
+                  if (r.id === "openai-compatible" && held.OPENAI_BASE_URL) {
+                    setBaseUrl(held.OPENAI_BASE_URL);
+                    setContainerBaseUrl(held.OPENAI_CONTAINER_BASE_URL ?? "");
+                    setModel(held.BOT_MODEL ?? "");
+                  } else {
+                    setBaseUrl("");
+                    setContainerBaseUrl("");
+                    setModel("");
+                  }
+                }}
+              />
+              <Mark id={r.mark} name={r.name} />
+              <span className="tile-name">{r.name}</span>
+              <span className="tile-summary">{r.summary}</span>
+            </label>
+          ))}
+        </fieldset>
+      )}
 
       {row && (
-        <div className="chosen-provider">
+        <div ref={selectedPanelRef} className="chosen-provider">
           {row.logins.length > 1 && (
-            <div className="segmented" role="tablist">
+            <fieldset className="segmented" role="tablist">
+              <legend className="sr-only">Sign-in method</legend>
               {row.logins.map((option) => (
                 <button
                   type="button"
@@ -406,7 +530,7 @@ export function ProviderPicker({
                     : "Use an API key"}
                 </button>
               ))}
-            </div>
+            </fieldset>
           )}
 
           {login === "plan" &&
@@ -620,6 +744,84 @@ export function ProviderPicker({
             </>
           )}
 
+          {login === "copilot" && (
+            <>
+              {copilotLoading ? (
+                <p className="lede" role="status">
+                  Checking Copilot CLI and your existing sign-in…
+                </p>
+              ) : copilotStatus?.authentication === "ready" ? (
+                <>
+                  <p className="lede">
+                    Ready through Copilot CLI {copilotStatus.version}. Your
+                    existing GitHub Copilot sign-in and local Copilot resources
+                    stay owned by the CLI.
+                  </p>
+                  <div
+                    className="copilot-counts"
+                    aria-label="Copilot resources"
+                  >
+                    <span>
+                      <strong>{copilotInventory?.agents.length ?? 0}</strong>{" "}
+                      agents
+                    </span>
+                    <span>
+                      <strong>{copilotInventory?.plugins.length ?? 0}</strong>{" "}
+                      plugins
+                    </span>
+                    <span>
+                      <strong>{copilotInventory?.skills.length ?? 0}</strong>{" "}
+                      skills
+                    </span>
+                    <span>
+                      <strong>
+                        {copilotInventory?.mcpServers.length ?? 0}
+                      </strong>{" "}
+                      MCP servers
+                    </span>
+                  </div>
+                  {(!copilotStatus.capabilities.listSessions ||
+                    !copilotStatus.capabilities.loadSession) && (
+                    <p className="caution">
+                      This Copilot CLI build does not advertise the session
+                      capabilities Darbot needs.
+                    </p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <p className="lede">
+                    Sign in with GitHub through Copilot CLI. Darbot does not
+                    read, copy, or store your Copilot token.
+                  </p>
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={signInToCopilot}
+                  >
+                    {busy ? "Waiting for GitHub…" : "Sign in with GitHub"}
+                  </button>
+                </>
+              )}
+              {[
+                ...(copilotStatus?.warnings ?? []),
+                ...(copilotInventory?.warnings ?? []),
+              ].length > 0 && (
+                <details className="copilot-warnings">
+                  <summary>Copilot CLI warnings</summary>
+                  <ul>
+                    {[
+                      ...(copilotStatus?.warnings ?? []),
+                      ...(copilotInventory?.warnings ?? []),
+                    ].map((warning) => (
+                      <li key={warning}>{warning}</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+            </>
+          )}
+
           {/* Said before it happens rather than diagnosed after the Bots stop answering. */}
           {failure && <InlineFailure problem={failure} />}
 
@@ -638,13 +840,19 @@ export function ProviderPicker({
         </div>
       )}
 
-      <div className="row">
+      <div ref={actionsRef} className="row provider-actions">
         <button type="button" className="quiet" onClick={onBack}>
           Back
         </button>
         <button
           type="button"
-          disabled={!row || !login || !ready}
+          disabled={
+            loadingProviders ||
+            providerFailure !== null ||
+            !row ||
+            !login ||
+            !ready
+          }
           onClick={continueWithChoice}
         >
           Continue

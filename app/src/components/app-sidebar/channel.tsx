@@ -22,6 +22,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import type { AgentIconIdentity } from "@/lib/agents/icons";
 import {
   deleteChannelMutationOptions,
   setChannelPinnedMutationOptions,
@@ -46,6 +47,7 @@ export const Channel = memo(function Channel({
   pinned,
   unread,
   busy,
+  agents,
 }: {
   channelId: string;
   participantIds: string[];
@@ -58,6 +60,8 @@ export const Channel = memo(function Channel({
   pinned: boolean;
   unread: boolean;
   busy: boolean;
+  /** The roster, so the row's avatar draws a coworker's real artwork rather than an id-shaped guess. */
+  agents?: readonly AgentIconIdentity[];
 }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -123,6 +127,7 @@ export const Channel = memo(function Channel({
                 participantIds={participantIds}
                 size={32}
                 typing={busy}
+                agents={agents}
               />
             </div>
             <div className="flex-col min-w-0 flex-1">

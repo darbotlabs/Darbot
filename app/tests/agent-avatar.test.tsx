@@ -7,7 +7,7 @@ import { AgentCard } from "@/components/agents/agent-card";
 import { type AgentIconIdentity, agentIcons } from "@/lib/agents/icons";
 import type { AgentProfile } from "@/lib/agents/queries";
 
-beforeAll(() => GlobalRegistrator.register());
+beforeAll(() => GlobalRegistrator.register({ url: "http://localhost/" }));
 afterEach(cleanup);
 afterAll(() => GlobalRegistrator.unregister());
 
@@ -73,7 +73,7 @@ test("a failed icon is reported and falls back, without poisoning the next cowor
     );
     expect(
       view.getByRole("img", { name: custom.name }).getAttribute("src"),
-    ).toBe(agentIcons["agent-mastra"].src);
+    ).toBe(agentIcons["agent-mastra"].identity.token.png256);
   } finally {
     report.mockRestore();
   }
@@ -118,4 +118,39 @@ test("a custom picker card retains its large generated background avatar", () =>
     "250",
   );
   expect(view.container.querySelector(".bg-background\\/40")).toBeTruthy();
+});
+
+test.each([16, 24, 32, 48])(
+  "%spx identities use exact token artwork without clipping or CSS recoloring",
+  (size) => {
+    const view = render(
+      <AgentAvatar
+        agent={{ ...custom, avatarSeed: "agent-adk" }}
+        size={size}
+      />,
+    );
+    const image = view.getByRole("img", { name: custom.name });
+    expect(image.getAttribute("src")).toBe(
+      agentIcons["agent-adk"].identity.token.png256,
+    );
+    expect(image.getAttribute("data-swarm-kind")).toBe("token");
+    expect(image.getAttribute("width")).toBe(String(size));
+    expect(image.className).toContain("object-contain");
+    expect(image.className).not.toContain("rounded-full");
+    expect(image.className).not.toContain("object-cover");
+    expect(image.getAttribute("style")).toBeNull();
+  },
+);
+
+test("a 64px identity shows the full source avatar and explicit artwork choice remains available", () => {
+  const agent = { ...custom, avatarSeed: "agent-adk" };
+  const view = render(<AgentAvatar agent={agent} size={64} />);
+  expect(view.getByRole("img").getAttribute("src")).toBe(
+    agentIcons["agent-adk"].src,
+  );
+  expect(view.getByRole("img").getAttribute("data-swarm-kind")).toBe("avatar");
+  view.rerender(<AgentAvatar agent={agent} kind="token" size={64} />);
+  expect(view.getByRole("img").getAttribute("src")).toBe(
+    agentIcons["agent-adk"].identity.token.png256,
+  );
 });

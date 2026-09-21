@@ -1,0 +1,64 @@
+[38;2;96;217;194m■[0m DSW-MO-065 agent-adk #60D9C2 [OPAL: solid fallback]
+[38;2;93;220;194m■[0m DSW-MO-066 agent-ag2 #5DDCC2 [OPAL: solid fallback]
+[38;2;90;222;194m■[0m DSW-MO-067 agent-agno #5ADEC2 [OPAL: solid fallback]
+[38;2;87;225;194m■[0m DSW-MO-068 agent-bot #57E1C2 [OPAL: solid fallback]
+[38;2;84;227;194m■[0m DSW-MO-069 agent-claude-sdk #54E3C2 [OPAL: solid fallback]
+[38;2;80;230;194m■[0m DSW-MO-070 agent-computer #50E6C2
+[38;2;107;233;201m■[0m DSW-MO-071 agent-crewai #6BE9C9
+[38;2;129;235;207m■[0m DSW-MO-072 agent-langgraph #81EBCF
+[38;2;149;238;214m■[0m DSW-MO-073 agent-langgraph-agui #95EED6
+[38;2;166;240;221m■[0m DSW-MO-074 agent-langroid #A6F0DD
+[38;2;183;243;228m■[0m DSW-MO-075 agent-llamaindex #B7F3E4
+[38;2;199;245;234m■[0m DSW-MO-076 agent-mastra #C7F5EA
+[38;2;214;247;241m■[0m DSW-MO-077 agent-microsoft #D6F7F1
+[38;2;229;249;248m■[0m DSW-MO-078 agent-pydantic-ai #E5F9F8
+[38;2;244;251;255m■[0m DSW-MO-079 agent-strands #F4FBFF
+[38;2;0;207;255m■[0m DSW-MO-080 agent-mcp #00CFFF
+[38;2;0;192;246m■[0m DSW-MO-081 agent-a2a #00C0F6
+[38;2;0;176;237m■[0m DSW-MO-082 agent-acp #00B0ED
+[38;2;0;161;227m■[0m DSW-MO-083 agent-identity #00A1E3
+[38;2;0;146;218m■[0m DSW-MO-084 agent-policy #0092DA
+[38;2;0;131;209m■[0m DSW-MO-085 agent-memory #0083D1
+[38;2;0;116;199m■[0m DSW-MO-086 agent-ontology #0074C7
+[38;2;0;102;190m■[0m DSW-MO-087 agent-knowledge-graph #0066BE
+[38;2;0;86;181m■[0m DSW-MO-088 agent-retrieval #0056B5
+[38;2;0;71;171m■[0m DSW-MO-089 agent-reranking #0047AB
+[38;2;57;74;176m■[0m DSW-MO-090 agent-embeddings #394AB0
+[38;2;87;75;180m■[0m DSW-MO-091 agent-context #574BB4
+[38;2;113;76;185m■[0m DSW-MO-092 agent-schemas #714CB9
+[38;2;137;74;190m■[0m DSW-MO-093 agent-provenance #894ABE
+[38;2;161;71;194m■[0m DSW-MO-094 agent-evaluation #A147C2
+[38;2;185;66;199m■[0m DSW-MO-095 agent-observability #B942C7
+[38;2;208;57;203m■[0m DSW-MO-096 agent-routing #D039CB
+[38;2;231;42;208m■[0m DSW-MO-097 agent-planning #E72AD0
+[38;2;255;0;212m■[0m DSW-MO-098 agent-scheduler #FF00D4
+[38;2;254;36;196m■[0m DSW-MO-099 agent-replay #FE24C4
+[38;2;254;52;180m■[0m DSW-MO-100 agent-sandbox #FE34B4
+[38;2;254;62;163m■[0m DSW-MO-101 agent-browser #FE3EA3
+[38;2;254;70;146m■[0m DSW-MO-102 agent-terminal #FE4692
+[38;2;254;76;128m■[0m DSW-MO-103 agent-filesystem #FE4C80
+[38;2;254;81;109m■[0m DSW-MO-104 agent-network #FE516D
+[38;2;254;85;87m■[0m DSW-MO-105 agent-storage #FE5557
+[38;2;255;88;60m■[0m DSW-MO-106 agent-inference #FF583C
+[38;2;255;90;0m■[0m DSW-MO-107 agent-quantization #FF5A00
+[38;2;248;84;2m■[0m DSW-MO-108 agent-training #F85402
+[38;2;242;78;4m■[0m DSW-MO-109 agent-reinforcement #F24E04
+[38;2;236;71;5m■[0m DSW-MO-110 agent-vision #EC4705
+[38;2;229;65;7m■[0m DSW-MO-111 agent-ocr #E54107
+[38;2;223;58;8m■[0m DSW-MO-112 agent-speech #DF3A08
+[38;2;216;51;9m■[0m DSW-MO-113 agent-robotics #D83309
+[38;2;210;44;10m■[0m DSW-MO-114 agent-simulation #D22C0A
+[38;2;203;35;10m■[0m DSW-MO-115 agent-geospatial #CB230A
+[38;2;197;26;11m■[0m DSW-MO-116 agent-api-design #C51A0B
+[38;2;195;63;43m■[0m DSW-MO-117 agent-data-quality #C33F2B [OPAL: solid fallback]
+[38;2;192;88;65m■[0m DSW-MO-118 agent-etl #C05841 [OPAL: solid fallback]
+[38;2;187;108;84m■[0m DSW-MO-119 agent-event-streams #BB6C54 [OPAL: solid fallback]
+[38;2;181;126;103m■[0m DSW-MO-120 agent-ui-design #B57E67 [OPAL: solid fallback]
+[38;2;173;143;121m■[0m DSW-MO-121 agent-accessibility #AD8F79 [OPAL: solid fallback]
+[38;2;162;160;139m■[0m DSW-MO-122 agent-documentation #A2A08B [OPAL: solid fallback]
+[38;2;149;176;157m■[0m DSW-MO-123 agent-research #95B09D [OPAL: solid fallback]
+[38;2;131;192;176m■[0m DSW-MO-124 agent-privacy #83C0B0 [OPAL: solid fallback]
+[38;2;105;207;194m■[0m DSW-MO-125 agent-threat-modeling #69CFC2 [OPAL: solid fallback]
+[38;2;103;210;194m■[0m DSW-MO-126 agent-formal-verification #67D2C2 [OPAL: solid fallback]
+[38;2;101;212;194m■[0m DSW-MO-127 agent-sustainability #65D4C2 [OPAL: solid fallback]
+[38;2;98;215;194m■[0m DSW-MO-128 agent-swarm-coordination #62D7C2 [OPAL: solid fallback]

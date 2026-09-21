@@ -1,12 +1,38 @@
-import Avatar from "boring-avatars";
-import { memo } from "react";
+import { memo, useMemo } from "react";
+import { AgentAvatar } from "@/components/agents/agent-avatar";
+import type { AgentIconIdentity } from "@/lib/agents/icons";
 import { cn } from "@/lib/utils";
+
+/**
+ * A participant's real profile when the roster carries it — a coworker's actual artwork, not just
+ * its id turned into an abstract shape. Falls back to a stable generated avatar, seeded on the id
+ * itself, for anyone the roster does not know: a stale list, a participant outside this deployment,
+ * or a genuinely unrecognized id. `AgentAvatar` draws that fallback on its own once it fails to
+ * resolve a profile, so the synthesized identity below only has to carry the id through.
+ */
+function identityFor(
+  participantId: string,
+  agentsById: Map<string, AgentIconIdentity>,
+): AgentIconIdentity {
+  return (
+    agentsById.get(participantId) ?? {
+      avatarSeed: participantId,
+      endpoint: null,
+      id: participantId,
+      name: participantId,
+    }
+  );
+}
 
 /**
  * Memoized roster avatar. Row updates usually change preview/timestamp only, and
  * `use-channel-events` preserves participant id arrays for unchanged rows.
  *
- * `size-full` opts the generated SVG out of ancestor icon selectors such as
+ * `agents` is a roster already loaded by the caller (the agent list, a channel's own profiles) —
+ * this never fetches on its own; passing nothing simply falls back to generated avatars for every
+ * participant rather than issuing a request of its own.
+ *
+ * `size-full` opts the drawn artwork out of ancestor icon selectors such as
  * `[&_svg:not([class*='size-'])]:size-4`.
  *
  * `typing` overlays a working indicator at the bottom-right — three bouncing dots, so a channel
@@ -14,18 +40,32 @@ import { cn } from "@/lib/utils";
  */
 export const ChannelAvatar = memo(function ChannelAvatar({
   participantIds,
+  agents,
   size = 32,
   typing = false,
 }: {
   participantIds: string[];
+  agents?: readonly AgentIconIdentity[];
   size?: number;
   typing?: boolean;
 }) {
+  const agentsById = useMemo(() => {
+    const map = new Map<string, AgentIconIdentity>();
+    for (const agent of agents ?? []) {
+      map.set(agent.id, agent);
+    }
+    return map;
+  }, [agents]);
+
   const channelSize = participantIds?.length;
 
   const avatar =
     channelSize === 1 ? (
-      <Avatar className="size-full" name={participantIds[0]} size={size} />
+      <AgentAvatar
+        agent={identityFor(participantIds[0], agentsById)}
+        className="size-full"
+        size={size}
+      />
     ) : (
       <div className="flex flex-row items-center size-full">
         {participantIds.slice(0, 3).map((c, i, shown) => (
@@ -38,9 +78,9 @@ export const ChannelAvatar = memo(function ChannelAvatar({
               transform: `translateX(${i * -75}%)`,
             }}
           >
-            <Avatar
+            <AgentAvatar
+              agent={identityFor(c, agentsById)}
               className="size-full"
-              name={c}
               size={size / (shown.length / 2)}
             />
           </div>

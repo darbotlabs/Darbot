@@ -1,0 +1,397 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:darbot:swarm:mint-opal64:v3",
+  "title": "Darbot Swarm Mint/Opal 64 Agent Perspective Registry",
+  "type": "object",
+  "required": [
+    "schema_id",
+    "version",
+    "count",
+    "source_lock",
+    "palette",
+    "agents"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "darbot.swarm.mint-opal64.v3"
+    },
+    "version": {
+      "const": "3.0.0"
+    },
+    "count": {
+      "const": 64
+    },
+    "palette": {
+      "type": "array",
+      "minItems": 64,
+      "maxItems": 64
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 64,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "required": [
+          "agent_id",
+          "display_name",
+          "swarm_index",
+          "identity_code",
+          "visual",
+          "assets"
+        ],
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "pattern": "^agent-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "display_name": {
+            "type": "string",
+            "pattern": "^Mint "
+          },
+          "swarm_index": {
+            "type": "integer",
+            "minimum": 65,
+            "maximum": 128
+          },
+          "identity_code": {
+            "type": "string",
+            "pattern": "^DSW-MO-[0-9]{3}$"
+          },
+          "visual": {
+            "type": "object",
+            "required": [
+              "palette_token",
+              "fallback_hex",
+              "color",
+              "material"
+            ],
+            "properties": {
+              "color": {
+                "type": "object",
+                "required": [
+                  "hex",
+                  "rgb",
+                  "hsl",
+                  "terminal"
+                ],
+                "properties": {
+                  "hex": {
+                    "type": "string",
+                    "pattern": "^#[0-9A-F]{6}$"
+                  },
+                  "rgb": {
+                    "type": "object",
+                    "required": [
+                      "r",
+                      "g",
+                      "b"
+                    ],
+                    "properties": {
+                      "r": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 255
+                      },
+                      "g": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 255
+                      },
+                      "b": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 255
+                      }
+                    }
+                  },
+                  "hsl": {
+                    "type": "object",
+                    "required": [
+                      "h",
+                      "s",
+                      "l"
+                    ],
+                    "properties": {
+                      "h": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 360
+                      },
+                      "s": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                      },
+                      "l": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                      }
+                    }
+                  }
+                }
+              },
+              "material": {
+                "type": "object",
+                "required": [
+                  "kind",
+                  "strength"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "solid",
+                      "opal-splatter"
+                    ]
+                  },
+                  "strength": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                }
+              }
+            }
+          },
+          "assets": {
+            "type": "object",
+            "required": [
+              "token_2048",
+              "token_1024",
+              "agent_2048_black",
+              "agent_1024_black"
+            ]
+          }
+        }
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-adk"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-ag2"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-agno"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-bot"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-claude-sdk"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-computer"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-crewai"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-langgraph"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-langgraph-agui"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-langroid"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-llamaindex"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-mastra"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-microsoft"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-pydantic-ai"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "const": "agent-strands"
+              }
+            },
+            "required": [
+              "agent_id"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ]
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 import { listenPort } from "../shared/listen-port";
+import { swarmAssets } from "./swarm-assets-plugin";
 
 /*
  * Announce the server's port to the two runtimes that serve the app through Vite, and to no other.
@@ -93,6 +94,7 @@ const serving = {
 
 export default defineConfig({
   plugins: [
+    swarmAssets(),
     announceServerPort(apiPort.port),
     tanstackRouter(),
     react(),

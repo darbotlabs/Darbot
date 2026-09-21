@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { type ReactNode, useState } from "react";
 import { AgentAvatar } from "@/components/agents/agent-avatar";
 import { AgentDialog } from "@/components/agents/agent-dialog";
+import { PackagedIdentity } from "@/components/agents/packaged-identity";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { agentQueryOptions } from "@/lib/agents/queries";
@@ -93,6 +94,8 @@ export function AgentProfile({ agentId }: { agentId: string }) {
           {profile.roleDescription}
         </p>
       </section>
+
+      <PackagedIdentity agent={profile} />
 
       <div className="flex flex-col gap-2">
         <Button

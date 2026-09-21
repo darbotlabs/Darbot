@@ -1,0 +1,65 @@
+﻿swarm_index,identity_code,agent_id,display_name,domain,role,perspective,group,palette_token,fallback_hex,material_kind,material_strength
+65,DSW-MO-065,agent-adk,Mint Seed,ADK,Agent construction,"Compose agents, tools, sessions and workflow building blocks.",frameworks-and-interaction,DSW-MO-P50,#60D9C2,opal-splatter,0.55555556
+66,DSW-MO-066,agent-ag2,Mint Council,AG2,Multi-agent dialogue,"Design participant roles, turn-taking, delegation and conversation handoffs.",frameworks-and-interaction,DSW-MO-P51,#5DDCC2,opal-splatter,0.44444444
+67,DSW-MO-067,agent-agno,Mint Grove,Agno,Agent teams,"Organize agent teams, knowledge, memory and tools into coherent services.",frameworks-and-interaction,DSW-MO-P52,#5ADEC2,opal-splatter,0.33333333
+68,DSW-MO-068,agent-bot,Mint Relay,Conversational bots,Channel interaction,"Route conversation events, maintain bot state and hand off to specialists.",frameworks-and-interaction,DSW-MO-P53,#57E1C2,opal-splatter,0.22222222
+69,DSW-MO-069,agent-claude-sdk,Mint Forge,Claude Agent SDK,Coding workflows,"Plan code changes, scoped tool execution and reviewable engineering outputs.",frameworks-and-interaction,DSW-MO-P54,#54E3C2,opal-splatter,0.11111111
+70,DSW-MO-070,agent-computer,Mint Pilot,Computer interaction,Desktop operation,"Map visible interface state to bounded, observable computer actions.",frameworks-and-interaction,DSW-MO-P55,#50E6C2,solid,0
+71,DSW-MO-071,agent-crewai,Mint Crew,CrewAI,Role-based collaboration,"Coordinate role-based crews, task delegation and event-driven flows.",frameworks-and-interaction,DSW-MO-P56,#6BE9C9,solid,0
+72,DSW-MO-072,agent-langgraph,Mint Branch,LangGraph,Stateful graphs,"Model branching execution, graph state, checkpoints and recovery paths.",frameworks-and-interaction,DSW-MO-P57,#81EBCF,solid,0
+73,DSW-MO-073,agent-langgraph-agui,Mint Stream,LangGraph + AG-UI,Agent-user interaction,Connect graph execution with event-driven UI state and human interaction.,frameworks-and-interaction,DSW-MO-P58,#95EED6,solid,0
+74,DSW-MO-074,agent-langroid,Mint Dialog,Langroid,Message-oriented agents,"Compose message-driven agents, tool exchange and collaborative tasks.",frameworks-and-interaction,DSW-MO-P59,#A6F0DD,solid,0
+75,DSW-MO-075,agent-llamaindex,Mint Index,LlamaIndex,Document agents,"Organize retrieval, document reasoning and event-driven data workflows.",frameworks-and-interaction,DSW-MO-P60,#B7F3E4,solid,0
+76,DSW-MO-076,agent-mastra,Mint Flow,Mastra,TypeScript agents,"Compose TypeScript agents, workflows and application-facing tools.",frameworks-and-interaction,DSW-MO-P61,#C7F5EA,solid,0
+77,DSW-MO-077,agent-microsoft,Mint Mesh,Microsoft Agent Framework,Enterprise agents,"Coordinate agents, workflows, sessions, tool integration and enterprise context.",frameworks-and-interaction,DSW-MO-P62,#D6F7F1,solid,0
+78,DSW-MO-078,agent-pydantic-ai,Mint Contract,Pydantic AI,Typed agent contracts,"Validate structured inputs and outputs, dependencies and typed tool boundaries.",frameworks-and-interaction,DSW-MO-P63,#E5F9F8,solid,0
+79,DSW-MO-079,agent-strands,Mint Thread,Strands Agents,Model-driven tool loops,Compose tool-using agents and cooperative execution patterns.,frameworks-and-interaction,DSW-MO-P64,#F4FBFF,solid,0
+80,DSW-MO-080,agent-mcp,Mint Socket,Tool connectivity,Protocol engineering,"Expose scoped tools, resources and interface contracts.",integration,DSW-MO-P01,#00CFFF,solid,0
+81,DSW-MO-081,agent-a2a,Mint Bridge,Agent interoperability,Task handoffs,"Define interoperable task exchange, capabilities and delegated work.",integration,DSW-MO-P02,#00C0F6,solid,0
+82,DSW-MO-082,agent-acp,Mint Workbench,Editor integration,Agent-client sessions,"Align agent sessions, editor events and user-visible tool interaction.",integration,DSW-MO-P03,#00B0ED,solid,0
+83,DSW-MO-083,agent-identity,Mint Passport,Agent identity,Identity and credentials,"Map principals, credentials and capability grants with explicit ownership.",trust,DSW-MO-P04,#00A1E3,solid,0
+84,DSW-MO-084,agent-policy,Mint Charter,Policy engineering,Bounded authority,"Specify permitted actions, escalation paths and policy evaluation evidence.",trust,DSW-MO-P05,#0092DA,solid,0
+85,DSW-MO-085,agent-memory,Mint Recall,Persistent memory,Memory engineering,"Manage memory scope, retrieval, expiry and provenance.",knowledge,DSW-MO-P06,#0083D1,solid,0
+86,DSW-MO-086,agent-ontology,Mint Atlas,Ontology engineering,Semantic modeling,"Define concepts, relationships and interoperable meaning boundaries.",knowledge,DSW-MO-P07,#0074C7,solid,0
+87,DSW-MO-087,agent-knowledge-graph,Mint Lattice,Knowledge graphs,Relationship reasoning,"Build typed relationships, graph queries and evidence-linked traversals.",knowledge,DSW-MO-P08,#0066BE,solid,0
+88,DSW-MO-088,agent-retrieval,Mint Seek,Grounded retrieval,Evidence retrieval,Select context through hybrid retrieval and explicit source attribution.,knowledge,DSW-MO-P09,#0056B5,solid,0
+89,DSW-MO-089,agent-reranking,Mint Rank,Relevance ranking,Result ordering,Evaluate candidate evidence and tune task-specific result ordering.,knowledge,DSW-MO-P10,#0047AB,solid,0
+90,DSW-MO-090,agent-embeddings,Mint Vector,Embedding systems,Vector representation,"Compare embeddings, similarity behavior and vector index configuration.",knowledge,DSW-MO-P11,#394AB0,solid,0
+91,DSW-MO-091,agent-context,Mint Context,Context engineering,Context composition,"Budget, compress and route relevant context without losing provenance.",knowledge,DSW-MO-P12,#574BB4,solid,0
+92,DSW-MO-092,agent-schemas,Mint Schema,Schema design,Contract evolution,"Define typed schemas, migrations and version-compatible payloads.",engineering,DSW-MO-P13,#714CB9,solid,0
+93,DSW-MO-093,agent-provenance,Mint Ledger,Evidence provenance,Lineage and attribution,"Track artifact lineage, source attribution and evidence dependencies.",trust,DSW-MO-P14,#894ABE,solid,0
+94,DSW-MO-094,agent-evaluation,Mint Bench,Agent evaluation,Benchmark design,"Design repeatable tasks, scoring criteria and regression analysis.",assurance,DSW-MO-P15,#A147C2,solid,0
+95,DSW-MO-095,agent-observability,Mint Trace,Agent observability,Execution telemetry,"Correlate traces, events, costs and tool outcomes.",assurance,DSW-MO-P16,#B942C7,solid,0
+96,DSW-MO-096,agent-routing,Mint Switch,Model routing,Capability selection,"Route tasks across providers by declared capability, budget and policy.",orchestration,DSW-MO-P17,#D039CB,solid,0
+97,DSW-MO-097,agent-planning,Mint Compass,Task planning,Dependency decomposition,"Decompose goals into bounded tasks, dependencies and acceptance checks.",orchestration,DSW-MO-P18,#E72AD0,solid,0
+98,DSW-MO-098,agent-scheduler,Mint Cadence,Scheduling,Fair execution,"Schedule work with quotas, cancellation and resource-aware fairness.",orchestration,DSW-MO-P19,#FF00D4,solid,0
+99,DSW-MO-099,agent-replay,Mint Replay,Execution replay,Reproducible sessions,"Capture replay inputs, event order and reproducibility constraints.",assurance,DSW-MO-P20,#FE24C4,solid,0
+100,DSW-MO-100,agent-sandbox,Mint Capsule,Runtime isolation,Execution boundaries,"Define process isolation, resource limits and artifact boundaries.",platform,DSW-MO-P21,#FE34B4,solid,0
+101,DSW-MO-101,agent-browser,Mint Scout,Browser automation,Web interaction,"Navigate page state, interaction targets and browser session evidence.",interaction,DSW-MO-P22,#FE3EA3,solid,0
+102,DSW-MO-102,agent-terminal,Mint Shell,Terminal operations,Command workflows,"Plan scoped commands, capture results and manage process lifecycles.",interaction,DSW-MO-P23,#FE4692,solid,0
+103,DSW-MO-103,agent-filesystem,Mint Vault,File operations,Workspace integrity,"Organize workspaces, atomic writes, diffs and artifact provenance.",platform,DSW-MO-P24,#FE4C80,solid,0
+104,DSW-MO-104,agent-network,Mint Packet,Network architecture,Traffic and topology,"Inspect topology, traffic paths and connectivity assumptions.",platform,DSW-MO-P25,#FE516D,solid,0
+105,DSW-MO-105,agent-storage,Mint Archive,Storage engineering,Durability and capacity,"Plan storage layouts, durability, capacity and data lifecycle.",platform,DSW-MO-P26,#FE5557,solid,0
+106,DSW-MO-106,agent-inference,Mint Core,Inference systems,Serving optimization,"Compare serving configurations, latency budgets and throughput.",learning,DSW-MO-P27,#FF583C,solid,0
+107,DSW-MO-107,agent-quantization,Mint Bit,Quantization,Efficient representations,"Evaluate numerical precision, compression and quality tradeoffs.",learning,DSW-MO-P28,#FF5A00,solid,0
+108,DSW-MO-108,agent-training,Mint Learn,Model training,Training pipelines,"Track data preparation, training configuration and evaluation artifacts.",learning,DSW-MO-P29,#F85402,solid,0
+109,DSW-MO-109,agent-reinforcement,Mint Reward,Reinforcement learning,Reward and policy design,"Define rewards, environments and repeatable policy evaluation.",learning,DSW-MO-P30,#F24E04,solid,0
+110,DSW-MO-110,agent-vision,Mint Lens,Computer vision,Visual understanding,Interpret visual evidence with spatial alignment and confidence.,perception,DSW-MO-P31,#EC4705,solid,0
+111,DSW-MO-111,agent-ocr,Mint Read,Document recognition,Text and layout,"Bind recognized text to layout, coordinates and reading order.",perception,DSW-MO-P32,#E54107,solid,0
+112,DSW-MO-112,agent-speech,Mint Voice,Speech systems,Audio interaction,"Coordinate transcription, speech output and time-aligned audio evidence.",perception,DSW-MO-P33,#DF3A08,solid,0
+113,DSW-MO-113,agent-robotics,Mint Motion,Robotics,Embodied action,"Model sensing, motion constraints and testable action plans.",physical,DSW-MO-P34,#D83309,solid,0
+114,DSW-MO-114,agent-simulation,Mint Twin,Simulation,Virtual validation,Build reproducible scenarios and compare simulated outcomes.,physical,DSW-MO-P35,#D22C0A,solid,0
+115,DSW-MO-115,agent-geospatial,Mint Terrain,Geospatial systems,Spatial reasoning,"Handle coordinate systems, spatial queries and map-linked evidence.",physical,DSW-MO-P36,#CB230A,solid,0
+116,DSW-MO-116,agent-api-design,Mint Interface,API architecture,Interface design,"Define API resources, error contracts and version boundaries.",engineering,DSW-MO-P37,#C51A0B,solid,0
+117,DSW-MO-117,agent-data-quality,Mint Clean,Data quality,Validation and repair,"Check completeness, consistency, duplication and repair provenance.",data,DSW-MO-P38,#C33F2B,opal-splatter,0.11111111
+118,DSW-MO-118,agent-etl,Mint Channel,Data pipelines,Data transformation,Map source-to-target transformations and trace pipeline lineage.,data,DSW-MO-P39,#C05841,opal-splatter,0.22222222
+119,DSW-MO-119,agent-event-streams,Mint Pulse,Event streaming,Event contracts,"Define event schemas, ordering, idempotency and replay behavior.",data,DSW-MO-P40,#BB6C54,opal-splatter,0.33333333
+120,DSW-MO-120,agent-ui-design,Mint Canvas,Interface design,Visual systems,Translate interaction requirements into coherent layouts and design tokens.,creation,DSW-MO-P41,#B57E67,opal-splatter,0.44444444
+121,DSW-MO-121,agent-accessibility,Mint Access,Accessibility,Inclusive interaction,"Review keyboard behavior, readable contrast and accessible semantics.",creation,DSW-MO-P42,#AD8F79,opal-splatter,0.55555556
+122,DSW-MO-122,agent-documentation,Mint Scribe,Technical writing,Knowledge communication,"Produce accurate, structured documentation and explicit examples.",creation,DSW-MO-P43,#A2A08B,opal-splatter,0.66666667
+123,DSW-MO-123,agent-research,Mint Inquiry,Research methods,Evidence synthesis,"Frame questions, compare evidence and track uncertainty.",creation,DSW-MO-P44,#95B09D,opal-splatter,0.77777778
+124,DSW-MO-124,agent-privacy,Mint Veil,Privacy engineering,Data minimization,"Scope collection, retention and disclosure of sensitive data.",trust,DSW-MO-P45,#83C0B0,opal-splatter,0.88888889
+125,DSW-MO-125,agent-threat-modeling,Mint Shield,Threat modeling,Security analysis,"Map trust boundaries, plausible abuse paths and mitigations.",trust,DSW-MO-P46,#69CFC2,opal-splatter,1.0
+126,DSW-MO-126,agent-formal-verification,Mint Proof,Formal methods,Invariant checking,Define invariants and analyze properties against explicit assumptions.,assurance,DSW-MO-P47,#67D2C2,opal-splatter,0.88888889
+127,DSW-MO-127,agent-sustainability,Mint Balance,Resource efficiency,Sustainable operations,"Measure energy, utilization and resource tradeoffs against workloads.",physical,DSW-MO-P48,#65D4C2,opal-splatter,0.77777778
+128,DSW-MO-128,agent-swarm-coordination,Mint Taproot,Swarm coordination,Bounded orchestration,"Coordinate perspectives, budgets, dependencies and reviewable outcomes.",orchestration,DSW-MO-P49,#62D7C2,opal-splatter,0.66666667

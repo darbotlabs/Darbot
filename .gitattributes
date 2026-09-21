@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# The approved packs carry checksums for text and images alike; preserve their exact source bytes.
+assets/swarm/cohort-*/** -text
+assets/swarm/canonical/** -text
+assets/swarm/generated/** text eol=lf

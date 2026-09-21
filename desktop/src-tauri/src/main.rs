@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::path::{Path, PathBuf};
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 
 mod desktop_host_access;
 mod desktop_telemetry;
@@ -11,9 +11,9 @@ mod desktop_telemetry;
 mod test_support;
 
 use darbot_desktop_lib::{
-    acquire, deployment, deployment_release, engine, env as darbot_env, harness, host_access,
-    install, problem::Problem, provider, pull_metrics, quiet, stack, supervise, telemetry, tray,
-    windows as win,
+    acquire, copilot, deployment, deployment_release, engine, env as darbot_env, harness,
+    host_access, install, problem::Problem, provider, pull_metrics, quiet, stack, supervise,
+    telemetry, tray, windows as win,
 };
 
 const QUIT_CLEANUP_NOTICE_FILE: &str = ".darbot-quit-cleanup-notice";
@@ -310,17 +310,32 @@ fn cleanup_root(shell: &Shell, fallback_root: &Path) -> PathBuf {
 }
 
 #[tauri::command]
-fn detect_engine<R: tauri::Runtime>(app: tauri::AppHandle<R>) -> engine::EngineStatus {
-    let status = engine::detect();
-    desktop_telemetry::observe_engine(&app, &status);
-    status
+async fn detect_engine<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+) -> Result<engine::EngineStatus, Problem> {
+    tauri::async_runtime::spawn_blocking(move || {
+        let status = engine::detect();
+        desktop_telemetry::observe_engine(&app, &status);
+        status
+    })
+    .await
+    .map_err(|error| {
+        Problem::with(
+            "Darbot could not check the container engine.",
+            error.to_string(),
+        )
+    })
 }
 
 #[tauri::command]
-fn windows_blocker<R: tauri::Runtime>(
+async fn windows_blocker<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
 ) -> Result<Option<win::Blocker>, Problem> {
-    let result = win::blocker();
+    let result = tauri::async_runtime::spawn_blocking(win::blocker)
+        .await
+        .map_err(|error| {
+            Problem::with("Darbot could not check Windows setup.", error.to_string())
+        })?;
     if cfg!(target_os = "windows") {
         use telemetry::WindowsStageOutcome as Outcome;
         let outcome = match &result {
@@ -851,20 +866,21 @@ async fn start_stack_inner<R: tauri::Runtime>(
      * Nobody is asked to know this, which is the audience rule. The plan re-points the Bot, and
      * the window says which Bot it will be while there is still a screen to say it on.
      */
-    let harness =
-        match &credential {
-            darbot_env::ModelCredential::ClaudePlan { .. } => harness::speaking_for("anthropic")
-                .map(|id| harness::HarnessChoice {
-                    id: id.into(),
-                    agent_url: None,
-                }),
-            darbot_env::ModelCredential::ChatGptPlan { .. } => harness::speaking_for("openai")
-                .map(|id| harness::HarnessChoice {
-                    id: id.into(),
-                    agent_url: None,
-                }),
-            _ => harness,
-        };
+    let harness = match &credential {
+        darbot_env::ModelCredential::ClaudePlan { .. } => {
+            harness::speaking_for("anthropic").map(|id| harness::HarnessChoice {
+                id: id.into(),
+                agent_url: None,
+            })
+        }
+        darbot_env::ModelCredential::ChatGptPlan { .. } => {
+            harness::speaking_for("openai").map(|id| harness::HarnessChoice {
+                id: id.into(),
+                agent_url: None,
+            })
+        }
+        _ => harness,
+    };
     let picked = harness::picked_after_deployment_ready(&root, harness.as_ref(), || async {
         deployment_ready(&app, &root).await
     })
@@ -2422,12 +2438,7 @@ async fn begin_chatgpt_sign_in(
     remember_selected_root(&app.state::<Shell>(), &root);
     // Set up rather than refused: see `engine_ready`.
     let address = engine_ready(&app).await?;
-    let image = sign_in_image(
-        &app,
-        &root,
-        darbot_desktop_lib::plan::CHATGPT_SIGN_IN_IMAGE,
-    )
-    .await?;
+    let image = sign_in_image(&app, &root, darbot_desktop_lib::plan::CHATGPT_SIGN_IN_IMAGE).await?;
     let telemetry_app = app.clone();
     let (signing, url) = tauri::async_runtime::spawn_blocking(move || {
         pull_metrics::pull_image(&address, &image, |metrics| {
@@ -2486,8 +2497,7 @@ async fn begin_intelligence_sign_in(app: tauri::AppHandle) -> Result<String, Str
 #[tauri::command]
 async fn finish_intelligence_sign_in(
     app: tauri::AppHandle,
-) -> Result<Vec<darbot_desktop_lib::intelligence::Project>, darbot_desktop_lib::problem::Problem>
-{
+) -> Result<Vec<darbot_desktop_lib::intelligence::Project>, darbot_desktop_lib::problem::Problem> {
     let signing = app
         .state::<Shell>()
         .signing_in_to_intelligence
@@ -2522,9 +2532,7 @@ async fn intelligence_key_for(
         .lock()
         .unwrap()
         .clone()
-        .ok_or_else(|| {
-            darbot_desktop_lib::problem::Problem::plain("Sign in to darbotlm first.")
-        })?;
+        .ok_or_else(|| darbot_desktop_lib::problem::Problem::plain("Sign in to darbotlm first."))?;
     tauri::async_runtime::spawn_blocking(move || {
         darbot_desktop_lib::intelligence::provision_key(&credential, &project)
     })
@@ -2539,6 +2547,242 @@ async fn intelligence_key_for(
 #[tauri::command]
 fn providers() -> Vec<provider::Provider> {
     provider::catalogue()
+}
+
+#[tauri::command]
+async fn copilot_status() -> Result<copilot::CopilotStatus, Problem> {
+    copilot_task("GitHub Copilot status could not be read", copilot::status).await
+}
+
+#[tauri::command]
+async fn copilot_workspace(cwd: Option<String>) -> Result<copilot::CopilotWorkspace, Problem> {
+    copilot_task(
+        "GitHub Copilot working folder could not be read",
+        move || copilot::workspace(cwd),
+    )
+    .await
+}
+
+#[tauri::command]
+async fn copilot_pick_directory<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+) -> Result<Option<copilot::CopilotWorkspace>, Problem> {
+    copilot_task(
+        "GitHub Copilot folder selection did not finish",
+        move || {
+            use tauri_plugin_dialog::DialogExt;
+            let window = app
+                .get_webview_window("main")
+                .ok_or_else(|| Problem::plain("The Darbot window is closed."))?;
+            let picked = app
+                .dialog()
+                .file()
+                .set_title("Choose a Copilot working folder")
+                .set_parent(&window)
+                .blocking_pick_folder();
+            picked
+                .map(|picked| {
+                    let path = picked.into_path().map_err(|error| {
+                        Problem::with("Choose a local or network folder.", error.to_string())
+                    })?;
+                    copilot::workspace(Some(path.to_string_lossy().into_owned()))
+                })
+                .transpose()
+        },
+    )
+    .await
+}
+
+#[tauri::command]
+async fn copilot_inventory(cwd: Option<String>) -> Result<copilot::CopilotInventory, Problem> {
+    copilot_task("GitHub Copilot resources could not be read", move || {
+        copilot::inventory(cwd)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_agents() -> Result<copilot::CopilotAgentCatalog, Problem> {
+    copilot_task("Personal Copilot agents could not be read", copilot::agents).await
+}
+
+#[tauri::command]
+async fn copilot_agent_create(
+    name: String,
+    description: String,
+    instructions: String,
+) -> Result<copilot::CopilotAgent, Problem> {
+    copilot_task("The Copilot agent could not be created", move || {
+        copilot::create_agent(name, description, instructions)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_login(
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+) -> Result<copilot::CopilotStatus, Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot sign-in stopped", move || {
+        runtime.shutdown();
+        copilot::login()
+    })
+    .await
+}
+
+async fn copilot_task<T, F>(failure: &'static str, task: F) -> Result<T, Problem>
+where
+    T: Send + 'static,
+    F: FnOnce() -> Result<T, Problem> + Send + 'static,
+{
+    tauri::async_runtime::spawn_blocking(task)
+        .await
+        .map_err(|error| Problem::plain(format!("{failure}: {error}")))?
+}
+
+#[tauri::command]
+async fn copilot_sessions<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    agent: Option<String>,
+    cursor: Option<String>,
+    cwd: Option<String>,
+) -> Result<copilot::CopilotSessionPage, Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot sessions could not be read", move || {
+        runtime.sessions(&app, agent, cursor, cwd)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_history<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    cwd: Option<String>,
+) -> Result<copilot::CopilotHistory, Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot history could not be read", move || {
+        runtime.history(&app, cwd)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_session_new<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    agent: Option<String>,
+    cwd: String,
+) -> Result<copilot::CopilotSession, Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot could not create a session", move || {
+        runtime.new_session(&app, agent, cwd)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_session_load<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    agent: Option<String>,
+    session_id: String,
+    cwd: String,
+) -> Result<copilot::CopilotSession, Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot could not load that session", move || {
+        runtime.load_session(&app, agent, session_id, cwd)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_session_resume<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    agent: Option<String>,
+    session_id: String,
+    cwd: String,
+) -> Result<copilot::CopilotSession, Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot could not resume that session", move || {
+        runtime.resume_session(&app, agent, session_id, cwd)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_session_prompt<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    agent: Option<String>,
+    session_id: String,
+    prompt: String,
+) -> Result<copilot::CopilotPromptResult, Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot could not finish that prompt", move || {
+        runtime.prompt(&app, agent, session_id, prompt)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_session_configure(
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    session_id: String,
+    config_id: String,
+    value: String,
+) -> Result<copilot::CopilotSessionConfig, Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot settings could not be changed", move || {
+        runtime.configure(session_id, config_id, value)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_session_cancel<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    agent: Option<String>,
+    session_id: String,
+) -> Result<(), Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot could not cancel that prompt", move || {
+        runtime.cancel(&app, agent, session_id)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_session_close<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    agent: Option<String>,
+    session_id: String,
+) -> Result<(), Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task("GitHub Copilot could not close that session", move || {
+        runtime.close_session(&app, agent, session_id)
+    })
+    .await
+}
+
+#[tauri::command]
+async fn copilot_permission_respond<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    agent: Option<String>,
+    request_id: String,
+    option_id: Option<String>,
+) -> Result<(), Problem> {
+    let runtime = Arc::clone(&runtime);
+    copilot_task(
+        "GitHub Copilot could not receive that permission decision",
+        move || runtime.respond_permission(&app, agent, request_id, option_id),
+    )
+    .await
 }
 
 /// `bun` from PATH, or the places an installer puts it when PATH has not been reloaded.
@@ -2870,6 +3114,7 @@ fn main() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .manage(Shell::default())
+        .manage(Arc::new(copilot::CopilotRuntimeState::default()))
         .invoke_handler(tauri::generate_handler![
             record_setup_event,
             detect_engine,
@@ -2886,6 +3131,23 @@ fn main() {
             selected_root,
             harnesses,
             providers,
+            copilot_status,
+            copilot_workspace,
+            copilot_pick_directory,
+            copilot_inventory,
+            copilot_agents,
+            copilot_agent_create,
+            copilot_login,
+            copilot_sessions,
+            copilot_history,
+            copilot_session_new,
+            copilot_session_load,
+            copilot_session_resume,
+            copilot_session_prompt,
+            copilot_session_configure,
+            copilot_session_cancel,
+            copilot_session_close,
+            copilot_permission_respond,
             already_configured,
             begin_claude_sign_in,
             finish_claude_sign_in,
@@ -2942,55 +3204,39 @@ fn main() {
                 .menu(&menu)
                 .build(app)?;
 
-            // The same three items on the window itself, because the tray cannot be relied on and
-            // Stop lives nowhere else.
-            //
-            // Linux needs a tray host to draw the icon, and Windows can place it in overflow.
-            // The tray library restores the Windows icon after Explorer restarts, but the window
-            // menu still provides access when the tray is unavailable or hard to find.
-            // Its own items, not the tray's: a menu item belongs to one menu, and the two menus
-            // outlive each other. The ids match so both arrive at the same function.
-            use tauri::menu::Submenu;
-            let window_open = MenuItem::with_id(app, "open", "Open darbot", true, None::<&str>)?;
-            let window_stop = MenuItem::with_id(app, "stop", "Stop darbot", true, None::<&str>)?;
-            let window_quit =
-                MenuItem::with_id(app, "quit", "Quit", true, quit_menu_accelerator())?;
-            // A submenu, because a top-level entry in a menu bar has to be one to open at all.
-            let darbot = Submenu::with_items(
-                app,
-                "darbot",
-                true,
-                &[&window_open, &window_stop, &window_quit],
-            )?;
-            /*
-             * AN EDIT MENU, WITHOUT WHICH COMMAND-V DOES NOTHING.
-             *
-             * MEASURED, on the screen that asks for a paste. macOS routes the clipboard shortcuts
-             * through the menu bar, so a window with no Edit menu has no Paste, and a webview text
-             * field silently ignores the keystroke. Typing worked and pasting did not, on the one
-             * screen whose own instruction is "paste the code it shows you". Every person signing
-             * in to a Claude plan would have reached that field, pressed the shortcut everybody
-             * knows, and had nothing happen.
-             *
-             * Predefined items rather than our own: these carry the standard shortcuts and the
-             * standard behaviour, which is the whole point of them being where a person expects.
-             */
-            use tauri::menu::PredefinedMenuItem;
-            let edit = Submenu::with_items(
-                app,
-                "Edit",
-                true,
-                &[
-                    &PredefinedMenuItem::undo(app, None)?,
-                    &PredefinedMenuItem::redo(app, None)?,
-                    &PredefinedMenuItem::separator(app)?,
-                    &PredefinedMenuItem::cut(app, None)?,
-                    &PredefinedMenuItem::copy(app, None)?,
-                    &PredefinedMenuItem::paste(app, None)?,
-                    &PredefinedMenuItem::select_all(app, None)?,
-                ],
-            )?;
-            app.set_menu(Menu::with_items(app, &[&darbot, &edit])?)?;
+            #[cfg(target_os = "macos")]
+            {
+                use tauri::menu::{PredefinedMenuItem, Submenu};
+
+                let window_open =
+                    MenuItem::with_id(app, "open", "Open darbot", true, None::<&str>)?;
+                let window_stop =
+                    MenuItem::with_id(app, "stop", "Stop darbot", true, None::<&str>)?;
+                let window_quit =
+                    MenuItem::with_id(app, "quit", "Quit", true, quit_menu_accelerator())?;
+                let darbot = Submenu::with_items(
+                    app,
+                    "darbot",
+                    true,
+                    &[&window_open, &window_stop, &window_quit],
+                )?;
+                // macOS routes standard clipboard shortcuts through the application menu.
+                let edit = Submenu::with_items(
+                    app,
+                    "Edit",
+                    true,
+                    &[
+                        &PredefinedMenuItem::undo(app, None)?,
+                        &PredefinedMenuItem::redo(app, None)?,
+                        &PredefinedMenuItem::separator(app)?,
+                        &PredefinedMenuItem::cut(app, None)?,
+                        &PredefinedMenuItem::copy(app, None)?,
+                        &PredefinedMenuItem::paste(app, None)?,
+                        &PredefinedMenuItem::select_all(app, None)?,
+                    ],
+                )?;
+                app.set_menu(Menu::with_items(app, &[&darbot, &edit])?)?;
+            }
             app.on_menu_event(|app, event| chose(app, event.id().as_ref()));
             Ok(())
         })
@@ -3016,6 +3262,9 @@ fn main() {
                         || api.prevent_exit(),
                         move || {
                             desktop_telemetry::shutdown(&cleaning_app);
+                            cleaning_app
+                                .state::<Arc<copilot::CopilotRuntimeState>>()
+                                .shutdown();
                             let shell = cleaning_app.state::<Shell>();
                             exit_cleanup_with(
                                 &shell,
@@ -3777,12 +4026,8 @@ mod tests {
                 format!("MANAGED_AGENT_AG_UI_URL=https://agent-{label}.example\n"),
             )
             .unwrap();
-            darbot_desktop_lib::vault::remember(
-                root,
-                "OPENAI_API_KEY",
-                &format!("openai-{label}"),
-            )
-            .unwrap();
+            darbot_desktop_lib::vault::remember(root, "OPENAI_API_KEY", &format!("openai-{label}"))
+                .unwrap();
             darbot_desktop_lib::vault::remember(
                 root,
                 "MANAGED_AGENT_TOKEN",
@@ -4152,10 +4397,7 @@ mod tests {
         let error = choice
             .into_credential_with(&root, |_, key| {
                 reads += 1;
-                assert_eq!(
-                    key,
-                    darbot_desktop_lib::saved_intent::COMPATIBLE_CREDENTIAL
-                );
+                assert_eq!(key, darbot_desktop_lib::saved_intent::COMPATIBLE_CREDENTIAL);
                 Ok(
                     r#"{"base_url":"https://other.example/v1","api_key":"synthetic-other-key"}"#
                         .into(),

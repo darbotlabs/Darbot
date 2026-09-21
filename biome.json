@@ -8,6 +8,7 @@
       "!app/src/components/ui",
       "!app/src/lib/generated/application-config.ts",
       "!app/src/routeTree.gen.ts",
+      "!assets/swarm",
       "!packages/runtime/__snapshots__/schema",
       "!packages/runtime-client-gql/src/graphql/@generated",
       "!packages/web-inspector/src/styles/generated.css",

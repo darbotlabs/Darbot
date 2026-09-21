@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import type { AgentIconIdentity } from "@/lib/agents/icons";
 import {
   type ControlState,
   readControl,
@@ -182,6 +183,8 @@ type Props = {
   minHeight?: number;
   /** Whose screen this is, drawn as a small badge over the frame. Absent, no badge is drawn. */
   name?: string;
+  /** Known agent roster, so the badge can draw the real profile instead of a generated fallback. */
+  agents?: readonly AgentIconIdentity[];
   /**
    * The page this turn left the browser on, for a turn that has finished.
    *
@@ -216,6 +219,7 @@ export function ComputerView({
   minWidth = DEFAULT_MIN_WIDTH,
   minHeight = DEFAULT_MIN_HEIGHT,
   name,
+  agents,
   page,
   finished,
   toolCallId,
@@ -475,7 +479,11 @@ export function ComputerView({
             <span className="absolute right-2 bottom-2 flex items-center gap-1.5">
               {name ? (
                 <span className="flex items-center gap-1.5 rounded-full bg-black/60 py-1 pr-2.5 pl-1.5 font-medium text-white text-xs backdrop-blur-sm">
-                  <ChannelAvatar participantIds={[computerId]} size={16} />
+                  <ChannelAvatar
+                    agents={agents}
+                    participantIds={[computerId]}
+                    size={16}
+                  />
                   {name}
                 </span>
               ) : null}
@@ -681,6 +689,7 @@ export function ComputerView({
                       {name ? (
                         <span className="flex shrink-0 items-center gap-1.5 font-medium">
                           <ChannelAvatar
+                            agents={agents}
                             participantIds={[computerId]}
                             size={20}
                           />

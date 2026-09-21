@@ -1,0 +1,2818 @@
+[
+  {
+    "index": 1,
+    "palette_token": "DSW-MO-P01",
+    "name": "Nitrous Blue",
+    "anchor": "nitrous-blue",
+    "from_anchor": "nitrous-blue",
+    "to_anchor": "cobalt-blue",
+    "step": 0,
+    "intervals": 9,
+    "hex": "#00CFFF",
+    "rgb": {
+      "r": 0,
+      "g": 207,
+      "b": 255
+    },
+    "argb_hex": "#FF00CFFF",
+    "hsl": {
+      "h": 191.2941,
+      "s": 100.0,
+      "l": 50.0
+    },
+    "oklab": [
+      0.7925636311073623,
+      -0.10839336137865231,
+      -0.09932536702601392
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;207;255m",
+      "ansi_background": "\u001b[48;2;0;207;255m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 45,
+      "xterm_256_hex": "#00D7FF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 2,
+    "palette_token": "DSW-MO-P02",
+    "name": "Nitrous Blue / Cobalt Blue 1/9",
+    "anchor": null,
+    "from_anchor": "nitrous-blue",
+    "to_anchor": "cobalt-blue",
+    "step": 1,
+    "intervals": 9,
+    "hex": "#00C0F6",
+    "rgb": {
+      "r": 0,
+      "g": 192,
+      "b": 246
+    },
+    "argb_hex": "#FF00C0F6",
+    "hsl": {
+      "h": 193.1707,
+      "s": 100.0,
+      "l": 48.2353
+    },
+    "oklab": [
+      0.753428070462913,
+      -0.09912438499937931,
+      -0.1066467765399394
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;192;246m",
+      "ansi_background": "\u001b[48;2;0;192;246m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 39,
+      "xterm_256_hex": "#00AFFF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 3,
+    "palette_token": "DSW-MO-P03",
+    "name": "Nitrous Blue / Cobalt Blue 2/9",
+    "anchor": null,
+    "from_anchor": "nitrous-blue",
+    "to_anchor": "cobalt-blue",
+    "step": 2,
+    "intervals": 9,
+    "hex": "#00B0ED",
+    "rgb": {
+      "r": 0,
+      "g": 176,
+      "b": 237
+    },
+    "argb_hex": "#FF00B0ED",
+    "hsl": {
+      "h": 195.443,
+      "s": 100.0,
+      "l": 46.4706
+    },
+    "oklab": [
+      0.7116333481017274,
+      -0.0890334441432183,
+      -0.1155389975127821
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;176;237m",
+      "ansi_background": "\u001b[48;2;0;176;237m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 39,
+      "xterm_256_hex": "#00AFFF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 4,
+    "palette_token": "DSW-MO-P04",
+    "name": "Nitrous Blue / Cobalt Blue 3/9",
+    "anchor": null,
+    "from_anchor": "nitrous-blue",
+    "to_anchor": "cobalt-blue",
+    "step": 3,
+    "intervals": 9,
+    "hex": "#00A1E3",
+    "rgb": {
+      "r": 0,
+      "g": 161,
+      "b": 227
+    },
+    "argb_hex": "#FF00A1E3",
+    "hsl": {
+      "h": 197.4449,
+      "s": 100.0,
+      "l": 44.5098
+    },
+    "oklab": [
+      0.6713586951165164,
+      -0.0801272682162632,
+      -0.12194739241437012
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;161;227m",
+      "ansi_background": "\u001b[48;2;0;161;227m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 38,
+      "xterm_256_hex": "#00AFD7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 5,
+    "palette_token": "DSW-MO-P05",
+    "name": "Nitrous Blue / Cobalt Blue 4/9",
+    "anchor": null,
+    "from_anchor": "nitrous-blue",
+    "to_anchor": "cobalt-blue",
+    "step": 4,
+    "intervals": 9,
+    "hex": "#0092DA",
+    "rgb": {
+      "r": 0,
+      "g": 146,
+      "b": 218
+    },
+    "argb_hex": "#FF0092DA",
+    "hsl": {
+      "h": 199.8165,
+      "s": 100.0,
+      "l": 42.7451
+    },
+    "oklab": [
+      0.6313019417638056,
+      -0.07097153521948245,
+      -0.1299739827838075
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;146;218m",
+      "ansi_background": "\u001b[48;2;0;146;218m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 32,
+      "xterm_256_hex": "#0087D7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 6,
+    "palette_token": "DSW-MO-P06",
+    "name": "Nitrous Blue / Cobalt Blue 5/9",
+    "anchor": null,
+    "from_anchor": "nitrous-blue",
+    "to_anchor": "cobalt-blue",
+    "step": 5,
+    "intervals": 9,
+    "hex": "#0083D1",
+    "rgb": {
+      "r": 0,
+      "g": 131,
+      "b": 209
+    },
+    "argb_hex": "#FF0083D1",
+    "hsl": {
+      "h": 202.3923,
+      "s": 100.0,
+      "l": 40.9804
+    },
+    "oklab": [
+      0.5910185592974767,
+      -0.06197840620090399,
+      -0.13821812194600902
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;131;209m",
+      "ansi_background": "\u001b[48;2;0;131;209m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 32,
+      "xterm_256_hex": "#0087D7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 7,
+    "palette_token": "DSW-MO-P07",
+    "name": "Nitrous Blue / Cobalt Blue 6/9",
+    "anchor": null,
+    "from_anchor": "nitrous-blue",
+    "to_anchor": "cobalt-blue",
+    "step": 6,
+    "intervals": 9,
+    "hex": "#0074C7",
+    "rgb": {
+      "r": 0,
+      "g": 116,
+      "b": 199
+    },
+    "argb_hex": "#FF0074C7",
+    "hsl": {
+      "h": 205.0251,
+      "s": 100.0,
+      "l": 39.0196
+    },
+    "oklab": [
+      0.5499305733306064,
+      -0.05348888515513098,
+      -0.14523829237647692
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;116;199m",
+      "ansi_background": "\u001b[48;2;0;116;199m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 32,
+      "xterm_256_hex": "#0087D7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 8,
+    "palette_token": "DSW-MO-P08",
+    "name": "Nitrous Blue / Cobalt Blue 7/9",
+    "anchor": null,
+    "from_anchor": "nitrous-blue",
+    "to_anchor": "cobalt-blue",
+    "step": 7,
+    "intervals": 9,
+    "hex": "#0066BE",
+    "rgb": {
+      "r": 0,
+      "g": 102,
+      "b": 190
+    },
+    "argb_hex": "#FF0066BE",
+    "hsl": {
+      "h": 207.7895,
+      "s": 100.0,
+      "l": 37.2549
+    },
+    "oklab": [
+      0.5116910165224365,
+      -0.04580523285673646,
+      -0.1523708043762362
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;102;190m",
+      "ansi_background": "\u001b[48;2;0;102;190m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 25,
+      "xterm_256_hex": "#005FAF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 9,
+    "palette_token": "DSW-MO-P09",
+    "name": "Nitrous Blue / Cobalt Blue 8/9",
+    "anchor": null,
+    "from_anchor": "nitrous-blue",
+    "to_anchor": "cobalt-blue",
+    "step": 8,
+    "intervals": 9,
+    "hex": "#0056B5",
+    "rgb": {
+      "r": 0,
+      "g": 86,
+      "b": 181
+    },
+    "argb_hex": "#FF0056B5",
+    "hsl": {
+      "h": 211.4917,
+      "s": 100.0,
+      "l": 35.4902
+    },
+    "oklab": [
+      0.4691003510528879,
+      -0.03744480407331806,
+      -0.1623099605465902
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;86;181m",
+      "ansi_background": "\u001b[48;2;0;86;181m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 25,
+      "xterm_256_hex": "#005FAF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 10,
+    "palette_token": "DSW-MO-P10",
+    "name": "Cobalt Blue",
+    "anchor": "cobalt-blue",
+    "from_anchor": "cobalt-blue",
+    "to_anchor": "magenta",
+    "step": 0,
+    "intervals": 9,
+    "hex": "#0047AB",
+    "rgb": {
+      "r": 0,
+      "g": 71,
+      "b": 171
+    },
+    "argb_hex": "#FF0047AB",
+    "hsl": {
+      "h": 215.0877,
+      "s": 100.0,
+      "l": 33.5294
+    },
+    "oklab": [
+      0.42841804963585467,
+      -0.03075001779240995,
+      -0.1692444431733497
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;0;71;171m",
+      "ansi_background": "\u001b[48;2;0;71;171m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 25,
+      "xterm_256_hex": "#005FAF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 11,
+    "palette_token": "DSW-MO-P11",
+    "name": "Cobalt Blue / Magenta 1/9",
+    "anchor": null,
+    "from_anchor": "cobalt-blue",
+    "to_anchor": "magenta",
+    "step": 1,
+    "intervals": 9,
+    "hex": "#394AB0",
+    "rgb": {
+      "r": 57,
+      "g": 74,
+      "b": 176
+    },
+    "argb_hex": "#FF394AB0",
+    "hsl": {
+      "h": 231.4286,
+      "s": 51.073,
+      "l": 45.6863
+    },
+    "oklab": [
+      0.45709687436273577,
+      0.003633993444140676,
+      -0.16258931864421974
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;57;74;176m",
+      "ansi_background": "\u001b[48;2;57;74;176m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 25,
+      "xterm_256_hex": "#005FAF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 12,
+    "palette_token": "DSW-MO-P12",
+    "name": "Cobalt Blue / Magenta 2/9",
+    "anchor": null,
+    "from_anchor": "cobalt-blue",
+    "to_anchor": "magenta",
+    "step": 2,
+    "intervals": 9,
+    "hex": "#574BB4",
+    "rgb": {
+      "r": 87,
+      "g": 75,
+      "b": 180
+    },
+    "argb_hex": "#FF574BB4",
+    "hsl": {
+      "h": 246.8571,
+      "s": 41.1765,
+      "l": 50.0
+    },
+    "oklab": [
+      0.48335024819390865,
+      0.038303580286462365,
+      -0.15566431305992826
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;87;75;180m",
+      "ansi_background": "\u001b[48;2;87;75;180m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 61,
+      "xterm_256_hex": "#5F5FAF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 13,
+    "palette_token": "DSW-MO-P13",
+    "name": "Cobalt Blue / Magenta 3/9",
+    "anchor": null,
+    "from_anchor": "cobalt-blue",
+    "to_anchor": "magenta",
+    "step": 3,
+    "intervals": 9,
+    "hex": "#714CB9",
+    "rgb": {
+      "r": 113,
+      "g": 76,
+      "b": 185
+    },
+    "argb_hex": "#FF714CB9",
+    "hsl": {
+      "h": 260.367,
+      "s": 43.7751,
+      "l": 51.1765
+    },
+    "oklab": [
+      0.5126697047567867,
+      0.07145791885238574,
+      -0.14872158432692487
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;113;76;185m",
+      "ansi_background": "\u001b[48;2;113;76;185m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 61,
+      "xterm_256_hex": "#5F5FAF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 14,
+    "palette_token": "DSW-MO-P14",
+    "name": "Cobalt Blue / Magenta 4/9",
+    "anchor": null,
+    "from_anchor": "cobalt-blue",
+    "to_anchor": "magenta",
+    "step": 4,
+    "intervals": 9,
+    "hex": "#894ABE",
+    "rgb": {
+      "r": 137,
+      "g": 74,
+      "b": 190
+    },
+    "argb_hex": "#FF894ABE",
+    "hsl": {
+      "h": 272.5862,
+      "s": 47.1545,
+      "l": 51.7647
+    },
+    "oklab": [
+      0.5390650923956058,
+      0.10571710412030125,
+      -0.14367404311315787
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;137;74;190m",
+      "ansi_background": "\u001b[48;2;137;74;190m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 98,
+      "xterm_256_hex": "#875FD7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 15,
+    "palette_token": "DSW-MO-P15",
+    "name": "Cobalt Blue / Magenta 5/9",
+    "anchor": null,
+    "from_anchor": "cobalt-blue",
+    "to_anchor": "magenta",
+    "step": 5,
+    "intervals": 9,
+    "hex": "#A147C2",
+    "rgb": {
+      "r": 161,
+      "g": 71,
+      "b": 194
+    },
+    "argb_hex": "#FFA147C2",
+    "hsl": {
+      "h": 283.9024,
+      "s": 50.2041,
+      "l": 51.9608
+    },
+    "oklab": [
+      0.5668596750494788,
+      0.13987726748877752,
+      -0.13604348584173287
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;161;71;194m",
+      "ansi_background": "\u001b[48;2;161;71;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 134,
+      "xterm_256_hex": "#AF5FD7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 16,
+    "palette_token": "DSW-MO-P16",
+    "name": "Cobalt Blue / Magenta 6/9",
+    "anchor": null,
+    "from_anchor": "cobalt-blue",
+    "to_anchor": "magenta",
+    "step": 6,
+    "intervals": 9,
+    "hex": "#B942C7",
+    "rgb": {
+      "r": 185,
+      "g": 66,
+      "b": 199
+    },
+    "argb_hex": "#FFB942C7",
+    "hsl": {
+      "h": 293.6842,
+      "s": 54.2857,
+      "l": 51.9608
+    },
+    "oklab": [
+      0.5960922591892924,
+      0.17392953450562648,
+      -0.1294316193348642
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;185;66;199m",
+      "ansi_background": "\u001b[48;2;185;66;199m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 134,
+      "xterm_256_hex": "#AF5FD7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 17,
+    "palette_token": "DSW-MO-P17",
+    "name": "Cobalt Blue / Magenta 7/9",
+    "anchor": null,
+    "from_anchor": "cobalt-blue",
+    "to_anchor": "magenta",
+    "step": 7,
+    "intervals": 9,
+    "hex": "#D039CB",
+    "rgb": {
+      "r": 208,
+      "g": 57,
+      "b": 203
+    },
+    "argb_hex": "#FFD039CB",
+    "hsl": {
+      "h": 301.9868,
+      "s": 61.6327,
+      "l": 51.9608
+    },
+    "oklab": [
+      0.6228947734827411,
+      0.20760955396002453,
+      -0.12253739252294892
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;208;57;203m",
+      "ansi_background": "\u001b[48;2;208;57;203m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 164,
+      "xterm_256_hex": "#D700D7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 18,
+    "palette_token": "DSW-MO-P18",
+    "name": "Cobalt Blue / Magenta 8/9",
+    "anchor": null,
+    "from_anchor": "cobalt-blue",
+    "to_anchor": "magenta",
+    "step": 8,
+    "intervals": 9,
+    "hex": "#E72AD0",
+    "rgb": {
+      "r": 231,
+      "g": 42,
+      "b": 208
+    },
+    "argb_hex": "#FFE72AD0",
+    "hsl": {
+      "h": 307.3016,
+      "s": 79.7468,
+      "l": 53.5294
+    },
+    "oklab": [
+      0.6503202466428745,
+      0.24122409959559235,
+      -0.1170814848879937
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;231;42;208m",
+      "ansi_background": "\u001b[48;2;231;42;208m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 200,
+      "xterm_256_hex": "#FF00D7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 19,
+    "palette_token": "DSW-MO-P19",
+    "name": "Magenta",
+    "anchor": "magenta",
+    "from_anchor": "magenta",
+    "to_anchor": "competition-orange",
+    "step": 0,
+    "intervals": 9,
+    "hex": "#FF00D4",
+    "rgb": {
+      "r": 255,
+      "g": 0,
+      "b": 212
+    },
+    "argb_hex": "#FFFF00D4",
+    "hsl": {
+      "h": 310.1176,
+      "s": 100.0,
+      "l": 50.0
+    },
+    "oklab": [
+      0.6783704085655525,
+      0.2759837536047451,
+      -0.10967565963251641
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;255;0;212m",
+      "ansi_background": "\u001b[48;2;255;0;212m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 200,
+      "xterm_256_hex": "#FF00D7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 20,
+    "palette_token": "DSW-MO-P20",
+    "name": "Magenta / Competition Orange 1/9",
+    "anchor": null,
+    "from_anchor": "magenta",
+    "to_anchor": "competition-orange",
+    "step": 1,
+    "intervals": 9,
+    "hex": "#FE24C4",
+    "rgb": {
+      "r": 254,
+      "g": 36,
+      "b": 196
+    },
+    "argb_hex": "#FFFE24C4",
+    "hsl": {
+      "h": 315.9633,
+      "s": 99.0909,
+      "l": 56.8627
+    },
+    "oklab": [
+      0.6777503230171533,
+      0.263208897940221,
+      -0.08248851635323641
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;254;36;196m",
+      "ansi_background": "\u001b[48;2;254;36;196m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 199,
+      "xterm_256_hex": "#FF00AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 21,
+    "palette_token": "DSW-MO-P21",
+    "name": "Magenta / Competition Orange 2/9",
+    "anchor": null,
+    "from_anchor": "magenta",
+    "to_anchor": "competition-orange",
+    "step": 2,
+    "intervals": 9,
+    "hex": "#FE34B4",
+    "rgb": {
+      "r": 254,
+      "g": 52,
+      "b": 180
+    },
+    "argb_hex": "#FFFE34B4",
+    "hsl": {
+      "h": 321.9802,
+      "s": 99.0196,
+      "l": 60.0
+    },
+    "oklab": [
+      0.6790461815753838,
+      0.2506206110256701,
+      -0.05472975662931633
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;254;52;180m",
+      "ansi_background": "\u001b[48;2;254;52;180m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 199,
+      "xterm_256_hex": "#FF00AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 22,
+    "palette_token": "DSW-MO-P22",
+    "name": "Magenta / Competition Orange 3/9",
+    "anchor": null,
+    "from_anchor": "magenta",
+    "to_anchor": "competition-orange",
+    "step": 3,
+    "intervals": 9,
+    "hex": "#FE3EA3",
+    "rgb": {
+      "r": 254,
+      "g": 62,
+      "b": 163
+    },
+    "argb_hex": "#FFFE3EA3",
+    "hsl": {
+      "h": 328.4375,
+      "s": 98.9691,
+      "l": 61.9608
+    },
+    "oklab": [
+      0.6793555846859504,
+      0.23846916372204258,
+      -0.026553372269542973
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;254;62;163m",
+      "ansi_background": "\u001b[48;2;254;62;163m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 205,
+      "xterm_256_hex": "#FF5FAF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 23,
+    "palette_token": "DSW-MO-P23",
+    "name": "Magenta / Competition Orange 4/9",
+    "anchor": null,
+    "from_anchor": "magenta",
+    "to_anchor": "competition-orange",
+    "step": 4,
+    "intervals": 9,
+    "hex": "#FE4692",
+    "rgb": {
+      "r": 254,
+      "g": 70,
+      "b": 146
+    },
+    "argb_hex": "#FFFE4692",
+    "hsl": {
+      "h": 335.2174,
+      "s": 98.9247,
+      "l": 63.5294
+    },
+    "oklab": [
+      0.680110819261897,
+      0.22582152541833647,
+      0.0009008517529033266
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;254;70;146m",
+      "ansi_background": "\u001b[48;2;254;70;146m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 204,
+      "xterm_256_hex": "#FF5F87",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 24,
+    "palette_token": "DSW-MO-P24",
+    "name": "Magenta / Competition Orange 5/9",
+    "anchor": null,
+    "from_anchor": "magenta",
+    "to_anchor": "competition-orange",
+    "step": 5,
+    "intervals": 9,
+    "hex": "#FE4C80",
+    "rgb": {
+      "r": 254,
+      "g": 76,
+      "b": 128
+    },
+    "argb_hex": "#FFFE4C80",
+    "hsl": {
+      "h": 342.4719,
+      "s": 98.8889,
+      "l": 64.7059
+    },
+    "oklab": [
+      0.6804008510560703,
+      0.2133331985125397,
+      0.028298078730291977
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;254;76;128m",
+      "ansi_background": "\u001b[48;2;254;76;128m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 204,
+      "xterm_256_hex": "#FF5F87",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 25,
+    "palette_token": "DSW-MO-P25",
+    "name": "Magenta / Competition Orange 6/9",
+    "anchor": null,
+    "from_anchor": "magenta",
+    "to_anchor": "competition-orange",
+    "step": 6,
+    "intervals": 9,
+    "hex": "#FE516D",
+    "rgb": {
+      "r": 254,
+      "g": 81,
+      "b": 109
+    },
+    "argb_hex": "#FFFE516D",
+    "hsl": {
+      "h": 350.289,
+      "s": 98.8571,
+      "l": 65.6863
+    },
+    "oklab": [
+      0.6808211337398088,
+      0.2006381496576485,
+      0.05519479661932021
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;254;81;109m",
+      "ansi_background": "\u001b[48;2;254;81;109m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 203,
+      "xterm_256_hex": "#FF5F5F",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 26,
+    "palette_token": "DSW-MO-P26",
+    "name": "Magenta / Competition Orange 7/9",
+    "anchor": null,
+    "from_anchor": "magenta",
+    "to_anchor": "competition-orange",
+    "step": 7,
+    "intervals": 9,
+    "hex": "#FE5557",
+    "rgb": {
+      "r": 254,
+      "g": 85,
+      "b": 87
+    },
+    "argb_hex": "#FFFE5557",
+    "hsl": {
+      "h": 359.2899,
+      "s": 98.8304,
+      "l": 66.4706
+    },
+    "oklab": [
+      0.6809290121853369,
+      0.18769682866691567,
+      0.08266946807243801
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;254;85;87m",
+      "ansi_background": "\u001b[48;2;254;85;87m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 203,
+      "xterm_256_hex": "#FF5F5F",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 27,
+    "palette_token": "DSW-MO-P27",
+    "name": "Magenta / Competition Orange 8/9",
+    "anchor": null,
+    "from_anchor": "magenta",
+    "to_anchor": "competition-orange",
+    "step": 8,
+    "intervals": 9,
+    "hex": "#FF583C",
+    "rgb": {
+      "r": 255,
+      "g": 88,
+      "b": 60
+    },
+    "argb_hex": "#FFFF583C",
+    "hsl": {
+      "h": 8.6154,
+      "s": 100.0,
+      "l": 61.7647
+    },
+    "oklab": [
+      0.6822857514924212,
+      0.17598881368376904,
+      0.1100072794145801
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;255;88;60m",
+      "ansi_background": "\u001b[48;2;255;88;60m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 203,
+      "xterm_256_hex": "#FF5F5F",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 28,
+    "palette_token": "DSW-MO-P28",
+    "name": "Competition Orange",
+    "anchor": "competition-orange",
+    "from_anchor": "competition-orange",
+    "to_anchor": "lava",
+    "step": 0,
+    "intervals": 9,
+    "hex": "#FF5A00",
+    "rgb": {
+      "r": 255,
+      "g": 90,
+      "b": 0
+    },
+    "argb_hex": "#FFFF5A00",
+    "hsl": {
+      "h": 21.1765,
+      "s": 100.0,
+      "l": 50.0
+    },
+    "oklab": [
+      0.6814136903344855,
+      0.163475697355936,
+      0.13746992129880395
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;255;90;0m",
+      "ansi_background": "\u001b[48;2;255;90;0m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 202,
+      "xterm_256_hex": "#FF5F00",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 29,
+    "palette_token": "DSW-MO-P29",
+    "name": "Competition Orange / Lava 1/9",
+    "anchor": null,
+    "from_anchor": "competition-orange",
+    "to_anchor": "lava",
+    "step": 1,
+    "intervals": 9,
+    "hex": "#F85402",
+    "rgb": {
+      "r": 248,
+      "g": 84,
+      "b": 2
+    },
+    "argb_hex": "#FFF85402",
+    "hsl": {
+      "h": 20.0,
+      "s": 98.4,
+      "l": 49.0196
+    },
+    "oklab": [
+      0.6635497201105023,
+      0.16422251419162132,
+      0.13339048545891546
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;248;84;2m",
+      "ansi_background": "\u001b[48;2;248;84;2m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 202,
+      "xterm_256_hex": "#FF5F00",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 30,
+    "palette_token": "DSW-MO-P30",
+    "name": "Competition Orange / Lava 2/9",
+    "anchor": null,
+    "from_anchor": "competition-orange",
+    "to_anchor": "lava",
+    "step": 2,
+    "intervals": 9,
+    "hex": "#F24E04",
+    "rgb": {
+      "r": 242,
+      "g": 78,
+      "b": 4
+    },
+    "argb_hex": "#FFF24E04",
+    "hsl": {
+      "h": 18.6555,
+      "s": 96.748,
+      "l": 48.2353
+    },
+    "oklab": [
+      0.6473515899413953,
+      0.1658334630145892,
+      0.12959894124583543
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;242;78;4m",
+      "ansi_background": "\u001b[48;2;242;78;4m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 202,
+      "xterm_256_hex": "#FF5F00",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 31,
+    "palette_token": "DSW-MO-P31",
+    "name": "Competition Orange / Lava 3/9",
+    "anchor": null,
+    "from_anchor": "competition-orange",
+    "to_anchor": "lava",
+    "step": 3,
+    "intervals": 9,
+    "hex": "#EC4705",
+    "rgb": {
+      "r": 236,
+      "g": 71,
+      "b": 5
+    },
+    "argb_hex": "#FFEC4705",
+    "hsl": {
+      "h": 17.1429,
+      "s": 95.8506,
+      "l": 47.2549
+    },
+    "oklab": [
+      0.6302150288183123,
+      0.1683643765121669,
+      0.1257845778362638
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;236;71;5m",
+      "ansi_background": "\u001b[48;2;236;71;5m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 166,
+      "xterm_256_hex": "#D75F00",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 32,
+    "palette_token": "DSW-MO-P32",
+    "name": "Competition Orange / Lava 4/9",
+    "anchor": null,
+    "from_anchor": "competition-orange",
+    "to_anchor": "lava",
+    "step": 4,
+    "intervals": 9,
+    "hex": "#E54107",
+    "rgb": {
+      "r": 229,
+      "g": 65,
+      "b": 7
+    },
+    "argb_hex": "#FFE54107",
+    "hsl": {
+      "h": 15.6757,
+      "s": 94.0678,
+      "l": 46.2745
+    },
+    "oklab": [
+      0.6125652038409962,
+      0.16877858223657533,
+      0.1216107750844745
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;229;65;7m",
+      "ansi_background": "\u001b[48;2;229;65;7m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 166,
+      "xterm_256_hex": "#D75F00",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 33,
+    "palette_token": "DSW-MO-P33",
+    "name": "Competition Orange / Lava 5/9",
+    "anchor": null,
+    "from_anchor": "competition-orange",
+    "to_anchor": "lava",
+    "step": 5,
+    "intervals": 9,
+    "hex": "#DF3A08",
+    "rgb": {
+      "r": 223,
+      "g": 58,
+      "b": 8
+    },
+    "argb_hex": "#FFDF3A08",
+    "hsl": {
+      "h": 13.9535,
+      "s": 93.0736,
+      "l": 45.2941
+    },
+    "oklab": [
+      0.5957997967696447,
+      0.1708669240414016,
+      0.11779849845389852
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;223;58;8m",
+      "ansi_background": "\u001b[48;2;223;58;8m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 160,
+      "xterm_256_hex": "#D70000",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 34,
+    "palette_token": "DSW-MO-P34",
+    "name": "Competition Orange / Lava 6/9",
+    "anchor": null,
+    "from_anchor": "competition-orange",
+    "to_anchor": "lava",
+    "step": 6,
+    "intervals": 9,
+    "hex": "#D83309",
+    "rgb": {
+      "r": 216,
+      "g": 51,
+      "b": 9
+    },
+    "argb_hex": "#FFD83309",
+    "hsl": {
+      "h": 12.1739,
+      "s": 92.0,
+      "l": 44.1176
+    },
+    "oklab": [
+      0.5775443433922027,
+      0.17177002261854277,
+      0.1136427780956759
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;216;51;9m",
+      "ansi_background": "\u001b[48;2;216;51;9m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 160,
+      "xterm_256_hex": "#D70000",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 35,
+    "palette_token": "DSW-MO-P35",
+    "name": "Competition Orange / Lava 7/9",
+    "anchor": null,
+    "from_anchor": "competition-orange",
+    "to_anchor": "lava",
+    "step": 7,
+    "intervals": 9,
+    "hex": "#D22C0A",
+    "rgb": {
+      "r": 210,
+      "g": 44,
+      "b": 10
+    },
+    "argb_hex": "#FFD22C0A",
+    "hsl": {
+      "h": 10.2,
+      "s": 90.9091,
+      "l": 43.1373
+    },
+    "oklab": [
+      0.5613505097524601,
+      0.1731645981100947,
+      0.10987401773643342
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;210;44;10m",
+      "ansi_background": "\u001b[48;2;210;44;10m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 160,
+      "xterm_256_hex": "#D70000",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 36,
+    "palette_token": "DSW-MO-P36",
+    "name": "Competition Orange / Lava 8/9",
+    "anchor": null,
+    "from_anchor": "competition-orange",
+    "to_anchor": "lava",
+    "step": 8,
+    "intervals": 9,
+    "hex": "#CB230A",
+    "rgb": {
+      "r": 203,
+      "g": 35,
+      "b": 10
+    },
+    "argb_hex": "#FFCB230A",
+    "hsl": {
+      "h": 7.772,
+      "s": 90.6103,
+      "l": 41.7647
+    },
+    "oklab": [
+      0.5423547854544715,
+      0.17471177816162972,
+      0.10575724774379572
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;203;35;10m",
+      "ansi_background": "\u001b[48;2;203;35;10m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 160,
+      "xterm_256_hex": "#D70000",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 37,
+    "palette_token": "DSW-MO-P37",
+    "name": "Lava",
+    "anchor": "lava",
+    "from_anchor": "lava",
+    "to_anchor": "opal-lightning",
+    "step": 0,
+    "intervals": 9,
+    "hex": "#C51A0B",
+    "rgb": {
+      "r": 197,
+      "g": 26,
+      "b": 11
+    },
+    "argb_hex": "#FFC51A0B",
+    "hsl": {
+      "h": 4.8387,
+      "s": 89.4231,
+      "l": 40.7843
+    },
+    "oklab": [
+      0.5260434501584308,
+      0.1762078242327854,
+      0.10186056903266269
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;197;26;11m",
+      "ansi_background": "\u001b[48;2;197;26;11m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 160,
+      "xterm_256_hex": "#D70000",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 38,
+    "palette_token": "DSW-MO-P38",
+    "name": "Lava / Opal Lightning Splatter 1/9",
+    "anchor": null,
+    "from_anchor": "lava",
+    "to_anchor": "opal-lightning",
+    "step": 1,
+    "intervals": 9,
+    "hex": "#C33F2B",
+    "rgb": {
+      "r": 195,
+      "g": 63,
+      "b": 43
+    },
+    "argb_hex": "#FFC33F2B",
+    "hsl": {
+      "h": 7.8947,
+      "s": 63.8655,
+      "l": 46.6667
+    },
+    "oklab": [
+      0.5549500912384048,
+      0.14654174615119261,
+      0.08954764310751877
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;195;63;43m",
+      "ansi_background": "\u001b[48;2;195;63;43m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 160,
+      "xterm_256_hex": "#D70000",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.11111111,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 39,
+    "palette_token": "DSW-MO-P39",
+    "name": "Lava / Opal Lightning Splatter 2/9",
+    "anchor": null,
+    "from_anchor": "lava",
+    "to_anchor": "opal-lightning",
+    "step": 2,
+    "intervals": 9,
+    "hex": "#C05841",
+    "rgb": {
+      "r": 192,
+      "g": 88,
+      "b": 65
+    },
+    "argb_hex": "#FFC05841",
+    "hsl": {
+      "h": 10.8661,
+      "s": 50.1976,
+      "l": 50.3922
+    },
+    "oklab": [
+      0.5857076756669983,
+      0.11545350029003808,
+      0.07753079827480407
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;192;88;65m",
+      "ansi_background": "\u001b[48;2;192;88;65m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 131,
+      "xterm_256_hex": "#AF5F5F",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.22222222,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 40,
+    "palette_token": "DSW-MO-P40",
+    "name": "Lava / Opal Lightning Splatter 3/9",
+    "anchor": null,
+    "from_anchor": "lava",
+    "to_anchor": "opal-lightning",
+    "step": 3,
+    "intervals": 9,
+    "hex": "#BB6C54",
+    "rgb": {
+      "r": 187,
+      "g": 108,
+      "b": 84
+    },
+    "argb_hex": "#FFBB6C54",
+    "hsl": {
+      "h": 13.9806,
+      "s": 43.0962,
+      "l": 53.1373
+    },
+    "oklab": [
+      0.6139829216215283,
+      0.08490019011025239,
+      0.06558516112872606
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;187;108;84m",
+      "ansi_background": "\u001b[48;2;187;108;84m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 131,
+      "xterm_256_hex": "#AF5F5F",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.33333333,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 41,
+    "palette_token": "DSW-MO-P41",
+    "name": "Lava / Opal Lightning Splatter 4/9",
+    "anchor": null,
+    "from_anchor": "lava",
+    "to_anchor": "opal-lightning",
+    "step": 4,
+    "intervals": 9,
+    "hex": "#B57E67",
+    "rgb": {
+      "r": 181,
+      "g": 126,
+      "b": 103
+    },
+    "argb_hex": "#FFB57E67",
+    "hsl": {
+      "h": 17.6923,
+      "s": 34.5133,
+      "l": 55.6863
+    },
+    "oklab": [
+      0.6429446821909581,
+      0.05547587566460443,
+      0.05277048595199722
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;181;126;103m",
+      "ansi_background": "\u001b[48;2;181;126;103m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 137,
+      "xterm_256_hex": "#AF875F",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.44444444,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 42,
+    "palette_token": "DSW-MO-P42",
+    "name": "Lava / Opal Lightning Splatter 5/9",
+    "anchor": null,
+    "from_anchor": "lava",
+    "to_anchor": "opal-lightning",
+    "step": 5,
+    "intervals": 9,
+    "hex": "#AD8F79",
+    "rgb": {
+      "r": 173,
+      "g": 143,
+      "b": 121
+    },
+    "argb_hex": "#FFAD8F79",
+    "hsl": {
+      "h": 25.3846,
+      "s": 24.0741,
+      "l": 57.6471
+    },
+    "oklab": [
+      0.6717720098392785,
+      0.025402928349006457,
+      0.04075176716259499
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;173;143;121m",
+      "ansi_background": "\u001b[48;2;173;143;121m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 137,
+      "xterm_256_hex": "#AF875F",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.55555556,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 43,
+    "palette_token": "DSW-MO-P43",
+    "name": "Lava / Opal Lightning Splatter 6/9",
+    "anchor": null,
+    "from_anchor": "lava",
+    "to_anchor": "opal-lightning",
+    "step": 6,
+    "intervals": 9,
+    "hex": "#A2A08B",
+    "rgb": {
+      "r": 162,
+      "g": 160,
+      "b": 139
+    },
+    "argb_hex": "#FFA2A08B",
+    "hsl": {
+      "h": 54.7826,
+      "s": 11.0048,
+      "l": 59.0196
+    },
+    "oklab": [
+      0.7015586560724179,
+      -0.0065300335795294324,
+      0.029047409638908606
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;162;160;139m",
+      "ansi_background": "\u001b[48;2;162;160;139m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 247,
+      "xterm_256_hex": "#9E9E9E",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.66666667,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 44,
+    "palette_token": "DSW-MO-P44",
+    "name": "Lava / Opal Lightning Splatter 7/9",
+    "anchor": null,
+    "from_anchor": "lava",
+    "to_anchor": "opal-lightning",
+    "step": 7,
+    "intervals": 9,
+    "hex": "#95B09D",
+    "rgb": {
+      "r": 149,
+      "g": 176,
+      "b": 157
+    },
+    "argb_hex": "#FF95B09D",
+    "hsl": {
+      "h": 137.7778,
+      "s": 14.5946,
+      "l": 63.7255
+    },
+    "oklab": [
+      0.7312449995633069,
+      -0.03641373814148042,
+      0.01726682782579576
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;149;176;157m",
+      "ansi_background": "\u001b[48;2;149;176;157m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 109,
+      "xterm_256_hex": "#87AFAF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.77777778,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 45,
+    "palette_token": "DSW-MO-P45",
+    "name": "Lava / Opal Lightning Splatter 8/9",
+    "anchor": null,
+    "from_anchor": "lava",
+    "to_anchor": "opal-lightning",
+    "step": 8,
+    "intervals": 9,
+    "hex": "#83C0B0",
+    "rgb": {
+      "r": 131,
+      "g": 192,
+      "b": 176
+    },
+    "argb_hex": "#FF83C0B0",
+    "hsl": {
+      "h": 164.2623,
+      "s": 32.6203,
+      "l": 63.3333
+    },
+    "oklab": [
+      0.761523823738847,
+      -0.06695173082064779,
+      0.004449580492305158
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;131;192;176m",
+      "ansi_background": "\u001b[48;2;131;192;176m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 109,
+      "xterm_256_hex": "#87AFAF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.88888889,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 46,
+    "palette_token": "DSW-MO-P46",
+    "name": "Opal Lightning Splatter",
+    "anchor": "opal-lightning",
+    "from_anchor": "opal-lightning",
+    "to_anchor": "mint-green",
+    "step": 0,
+    "intervals": 9,
+    "hex": "#69CFC2",
+    "rgb": {
+      "r": 105,
+      "g": 207,
+      "b": 194
+    },
+    "argb_hex": "#FF69CFC2",
+    "hsl": {
+      "h": 172.3529,
+      "s": 51.5152,
+      "l": 61.1765
+    },
+    "oklab": [
+      0.7895376087554937,
+      -0.09737182044292383,
+      -0.0077865671392420045
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;105;207;194m",
+      "ansi_background": "\u001b[48;2;105;207;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 80,
+      "xterm_256_hex": "#5FD7D7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 1.0,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 47,
+    "palette_token": "DSW-MO-P47",
+    "name": "Opal Lightning Splatter / Mint Green 1/9",
+    "anchor": null,
+    "from_anchor": "opal-lightning",
+    "to_anchor": "mint-green",
+    "step": 1,
+    "intervals": 9,
+    "hex": "#67D2C2",
+    "rgb": {
+      "r": 103,
+      "g": 210,
+      "b": 194
+    },
+    "argb_hex": "#FF67D2C2",
+    "hsl": {
+      "h": 171.028,
+      "s": 54.3147,
+      "l": 61.3725
+    },
+    "oklab": [
+      0.7958373324177519,
+      -0.10204466039221645,
+      -0.0046651682919982155
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;103;210;194m",
+      "ansi_background": "\u001b[48;2;103;210;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 80,
+      "xterm_256_hex": "#5FD7D7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.88888889,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 48,
+    "palette_token": "DSW-MO-P48",
+    "name": "Opal Lightning Splatter / Mint Green 2/9",
+    "anchor": null,
+    "from_anchor": "opal-lightning",
+    "to_anchor": "mint-green",
+    "step": 2,
+    "intervals": 9,
+    "hex": "#65D4C2",
+    "rgb": {
+      "r": 101,
+      "g": 212,
+      "b": 194
+    },
+    "argb_hex": "#FF65D4C2",
+    "hsl": {
+      "h": 170.2703,
+      "s": 56.3452,
+      "l": 61.3725
+    },
+    "oklab": [
+      0.7998191258457603,
+      -0.10553633265369329,
+      -0.0026829241618211495
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;101;212;194m",
+      "ansi_background": "\u001b[48;2;101;212;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 80,
+      "xterm_256_hex": "#5FD7D7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.77777778,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 49,
+    "palette_token": "DSW-MO-P49",
+    "name": "Opal Lightning Splatter / Mint Green 3/9",
+    "anchor": null,
+    "from_anchor": "opal-lightning",
+    "to_anchor": "mint-green",
+    "step": 3,
+    "intervals": 9,
+    "hex": "#62D7C2",
+    "rgb": {
+      "r": 98,
+      "g": 215,
+      "b": 194
+    },
+    "argb_hex": "#FF62D7C2",
+    "hsl": {
+      "h": 169.2308,
+      "s": 59.3909,
+      "l": 61.3725
+    },
+    "oklab": [
+      0.8058594208389127,
+      -0.11066340265597793,
+      0.0003017874444688791
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;98;215;194m",
+      "ansi_background": "\u001b[48;2;98;215;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 79,
+      "xterm_256_hex": "#5FD7AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.66666667,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 50,
+    "palette_token": "DSW-MO-P50",
+    "name": "Opal Lightning Splatter / Mint Green 4/9",
+    "anchor": null,
+    "from_anchor": "opal-lightning",
+    "to_anchor": "mint-green",
+    "step": 4,
+    "intervals": 9,
+    "hex": "#60D9C2",
+    "rgb": {
+      "r": 96,
+      "g": 217,
+      "b": 194
+    },
+    "argb_hex": "#FF60D9C2",
+    "hsl": {
+      "h": 168.595,
+      "s": 61.4213,
+      "l": 61.3725
+    },
+    "oklab": [
+      0.8099296745241175,
+      -0.1140089680128717,
+      0.002298239765598625
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;96;217;194m",
+      "ansi_background": "\u001b[48;2;96;217;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 79,
+      "xterm_256_hex": "#5FD7AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.55555556,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 51,
+    "palette_token": "DSW-MO-P51",
+    "name": "Opal Lightning Splatter / Mint Green 5/9",
+    "anchor": null,
+    "from_anchor": "opal-lightning",
+    "to_anchor": "mint-green",
+    "step": 5,
+    "intervals": 9,
+    "hex": "#5DDCC2",
+    "rgb": {
+      "r": 93,
+      "g": 220,
+      "b": 194
+    },
+    "argb_hex": "#FF5DDCC2",
+    "hsl": {
+      "h": 167.7165,
+      "s": 64.467,
+      "l": 61.3725
+    },
+    "oklab": [
+      0.8160973303358745,
+      -0.11892068655952906,
+      0.005301375206798867
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;93;220;194m",
+      "ansi_background": "\u001b[48;2;93;220;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 79,
+      "xterm_256_hex": "#5FD7AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.44444444,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 52,
+    "palette_token": "DSW-MO-P52",
+    "name": "Opal Lightning Splatter / Mint Green 6/9",
+    "anchor": null,
+    "from_anchor": "opal-lightning",
+    "to_anchor": "mint-green",
+    "step": 6,
+    "intervals": 9,
+    "hex": "#5ADEC2",
+    "rgb": {
+      "r": 90,
+      "g": 222,
+      "b": 194
+    },
+    "argb_hex": "#FF5ADEC2",
+    "hsl": {
+      "h": 167.2727,
+      "s": 66.6667,
+      "l": 61.1765
+    },
+    "oklab": [
+      0.8199425036497592,
+      -0.1226640576384951,
+      0.007188411234470083
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;90;222;194m",
+      "ansi_background": "\u001b[48;2;90;222;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 79,
+      "xterm_256_hex": "#5FD7AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.33333333,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 53,
+    "palette_token": "DSW-MO-P53",
+    "name": "Opal Lightning Splatter / Mint Green 7/9",
+    "anchor": null,
+    "from_anchor": "opal-lightning",
+    "to_anchor": "mint-green",
+    "step": 7,
+    "intervals": 9,
+    "hex": "#57E1C2",
+    "rgb": {
+      "r": 87,
+      "g": 225,
+      "b": 194
+    },
+    "argb_hex": "#FF57E1C2",
+    "hsl": {
+      "h": 166.5217,
+      "s": 69.697,
+      "l": 61.1765
+    },
+    "oklab": [
+      0.8262438098134605,
+      -0.1273421891119718,
+      0.010211813868605158
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;87;225;194m",
+      "ansi_background": "\u001b[48;2;87;225;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 79,
+      "xterm_256_hex": "#5FD7AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.22222222,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 54,
+    "palette_token": "DSW-MO-P54",
+    "name": "Opal Lightning Splatter / Mint Green 8/9",
+    "anchor": null,
+    "from_anchor": "opal-lightning",
+    "to_anchor": "mint-green",
+    "step": 8,
+    "intervals": 9,
+    "hex": "#54E3C2",
+    "rgb": {
+      "r": 84,
+      "g": 227,
+      "b": 194
+    },
+    "argb_hex": "#FF54E3C2",
+    "hsl": {
+      "h": 166.1538,
+      "s": 71.8593,
+      "l": 60.9804
+    },
+    "oklab": [
+      0.8302054957441023,
+      -0.13088317873133481,
+      0.012123865403017528
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;84;227;194m",
+      "ansi_background": "\u001b[48;2;84;227;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 79,
+      "xterm_256_hex": "#5FD7AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "opal-splatter",
+      "material_id": "darbot.opal-lightning-splatter.v1",
+      "strength": 0.11111111,
+      "seed": 640246,
+      "fallback_color_is_approximation": true
+    }
+  },
+  {
+    "index": 55,
+    "palette_token": "DSW-MO-P55",
+    "name": "Mint Green",
+    "anchor": "mint-green",
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 0,
+    "intervals": 9,
+    "hex": "#50E6C2",
+    "rgb": {
+      "r": 80,
+      "g": 230,
+      "b": 194
+    },
+    "argb_hex": "#FF50E6C2",
+    "hsl": {
+      "h": 165.6,
+      "s": 75.0,
+      "l": 60.7843
+    },
+    "oklab": [
+      0.8363725270604535,
+      -0.135795708489165,
+      0.015063153776591027
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;80;230;194m",
+      "ansi_background": "\u001b[48;2;80;230;194m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 79,
+      "xterm_256_hex": "#5FD7AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 56,
+    "palette_token": "DSW-MO-P56",
+    "name": "Mint Green / Frost White 1/9",
+    "anchor": null,
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 1,
+    "intervals": 9,
+    "hex": "#6BE9C9",
+    "rgb": {
+      "r": 107,
+      "g": 233,
+      "b": 201
+    },
+    "argb_hex": "#FF6BE9C9",
+    "hsl": {
+      "h": 164.7619,
+      "s": 74.1176,
+      "l": 66.6667
+    },
+    "oklab": [
+      0.8535620116781404,
+      -0.12153112958708573,
+      0.012477168787708798
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;107;233;201m",
+      "ansi_background": "\u001b[48;2;107;233;201m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 115,
+      "xterm_256_hex": "#87D7AF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 57,
+    "palette_token": "DSW-MO-P57",
+    "name": "Mint Green / Frost White 2/9",
+    "anchor": null,
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 2,
+    "intervals": 9,
+    "hex": "#81EBCF",
+    "rgb": {
+      "r": 129,
+      "g": 235,
+      "b": 207
+    },
+    "argb_hex": "#FF81EBCF",
+    "hsl": {
+      "h": 164.1509,
+      "s": 72.6027,
+      "l": 71.3725
+    },
+    "oklab": [
+      0.8683361207594715,
+      -0.10672541067492188,
+      0.010221124720179744
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;129;235;207m",
+      "ansi_background": "\u001b[48;2;129;235;207m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 86,
+      "xterm_256_hex": "#5FFFD7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 58,
+    "palette_token": "DSW-MO-P58",
+    "name": "Mint Green / Frost White 3/9",
+    "anchor": null,
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 3,
+    "intervals": 9,
+    "hex": "#95EED6",
+    "rgb": {
+      "r": 149,
+      "g": 238,
+      "b": 214
+    },
+    "argb_hex": "#FF95EED6",
+    "hsl": {
+      "h": 163.8202,
+      "s": 72.3577,
+      "l": 75.8824
+    },
+    "oklab": [
+      0.8861806803491376,
+      -0.09225277980133538,
+      0.008006545139811947
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;149;238;214m",
+      "ansi_background": "\u001b[48;2;149;238;214m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 122,
+      "xterm_256_hex": "#87FFD7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 59,
+    "palette_token": "DSW-MO-P59",
+    "name": "Mint Green / Frost White 4/9",
+    "anchor": null,
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 4,
+    "intervals": 9,
+    "hex": "#A6F0DD",
+    "rgb": {
+      "r": 166,
+      "g": 240,
+      "b": 221
+    },
+    "argb_hex": "#FFA6F0DD",
+    "hsl": {
+      "h": 164.5946,
+      "s": 71.1538,
+      "l": 79.6078
+    },
+    "oklab": [
+      0.9012808155499078,
+      -0.07783987439002175,
+      0.004585659890612931
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;166;240;221m",
+      "ansi_background": "\u001b[48;2;166;240;221m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 158,
+      "xterm_256_hex": "#AFFFD7",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 60,
+    "palette_token": "DSW-MO-P60",
+    "name": "Mint Green / Frost White 5/9",
+    "anchor": null,
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 5,
+    "intervals": 9,
+    "hex": "#B7F3E4",
+    "rgb": {
+      "r": 183,
+      "g": 243,
+      "b": 228
+    },
+    "argb_hex": "#FFB7F3E4",
+    "hsl": {
+      "h": 165.0,
+      "s": 71.4286,
+      "l": 83.5294
+    },
+    "oklab": [
+      0.9193135106749816,
+      -0.06390412991776807,
+      0.0025651226571140966
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;183;243;228m",
+      "ansi_background": "\u001b[48;2;183;243;228m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 159,
+      "xterm_256_hex": "#AFFFFF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 61,
+    "palette_token": "DSW-MO-P61",
+    "name": "Mint Green / Frost White 6/9",
+    "anchor": null,
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 6,
+    "intervals": 9,
+    "hex": "#C7F5EA",
+    "rgb": {
+      "r": 199,
+      "g": 245,
+      "b": 234
+    },
+    "argb_hex": "#FFC7F5EA",
+    "hsl": {
+      "h": 165.6522,
+      "s": 69.697,
+      "l": 87.0588
+    },
+    "oklab": [
+      0.9349695408475975,
+      -0.049430401259795954,
+      0.0008694781989481185
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;199;245;234m",
+      "ansi_background": "\u001b[48;2;199;245;234m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 159,
+      "xterm_256_hex": "#AFFFFF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 62,
+    "palette_token": "DSW-MO-P62",
+    "name": "Mint Green / Frost White 7/9",
+    "anchor": null,
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 7,
+    "intervals": 9,
+    "hex": "#D6F7F1",
+    "rgb": {
+      "r": 214,
+      "g": 247,
+      "b": 241
+    },
+    "argb_hex": "#FFD6F7F1",
+    "hsl": {
+      "h": 169.0909,
+      "s": 67.3469,
+      "l": 90.3922
+    },
+    "oklab": [
+      0.9508363464588332,
+      -0.03507911896844482,
+      -0.002083706807819996
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;214;247;241m",
+      "ansi_background": "\u001b[48;2;214;247;241m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 195,
+      "xterm_256_hex": "#D7FFFF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 63,
+    "palette_token": "DSW-MO-P63",
+    "name": "Mint Green / Frost White 8/9",
+    "anchor": null,
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 8,
+    "intervals": 9,
+    "hex": "#E5F9F8",
+    "rgb": {
+      "r": 229,
+      "g": 249,
+      "b": 248
+    },
+    "argb_hex": "#FFE5F9F8",
+    "hsl": {
+      "h": 177.0,
+      "s": 62.5,
+      "l": 93.7255
+    },
+    "oklab": [
+      0.9671838074696264,
+      -0.02044074027106995,
+      -0.004786430057761755
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;229;249;248m",
+      "ansi_background": "\u001b[48;2;229;249;248m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 195,
+      "xterm_256_hex": "#D7FFFF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  },
+  {
+    "index": 64,
+    "palette_token": "DSW-MO-P64",
+    "name": "Frost White",
+    "anchor": "frost-white",
+    "from_anchor": "mint-green",
+    "to_anchor": "frost-white",
+    "step": 9,
+    "intervals": 9,
+    "hex": "#F4FBFF",
+    "rgb": {
+      "r": 244,
+      "g": 251,
+      "b": 255
+    },
+    "argb_hex": "#FFF4FBFF",
+    "hsl": {
+      "h": 201.8182,
+      "s": 100.0,
+      "l": 97.8431
+    },
+    "oklab": [
+      0.9839770699260835,
+      -0.00559059457977933,
+      -0.0072492757061270235
+    ],
+    "terminal": {
+      "unicode_swatch": "■",
+      "codepoint": "U+25A0",
+      "ansi_foreground": "\u001b[38;2;244;251;255m",
+      "ansi_background": "\u001b[48;2;244;251;255m",
+      "reset": "\u001b[0m",
+      "xterm_256_index": 231,
+      "xterm_256_hex": "#FFFFFF",
+      "xterm_distance_metric": "Euclidean OKLab; fixed entries 16..255 only"
+    },
+    "material": {
+      "kind": "solid",
+      "material_id": null,
+      "strength": 0,
+      "seed": null,
+      "fallback_color_is_approximation": false
+    }
+  }
+]

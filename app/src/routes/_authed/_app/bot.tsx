@@ -2,6 +2,7 @@ import { CopilotChat } from "@darbotlm/react-core/v2";
 import { IconPlus } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { AgentAvatar } from "@/components/agents/agent-avatar";
 import { SidebarToggleBar } from "@/components/layout/sidebar-toggle";
 import { Button } from "@/components/ui/button";
 import { defaultAgentId } from "@/lib/agents/default-agent";
@@ -123,10 +124,16 @@ function RouteComponent() {
    * Keyed on the Bot, so the hooks below never see it change under them. They cannot be called
    * conditionally, and the guards above return before any of them run.
    */
-  return <BotChat agentId={agentId} key={agentId} name={bot.name} />;
+  return <BotChat agent={bot} agentId={agentId} key={agentId} />;
 }
 
-function BotChat({ agentId, name }: { agentId: string; name: string }) {
+function BotChat({
+  agent,
+  agentId,
+}: {
+  agent: AgentProfile;
+  agentId: string;
+}) {
   // Tool calls here act on this Bot's own computer.
   useActiveBot(agentId);
   /*
@@ -150,14 +157,20 @@ function BotChat({ agentId, name }: { agentId: string; name: string }) {
     <div className="flex h-screen flex-col">
       <SidebarToggleBar />
       <header className="border-b px-6 py-3">
-        <div className="flex items-baseline justify-between">
+        <div className="flex items-center justify-between">
           {/*
-           * The Bot this screen is actually showing. A name written into the markup is wrong on
-           * every deployment whose package did not happen to use it, which is the same defect the
-           * route default above was fixed for: this screen called whichever Bot you opened
-           * "Browser Bot", including the one named something else two lines of state away.
+           * The Bot this screen is actually showing, including its packaged Swarm artwork when its
+           * saved id or seed resolves to one. A name written into the markup is wrong on every
+           * deployment whose package did not happen to use it, which is the same defect the route
+           * default above was fixed for: this screen called whichever Bot you opened "Browser Bot",
+           * including the one named something else two lines of state away. The avatar sits beside
+           * the heading rather than inside it, so an image `alt` never doubles up in the heading's
+           * accessible name.
            */}
-          <h1 className="text-lg font-semibold">{name}</h1>
+          <div className="flex min-w-0 items-center gap-2">
+            <AgentAvatar agent={agent} size={32} />
+            <h1 className="text-lg font-semibold">{agent.name}</h1>
+          </div>
           {/*
            * Labelled rather than the bare icon button the sidebar uses for its own "start
            * something new" control: that one opens an empty screen, but this one throws away

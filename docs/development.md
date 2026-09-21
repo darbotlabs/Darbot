@@ -103,6 +103,12 @@ and the directory agree. Compare `meta/_journal.json` against `ls server/drizzle
 
 ## Quality checks
 
+The Swarm registry is generated from the two approved manifests under
+`assets/swarm`, without transforming artwork. `bun run generate:swarm` regenerates
+it after verifying the packs; `bun run verify:swarm` verifies both checksums and
+freshness without writing anything. Web and desktop production builds perform the
+same validation automatically. Keep the immutable packs outside formatter runs.
+
 Run these before opening a pull request:
 
 ```sh

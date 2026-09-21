@@ -14,7 +14,21 @@ export type Problem = {
 /** Anything thrown, as a problem. A bare string keeps working and reads as it always did. */
 export function asProblem(thrown: unknown): Problem {
   if (thrown && typeof thrown === "object" && "said" in thrown) {
-    return thrown as Problem;
+    const said = (thrown as { said?: unknown }).said;
+    const detail = (thrown as { detail?: unknown }).detail;
+    if (typeof said === "string") {
+      return {
+        said,
+        detail: typeof detail === "string" ? detail : null,
+      };
+    }
+  }
+  if (thrown instanceof Error) {
+    return {
+      said: thrown.message,
+      detail:
+        thrown.stack && thrown.stack !== thrown.message ? thrown.stack : null,
+    };
   }
   return { said: String(thrown) };
 }

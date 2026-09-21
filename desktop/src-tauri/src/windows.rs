@@ -153,6 +153,18 @@ fn parse_default_wsl_version(operation: &str, output: &str) -> Result<u8, Proble
     }
 }
 
+/// CIM can inspect enabled features in a normal user session; DISM requires elevation even to read.
+fn optional_feature_probe_command(feature: &str) -> String {
+    format!(
+        r#"$ErrorActionPreference = 'Stop';
+$features = @(Get-CimInstance Win32_OptionalFeature -Filter "Name = '{feature}'");
+if ($features.Count -ne 1) {{ throw 'Feature query did not return exactly one result' }}
+$state = $features[0].InstallState;
+if ($null -eq $state -or $state -notin 1,2,3) {{ throw 'Feature query returned an unknown install state' }}
+$state -eq 1"#
+    )
+}
+
 /// Whether WSL has a kernel to run, given what `wsl --version` said and whether the kernel file
 /// that the update package installs is on disk.
 ///
@@ -363,7 +375,7 @@ fn blocker_with(
     kernel_file_exists: impl FnOnce() -> Result<bool, Problem>,
 ) -> Result<Option<Blocker>, Problem> {
     // A running hypervisor is positive virtualization evidence even when firmware reports False.
-    // Stop converts CIM/DISM non-terminating errors into failed probes instead of partial answers.
+    // Stop converts non-terminating CIM errors into failed probes instead of partial answers.
     let virtualization = "Windows virtualization support (powershell)";
     let reported = probe_text(
         virtualization,
@@ -413,36 +425,36 @@ fn blocker_with(
          ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)",
     ]))?)?;
 
-    let wsl_feature = "the WSL feature state (powershell)";
-    let enabled = probe_bool(wsl_feature, &probe_text(wsl_feature, run("powershell", &[
-        "-NoProfile", "-NonInteractive", "-Command",
-        "$ErrorActionPreference = 'Stop'; \
-         $state = (Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State; \
-         if ($null -eq $state) { throw 'WSL feature query returned no state' }; \
-         $state -eq 'Enabled'",
-    ]))?)?;
-    if !enabled {
-        return Ok(Some(if elevated {
-            Blocker::WslAbsent
-        } else {
-            Blocker::NotAdministrator
-        }));
-    }
-
-    let vmp_feature = "the Virtual Machine Platform feature state (powershell)";
-    let enabled = probe_bool(vmp_feature, &probe_text(vmp_feature, run("powershell", &[
-        "-NoProfile", "-NonInteractive", "-Command",
-        "$ErrorActionPreference = 'Stop'; \
-         $state = (Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State; \
-         if ($null -eq $state) { throw 'Virtual Machine Platform feature query returned no state' }; \
-         $state -eq 'Enabled'",
-    ]))?)?;
-    if !enabled {
-        return Ok(Some(if elevated {
-            Blocker::VirtualMachinePlatformDisabled
-        } else {
-            Blocker::NotAdministrator
-        }));
+    for (feature, operation, missing) in [
+        (
+            "Microsoft-Windows-Subsystem-Linux",
+            "the WSL feature state (powershell)",
+            Blocker::WslAbsent,
+        ),
+        (
+            "VirtualMachinePlatform",
+            "the Virtual Machine Platform feature state (powershell)",
+            Blocker::VirtualMachinePlatformDisabled,
+        ),
+    ] {
+        let command = optional_feature_probe_command(feature);
+        let enabled = probe_bool(
+            operation,
+            &probe_text(
+                operation,
+                run(
+                    "powershell",
+                    &["-NoProfile", "-NonInteractive", "-Command", &command],
+                ),
+            )?,
+        )?;
+        if !enabled {
+            return Ok(Some(if elevated {
+                missing
+            } else {
+                Blocker::NotAdministrator
+            }));
+        }
     }
 
     let default_version = "the default WSL version (registry)";
@@ -507,11 +519,14 @@ mod tests {
             match probe {
                 0 => assert!(args[3].contains("Get-CimInstance Win32_ComputerSystem")),
                 1 => assert!(args[3].contains("WindowsBuiltInRole]::Administrator")),
-                2 => assert!(args[3].contains("-FeatureName Microsoft-Windows-Subsystem-Linux")),
-                3 => assert_eq!(args[3], "$ErrorActionPreference = 'Stop'; \
-                    $state = (Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State; \
-                    if ($null -eq $state) { throw 'Virtual Machine Platform feature query returned no state' }; \
-                    $state -eq 'Enabled'"),
+                2 => assert_eq!(
+                    args[3],
+                    optional_feature_probe_command("Microsoft-Windows-Subsystem-Linux")
+                ),
+                3 => assert_eq!(
+                    args[3],
+                    optional_feature_probe_command("VirtualMachinePlatform")
+                ),
                 4 => assert_eq!(args[3], default_wsl_version_probe_command()),
                 _ => unreachable!(),
             }
@@ -534,6 +549,59 @@ mod tests {
             status: std::process::ExitStatus::from_raw(code as u32),
             stdout: stdout.as_bytes().to_vec(),
             stderr: stderr.as_bytes().to_vec(),
+        }
+    }
+
+    #[test]
+    fn feature_inspection_uses_unelevated_cim_and_rejects_unknown_states() {
+        for feature in [
+            "Microsoft-Windows-Subsystem-Linux",
+            "VirtualMachinePlatform",
+        ] {
+            let command = optional_feature_probe_command(feature);
+            assert!(command.contains("Get-CimInstance Win32_OptionalFeature"));
+            assert!(command.contains(&format!("Name = '{feature}'")));
+            assert!(command.contains("$features.Count -ne 1"));
+            assert!(command.contains("$null -eq $state -or $state -notin 1,2,3"));
+            assert!(command.ends_with("$state -eq 1"));
+            assert!(!command.contains("Get-WindowsOptionalFeature"));
+            assert!(!command.contains("Enable-WindowsOptionalFeature"));
+        }
+    }
+
+    #[cfg(target_os = "windows")]
+    #[test]
+    fn feature_probe_script_handles_enabled_disabled_absent_and_unknown_results() {
+        for (result, expected) in [
+            ("[pscustomobject]@{ InstallState = 1 }", Some("True")),
+            ("[pscustomobject]@{ InstallState = 2 }", Some("False")),
+            ("[pscustomobject]@{ InstallState = 3 }", Some("False")),
+            ("[pscustomobject]@{ InstallState = 4 }", None),
+            ("[pscustomobject]@{ InstallState = $null }", None),
+            ("@()", None),
+            (
+                "@([pscustomobject]@{ InstallState = 1 }, [pscustomobject]@{ InstallState = 1 })",
+                None,
+            ),
+        ] {
+            // This child-local function prevents the test from inspecting or modifying Windows.
+            let command = format!(
+                "function Get-CimInstance {{ param($ClassName, $Filter); {result} }}; {}",
+                optional_feature_probe_command("VirtualMachinePlatform")
+            );
+            let output = crate::quiet::command("powershell")
+                .args(["-NoProfile", "-NonInteractive", "-Command", &command])
+                .output()
+                .expect("PowerShell must be available for the native Windows probe test");
+            if let Some(expected) = expected {
+                assert!(output.status.success(), "{:?}", output);
+                assert_eq!(String::from_utf8(output.stdout).unwrap().trim(), expected);
+            } else {
+                assert!(
+                    !output.status.success(),
+                    "Unknown feature state was accepted: {result}"
+                );
+            }
         }
     }
 

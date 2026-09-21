@@ -1,0 +1,325 @@
+{
+  "$description": "Darbot Swarm Solid64 design tokens",
+  "color": {
+    "dsw64-01": {
+      "$type": "color",
+      "$value": "#00CFFF",
+      "$description": "Cloud Architect — Azure — azure_architect"
+    },
+    "dsw64-02": {
+      "$type": "color",
+      "$value": "#00C0F6",
+      "$description": "Identity Guardian — Microsoft Entra — entra_identity"
+    },
+    "dsw64-03": {
+      "$type": "color",
+      "$value": "#00B0ED",
+      "$description": "Collaboration Conductor — Microsoft Teams — teams_collaboration"
+    },
+    "dsw64-04": {
+      "$type": "color",
+      "$value": "#00A1E3",
+      "$description": "Fusion Maker — Power Platform — power_platform_maker"
+    },
+    "dsw64-05": {
+      "$type": "color",
+      "$value": "#0092DA",
+      "$description": "App Creator — Power Apps — power_apps_creator"
+    },
+    "dsw64-06": {
+      "$type": "color",
+      "$value": "#0083D1",
+      "$description": "Flow Orchestrator — Power Automate — power_automate_orchestrator"
+    },
+    "dsw64-07": {
+      "$type": "color",
+      "$value": "#0074C7",
+      "$description": "Insight Analyst — Power BI — power_bi_analyst"
+    },
+    "dsw64-08": {
+      "$type": "color",
+      "$value": "#0066BE",
+      "$description": "Portal Maker — Power Pages — power_pages_portal"
+    },
+    "dsw64-09": {
+      "$type": "color",
+      "$value": "#0056B5",
+      "$description": "Productivity Strategist — Microsoft 365 — m365_strategist"
+    },
+    "dsw64-10": {
+      "$type": "color",
+      "$value": "#0047AB",
+      "$description": "Agent Builder — Copilot Studio — copilot_studio_agent_builder"
+    },
+    "dsw64-11": {
+      "$type": "color",
+      "$value": "#394AB0",
+      "$description": "Storytelling Expert — PowerPoint — powerpoint_storyteller"
+    },
+    "dsw64-12": {
+      "$type": "color",
+      "$value": "#574BB4",
+      "$description": "Modeling Expert — Excel — excel_modeler"
+    },
+    "dsw64-13": {
+      "$type": "color",
+      "$value": "#714CB9",
+      "$description": "Technical Writer — Word — word_writer"
+    },
+    "dsw64-14": {
+      "$type": "color",
+      "$value": "#894ABE",
+      "$description": "Comms Strategist — Outlook / Exchange — outlook_communicator"
+    },
+    "dsw64-15": {
+      "$type": "color",
+      "$value": "#A147C2",
+      "$description": "Knowledge Architect — SharePoint — sharepoint_knowledge"
+    },
+    "dsw64-16": {
+      "$type": "color",
+      "$value": "#B942C7",
+      "$description": "File Sync Expert — OneDrive — onedrive_sync"
+    },
+    "dsw64-17": {
+      "$type": "color",
+      "$value": "#D039CB",
+      "$description": "Browser Specialist — Edge — edge_browser"
+    },
+    "dsw64-18": {
+      "$type": "color",
+      "$value": "#E72AD0",
+      "$description": "Endpoint Platform Expert — Windows — windows_os"
+    },
+    "dsw64-19": {
+      "$type": "color",
+      "$value": "#FF00D4",
+      "$description": "Data Modeler — Dataverse — dataverse_modeler"
+    },
+    "dsw64-20": {
+      "$type": "color",
+      "$value": "#FE24C4",
+      "$description": "Data Engineer — Microsoft Fabric — fabric_data_engineer"
+    },
+    "dsw64-21": {
+      "$type": "color",
+      "$value": "#FE34B4",
+      "$description": "AI Foundry Engineer — Azure AI Foundry — azure_ai_foundry"
+    },
+    "dsw64-22": {
+      "$type": "color",
+      "$value": "#FE3EA3",
+      "$description": "Integration Expert — Azure API Management — apim_integration"
+    },
+    "dsw64-23": {
+      "$type": "color",
+      "$value": "#FE4692",
+      "$description": "Visual Creator — Designer — designer_creator"
+    },
+    "dsw64-24": {
+      "$type": "color",
+      "$value": "#FE4C80",
+      "$description": "Software Engineer — GitHub — github_engineer"
+    },
+    "dsw64-25": {
+      "$type": "color",
+      "$value": "#FE516D",
+      "$description": "Developer Tools Expert — Visual Studio Code — vscode_developer"
+    },
+    "dsw64-26": {
+      "$type": "color",
+      "$value": "#FE5557",
+      "$description": "Release Engineer — Azure DevOps — devops_release"
+    },
+    "dsw64-27": {
+      "$type": "color",
+      "$value": "#FF583C",
+      "$description": "Platform Engineer — Azure Kubernetes Service — aks_platform"
+    },
+    "dsw64-28": {
+      "$type": "color",
+      "$value": "#FF5A00",
+      "$description": "Serverless Builder — Azure Functions — functions_serverless"
+    },
+    "dsw64-29": {
+      "$type": "color",
+      "$value": "#F85402",
+      "$description": "Global Data Expert — Azure Cosmos DB — cosmosdb_global"
+    },
+    "dsw64-30": {
+      "$type": "color",
+      "$value": "#F24E04",
+      "$description": "Database Expert — Azure SQL / SQL Server — sql_database"
+    },
+    "dsw64-31": {
+      "$type": "color",
+      "$value": "#EC4705",
+      "$description": "Connector Expert — Microsoft Graph — graph_connector"
+    },
+    "dsw64-32": {
+      "$type": "color",
+      "$value": "#E54107",
+      "$description": "Threat Protection Expert — Microsoft Defender — defender_security"
+    },
+    "dsw64-33": {
+      "$type": "color",
+      "$value": "#DF3A08",
+      "$description": "SOC Analyst — Microsoft Sentinel — sentinel_soc"
+    },
+    "dsw64-34": {
+      "$type": "color",
+      "$value": "#D83309",
+      "$description": "Governance Officer — Microsoft Purview — purview_governance"
+    },
+    "dsw64-35": {
+      "$type": "color",
+      "$value": "#D22C0A",
+      "$description": "Endpoint Manager — Microsoft Intune — intune_endpoint"
+    },
+    "dsw64-36": {
+      "$type": "color",
+      "$value": "#CB230A",
+      "$description": "Employee Experience Expert — Microsoft Viva — viva_employee_experience"
+    },
+    "dsw64-37": {
+      "$type": "color",
+      "$value": "#C51A0B",
+      "$description": "Fluid Collaboration Expert — Microsoft Loop — loop_workflows"
+    },
+    "dsw64-38": {
+      "$type": "color",
+      "$value": "#CE3C10",
+      "$description": "Work Coordinator — Planner / To Do — planner_coordination"
+    },
+    "dsw64-39": {
+      "$type": "color",
+      "$value": "#D65514",
+      "$description": "Customer Systems Expert — Dynamics 365 — dynamics_customer"
+    },
+    "dsw64-40": {
+      "$type": "color",
+      "$value": "#DE6B19",
+      "$description": "Finance Strategist — Finance Operations — finance_ops"
+    },
+    "dsw64-41": {
+      "$type": "color",
+      "$value": "#E57F1D",
+      "$description": "Clinical AI Advisor — Healthcare — healthcare_clinical"
+    },
+    "dsw64-42": {
+      "$type": "color",
+      "$value": "#EB9322",
+      "$description": "Personalization Expert — Retail — retail_personalization"
+    },
+    "dsw64-43": {
+      "$type": "color",
+      "$value": "#F1A727",
+      "$description": "Industrial IoT Expert — Manufacturing / IoT — manufacturing_iot"
+    },
+    "dsw64-44": {
+      "$type": "color",
+      "$value": "#F6BA2B",
+      "$description": "GreenOps Advisor — Sustainability — sustainability_greenops"
+    },
+    "dsw64-45": {
+      "$type": "color",
+      "$value": "#FBCE30",
+      "$description": "Trust Architect — Privacy / Trust — privacy_trust"
+    },
+    "dsw64-46": {
+      "$type": "color",
+      "$value": "#FFE135",
+      "$description": "Research Scientist — Research — research_scientist"
+    },
+    "dsw64-47": {
+      "$type": "color",
+      "$value": "#FFD030",
+      "$description": "Principal Architect — Architecture — principal_architect"
+    },
+    "dsw64-48": {
+      "$type": "color",
+      "$value": "#FFBE2B",
+      "$description": "Executive Briefer — Executive Strategy — executive_briefing"
+    },
+    "dsw64-49": {
+      "$type": "color",
+      "$value": "#FFAC25",
+      "$description": "Swarm Orchestrator — Agent Swarm — agent_swarm_orchestrator"
+    },
+    "dsw64-50": {
+      "$type": "color",
+      "$value": "#FF9A20",
+      "$description": "Adversarial Tester — Red Team — red_team_adversary"
+    },
+    "dsw64-51": {
+      "$type": "color",
+      "$value": "#FF871A",
+      "$description": "Compliance Auditor — Compliance — compliance_auditor"
+    },
+    "dsw64-52": {
+      "$type": "color",
+      "$value": "#FF7214",
+      "$description": "Learning Designer — Education — education_learning"
+    },
+    "dsw64-53": {
+      "$type": "color",
+      "$value": "#FF5B0E",
+      "$description": "Contracts Expert — Legal — legal_contracts"
+    },
+    "dsw64-54": {
+      "$type": "color",
+      "$value": "#FF3F06",
+      "$description": "Growth Strategist — Marketing — marketing_growth"
+    },
+    "dsw64-55": {
+      "$type": "color",
+      "$value": "#FF0800",
+      "$description": "Sales Enablement Expert — Sales — sales_enablement"
+    },
+    "dsw64-56": {
+      "$type": "color",
+      "$value": "#FF4535",
+      "$description": "Triage Specialist — Support — support_triage"
+    },
+    "dsw64-57": {
+      "$type": "color",
+      "$value": "#FF6553",
+      "$description": "Reliability Engineer — Observability / SRE — observability_sre"
+    },
+    "dsw64-58": {
+      "$type": "color",
+      "$value": "#FF7E6D",
+      "$description": "Storage Architect — Storage at Scale — storage_scale"
+    },
+    "dsw64-59": {
+      "$type": "color",
+      "$value": "#FF9586",
+      "$description": "Network Architect — Networking / Edge — network_edge"
+    },
+    "dsw64-60": {
+      "$type": "color",
+      "$value": "#FFAB9E",
+      "$description": "Embodied Systems Expert — Robotics — robotics_embodied"
+    },
+    "dsw64-61": {
+      "$type": "color",
+      "$value": "#FFBFB6",
+      "$description": "Quantum Experimenter — Quantum / Advanced Research — quantum_experiment"
+    },
+    "dsw64-62": {
+      "$type": "color",
+      "$value": "#FFD4CE",
+      "$description": "Crypto / Web3 Architect — Decentralized Systems — blockchain_decentralized"
+    },
+    "dsw64-63": {
+      "$type": "color",
+      "$value": "#FBE7E7",
+      "$description": "Prompt Systems Expert — Prompt Engineering — prompt_engineer"
+    },
+    "dsw64-64": {
+      "$type": "color",
+      "$value": "#F4FBFF",
+      "$description": "Sober Second-Opinion Reviewer — Neutral Review — graphite_reviewer"
+    }
+  }
+}

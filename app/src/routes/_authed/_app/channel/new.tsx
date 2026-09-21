@@ -124,7 +124,11 @@ function RouteComponent() {
             <ComboboxList>
               {(item: AgentProfile) => (
                 <ComboboxItem key={item.id} value={item} className="h-10">
-                  <ChannelAvatar participantIds={[item.id]} size={24} />
+                  <ChannelAvatar
+                    agents={profiles}
+                    participantIds={[item.id]}
+                    size={24}
+                  />
                   {item.name}
                   <span className="truncate text-muted-foreground ml-1">
                     {item.title}

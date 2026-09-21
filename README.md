@@ -52,6 +52,50 @@ A Bot is any endpoint speaking [AG-UI](https://github.com/ag-ui-protocol/ag-ui),
   <img src="assets/architecture-light.svg" alt="You talk to the server, which sends the turn to a Bot over AG-UI. Every tool call the Bot makes comes back through the gateway, which resolves the target, decides it against your policy, records an audit row, and only then acts, or refuses and names the rule. Allowed browser and file actions reach that Bot's own computer, one container each with its own Chromium, logins and workspace, built by the supervisor. Decisions land in PostgreSQL and threads in darbotlm Intelligence.">
 </picture>
 
+## GitHub Copilot desktop runtime
+
+The native desktop application can use GitHub Copilot CLI as an alternate agent
+runtime instead of starting the containerized Bot stack. This path reuses the
+user's existing Copilot authentication and configuration; Darbot does not copy
+or persist GitHub OAuth tokens.
+
+The desktop experience remains coworker-first:
+
+- personal-agent metadata initially comes from `COPILOT_HOME/agents` (normally
+  `~/.copilot/agents`); an open session supplies the authoritative personal,
+  plugin and default Copilot choices through ACP configuration;
+- skills are discovered through Copilot CLI from the user's existing
+  `~/.copilot/skills` configuration;
+- plugins and MCP servers use Copilot CLI's supported JSON inventory commands;
+- the selected agent, model and reasoning level use negotiated ACP
+  `session/set_config_option` values, not hard-coded model lists or `--agent`;
+- conversations, streamed responses, tool activity and permission requests use
+  Agent Client Protocol.
+
+Sessions are transport history, not the primary navigation model. The Darbot
+workspace selects an agent first, then starts a conversation powered by that
+agent's prompt, model, skills and tools. See
+[docs/copilot-cli.md](docs/copilot-cli.md) for the runtime and security
+contract.
+
+After connecting GitHub, choose which personal agents to import, or choose
+**Import none**. No agents are preselected. The canvas opens with a vertical
+left-hand sidebar for agents and their chats. **New agent** creates a standard
+personal Copilot definition and starts a chat; **Import agents** can add existing
+agents later. Importing only records workspace references and never copies or
+deletes Copilot definitions, credentials or conversations.
+
+**Agents** sits above **Conversations** in history. The agent filter includes
+counts across all folders by default, including existing custom-agent sessions.
+An unassigned session appears as **Copilot CLI**. Associations come from recorded
+initial agent-selection events, never from guesses about a title or prompt.
+
+Copilot uses a separate working folder, initially your existing home folder.
+Choose a project in Settings; the folder must already exist. Darbot never creates
+a container deployment just to start Copilot. Appearance defaults to dark, with
+persisted light/system overrides and scrolling preferences. Profile and resource
+views show CLI-owned configuration without exposing authentication tokens.
+
 ## Requirements
 
 - Docker, for PostgreSQL and the shipped Bots.
@@ -294,21 +338,36 @@ More detail: [docs/architecture.md](docs/architecture.md).
 
 ### Agent icons
 
-The coworker picker, profiles, handoff roster, and onboarding share the 15
-Mint/Opal icons from `assets/darbot_swarm_v3` (identities 065-079). Only their
-256px transparent PNGs are bundled in `app/src/assets/agents`; the full design
-archive is not needed to build or serve the app.
+`assets/swarm` is the canonical source for both approved cohorts: Solid64 v2
+(indices 1-64) and Mint/Opal64 v3 (65-128). All 128 identities and descriptive
+perspectives are registered through `shared/swarm-identity.ts`. The searchable
+Swarm catalog on `/agents` is separate from the deployment's actual coworkers:
+15 identities bind to existing adapter code and 113 are perspective assets,
+not newly created or connected runtimes.
 
-Icons resolve from a canonical `avatar_seed` first, then the agent ID, a
+Identities resolve from a canonical `avatar_seed` first, then the agent ID, a
 canonical endpoint hostname such as `agent-adk`, and finally an exact framework
-label or Mint alias. Custom coworkers keep their generated avatars. No match is
-inferred from an endpoint port or a substring in a coworker's name.
+label or its existing Mint alias. Unknown custom coworkers keep their generated
+avatars. No match is inferred from a raw color, endpoint port, or substring in
+a coworker's name. User-edited names, roles, credentials and grants are unchanged.
 
-To bind an icon to an arbitrarily named coworker, set its tenant-package entry's
-`avatar_seed`, for example `avatar_seed: agent-adk`. The two LangGraph identities
-remain distinct: `agent-langgraph` is Mint Branch; `agent-langgraph-agui` is Mint
-Stream and matches the desktop harness labelled "LangGraph". These bindings affect
-appearance only, not names, endpoints, permissions, or which agents are running.
+To bind artwork to an arbitrarily named coworker, set its tenant-package entry's
+`avatar_seed` to a semantic ID such as `azure_architect` or `agent-adk`.
+The two LangGraph identities remain distinct: `agent-langgraph` is Mint Branch;
+`agent-langgraph-agui` is Mint Stream and matches the desktop harness labelled
+"LangGraph". These bindings affect appearance only, not runtime routing.
+
+The web app and desktop harness picker consume the same resolver. Small identity
+marks use the exact standalone token; larger portraits use full-agent artwork.
+Opal remains patterned PNG artwork, never a CSS tint. Both Vite builds emit
+unchanged PNGs at `/assets/swarm/...`; images are loaded lazily, not inlined into
+JavaScript or duplicated into application source directories.
+
+`bun run generate:swarm` validates the source checksums and generates the typed
+registry; `bun run verify:swarm` also refuses a stale generated registry. Production
+builds run this automatically. The supplied Mint/Opal compact pack contains the
+1024/512/256 tiers used by the UI; unavailable 2048/SVG exports are not advertised
+by the effective registry. See [the canonical asset notes](assets/swarm/README.md).
 
 ## Sign in
 

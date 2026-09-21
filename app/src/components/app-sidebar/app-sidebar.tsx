@@ -44,6 +44,8 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import type { AgentIconIdentity } from "@/lib/agents/icons";
+import { agentListQueryOptions } from "@/lib/agents/queries";
 import { signOutMutationOptions } from "@/lib/auth/mutations";
 import { currentUserQueryOptions } from "@/lib/auth/queries";
 import {
@@ -164,9 +166,12 @@ export function isUnread(
 function ChannelRow({
   channel,
   animateOrder,
+  agents,
 }: {
   channel: ChannelSummary;
   animateOrder: boolean;
+  /** The roster, so the row's avatar draws a coworker's real artwork rather than an id-shaped guess. */
+  agents?: readonly AgentIconIdentity[];
 }) {
   const shouldReduceMotion = useReducedMotion();
   // Whether this row is unread, as a boolean, for the same reason `Channel` computes `isOpen`
@@ -201,6 +206,7 @@ function ChannelRow({
         pinned={channel.pinned}
         unread={unread}
         busy={channel.busy ?? false}
+        agents={agents}
       />
     </motion.div>
   );
@@ -212,6 +218,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navigate = useNavigate();
   const signOut = useMutation(signOutMutationOptions(queryClient));
   const channels = useInfiniteQuery(channelListQueryOptions());
+  // Real coworker artwork for the roster's avatars, not just the id strings channels carry.
+  const agents = useQuery(agentListQueryOptions());
   // One socket for the app, opened where the roster is kept live.
   useChannelEvents();
   const [search, setSearch] = useState("");
@@ -317,6 +325,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   key={channel.id}
                   animateOrder={animateOrder}
                   channel={channel}
+                  agents={agents.data}
                 />
               ))}
             </AnimatePresence>

@@ -19,6 +19,8 @@ import { useNeedsYou } from "@/components/computer/needs-you";
 import { DetailPanel } from "@/components/layout/detail-panel";
 import { SidebarToggle } from "@/components/layout/sidebar-toggle";
 import { Button } from "@/components/ui/button";
+import type { AgentIconIdentity } from "@/lib/agents/icons";
+import { agentListQueryOptions } from "@/lib/agents/queries";
 import { markChannelReadMutationOptions } from "@/lib/channels/mutations";
 import {
   type AgentChannel,
@@ -58,14 +60,16 @@ export const Route = createFileRoute("/_authed/_app/channel/$channelId")({
 function ComputerViewPanel({
   agentId,
   name,
+  agents,
 }: {
   agentId: string;
   name?: string;
+  agents?: readonly AgentIconIdentity[];
 }) {
   return (
     <div className="mt-4 px-4">
       <div className="p-4">
-        <ComputerView active computerId={agentId} name={name} />
+        <ComputerView active agents={agents} computerId={agentId} name={name} />
 
         <div className="mt-10">
           <h3 className="mb-2 font-medium text-sm">Activity</h3>
@@ -80,6 +84,8 @@ function RouteComponent() {
   const { channelId } = Route.useParams();
   const { settings, watch } = Route.useSearch();
   const channel = useQuery(channelQueryOptions(channelId));
+  /** Roster used to draw real agent artwork on the header and screen-panel avatars below. */
+  const agents = useQuery(agentListQueryOptions());
   const navigate = Route.useNavigate();
   const isSettingsOpen = settings === true;
   const prefersReducedMotion = useReducedMotion();
@@ -168,7 +174,11 @@ function RouteComponent() {
       detail={
         agentId === undefined ? null : isWatching ? (
           // Manual watch remains active even when there is no current browser action.
-          <ComputerViewPanel agentId={agentId} name={channel?.data?.name} />
+          <ComputerViewPanel
+            agentId={agentId}
+            agents={agents.data}
+            name={channel?.data?.name}
+          />
         ) : (
           <AgentProfile agentId={agentId} />
         )
@@ -190,6 +200,7 @@ function RouteComponent() {
               }}
             >
               <ChannelAvatar
+                agents={agents.data}
                 participantIds={channel.data?.agentIds ?? []}
                 size={22}
               />

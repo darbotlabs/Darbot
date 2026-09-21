@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darbot.dev/schemas/darbot_swarm_agent_perspectives.v2.schema.json",
+  "title": "Darbot Swarm Agent Perspectives Solid64 v2",
+  "type": "object",
+  "required": [
+    "schema_id",
+    "version",
+    "agents"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "darbot.swarm.agent_perspectives.solid64.v2"
+    },
+    "version": {
+      "type": "string"
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 64,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "required": [
+          "agent",
+          "color",
+          "assets"
+        ],
+        "properties": {
+          "agent": {
+            "type": "object",
+            "required": [
+              "agent_id",
+              "domain",
+              "persona",
+              "perspective"
+            ]
+          },
+          "color": {
+            "type": "object",
+            "required": [
+              "token_id",
+              "hex",
+              "rgb"
+            ],
+            "properties": {
+              "hex": {
+                "type": "string",
+                "pattern": "^#[0-9A-F]{6}$"
+              }
+            }
+          },
+          "assets": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

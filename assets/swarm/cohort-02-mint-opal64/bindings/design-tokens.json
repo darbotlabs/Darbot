@@ -1,0 +1,1606 @@
+{
+  "darbot": {
+    "mintOpal": {
+      "DSW-MO-065": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.3764705882352941,
+            0.8509803921568627,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Seed \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-adk",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.55555556,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-066": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.36470588235294116,
+            0.8627450980392157,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Council \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-ag2",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.44444444,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-067": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.35294117647058826,
+            0.8705882352941177,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Grove \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-agno",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.33333333,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-068": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.3411764705882353,
+            0.8823529411764706,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Relay \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-bot",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.22222222,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-069": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.32941176470588235,
+            0.8901960784313725,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Forge \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-claude-sdk",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.11111111,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-070": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.3137254901960784,
+            0.9019607843137255,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Pilot \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-computer",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-071": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.4196078431372549,
+            0.9137254901960784,
+            0.788235294117647
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Crew \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-crewai",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-072": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.5058823529411764,
+            0.9215686274509803,
+            0.8117647058823529
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Branch \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-langgraph",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-073": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.5843137254901961,
+            0.9333333333333333,
+            0.8392156862745098
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Stream \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-langgraph-agui",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-074": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6509803921568628,
+            0.9411764705882353,
+            0.8666666666666667
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Dialog \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-langroid",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-075": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7176470588235294,
+            0.9529411764705882,
+            0.8941176470588236
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Index \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-llamaindex",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-076": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7803921568627451,
+            0.9607843137254902,
+            0.9176470588235294
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Flow \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-mastra",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-077": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8392156862745098,
+            0.9686274509803922,
+            0.9450980392156862
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Mesh \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-microsoft",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-078": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8980392156862745,
+            0.9764705882352941,
+            0.9725490196078431
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Contract \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-pydantic-ai",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-079": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9568627450980393,
+            0.984313725490196,
+            1.0
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Thread \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-strands",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-080": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.8117647058823529,
+            1.0
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Socket \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-mcp",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-081": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.7529411764705882,
+            0.9647058823529412
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Bridge \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-a2a",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-082": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.6901960784313725,
+            0.9294117647058824
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Workbench \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-acp",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-083": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.6313725490196078,
+            0.8901960784313725
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Passport \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-identity",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-084": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.5725490196078431,
+            0.8549019607843137
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Charter \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-policy",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-085": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.5137254901960784,
+            0.8196078431372549
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Recall \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-memory",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-086": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.4549019607843137,
+            0.7803921568627451
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Atlas \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-ontology",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-087": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.4,
+            0.7450980392156863
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Lattice \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-knowledge-graph",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-088": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.33725490196078434,
+            0.7098039215686275
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Seek \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-retrieval",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-089": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0,
+            0.2784313725490196,
+            0.6705882352941176
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Rank \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-reranking",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-090": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.2235294117647059,
+            0.2901960784313726,
+            0.6901960784313725
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Vector \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-embeddings",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-091": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.3411764705882353,
+            0.29411764705882354,
+            0.7058823529411765
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Context \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-context",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-092": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.44313725490196076,
+            0.2980392156862745,
+            0.7254901960784313
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Schema \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-schemas",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-093": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.5372549019607843,
+            0.2901960784313726,
+            0.7450980392156863
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Ledger \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-provenance",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-094": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6313725490196078,
+            0.2784313725490196,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Bench \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-evaluation",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-095": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7254901960784313,
+            0.25882352941176473,
+            0.7803921568627451
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Trace \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-observability",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-096": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8156862745098039,
+            0.2235294117647059,
+            0.796078431372549
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Switch \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-routing",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-097": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9058823529411765,
+            0.16470588235294117,
+            0.8156862745098039
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Compass \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-planning",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-098": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1.0,
+            0.0,
+            0.8313725490196079
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Cadence \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-scheduler",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-099": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.1411764705882353,
+            0.7686274509803922
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Replay \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-replay",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.20392156862745098,
+            0.7058823529411765
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Capsule \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-sandbox",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-101": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.24313725490196078,
+            0.6392156862745098
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Scout \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-browser",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-102": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.27450980392156865,
+            0.5725490196078431
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Shell \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-terminal",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-103": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.2980392156862745,
+            0.5019607843137255
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Vault \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-filesystem",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-104": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.3176470588235294,
+            0.42745098039215684
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Packet \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-network",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-105": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.3333333333333333,
+            0.3411764705882353
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Archive \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-storage",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-106": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1.0,
+            0.34509803921568627,
+            0.23529411764705882
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Core \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-inference",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-107": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1.0,
+            0.35294117647058826,
+            0.0
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Bit \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-quantization",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-108": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.32941176470588235,
+            0.00784313725490196
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Learn \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-training",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-109": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9490196078431372,
+            0.3058823529411765,
+            0.01568627450980392
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Reward \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-reinforcement",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-110": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9254901960784314,
+            0.2784313725490196,
+            0.0196078431372549
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Lens \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-vision",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-111": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8980392156862745,
+            0.2549019607843137,
+            0.027450980392156862
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Read \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-ocr",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-112": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8745098039215686,
+            0.22745098039215686,
+            0.03137254901960784
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Voice \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-speech",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-113": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8470588235294118,
+            0.2,
+            0.03529411764705882
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Motion \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-robotics",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-114": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8235294117647058,
+            0.17254901960784313,
+            0.0392156862745098
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Twin \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-simulation",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-115": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.796078431372549,
+            0.13725490196078433,
+            0.0392156862745098
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Terrain \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-geospatial",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-116": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7725490196078432,
+            0.10196078431372549,
+            0.043137254901960784
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Interface \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-api-design",
+            "material": {
+              "kind": "solid",
+              "material_id": null,
+              "strength": 0,
+              "seed": null,
+              "fallback_color_is_approximation": false
+            }
+          }
+        }
+      },
+      "DSW-MO-117": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7647058823529411,
+            0.24705882352941178,
+            0.16862745098039217
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Clean \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-data-quality",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.11111111,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-118": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7529411764705882,
+            0.34509803921568627,
+            0.2549019607843137
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Channel \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-etl",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.22222222,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-119": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7333333333333333,
+            0.4235294117647059,
+            0.32941176470588235
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Pulse \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-event-streams",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.33333333,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-120": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7098039215686275,
+            0.49411764705882355,
+            0.403921568627451
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Canvas \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-ui-design",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.44444444,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-121": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6784313725490196,
+            0.5607843137254902,
+            0.4745098039215686
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Access \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-accessibility",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.55555556,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-122": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6352941176470588,
+            0.6274509803921569,
+            0.5450980392156862
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Scribe \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-documentation",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.66666667,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-123": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.5843137254901961,
+            0.6901960784313725,
+            0.615686274509804
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Inquiry \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-research",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.77777778,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-124": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.5137254901960784,
+            0.7529411764705882,
+            0.6901960784313725
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Veil \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-privacy",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.88888889,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-125": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.8117647058823529,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Shield \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-threat-modeling",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 1.0,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-126": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.403921568627451,
+            0.8235294117647058,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Proof \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-formal-verification",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.88888889,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-127": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.396078431372549,
+            0.8313725490196079,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Balance \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-sustainability",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.77777778,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      },
+      "DSW-MO-128": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.3843137254901961,
+            0.8431372549019608,
+            0.7607843137254902
+          ],
+          "alpha": 1
+        },
+        "$description": "Mint Taproot \u2014 solid fallback color; material metadata is separate.",
+        "$extensions": {
+          "darbot": {
+            "agentId": "agent-swarm-coordination",
+            "material": {
+              "kind": "opal-splatter",
+              "material_id": "darbot.opal-lightning-splatter.v1",
+              "strength": 0.66666667,
+              "seed": 640246,
+              "fallback_color_is_approximation": true
+            }
+          }
+        }
+      }
+    }
+  }
+}

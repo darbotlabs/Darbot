@@ -1,6 +1,6 @@
 [package]
 name = "darbot-desktop"
-version = "0.0.0"
+version = "0.0.16"
 description = "darbot Desktop"
 edition = "2021"
 rust-version = "1.77"

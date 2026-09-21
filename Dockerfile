@@ -78,6 +78,7 @@ FROM deps AS app-build
 COPY app app
 COPY scripts scripts
 COPY shared shared
+COPY assets/swarm assets/swarm
 # The server's source as well: the app's prebuild step reads the tenant package through
 # `server/src/tenant-package`, so the app cannot be built without it.
 COPY server server

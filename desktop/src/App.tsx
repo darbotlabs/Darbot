@@ -2,25 +2,34 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Ask } from "./Ask";
+import { CopilotWorkspace } from "./CopilotWorkspace";
+import { CopilotAgentImport } from "./CopilotAgentImport";
+import {
+  readImportedAgentIds,
+  readOpenCopilot,
+  writeImportedAgentIds,
+  writeOpenCopilot,
+  writeStoredAgentId,
+} from "./copilot-preferences";
 import {
   DEFAULT_HARNESS,
   type HarnessChoice,
   HarnessPicker,
 } from "./HarnessPicker";
+import { isHttpEndpointUrl } from "./http-endpoint-url";
 import { asProblem, Failure, type Problem } from "./Problem";
 import {
   type HeldConfiguration,
   type ModelChoice,
   ProviderPicker,
 } from "./ProviderPicker";
-import { Welcome } from "./Welcome";
-import { isHttpEndpointUrl } from "./http-endpoint-url";
 import {
   harnessChoiceEvent,
   modelChoiceEvent,
   recordSetupEvent,
   type SetupStep,
 } from "./telemetry";
+import { BrandLockup, Welcome } from "./Welcome";
 
 type EngineStatus = {
   engine: "docker" | "podman" | null;
@@ -64,6 +73,7 @@ export function App() {
   const [engine, setEngine] = useState<EngineStatus | null>(null);
   const [blocker, setBlocker] = useState<Blocker | null>(null);
   const [blockerFailure, setBlockerFailure] = useState<Problem | null>(null);
+  const [checkingPlatform, setCheckingPlatform] = useState(true);
   const [instruction, setInstruction] = useState("");
   const [root, setRoot] = useState("");
   const [reuseIntelligence, setReuseIntelligence] = useState(false);
@@ -79,6 +89,10 @@ export function App() {
     id: DEFAULT_HARNESS,
   });
   const [model, setModel] = useState<ModelChoice | null>(null);
+  const [copilotMode, setCopilotMode] = useState(readOpenCopilot);
+  const [importingAgents, setImportingAgents] = useState(
+    () => readImportedAgentIds() === null,
+  );
   /** Model credentials a previous run already wrote, so the provider screen arrives filled in. */
   const [alreadyHeld, setAlreadyHeld] = useState<HeldConfiguration>({});
   /*
@@ -142,8 +156,19 @@ export function App() {
   const [busy, setBusy] = useState(false);
   const [running, setRunning] = useState(false);
   const visibleSetupStep =
-    blockerFailure || blocker || (running && step !== "ask") ? null : step;
+    copilotMode || blockerFailure || blocker || (running && step !== "ask")
+      ? null
+      : step;
   const lastViewedStep = useRef<SetupStep | null>(null);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  }, [step, copilotMode, importingAgents]);
+
   useEffect(() => {
     if (visibleSetupStep === lastViewedStep.current) return;
     lastViewedStep.current = visibleSetupStep;
@@ -229,9 +254,6 @@ export function App() {
   );
 
   useEffect(() => {
-    invoke<EngineStatus>("detect_engine")
-      .then(setEngine)
-      .catch(() => undefined);
     Promise.all([
       invoke<string | null>("selected_root").catch(() => null),
       invoke<string>("default_root"),
@@ -250,9 +272,10 @@ export function App() {
         // A stack this app started may still be up from a previous window. Ask, rather than
         // offering to set up something that is already running.
         if (
-          await invoke<boolean>("already_running", { root: found }).catch(
+          !readOpenCopilot() &&
+          (await invoke<boolean>("already_running", { root: found }).catch(
             () => false,
-          )
+          ))
         ) {
           // Already up from a previous window: show it, rather than a screen about it.
           await invoke("show_darbot");
@@ -260,18 +283,6 @@ export function App() {
         }
       })
       .catch(() => undefined);
-    invoke<Blocker | null>("windows_blocker")
-      .then(async (found) => {
-        setBlocker(found);
-        if (found) {
-          setInstruction(
-            await invoke<string>("windows_blocker_instruction", {
-              blocker: found,
-            }),
-          );
-        }
-      })
-      .catch((error) => setBlockerFailure(asProblem(error)));
     // Why the stack stopped, if it did while this screen was not loaded. The supervisor gives up
     // and sends the window back here, and without this the person arrives at a setup screen with
     // no indication that anything happened.
@@ -297,6 +308,37 @@ export function App() {
       stop.then((unlisten) => unlisten());
     };
   }, [loadConfiguredRoot]);
+
+  useEffect(() => {
+    if (copilotMode || step !== "install") return;
+    let active = true;
+    setCheckingPlatform(true);
+    setBlockerFailure(null);
+    Promise.all([
+      invoke<EngineStatus>("detect_engine"),
+      invoke<Blocker | null>("windows_blocker"),
+    ])
+      .then(async ([nextEngine, nextBlocker]) => {
+        const nextInstruction = nextBlocker
+          ? await invoke<string>("windows_blocker_instruction", {
+              blocker: nextBlocker,
+            })
+          : "";
+        if (!active) return;
+        setEngine(nextEngine);
+        setBlocker(nextBlocker);
+        setInstruction(nextInstruction);
+      })
+      .catch((error) => {
+        if (active) setBlockerFailure(asProblem(error));
+      })
+      .finally(() => {
+        if (active) setCheckingPlatform(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [copilotMode, step]);
 
   async function start() {
     setBusy(true);
@@ -384,22 +426,87 @@ export function App() {
   }
 
   // Nothing else on this screen can be done until the machine allows it, so nothing else is shown.
-  if (blockerFailure) {
+  if (copilotMode) {
+    if (importingAgents) {
+      return (
+        <main className="copilot-import-main">
+          <div className="sheet copilot-import-sheet">
+            <CopilotAgentImport
+              firstRun
+              existingIds={readImportedAgentIds() ?? []}
+              onComplete={(ids) => {
+                writeImportedAgentIds([
+                  ...(readImportedAgentIds() ?? []),
+                  ...ids,
+                ]);
+                writeStoredAgentId("");
+                writeOpenCopilot(true);
+                setImportingAgents(false);
+              }}
+              onBack={() => {
+                writeOpenCopilot(false);
+                setCopilotMode(false);
+                setStep("model");
+              }}
+            />
+          </div>
+        </main>
+      );
+    }
+    return (
+      <CopilotWorkspace
+        onBack={() => {
+          writeOpenCopilot(false);
+          setCopilotMode(false);
+          setStep("model");
+        }}
+      />
+    );
+  }
+
+  if (checkingPlatform && step === "install") {
     return (
       <main>
-        <h1>darbot could not check Windows setup</h1>
-        <Failure problem={blockerFailure} />
+        <div className="sheet">
+          <BrandLockup />
+          <h1>Checking your container runtime</h1>
+          <p role="status">
+            Checking Windows and the selected container engine...
+          </p>
+          <button
+            type="button"
+            className="quiet"
+            onClick={() => setStep("model")}
+          >
+            Back
+          </button>
+        </div>
       </main>
     );
   }
 
-  if (blocker) {
+  if (blockerFailure && step === "install") {
     return (
       <main>
-        <h1>darbot needs one thing first</h1>
-        <div className="blocker">
-          <h2>{titleFor(blocker)}</h2>
-          <p>{instruction}</p>
+        <div className="sheet">
+          <BrandLockup />
+          <h1>darbot could not check Windows setup</h1>
+          <Failure problem={blockerFailure} />
+        </div>
+      </main>
+    );
+  }
+
+  if (blocker && step === "install") {
+    return (
+      <main>
+        <div className="sheet">
+          <BrandLockup />
+          <h1>darbot needs one thing first</h1>
+          <div className="blocker">
+            <h2>{titleFor(blocker)}</h2>
+            <p>{instruction}</p>
+          </div>
         </div>
       </main>
     );
@@ -415,8 +522,10 @@ export function App() {
   if (!running && step === "welcome") {
     return (
       <main>
-        <Welcome onStart={() => setStep("harness")} />
-        {displayedFailure && <Failure problem={displayedFailure} />}
+        <div className="screen-stack">
+          <Welcome onStart={() => setStep("harness")} />
+          {displayedFailure && <Failure problem={displayedFailure} />}
+        </div>
       </main>
     );
   }
@@ -452,19 +561,21 @@ export function App() {
   if (step === "ask") {
     return (
       <main>
-        <Ask
-          suggestion={SUGGESTED_QUESTION}
-          onAsk={(question) =>
-            invoke<string>("ask_the_bot", { root, question })
-          }
-          onOpen={() => {
-            invoke("show_darbot").catch((error) =>
-              setFailure(asProblem(error)),
-            );
-          }}
-          onBack={changeModelAfterAskFailure}
-        />
-        {displayedFailure && <Failure problem={displayedFailure} />}
+        <div className="screen-stack">
+          <Ask
+            suggestion={SUGGESTED_QUESTION}
+            onAsk={(question) =>
+              invoke<string>("ask_the_bot", { root, question })
+            }
+            onOpen={() => {
+              invoke("show_darbot").catch((error) =>
+                setFailure(asProblem(error)),
+              );
+            }}
+            onBack={changeModelAfterAskFailure}
+          />
+          {displayedFailure && <Failure problem={displayedFailure} />}
+        </div>
       </main>
     );
   }
@@ -479,7 +590,17 @@ export function App() {
           onChoose={(choice) => {
             recordSetupEvent(modelChoiceEvent(choice));
             setModel(choice);
-            setStep("install");
+            if (
+              choice.provider === "github-copilot" &&
+              choice.login === "copilot"
+            ) {
+              writeOpenCopilot(true);
+              setImportingAgents(true);
+              setCopilotMode(true);
+            } else {
+              setCheckingPlatform(true);
+              setStep("install");
+            }
           }}
           onBack={() => setStep("harness")}
         />
@@ -489,18 +610,20 @@ export function App() {
 
   return (
     <main>
-      {/* A failure outranks `running`. The supervisor gives up on a process and sends the window
-          back here, and a heading that still says everything is running while the box underneath
-          names the process that stopped is a screen arguing with itself. */}
-      <h1>
-        {running && !displayedFailure ? "darbot is running" : "Set up darbot"}
-      </h1>
-      <p className="lede">
-        {running && !displayedFailure
-          ? "The stack is up. darbot is in this window; the menu bar has it too, and stops it."
-          : engine?.responding
-            ? `Using ${engine.engine === "docker" ? "Docker" : "Podman"}. It is answering, so nothing needs installing.`
-            : /* Two states, and only one of them is somebody's to act on.
+      <div className="sheet">
+        <BrandLockup />
+        {/* A failure outranks `running`. The supervisor gives up on a process and sends the window
+            back here, and a heading that still says everything is running while the box underneath
+            names the process that stopped is a screen arguing with itself. */}
+        <h1>
+          {running && !displayedFailure ? "darbot is running" : "Set up darbot"}
+        </h1>
+        <p className="lede">
+          {running && !displayedFailure
+            ? "The stack is up. darbot is in this window; the menu bar has it too, and stops it."
+            : engine?.responding
+              ? `Using ${engine.engine === "docker" ? "Docker" : "Podman"}. It is answering, so nothing needs installing.`
+              : /* Two states, and only one of them is somebody's to act on.
 
                  An engine that is there but not running is theirs: the backend says "podman is
                  installed but not answering", and that is the sentence to show. Repeating a fixed
@@ -509,17 +632,17 @@ export function App() {
 
                  No engine at all is ours. Start installs one, so this says so rather than sending
                  somebody to a download page they were never going to read. */
-              engine?.engine
-              ? engine.detail
-              : "darbot needs one more piece of software to run, and installs it for you. Press Start."}
-      </p>
+                engine?.engine
+                ? engine.detail
+                : "darbot needs one more piece of software to run, and installs it for you. Press Start."}
+        </p>
 
-      {!running && (
-        <fieldset
-          disabled={busy}
-          style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}
-        >
-          {/*
+        {!running && (
+          <fieldset
+            disabled={busy}
+            style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}
+          >
+            {/*
             Sign in on the main path; paste behind the disclosure.
 
             This screen used to ask for a key whose only source was two terminal commands, which is
@@ -528,238 +651,242 @@ export function App() {
             Intelligence has a key this sign-in knows nothing about, so the field moves down there
             with the addresses it belongs with.
           */}
-          {apiKey ? (
-            <p className="lede">Connected to darbotlm.</p>
-          ) : (alreadyHeld.saved?.intelligenceApiKey || reuseIntelligence) &&
-            !signingIn &&
-            !projects ? (
-            <>
-              <p className="lede">
-                A saved darbotlm connection will be checked when you start.
-              </p>
-              <button
-                type="button"
-                className="quiet"
-                onClick={signInTodarbotlm}
-              >
-                Sign in to darbotlm again
-              </button>
-            </>
-          ) : signInUrl ? (
-            <>
-              <p className="lede">
-                Finish signing in to darbotlm in your browser. If it did not
-                open, this is the address:
-              </p>
-              {/* Selectable text, not a link: the browser has already been asked to open it, and
+            {apiKey ? (
+              <p className="lede">Connected to darbotlm.</p>
+            ) : (alreadyHeld.saved?.intelligenceApiKey || reuseIntelligence) &&
+              !signingIn &&
+              !projects ? (
+              <>
+                <p className="lede">
+                  A saved darbotlm connection will be checked when you start.
+                </p>
+                <button
+                  type="button"
+                  className="quiet"
+                  onClick={signInTodarbotlm}
+                >
+                  Sign in to darbotlm again
+                </button>
+              </>
+            ) : signInUrl ? (
+              <>
+                <p className="lede">
+                  Finish signing in to darbotlm in your browser. If it did not
+                  open, this is the address:
+                </p>
+                {/* Selectable text, not a link: the browser has already been asked to open it, and
                   what is needed here is something a person can copy. */}
-              <p className="footnote" style={{ userSelect: "text" }}>
-                {signInUrl}
-              </p>
-              <p className="footnote">Waiting for you to approve it…</p>
-            </>
-          ) : projects ? (
-            <>
-              <p className="lede">Which project should darbot use?</p>
-              <fieldset className="picker">
-                <legend className="sr-only">Project</legend>
-                {projects.map((project) => (
-                  <button
-                    type="button"
-                    key={project.id}
-                    className="tile"
-                    disabled={signingIn}
-                    onClick={() => pickProject(project.id)}
-                  >
-                    <span className="tile-name">{project.name}</span>
-                  </button>
-                ))}
-              </fieldset>
-              {projects.length === 0 && (
-                <>
-                  <p className="footnote">
-                    That account has no projects yet. Make one at darbot.ai,
-                    then sign in again.
-                  </p>
-                  <button
-                    type="button"
-                    className="quiet"
-                    disabled={signingIn}
-                    onClick={signInTodarbotlm}
-                  >
-                    {signingIn ? "Waiting for your browser…" : "Sign in again"}
-                  </button>
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <p className="lede">
-                darbot keeps your conversations in darbotlm. Sign in and it
-                sets the rest up for you.
-              </p>
-              <button
-                type="button"
-                disabled={signingIn}
-                onClick={signInTodarbotlm}
-              >
-                {signingIn
-                  ? "Waiting for your browser…"
-                  : "Sign in to darbotlm"}
-              </button>
-            </>
-          )}
-          {!apiKey &&
-            !reuseIntelligence &&
-            alreadyHeld.saved?.intelligenceApiKey == null &&
-            !signingIn &&
-            !projects && (
-              <button
-                type="button"
-                className="quiet"
-                onClick={() => setReuseIntelligence(true)}
-              >
-                Use a saved connection
-              </button>
+                <p className="footnote" style={{ userSelect: "text" }}>
+                  {signInUrl}
+                </p>
+                <p className="footnote">Waiting for you to approve it…</p>
+              </>
+            ) : projects ? (
+              <>
+                <p className="lede">Which project should darbot use?</p>
+                <fieldset className="picker">
+                  <legend className="sr-only">Project</legend>
+                  {projects.map((project) => (
+                    <button
+                      type="button"
+                      key={project.id}
+                      className="tile"
+                      disabled={signingIn}
+                      onClick={() => pickProject(project.id)}
+                    >
+                      <span className="tile-name">{project.name}</span>
+                    </button>
+                  ))}
+                </fieldset>
+                {projects.length === 0 && (
+                  <>
+                    <p className="footnote">
+                      That account has no projects yet. Make one at darbot.ai,
+                      then sign in again.
+                    </p>
+                    <button
+                      type="button"
+                      className="quiet"
+                      disabled={signingIn}
+                      onClick={signInTodarbotlm}
+                    >
+                      {signingIn
+                        ? "Waiting for your browser…"
+                        : "Sign in again"}
+                    </button>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <p className="lede">
+                  darbot keeps your conversations in darbotlm. Sign in and it
+                  sets the rest up for you.
+                </p>
+                <button
+                  type="button"
+                  disabled={signingIn}
+                  onClick={signInTodarbotlm}
+                >
+                  {signingIn
+                    ? "Waiting for your browser…"
+                    : "Sign in to darbotlm"}
+                </button>
+              </>
             )}
-          <div className="field">
-            <label htmlFor="root">Where darbot lives</label>
-            <input
-              id="root"
-              disabled={busy}
-              value={root}
-              onChange={(event) => {
-                // Invalidate pending loads before blur starts one for this edit.
-                configuredRunRef.current += 1;
-                setRoot(event.target.value);
-                setModel(null);
-                clearRootScopedSavedState();
-              }}
-              onBlur={(event) => loadConfiguredRoot(event.target.value)}
-              spellCheck={false}
-            />
-          </div>
-          {/*
+            {!apiKey &&
+              !reuseIntelligence &&
+              alreadyHeld.saved?.intelligenceApiKey == null &&
+              !signingIn &&
+              !projects && (
+                <button
+                  type="button"
+                  className="quiet"
+                  onClick={() => setReuseIntelligence(true)}
+                >
+                  Use a saved connection
+                </button>
+              )}
+            <div className="field">
+              <label htmlFor="root">Where darbot lives</label>
+              <input
+                id="root"
+                disabled={busy}
+                value={root}
+                onChange={(event) => {
+                  // Invalidate pending loads before blur starts one for this edit.
+                  configuredRunRef.current += 1;
+                  setRoot(event.target.value);
+                  setModel(null);
+                  clearRootScopedSavedState();
+                }}
+                onBlur={(event) => loadConfiguredRoot(event.target.value)}
+                spellCheck={false}
+              />
+            </div>
+            {/*
             This used to be headed "Self-hosted Intelligence" over two fields pre-filled with the
             MANAGED service's addresses, which says the opposite of what it does: somebody opening
             it to check where their data goes read "self-hosted" and saw darbotlm's own hosts.
             The heading now describes the action, and the note says what the defaults are.
           */}
-          <details>
-            <summary>Point at your own Intelligence server</summary>
-            <p className="footnote" style={{ margin: "0.6rem 0 0.75rem" }}>
-              These default to darbotlm's managed service. Change them only if
-              you run Intelligence yourself, and paste that server's key below.
-            </p>
-            <div className="field">
-              <label htmlFor="key">Project key</label>
-              <input
-                id="key"
-                type="password"
-                value={apiKey}
-                onChange={(event) => setApiKey(event.target.value)}
-                placeholder="the key from your own Intelligence"
-                autoComplete="off"
-                spellCheck={false}
-              />
-            </div>
-            <div className="field" style={{ marginTop: "0.75rem" }}>
-              <label htmlFor="api">API URL</label>
-              <input
-                id="api"
-                value={apiUrl}
-                onChange={(event) => setApiUrl(event.target.value)}
-                spellCheck={false}
-              />
-            </div>
-            <div className="field">
-              <label htmlFor="ws">Gateway WebSocket URL</label>
-              <input
-                id="ws"
-                value={wsUrl}
-                onChange={(event) => setWsUrl(event.target.value)}
-                spellCheck={false}
-              />
-            </div>
-          </details>
-        </fieldset>
-      )}
+            <details>
+              <summary>Point at your own Intelligence server</summary>
+              <p className="footnote" style={{ margin: "0.6rem 0 0.75rem" }}>
+                These default to darbotlm's managed service. Change them only if
+                you run Intelligence yourself, and paste that server's key
+                below.
+              </p>
+              <div className="field">
+                <label htmlFor="key">Project key</label>
+                <input
+                  id="key"
+                  type="password"
+                  value={apiKey}
+                  onChange={(event) => setApiKey(event.target.value)}
+                  placeholder="the key from your own Intelligence"
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+              </div>
+              <div className="field" style={{ marginTop: "0.75rem" }}>
+                <label htmlFor="api">API URL</label>
+                <input
+                  id="api"
+                  value={apiUrl}
+                  onChange={(event) => setApiUrl(event.target.value)}
+                  spellCheck={false}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="ws">Gateway WebSocket URL</label>
+                <input
+                  id="ws"
+                  value={wsUrl}
+                  onChange={(event) => setWsUrl(event.target.value)}
+                  spellCheck={false}
+                />
+              </div>
+            </details>
+          </fieldset>
+        )}
 
-      {steps.length > 0 && (
-        <div className="steps">
-          {steps.map((step) => (
-            <div className="step" key={step.step}>
-              <span className={`mark ${step.ok ? "good" : "bad"}`}>
-                {step.ok ? "✓" : "✗"}
-              </span>
-              <span>{label(step.step)}</span>
-              <span className="detail">{step.detail}</span>
-            </div>
-          ))}
-        </div>
-      )}
+        {steps.length > 0 && (
+          <div className="steps">
+            {steps.map((step) => (
+              <div className="step" key={step.step}>
+                <span className={`mark ${step.ok ? "good" : "bad"}`}>
+                  {step.ok ? "✓" : "✗"}
+                </span>
+                <span>{label(step.step)}</span>
+                <span className="detail">{step.detail}</span>
+              </div>
+            ))}
+          </div>
+        )}
 
-      {displayedFailure && <Failure problem={displayedFailure} />}
+        {displayedFailure && <Failure problem={displayedFailure} />}
 
-      {!running && (
-        <button
-          type="button"
-          className="quiet"
-          disabled={busy}
-          onClick={() => setStep("model")}
-        >
-          Change AI connection
-        </button>
-      )}
-      <div className="row">
-        {running ? (
-          <>
-            <button
-              type="button"
-              /*
-               * The refusal is shown, not swallowed.
-               *
-               * `show_darbot` answers with "darbot is not answering on port 3010 yet, so there
-               * is nothing to show" when the app host process is not up, and this button dropped
-               * it on the floor. Clicking it then did nothing at all, on a screen headed "darbot
-               * is running", which is the worst of both: a true sentence was available and the
-               * window threw it away. The Ask screen's copy of this call always showed it.
-               */
-              onClick={() =>
-                invoke("show_darbot").catch((error) =>
-                  setFailure(asProblem(error)),
-                )
-              }
-            >
-              Show darbot
-            </button>
-            <button
-              type="button"
-              className="quiet"
-              onClick={stop}
-              disabled={busy}
-            >
-              Stop darbot
-            </button>
-          </>
-        ) : (
+        {!running && (
           <button
             type="button"
-            onClick={start}
-            // The model is answered by its own screen now, so what is checked here is that it was
-            // answered at all, not that some field on this screen is non-empty.
-            disabled={
-              busy ||
-              (apiKey.trim() === "" &&
-                !alreadyHeld.saved?.intelligenceApiKey &&
-                !reuseIntelligence) ||
-              !modelCanStart() ||
-              root.trim() === ""
-            }
+            className="quiet standalone-action"
+            disabled={busy}
+            onClick={() => setStep("model")}
           >
-            {busy ? "Working…" : "Start darbot"}
+            Change AI connection
           </button>
         )}
+        <div className="row">
+          {running ? (
+            <>
+              <button
+                type="button"
+                /*
+                 * The refusal is shown, not swallowed.
+                 *
+                 * `show_darbot` answers with "darbot is not answering on port 3010 yet, so there
+                 * is nothing to show" when the app host process is not up, and this button dropped
+                 * it on the floor. Clicking it then did nothing at all, on a screen headed "darbot
+                 * is running", which is the worst of both: a true sentence was available and the
+                 * window threw it away. The Ask screen's copy of this call always showed it.
+                 */
+                onClick={() =>
+                  invoke("show_darbot").catch((error) =>
+                    setFailure(asProblem(error)),
+                  )
+                }
+              >
+                Show darbot
+              </button>
+              <button
+                type="button"
+                className="quiet"
+                onClick={stop}
+                disabled={busy}
+              >
+                Stop darbot
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              onClick={start}
+              // The model is answered by its own screen now, so what is checked here is that it was
+              // answered at all, not that some field on this screen is non-empty.
+              disabled={
+                busy ||
+                (apiKey.trim() === "" &&
+                  !alreadyHeld.saved?.intelligenceApiKey &&
+                  !reuseIntelligence) ||
+                !modelCanStart() ||
+                root.trim() === ""
+              }
+            >
+              {busy ? "Working…" : "Start darbot"}
+            </button>
+          )}
+        </div>
       </div>
     </main>
   );

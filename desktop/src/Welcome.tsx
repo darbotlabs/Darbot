@@ -1,3 +1,14 @@
+import darbotIcon from "../src-tauri/icons/128x128.png";
+
+export function BrandLockup() {
+  return (
+    <div className="lockup">
+      <img className="brand-mark" src={darbotIcon} alt="" />
+      <span>darbot</span>
+    </div>
+  );
+}
+
 /**
  * What darbot is, before it asks for anything.
  *
@@ -8,10 +19,7 @@
 export function Welcome({ onStart }: { onStart: () => void }) {
   return (
     <div className="sheet">
-      <div className="lockup">
-        <div className="orb" aria-hidden="true" />
-        <span>darbot</span>
-      </div>
+      <BrandLockup />
       <h1>Your own AI coworkers, on this computer.</h1>
       <p className="lede big">
         They answer questions, use the tools you connect, and can work in a

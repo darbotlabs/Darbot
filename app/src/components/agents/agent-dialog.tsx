@@ -14,6 +14,7 @@ import type { ZodType } from "zod";
 import { AgentAvatar } from "@/components/agents/agent-avatar";
 import { CallbackTokenPanel } from "@/components/agents/callback-token-panel";
 import { HandoffPanel } from "@/components/agents/handoff-panel";
+import { PackagedIdentity } from "@/components/agents/packaged-identity";
 import { RoutinesList } from "@/components/routines/routines-list";
 import { Button } from "@/components/ui/button";
 import {
@@ -286,6 +287,7 @@ function GeneralSection({
           schema={agentFormSchema.shape.roleDescription}
           value={profile.roleDescription}
         />
+        <PackagedIdentity agent={profile} />
         <VisibilityItem
           canManage={profile.canManage}
           onSave={(visibility) => save({ visibility })}

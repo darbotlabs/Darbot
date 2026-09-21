@@ -1,0 +1,1225 @@
+{
+  "profile": "compact",
+  "version": "3.0.0",
+  "registry_file": "manifest/agent-perspectives.json",
+  "note": "The canonical registry is identical between packages. Use included_assets below for this package; full_pack_only_assets resolve in the full archive.",
+  "individual_exports_included": 512,
+  "agents": [
+    {
+      "agent_id": "agent-adk",
+      "identity_code": "DSW-MO-065",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/065_agent-adk.png",
+        "agent_1024_black": "agents/png_1024_black/065_agent-adk.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/065_agent-adk.png",
+        "token_512": "tokens/png_512/065_agent-adk.png",
+        "agent_512_black": "agents/png_512_black/065_agent-adk.png",
+        "agent_512_transparent": "agents/png_512_transparent/065_agent-adk.png",
+        "token_256": "tokens/png_256/065_agent-adk.png",
+        "agent_256_transparent": "agents/png_256_transparent/065_agent-adk.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/065_agent-adk.png",
+        "agent_2048_black": "agents/png_2048_black/065_agent-adk.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/065_agent-adk.svg"
+      }
+    },
+    {
+      "agent_id": "agent-ag2",
+      "identity_code": "DSW-MO-066",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/066_agent-ag2.png",
+        "agent_1024_black": "agents/png_1024_black/066_agent-ag2.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/066_agent-ag2.png",
+        "token_512": "tokens/png_512/066_agent-ag2.png",
+        "agent_512_black": "agents/png_512_black/066_agent-ag2.png",
+        "agent_512_transparent": "agents/png_512_transparent/066_agent-ag2.png",
+        "token_256": "tokens/png_256/066_agent-ag2.png",
+        "agent_256_transparent": "agents/png_256_transparent/066_agent-ag2.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/066_agent-ag2.png",
+        "agent_2048_black": "agents/png_2048_black/066_agent-ag2.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/066_agent-ag2.svg"
+      }
+    },
+    {
+      "agent_id": "agent-agno",
+      "identity_code": "DSW-MO-067",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/067_agent-agno.png",
+        "agent_1024_black": "agents/png_1024_black/067_agent-agno.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/067_agent-agno.png",
+        "token_512": "tokens/png_512/067_agent-agno.png",
+        "agent_512_black": "agents/png_512_black/067_agent-agno.png",
+        "agent_512_transparent": "agents/png_512_transparent/067_agent-agno.png",
+        "token_256": "tokens/png_256/067_agent-agno.png",
+        "agent_256_transparent": "agents/png_256_transparent/067_agent-agno.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/067_agent-agno.png",
+        "agent_2048_black": "agents/png_2048_black/067_agent-agno.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/067_agent-agno.svg"
+      }
+    },
+    {
+      "agent_id": "agent-bot",
+      "identity_code": "DSW-MO-068",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/068_agent-bot.png",
+        "agent_1024_black": "agents/png_1024_black/068_agent-bot.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/068_agent-bot.png",
+        "token_512": "tokens/png_512/068_agent-bot.png",
+        "agent_512_black": "agents/png_512_black/068_agent-bot.png",
+        "agent_512_transparent": "agents/png_512_transparent/068_agent-bot.png",
+        "token_256": "tokens/png_256/068_agent-bot.png",
+        "agent_256_transparent": "agents/png_256_transparent/068_agent-bot.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/068_agent-bot.png",
+        "agent_2048_black": "agents/png_2048_black/068_agent-bot.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/068_agent-bot.svg"
+      }
+    },
+    {
+      "agent_id": "agent-claude-sdk",
+      "identity_code": "DSW-MO-069",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/069_agent-claude-sdk.png",
+        "agent_1024_black": "agents/png_1024_black/069_agent-claude-sdk.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/069_agent-claude-sdk.png",
+        "token_512": "tokens/png_512/069_agent-claude-sdk.png",
+        "agent_512_black": "agents/png_512_black/069_agent-claude-sdk.png",
+        "agent_512_transparent": "agents/png_512_transparent/069_agent-claude-sdk.png",
+        "token_256": "tokens/png_256/069_agent-claude-sdk.png",
+        "agent_256_transparent": "agents/png_256_transparent/069_agent-claude-sdk.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/069_agent-claude-sdk.png",
+        "agent_2048_black": "agents/png_2048_black/069_agent-claude-sdk.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/069_agent-claude-sdk.svg"
+      }
+    },
+    {
+      "agent_id": "agent-computer",
+      "identity_code": "DSW-MO-070",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/070_agent-computer.png",
+        "agent_1024_black": "agents/png_1024_black/070_agent-computer.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/070_agent-computer.png",
+        "token_512": "tokens/png_512/070_agent-computer.png",
+        "agent_512_black": "agents/png_512_black/070_agent-computer.png",
+        "agent_512_transparent": "agents/png_512_transparent/070_agent-computer.png",
+        "token_256": "tokens/png_256/070_agent-computer.png",
+        "agent_256_transparent": "agents/png_256_transparent/070_agent-computer.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/070_agent-computer.png",
+        "agent_2048_black": "agents/png_2048_black/070_agent-computer.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/070_agent-computer.svg"
+      }
+    },
+    {
+      "agent_id": "agent-crewai",
+      "identity_code": "DSW-MO-071",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/071_agent-crewai.png",
+        "agent_1024_black": "agents/png_1024_black/071_agent-crewai.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/071_agent-crewai.png",
+        "token_512": "tokens/png_512/071_agent-crewai.png",
+        "agent_512_black": "agents/png_512_black/071_agent-crewai.png",
+        "agent_512_transparent": "agents/png_512_transparent/071_agent-crewai.png",
+        "token_256": "tokens/png_256/071_agent-crewai.png",
+        "agent_256_transparent": "agents/png_256_transparent/071_agent-crewai.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/071_agent-crewai.png",
+        "agent_2048_black": "agents/png_2048_black/071_agent-crewai.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/071_agent-crewai.svg"
+      }
+    },
+    {
+      "agent_id": "agent-langgraph",
+      "identity_code": "DSW-MO-072",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/072_agent-langgraph.png",
+        "agent_1024_black": "agents/png_1024_black/072_agent-langgraph.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/072_agent-langgraph.png",
+        "token_512": "tokens/png_512/072_agent-langgraph.png",
+        "agent_512_black": "agents/png_512_black/072_agent-langgraph.png",
+        "agent_512_transparent": "agents/png_512_transparent/072_agent-langgraph.png",
+        "token_256": "tokens/png_256/072_agent-langgraph.png",
+        "agent_256_transparent": "agents/png_256_transparent/072_agent-langgraph.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/072_agent-langgraph.png",
+        "agent_2048_black": "agents/png_2048_black/072_agent-langgraph.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/072_agent-langgraph.svg"
+      }
+    },
+    {
+      "agent_id": "agent-langgraph-agui",
+      "identity_code": "DSW-MO-073",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/073_agent-langgraph-agui.png",
+        "agent_1024_black": "agents/png_1024_black/073_agent-langgraph-agui.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/073_agent-langgraph-agui.png",
+        "token_512": "tokens/png_512/073_agent-langgraph-agui.png",
+        "agent_512_black": "agents/png_512_black/073_agent-langgraph-agui.png",
+        "agent_512_transparent": "agents/png_512_transparent/073_agent-langgraph-agui.png",
+        "token_256": "tokens/png_256/073_agent-langgraph-agui.png",
+        "agent_256_transparent": "agents/png_256_transparent/073_agent-langgraph-agui.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/073_agent-langgraph-agui.png",
+        "agent_2048_black": "agents/png_2048_black/073_agent-langgraph-agui.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/073_agent-langgraph-agui.svg"
+      }
+    },
+    {
+      "agent_id": "agent-langroid",
+      "identity_code": "DSW-MO-074",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/074_agent-langroid.png",
+        "agent_1024_black": "agents/png_1024_black/074_agent-langroid.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/074_agent-langroid.png",
+        "token_512": "tokens/png_512/074_agent-langroid.png",
+        "agent_512_black": "agents/png_512_black/074_agent-langroid.png",
+        "agent_512_transparent": "agents/png_512_transparent/074_agent-langroid.png",
+        "token_256": "tokens/png_256/074_agent-langroid.png",
+        "agent_256_transparent": "agents/png_256_transparent/074_agent-langroid.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/074_agent-langroid.png",
+        "agent_2048_black": "agents/png_2048_black/074_agent-langroid.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/074_agent-langroid.svg"
+      }
+    },
+    {
+      "agent_id": "agent-llamaindex",
+      "identity_code": "DSW-MO-075",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/075_agent-llamaindex.png",
+        "agent_1024_black": "agents/png_1024_black/075_agent-llamaindex.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/075_agent-llamaindex.png",
+        "token_512": "tokens/png_512/075_agent-llamaindex.png",
+        "agent_512_black": "agents/png_512_black/075_agent-llamaindex.png",
+        "agent_512_transparent": "agents/png_512_transparent/075_agent-llamaindex.png",
+        "token_256": "tokens/png_256/075_agent-llamaindex.png",
+        "agent_256_transparent": "agents/png_256_transparent/075_agent-llamaindex.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/075_agent-llamaindex.png",
+        "agent_2048_black": "agents/png_2048_black/075_agent-llamaindex.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/075_agent-llamaindex.svg"
+      }
+    },
+    {
+      "agent_id": "agent-mastra",
+      "identity_code": "DSW-MO-076",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/076_agent-mastra.png",
+        "agent_1024_black": "agents/png_1024_black/076_agent-mastra.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/076_agent-mastra.png",
+        "token_512": "tokens/png_512/076_agent-mastra.png",
+        "agent_512_black": "agents/png_512_black/076_agent-mastra.png",
+        "agent_512_transparent": "agents/png_512_transparent/076_agent-mastra.png",
+        "token_256": "tokens/png_256/076_agent-mastra.png",
+        "agent_256_transparent": "agents/png_256_transparent/076_agent-mastra.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/076_agent-mastra.png",
+        "agent_2048_black": "agents/png_2048_black/076_agent-mastra.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/076_agent-mastra.svg"
+      }
+    },
+    {
+      "agent_id": "agent-microsoft",
+      "identity_code": "DSW-MO-077",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/077_agent-microsoft.png",
+        "agent_1024_black": "agents/png_1024_black/077_agent-microsoft.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/077_agent-microsoft.png",
+        "token_512": "tokens/png_512/077_agent-microsoft.png",
+        "agent_512_black": "agents/png_512_black/077_agent-microsoft.png",
+        "agent_512_transparent": "agents/png_512_transparent/077_agent-microsoft.png",
+        "token_256": "tokens/png_256/077_agent-microsoft.png",
+        "agent_256_transparent": "agents/png_256_transparent/077_agent-microsoft.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/077_agent-microsoft.png",
+        "agent_2048_black": "agents/png_2048_black/077_agent-microsoft.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/077_agent-microsoft.svg"
+      }
+    },
+    {
+      "agent_id": "agent-pydantic-ai",
+      "identity_code": "DSW-MO-078",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/078_agent-pydantic-ai.png",
+        "agent_1024_black": "agents/png_1024_black/078_agent-pydantic-ai.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/078_agent-pydantic-ai.png",
+        "token_512": "tokens/png_512/078_agent-pydantic-ai.png",
+        "agent_512_black": "agents/png_512_black/078_agent-pydantic-ai.png",
+        "agent_512_transparent": "agents/png_512_transparent/078_agent-pydantic-ai.png",
+        "token_256": "tokens/png_256/078_agent-pydantic-ai.png",
+        "agent_256_transparent": "agents/png_256_transparent/078_agent-pydantic-ai.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/078_agent-pydantic-ai.png",
+        "agent_2048_black": "agents/png_2048_black/078_agent-pydantic-ai.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/078_agent-pydantic-ai.svg"
+      }
+    },
+    {
+      "agent_id": "agent-strands",
+      "identity_code": "DSW-MO-079",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/079_agent-strands.png",
+        "agent_1024_black": "agents/png_1024_black/079_agent-strands.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/079_agent-strands.png",
+        "token_512": "tokens/png_512/079_agent-strands.png",
+        "agent_512_black": "agents/png_512_black/079_agent-strands.png",
+        "agent_512_transparent": "agents/png_512_transparent/079_agent-strands.png",
+        "token_256": "tokens/png_256/079_agent-strands.png",
+        "agent_256_transparent": "agents/png_256_transparent/079_agent-strands.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/079_agent-strands.png",
+        "agent_2048_black": "agents/png_2048_black/079_agent-strands.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/079_agent-strands.svg"
+      }
+    },
+    {
+      "agent_id": "agent-mcp",
+      "identity_code": "DSW-MO-080",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/080_agent-mcp.png",
+        "agent_1024_black": "agents/png_1024_black/080_agent-mcp.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/080_agent-mcp.png",
+        "token_512": "tokens/png_512/080_agent-mcp.png",
+        "agent_512_black": "agents/png_512_black/080_agent-mcp.png",
+        "agent_512_transparent": "agents/png_512_transparent/080_agent-mcp.png",
+        "token_256": "tokens/png_256/080_agent-mcp.png",
+        "agent_256_transparent": "agents/png_256_transparent/080_agent-mcp.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/080_agent-mcp.png",
+        "agent_2048_black": "agents/png_2048_black/080_agent-mcp.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/080_agent-mcp.svg"
+      }
+    },
+    {
+      "agent_id": "agent-a2a",
+      "identity_code": "DSW-MO-081",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/081_agent-a2a.png",
+        "agent_1024_black": "agents/png_1024_black/081_agent-a2a.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/081_agent-a2a.png",
+        "token_512": "tokens/png_512/081_agent-a2a.png",
+        "agent_512_black": "agents/png_512_black/081_agent-a2a.png",
+        "agent_512_transparent": "agents/png_512_transparent/081_agent-a2a.png",
+        "token_256": "tokens/png_256/081_agent-a2a.png",
+        "agent_256_transparent": "agents/png_256_transparent/081_agent-a2a.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/081_agent-a2a.png",
+        "agent_2048_black": "agents/png_2048_black/081_agent-a2a.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/081_agent-a2a.svg"
+      }
+    },
+    {
+      "agent_id": "agent-acp",
+      "identity_code": "DSW-MO-082",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/082_agent-acp.png",
+        "agent_1024_black": "agents/png_1024_black/082_agent-acp.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/082_agent-acp.png",
+        "token_512": "tokens/png_512/082_agent-acp.png",
+        "agent_512_black": "agents/png_512_black/082_agent-acp.png",
+        "agent_512_transparent": "agents/png_512_transparent/082_agent-acp.png",
+        "token_256": "tokens/png_256/082_agent-acp.png",
+        "agent_256_transparent": "agents/png_256_transparent/082_agent-acp.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/082_agent-acp.png",
+        "agent_2048_black": "agents/png_2048_black/082_agent-acp.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/082_agent-acp.svg"
+      }
+    },
+    {
+      "agent_id": "agent-identity",
+      "identity_code": "DSW-MO-083",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/083_agent-identity.png",
+        "agent_1024_black": "agents/png_1024_black/083_agent-identity.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/083_agent-identity.png",
+        "token_512": "tokens/png_512/083_agent-identity.png",
+        "agent_512_black": "agents/png_512_black/083_agent-identity.png",
+        "agent_512_transparent": "agents/png_512_transparent/083_agent-identity.png",
+        "token_256": "tokens/png_256/083_agent-identity.png",
+        "agent_256_transparent": "agents/png_256_transparent/083_agent-identity.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/083_agent-identity.png",
+        "agent_2048_black": "agents/png_2048_black/083_agent-identity.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/083_agent-identity.svg"
+      }
+    },
+    {
+      "agent_id": "agent-policy",
+      "identity_code": "DSW-MO-084",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/084_agent-policy.png",
+        "agent_1024_black": "agents/png_1024_black/084_agent-policy.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/084_agent-policy.png",
+        "token_512": "tokens/png_512/084_agent-policy.png",
+        "agent_512_black": "agents/png_512_black/084_agent-policy.png",
+        "agent_512_transparent": "agents/png_512_transparent/084_agent-policy.png",
+        "token_256": "tokens/png_256/084_agent-policy.png",
+        "agent_256_transparent": "agents/png_256_transparent/084_agent-policy.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/084_agent-policy.png",
+        "agent_2048_black": "agents/png_2048_black/084_agent-policy.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/084_agent-policy.svg"
+      }
+    },
+    {
+      "agent_id": "agent-memory",
+      "identity_code": "DSW-MO-085",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/085_agent-memory.png",
+        "agent_1024_black": "agents/png_1024_black/085_agent-memory.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/085_agent-memory.png",
+        "token_512": "tokens/png_512/085_agent-memory.png",
+        "agent_512_black": "agents/png_512_black/085_agent-memory.png",
+        "agent_512_transparent": "agents/png_512_transparent/085_agent-memory.png",
+        "token_256": "tokens/png_256/085_agent-memory.png",
+        "agent_256_transparent": "agents/png_256_transparent/085_agent-memory.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/085_agent-memory.png",
+        "agent_2048_black": "agents/png_2048_black/085_agent-memory.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/085_agent-memory.svg"
+      }
+    },
+    {
+      "agent_id": "agent-ontology",
+      "identity_code": "DSW-MO-086",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/086_agent-ontology.png",
+        "agent_1024_black": "agents/png_1024_black/086_agent-ontology.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/086_agent-ontology.png",
+        "token_512": "tokens/png_512/086_agent-ontology.png",
+        "agent_512_black": "agents/png_512_black/086_agent-ontology.png",
+        "agent_512_transparent": "agents/png_512_transparent/086_agent-ontology.png",
+        "token_256": "tokens/png_256/086_agent-ontology.png",
+        "agent_256_transparent": "agents/png_256_transparent/086_agent-ontology.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/086_agent-ontology.png",
+        "agent_2048_black": "agents/png_2048_black/086_agent-ontology.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/086_agent-ontology.svg"
+      }
+    },
+    {
+      "agent_id": "agent-knowledge-graph",
+      "identity_code": "DSW-MO-087",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/087_agent-knowledge-graph.png",
+        "agent_1024_black": "agents/png_1024_black/087_agent-knowledge-graph.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/087_agent-knowledge-graph.png",
+        "token_512": "tokens/png_512/087_agent-knowledge-graph.png",
+        "agent_512_black": "agents/png_512_black/087_agent-knowledge-graph.png",
+        "agent_512_transparent": "agents/png_512_transparent/087_agent-knowledge-graph.png",
+        "token_256": "tokens/png_256/087_agent-knowledge-graph.png",
+        "agent_256_transparent": "agents/png_256_transparent/087_agent-knowledge-graph.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/087_agent-knowledge-graph.png",
+        "agent_2048_black": "agents/png_2048_black/087_agent-knowledge-graph.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/087_agent-knowledge-graph.svg"
+      }
+    },
+    {
+      "agent_id": "agent-retrieval",
+      "identity_code": "DSW-MO-088",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/088_agent-retrieval.png",
+        "agent_1024_black": "agents/png_1024_black/088_agent-retrieval.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/088_agent-retrieval.png",
+        "token_512": "tokens/png_512/088_agent-retrieval.png",
+        "agent_512_black": "agents/png_512_black/088_agent-retrieval.png",
+        "agent_512_transparent": "agents/png_512_transparent/088_agent-retrieval.png",
+        "token_256": "tokens/png_256/088_agent-retrieval.png",
+        "agent_256_transparent": "agents/png_256_transparent/088_agent-retrieval.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/088_agent-retrieval.png",
+        "agent_2048_black": "agents/png_2048_black/088_agent-retrieval.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/088_agent-retrieval.svg"
+      }
+    },
+    {
+      "agent_id": "agent-reranking",
+      "identity_code": "DSW-MO-089",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/089_agent-reranking.png",
+        "agent_1024_black": "agents/png_1024_black/089_agent-reranking.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/089_agent-reranking.png",
+        "token_512": "tokens/png_512/089_agent-reranking.png",
+        "agent_512_black": "agents/png_512_black/089_agent-reranking.png",
+        "agent_512_transparent": "agents/png_512_transparent/089_agent-reranking.png",
+        "token_256": "tokens/png_256/089_agent-reranking.png",
+        "agent_256_transparent": "agents/png_256_transparent/089_agent-reranking.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/089_agent-reranking.png",
+        "agent_2048_black": "agents/png_2048_black/089_agent-reranking.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/089_agent-reranking.svg"
+      }
+    },
+    {
+      "agent_id": "agent-embeddings",
+      "identity_code": "DSW-MO-090",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/090_agent-embeddings.png",
+        "agent_1024_black": "agents/png_1024_black/090_agent-embeddings.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/090_agent-embeddings.png",
+        "token_512": "tokens/png_512/090_agent-embeddings.png",
+        "agent_512_black": "agents/png_512_black/090_agent-embeddings.png",
+        "agent_512_transparent": "agents/png_512_transparent/090_agent-embeddings.png",
+        "token_256": "tokens/png_256/090_agent-embeddings.png",
+        "agent_256_transparent": "agents/png_256_transparent/090_agent-embeddings.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/090_agent-embeddings.png",
+        "agent_2048_black": "agents/png_2048_black/090_agent-embeddings.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/090_agent-embeddings.svg"
+      }
+    },
+    {
+      "agent_id": "agent-context",
+      "identity_code": "DSW-MO-091",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/091_agent-context.png",
+        "agent_1024_black": "agents/png_1024_black/091_agent-context.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/091_agent-context.png",
+        "token_512": "tokens/png_512/091_agent-context.png",
+        "agent_512_black": "agents/png_512_black/091_agent-context.png",
+        "agent_512_transparent": "agents/png_512_transparent/091_agent-context.png",
+        "token_256": "tokens/png_256/091_agent-context.png",
+        "agent_256_transparent": "agents/png_256_transparent/091_agent-context.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/091_agent-context.png",
+        "agent_2048_black": "agents/png_2048_black/091_agent-context.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/091_agent-context.svg"
+      }
+    },
+    {
+      "agent_id": "agent-schemas",
+      "identity_code": "DSW-MO-092",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/092_agent-schemas.png",
+        "agent_1024_black": "agents/png_1024_black/092_agent-schemas.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/092_agent-schemas.png",
+        "token_512": "tokens/png_512/092_agent-schemas.png",
+        "agent_512_black": "agents/png_512_black/092_agent-schemas.png",
+        "agent_512_transparent": "agents/png_512_transparent/092_agent-schemas.png",
+        "token_256": "tokens/png_256/092_agent-schemas.png",
+        "agent_256_transparent": "agents/png_256_transparent/092_agent-schemas.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/092_agent-schemas.png",
+        "agent_2048_black": "agents/png_2048_black/092_agent-schemas.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/092_agent-schemas.svg"
+      }
+    },
+    {
+      "agent_id": "agent-provenance",
+      "identity_code": "DSW-MO-093",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/093_agent-provenance.png",
+        "agent_1024_black": "agents/png_1024_black/093_agent-provenance.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/093_agent-provenance.png",
+        "token_512": "tokens/png_512/093_agent-provenance.png",
+        "agent_512_black": "agents/png_512_black/093_agent-provenance.png",
+        "agent_512_transparent": "agents/png_512_transparent/093_agent-provenance.png",
+        "token_256": "tokens/png_256/093_agent-provenance.png",
+        "agent_256_transparent": "agents/png_256_transparent/093_agent-provenance.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/093_agent-provenance.png",
+        "agent_2048_black": "agents/png_2048_black/093_agent-provenance.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/093_agent-provenance.svg"
+      }
+    },
+    {
+      "agent_id": "agent-evaluation",
+      "identity_code": "DSW-MO-094",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/094_agent-evaluation.png",
+        "agent_1024_black": "agents/png_1024_black/094_agent-evaluation.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/094_agent-evaluation.png",
+        "token_512": "tokens/png_512/094_agent-evaluation.png",
+        "agent_512_black": "agents/png_512_black/094_agent-evaluation.png",
+        "agent_512_transparent": "agents/png_512_transparent/094_agent-evaluation.png",
+        "token_256": "tokens/png_256/094_agent-evaluation.png",
+        "agent_256_transparent": "agents/png_256_transparent/094_agent-evaluation.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/094_agent-evaluation.png",
+        "agent_2048_black": "agents/png_2048_black/094_agent-evaluation.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/094_agent-evaluation.svg"
+      }
+    },
+    {
+      "agent_id": "agent-observability",
+      "identity_code": "DSW-MO-095",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/095_agent-observability.png",
+        "agent_1024_black": "agents/png_1024_black/095_agent-observability.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/095_agent-observability.png",
+        "token_512": "tokens/png_512/095_agent-observability.png",
+        "agent_512_black": "agents/png_512_black/095_agent-observability.png",
+        "agent_512_transparent": "agents/png_512_transparent/095_agent-observability.png",
+        "token_256": "tokens/png_256/095_agent-observability.png",
+        "agent_256_transparent": "agents/png_256_transparent/095_agent-observability.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/095_agent-observability.png",
+        "agent_2048_black": "agents/png_2048_black/095_agent-observability.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/095_agent-observability.svg"
+      }
+    },
+    {
+      "agent_id": "agent-routing",
+      "identity_code": "DSW-MO-096",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/096_agent-routing.png",
+        "agent_1024_black": "agents/png_1024_black/096_agent-routing.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/096_agent-routing.png",
+        "token_512": "tokens/png_512/096_agent-routing.png",
+        "agent_512_black": "agents/png_512_black/096_agent-routing.png",
+        "agent_512_transparent": "agents/png_512_transparent/096_agent-routing.png",
+        "token_256": "tokens/png_256/096_agent-routing.png",
+        "agent_256_transparent": "agents/png_256_transparent/096_agent-routing.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/096_agent-routing.png",
+        "agent_2048_black": "agents/png_2048_black/096_agent-routing.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/096_agent-routing.svg"
+      }
+    },
+    {
+      "agent_id": "agent-planning",
+      "identity_code": "DSW-MO-097",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/097_agent-planning.png",
+        "agent_1024_black": "agents/png_1024_black/097_agent-planning.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/097_agent-planning.png",
+        "token_512": "tokens/png_512/097_agent-planning.png",
+        "agent_512_black": "agents/png_512_black/097_agent-planning.png",
+        "agent_512_transparent": "agents/png_512_transparent/097_agent-planning.png",
+        "token_256": "tokens/png_256/097_agent-planning.png",
+        "agent_256_transparent": "agents/png_256_transparent/097_agent-planning.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/097_agent-planning.png",
+        "agent_2048_black": "agents/png_2048_black/097_agent-planning.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/097_agent-planning.svg"
+      }
+    },
+    {
+      "agent_id": "agent-scheduler",
+      "identity_code": "DSW-MO-098",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/098_agent-scheduler.png",
+        "agent_1024_black": "agents/png_1024_black/098_agent-scheduler.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/098_agent-scheduler.png",
+        "token_512": "tokens/png_512/098_agent-scheduler.png",
+        "agent_512_black": "agents/png_512_black/098_agent-scheduler.png",
+        "agent_512_transparent": "agents/png_512_transparent/098_agent-scheduler.png",
+        "token_256": "tokens/png_256/098_agent-scheduler.png",
+        "agent_256_transparent": "agents/png_256_transparent/098_agent-scheduler.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/098_agent-scheduler.png",
+        "agent_2048_black": "agents/png_2048_black/098_agent-scheduler.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/098_agent-scheduler.svg"
+      }
+    },
+    {
+      "agent_id": "agent-replay",
+      "identity_code": "DSW-MO-099",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/099_agent-replay.png",
+        "agent_1024_black": "agents/png_1024_black/099_agent-replay.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/099_agent-replay.png",
+        "token_512": "tokens/png_512/099_agent-replay.png",
+        "agent_512_black": "agents/png_512_black/099_agent-replay.png",
+        "agent_512_transparent": "agents/png_512_transparent/099_agent-replay.png",
+        "token_256": "tokens/png_256/099_agent-replay.png",
+        "agent_256_transparent": "agents/png_256_transparent/099_agent-replay.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/099_agent-replay.png",
+        "agent_2048_black": "agents/png_2048_black/099_agent-replay.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/099_agent-replay.svg"
+      }
+    },
+    {
+      "agent_id": "agent-sandbox",
+      "identity_code": "DSW-MO-100",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/100_agent-sandbox.png",
+        "agent_1024_black": "agents/png_1024_black/100_agent-sandbox.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/100_agent-sandbox.png",
+        "token_512": "tokens/png_512/100_agent-sandbox.png",
+        "agent_512_black": "agents/png_512_black/100_agent-sandbox.png",
+        "agent_512_transparent": "agents/png_512_transparent/100_agent-sandbox.png",
+        "token_256": "tokens/png_256/100_agent-sandbox.png",
+        "agent_256_transparent": "agents/png_256_transparent/100_agent-sandbox.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/100_agent-sandbox.png",
+        "agent_2048_black": "agents/png_2048_black/100_agent-sandbox.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/100_agent-sandbox.svg"
+      }
+    },
+    {
+      "agent_id": "agent-browser",
+      "identity_code": "DSW-MO-101",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/101_agent-browser.png",
+        "agent_1024_black": "agents/png_1024_black/101_agent-browser.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/101_agent-browser.png",
+        "token_512": "tokens/png_512/101_agent-browser.png",
+        "agent_512_black": "agents/png_512_black/101_agent-browser.png",
+        "agent_512_transparent": "agents/png_512_transparent/101_agent-browser.png",
+        "token_256": "tokens/png_256/101_agent-browser.png",
+        "agent_256_transparent": "agents/png_256_transparent/101_agent-browser.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/101_agent-browser.png",
+        "agent_2048_black": "agents/png_2048_black/101_agent-browser.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/101_agent-browser.svg"
+      }
+    },
+    {
+      "agent_id": "agent-terminal",
+      "identity_code": "DSW-MO-102",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/102_agent-terminal.png",
+        "agent_1024_black": "agents/png_1024_black/102_agent-terminal.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/102_agent-terminal.png",
+        "token_512": "tokens/png_512/102_agent-terminal.png",
+        "agent_512_black": "agents/png_512_black/102_agent-terminal.png",
+        "agent_512_transparent": "agents/png_512_transparent/102_agent-terminal.png",
+        "token_256": "tokens/png_256/102_agent-terminal.png",
+        "agent_256_transparent": "agents/png_256_transparent/102_agent-terminal.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/102_agent-terminal.png",
+        "agent_2048_black": "agents/png_2048_black/102_agent-terminal.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/102_agent-terminal.svg"
+      }
+    },
+    {
+      "agent_id": "agent-filesystem",
+      "identity_code": "DSW-MO-103",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/103_agent-filesystem.png",
+        "agent_1024_black": "agents/png_1024_black/103_agent-filesystem.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/103_agent-filesystem.png",
+        "token_512": "tokens/png_512/103_agent-filesystem.png",
+        "agent_512_black": "agents/png_512_black/103_agent-filesystem.png",
+        "agent_512_transparent": "agents/png_512_transparent/103_agent-filesystem.png",
+        "token_256": "tokens/png_256/103_agent-filesystem.png",
+        "agent_256_transparent": "agents/png_256_transparent/103_agent-filesystem.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/103_agent-filesystem.png",
+        "agent_2048_black": "agents/png_2048_black/103_agent-filesystem.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/103_agent-filesystem.svg"
+      }
+    },
+    {
+      "agent_id": "agent-network",
+      "identity_code": "DSW-MO-104",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/104_agent-network.png",
+        "agent_1024_black": "agents/png_1024_black/104_agent-network.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/104_agent-network.png",
+        "token_512": "tokens/png_512/104_agent-network.png",
+        "agent_512_black": "agents/png_512_black/104_agent-network.png",
+        "agent_512_transparent": "agents/png_512_transparent/104_agent-network.png",
+        "token_256": "tokens/png_256/104_agent-network.png",
+        "agent_256_transparent": "agents/png_256_transparent/104_agent-network.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/104_agent-network.png",
+        "agent_2048_black": "agents/png_2048_black/104_agent-network.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/104_agent-network.svg"
+      }
+    },
+    {
+      "agent_id": "agent-storage",
+      "identity_code": "DSW-MO-105",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/105_agent-storage.png",
+        "agent_1024_black": "agents/png_1024_black/105_agent-storage.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/105_agent-storage.png",
+        "token_512": "tokens/png_512/105_agent-storage.png",
+        "agent_512_black": "agents/png_512_black/105_agent-storage.png",
+        "agent_512_transparent": "agents/png_512_transparent/105_agent-storage.png",
+        "token_256": "tokens/png_256/105_agent-storage.png",
+        "agent_256_transparent": "agents/png_256_transparent/105_agent-storage.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/105_agent-storage.png",
+        "agent_2048_black": "agents/png_2048_black/105_agent-storage.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/105_agent-storage.svg"
+      }
+    },
+    {
+      "agent_id": "agent-inference",
+      "identity_code": "DSW-MO-106",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/106_agent-inference.png",
+        "agent_1024_black": "agents/png_1024_black/106_agent-inference.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/106_agent-inference.png",
+        "token_512": "tokens/png_512/106_agent-inference.png",
+        "agent_512_black": "agents/png_512_black/106_agent-inference.png",
+        "agent_512_transparent": "agents/png_512_transparent/106_agent-inference.png",
+        "token_256": "tokens/png_256/106_agent-inference.png",
+        "agent_256_transparent": "agents/png_256_transparent/106_agent-inference.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/106_agent-inference.png",
+        "agent_2048_black": "agents/png_2048_black/106_agent-inference.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/106_agent-inference.svg"
+      }
+    },
+    {
+      "agent_id": "agent-quantization",
+      "identity_code": "DSW-MO-107",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/107_agent-quantization.png",
+        "agent_1024_black": "agents/png_1024_black/107_agent-quantization.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/107_agent-quantization.png",
+        "token_512": "tokens/png_512/107_agent-quantization.png",
+        "agent_512_black": "agents/png_512_black/107_agent-quantization.png",
+        "agent_512_transparent": "agents/png_512_transparent/107_agent-quantization.png",
+        "token_256": "tokens/png_256/107_agent-quantization.png",
+        "agent_256_transparent": "agents/png_256_transparent/107_agent-quantization.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/107_agent-quantization.png",
+        "agent_2048_black": "agents/png_2048_black/107_agent-quantization.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/107_agent-quantization.svg"
+      }
+    },
+    {
+      "agent_id": "agent-training",
+      "identity_code": "DSW-MO-108",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/108_agent-training.png",
+        "agent_1024_black": "agents/png_1024_black/108_agent-training.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/108_agent-training.png",
+        "token_512": "tokens/png_512/108_agent-training.png",
+        "agent_512_black": "agents/png_512_black/108_agent-training.png",
+        "agent_512_transparent": "agents/png_512_transparent/108_agent-training.png",
+        "token_256": "tokens/png_256/108_agent-training.png",
+        "agent_256_transparent": "agents/png_256_transparent/108_agent-training.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/108_agent-training.png",
+        "agent_2048_black": "agents/png_2048_black/108_agent-training.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/108_agent-training.svg"
+      }
+    },
+    {
+      "agent_id": "agent-reinforcement",
+      "identity_code": "DSW-MO-109",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/109_agent-reinforcement.png",
+        "agent_1024_black": "agents/png_1024_black/109_agent-reinforcement.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/109_agent-reinforcement.png",
+        "token_512": "tokens/png_512/109_agent-reinforcement.png",
+        "agent_512_black": "agents/png_512_black/109_agent-reinforcement.png",
+        "agent_512_transparent": "agents/png_512_transparent/109_agent-reinforcement.png",
+        "token_256": "tokens/png_256/109_agent-reinforcement.png",
+        "agent_256_transparent": "agents/png_256_transparent/109_agent-reinforcement.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/109_agent-reinforcement.png",
+        "agent_2048_black": "agents/png_2048_black/109_agent-reinforcement.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/109_agent-reinforcement.svg"
+      }
+    },
+    {
+      "agent_id": "agent-vision",
+      "identity_code": "DSW-MO-110",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/110_agent-vision.png",
+        "agent_1024_black": "agents/png_1024_black/110_agent-vision.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/110_agent-vision.png",
+        "token_512": "tokens/png_512/110_agent-vision.png",
+        "agent_512_black": "agents/png_512_black/110_agent-vision.png",
+        "agent_512_transparent": "agents/png_512_transparent/110_agent-vision.png",
+        "token_256": "tokens/png_256/110_agent-vision.png",
+        "agent_256_transparent": "agents/png_256_transparent/110_agent-vision.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/110_agent-vision.png",
+        "agent_2048_black": "agents/png_2048_black/110_agent-vision.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/110_agent-vision.svg"
+      }
+    },
+    {
+      "agent_id": "agent-ocr",
+      "identity_code": "DSW-MO-111",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/111_agent-ocr.png",
+        "agent_1024_black": "agents/png_1024_black/111_agent-ocr.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/111_agent-ocr.png",
+        "token_512": "tokens/png_512/111_agent-ocr.png",
+        "agent_512_black": "agents/png_512_black/111_agent-ocr.png",
+        "agent_512_transparent": "agents/png_512_transparent/111_agent-ocr.png",
+        "token_256": "tokens/png_256/111_agent-ocr.png",
+        "agent_256_transparent": "agents/png_256_transparent/111_agent-ocr.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/111_agent-ocr.png",
+        "agent_2048_black": "agents/png_2048_black/111_agent-ocr.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/111_agent-ocr.svg"
+      }
+    },
+    {
+      "agent_id": "agent-speech",
+      "identity_code": "DSW-MO-112",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/112_agent-speech.png",
+        "agent_1024_black": "agents/png_1024_black/112_agent-speech.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/112_agent-speech.png",
+        "token_512": "tokens/png_512/112_agent-speech.png",
+        "agent_512_black": "agents/png_512_black/112_agent-speech.png",
+        "agent_512_transparent": "agents/png_512_transparent/112_agent-speech.png",
+        "token_256": "tokens/png_256/112_agent-speech.png",
+        "agent_256_transparent": "agents/png_256_transparent/112_agent-speech.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/112_agent-speech.png",
+        "agent_2048_black": "agents/png_2048_black/112_agent-speech.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/112_agent-speech.svg"
+      }
+    },
+    {
+      "agent_id": "agent-robotics",
+      "identity_code": "DSW-MO-113",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/113_agent-robotics.png",
+        "agent_1024_black": "agents/png_1024_black/113_agent-robotics.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/113_agent-robotics.png",
+        "token_512": "tokens/png_512/113_agent-robotics.png",
+        "agent_512_black": "agents/png_512_black/113_agent-robotics.png",
+        "agent_512_transparent": "agents/png_512_transparent/113_agent-robotics.png",
+        "token_256": "tokens/png_256/113_agent-robotics.png",
+        "agent_256_transparent": "agents/png_256_transparent/113_agent-robotics.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/113_agent-robotics.png",
+        "agent_2048_black": "agents/png_2048_black/113_agent-robotics.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/113_agent-robotics.svg"
+      }
+    },
+    {
+      "agent_id": "agent-simulation",
+      "identity_code": "DSW-MO-114",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/114_agent-simulation.png",
+        "agent_1024_black": "agents/png_1024_black/114_agent-simulation.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/114_agent-simulation.png",
+        "token_512": "tokens/png_512/114_agent-simulation.png",
+        "agent_512_black": "agents/png_512_black/114_agent-simulation.png",
+        "agent_512_transparent": "agents/png_512_transparent/114_agent-simulation.png",
+        "token_256": "tokens/png_256/114_agent-simulation.png",
+        "agent_256_transparent": "agents/png_256_transparent/114_agent-simulation.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/114_agent-simulation.png",
+        "agent_2048_black": "agents/png_2048_black/114_agent-simulation.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/114_agent-simulation.svg"
+      }
+    },
+    {
+      "agent_id": "agent-geospatial",
+      "identity_code": "DSW-MO-115",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/115_agent-geospatial.png",
+        "agent_1024_black": "agents/png_1024_black/115_agent-geospatial.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/115_agent-geospatial.png",
+        "token_512": "tokens/png_512/115_agent-geospatial.png",
+        "agent_512_black": "agents/png_512_black/115_agent-geospatial.png",
+        "agent_512_transparent": "agents/png_512_transparent/115_agent-geospatial.png",
+        "token_256": "tokens/png_256/115_agent-geospatial.png",
+        "agent_256_transparent": "agents/png_256_transparent/115_agent-geospatial.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/115_agent-geospatial.png",
+        "agent_2048_black": "agents/png_2048_black/115_agent-geospatial.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/115_agent-geospatial.svg"
+      }
+    },
+    {
+      "agent_id": "agent-api-design",
+      "identity_code": "DSW-MO-116",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/116_agent-api-design.png",
+        "agent_1024_black": "agents/png_1024_black/116_agent-api-design.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/116_agent-api-design.png",
+        "token_512": "tokens/png_512/116_agent-api-design.png",
+        "agent_512_black": "agents/png_512_black/116_agent-api-design.png",
+        "agent_512_transparent": "agents/png_512_transparent/116_agent-api-design.png",
+        "token_256": "tokens/png_256/116_agent-api-design.png",
+        "agent_256_transparent": "agents/png_256_transparent/116_agent-api-design.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/116_agent-api-design.png",
+        "agent_2048_black": "agents/png_2048_black/116_agent-api-design.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/116_agent-api-design.svg"
+      }
+    },
+    {
+      "agent_id": "agent-data-quality",
+      "identity_code": "DSW-MO-117",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/117_agent-data-quality.png",
+        "agent_1024_black": "agents/png_1024_black/117_agent-data-quality.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/117_agent-data-quality.png",
+        "token_512": "tokens/png_512/117_agent-data-quality.png",
+        "agent_512_black": "agents/png_512_black/117_agent-data-quality.png",
+        "agent_512_transparent": "agents/png_512_transparent/117_agent-data-quality.png",
+        "token_256": "tokens/png_256/117_agent-data-quality.png",
+        "agent_256_transparent": "agents/png_256_transparent/117_agent-data-quality.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/117_agent-data-quality.png",
+        "agent_2048_black": "agents/png_2048_black/117_agent-data-quality.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/117_agent-data-quality.svg"
+      }
+    },
+    {
+      "agent_id": "agent-etl",
+      "identity_code": "DSW-MO-118",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/118_agent-etl.png",
+        "agent_1024_black": "agents/png_1024_black/118_agent-etl.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/118_agent-etl.png",
+        "token_512": "tokens/png_512/118_agent-etl.png",
+        "agent_512_black": "agents/png_512_black/118_agent-etl.png",
+        "agent_512_transparent": "agents/png_512_transparent/118_agent-etl.png",
+        "token_256": "tokens/png_256/118_agent-etl.png",
+        "agent_256_transparent": "agents/png_256_transparent/118_agent-etl.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/118_agent-etl.png",
+        "agent_2048_black": "agents/png_2048_black/118_agent-etl.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/118_agent-etl.svg"
+      }
+    },
+    {
+      "agent_id": "agent-event-streams",
+      "identity_code": "DSW-MO-119",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/119_agent-event-streams.png",
+        "agent_1024_black": "agents/png_1024_black/119_agent-event-streams.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/119_agent-event-streams.png",
+        "token_512": "tokens/png_512/119_agent-event-streams.png",
+        "agent_512_black": "agents/png_512_black/119_agent-event-streams.png",
+        "agent_512_transparent": "agents/png_512_transparent/119_agent-event-streams.png",
+        "token_256": "tokens/png_256/119_agent-event-streams.png",
+        "agent_256_transparent": "agents/png_256_transparent/119_agent-event-streams.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/119_agent-event-streams.png",
+        "agent_2048_black": "agents/png_2048_black/119_agent-event-streams.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/119_agent-event-streams.svg"
+      }
+    },
+    {
+      "agent_id": "agent-ui-design",
+      "identity_code": "DSW-MO-120",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/120_agent-ui-design.png",
+        "agent_1024_black": "agents/png_1024_black/120_agent-ui-design.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/120_agent-ui-design.png",
+        "token_512": "tokens/png_512/120_agent-ui-design.png",
+        "agent_512_black": "agents/png_512_black/120_agent-ui-design.png",
+        "agent_512_transparent": "agents/png_512_transparent/120_agent-ui-design.png",
+        "token_256": "tokens/png_256/120_agent-ui-design.png",
+        "agent_256_transparent": "agents/png_256_transparent/120_agent-ui-design.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/120_agent-ui-design.png",
+        "agent_2048_black": "agents/png_2048_black/120_agent-ui-design.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/120_agent-ui-design.svg"
+      }
+    },
+    {
+      "agent_id": "agent-accessibility",
+      "identity_code": "DSW-MO-121",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/121_agent-accessibility.png",
+        "agent_1024_black": "agents/png_1024_black/121_agent-accessibility.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/121_agent-accessibility.png",
+        "token_512": "tokens/png_512/121_agent-accessibility.png",
+        "agent_512_black": "agents/png_512_black/121_agent-accessibility.png",
+        "agent_512_transparent": "agents/png_512_transparent/121_agent-accessibility.png",
+        "token_256": "tokens/png_256/121_agent-accessibility.png",
+        "agent_256_transparent": "agents/png_256_transparent/121_agent-accessibility.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/121_agent-accessibility.png",
+        "agent_2048_black": "agents/png_2048_black/121_agent-accessibility.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/121_agent-accessibility.svg"
+      }
+    },
+    {
+      "agent_id": "agent-documentation",
+      "identity_code": "DSW-MO-122",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/122_agent-documentation.png",
+        "agent_1024_black": "agents/png_1024_black/122_agent-documentation.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/122_agent-documentation.png",
+        "token_512": "tokens/png_512/122_agent-documentation.png",
+        "agent_512_black": "agents/png_512_black/122_agent-documentation.png",
+        "agent_512_transparent": "agents/png_512_transparent/122_agent-documentation.png",
+        "token_256": "tokens/png_256/122_agent-documentation.png",
+        "agent_256_transparent": "agents/png_256_transparent/122_agent-documentation.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/122_agent-documentation.png",
+        "agent_2048_black": "agents/png_2048_black/122_agent-documentation.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/122_agent-documentation.svg"
+      }
+    },
+    {
+      "agent_id": "agent-research",
+      "identity_code": "DSW-MO-123",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/123_agent-research.png",
+        "agent_1024_black": "agents/png_1024_black/123_agent-research.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/123_agent-research.png",
+        "token_512": "tokens/png_512/123_agent-research.png",
+        "agent_512_black": "agents/png_512_black/123_agent-research.png",
+        "agent_512_transparent": "agents/png_512_transparent/123_agent-research.png",
+        "token_256": "tokens/png_256/123_agent-research.png",
+        "agent_256_transparent": "agents/png_256_transparent/123_agent-research.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/123_agent-research.png",
+        "agent_2048_black": "agents/png_2048_black/123_agent-research.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/123_agent-research.svg"
+      }
+    },
+    {
+      "agent_id": "agent-privacy",
+      "identity_code": "DSW-MO-124",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/124_agent-privacy.png",
+        "agent_1024_black": "agents/png_1024_black/124_agent-privacy.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/124_agent-privacy.png",
+        "token_512": "tokens/png_512/124_agent-privacy.png",
+        "agent_512_black": "agents/png_512_black/124_agent-privacy.png",
+        "agent_512_transparent": "agents/png_512_transparent/124_agent-privacy.png",
+        "token_256": "tokens/png_256/124_agent-privacy.png",
+        "agent_256_transparent": "agents/png_256_transparent/124_agent-privacy.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/124_agent-privacy.png",
+        "agent_2048_black": "agents/png_2048_black/124_agent-privacy.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/124_agent-privacy.svg"
+      }
+    },
+    {
+      "agent_id": "agent-threat-modeling",
+      "identity_code": "DSW-MO-125",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/125_agent-threat-modeling.png",
+        "agent_1024_black": "agents/png_1024_black/125_agent-threat-modeling.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/125_agent-threat-modeling.png",
+        "token_512": "tokens/png_512/125_agent-threat-modeling.png",
+        "agent_512_black": "agents/png_512_black/125_agent-threat-modeling.png",
+        "agent_512_transparent": "agents/png_512_transparent/125_agent-threat-modeling.png",
+        "token_256": "tokens/png_256/125_agent-threat-modeling.png",
+        "agent_256_transparent": "agents/png_256_transparent/125_agent-threat-modeling.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/125_agent-threat-modeling.png",
+        "agent_2048_black": "agents/png_2048_black/125_agent-threat-modeling.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/125_agent-threat-modeling.svg"
+      }
+    },
+    {
+      "agent_id": "agent-formal-verification",
+      "identity_code": "DSW-MO-126",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/126_agent-formal-verification.png",
+        "agent_1024_black": "agents/png_1024_black/126_agent-formal-verification.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/126_agent-formal-verification.png",
+        "token_512": "tokens/png_512/126_agent-formal-verification.png",
+        "agent_512_black": "agents/png_512_black/126_agent-formal-verification.png",
+        "agent_512_transparent": "agents/png_512_transparent/126_agent-formal-verification.png",
+        "token_256": "tokens/png_256/126_agent-formal-verification.png",
+        "agent_256_transparent": "agents/png_256_transparent/126_agent-formal-verification.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/126_agent-formal-verification.png",
+        "agent_2048_black": "agents/png_2048_black/126_agent-formal-verification.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/126_agent-formal-verification.svg"
+      }
+    },
+    {
+      "agent_id": "agent-sustainability",
+      "identity_code": "DSW-MO-127",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/127_agent-sustainability.png",
+        "agent_1024_black": "agents/png_1024_black/127_agent-sustainability.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/127_agent-sustainability.png",
+        "token_512": "tokens/png_512/127_agent-sustainability.png",
+        "agent_512_black": "agents/png_512_black/127_agent-sustainability.png",
+        "agent_512_transparent": "agents/png_512_transparent/127_agent-sustainability.png",
+        "token_256": "tokens/png_256/127_agent-sustainability.png",
+        "agent_256_transparent": "agents/png_256_transparent/127_agent-sustainability.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/127_agent-sustainability.png",
+        "agent_2048_black": "agents/png_2048_black/127_agent-sustainability.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/127_agent-sustainability.svg"
+      }
+    },
+    {
+      "agent_id": "agent-swarm-coordination",
+      "identity_code": "DSW-MO-128",
+      "included_assets": {
+        "token_1024": "tokens/png_1024/128_agent-swarm-coordination.png",
+        "agent_1024_black": "agents/png_1024_black/128_agent-swarm-coordination.png",
+        "agent_1024_transparent": "agents/png_1024_transparent/128_agent-swarm-coordination.png",
+        "token_512": "tokens/png_512/128_agent-swarm-coordination.png",
+        "agent_512_black": "agents/png_512_black/128_agent-swarm-coordination.png",
+        "agent_512_transparent": "agents/png_512_transparent/128_agent-swarm-coordination.png",
+        "token_256": "tokens/png_256/128_agent-swarm-coordination.png",
+        "agent_256_transparent": "agents/png_256_transparent/128_agent-swarm-coordination.png"
+      },
+      "full_pack_only_assets": {
+        "token_2048": "tokens/png_2048/128_agent-swarm-coordination.png",
+        "agent_2048_black": "agents/png_2048_black/128_agent-swarm-coordination.png",
+        "token_svg_raster_backed": "tokens/svg_raster_backed/128_agent-swarm-coordination.svg"
+      }
+    }
+  ]
+}

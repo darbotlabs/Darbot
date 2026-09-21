@@ -1,5 +1,53 @@
 # Changelog
 
+## 0.0.16
+
+- Add optional personal-agent selection after connecting GitHub Copilot. Nothing
+  is preselected, and Import none opens an empty, usable workspace.
+- Replace the top-only agent picker with a canvas and a persistent vertical
+  agent/chat sidebar. Imported agents are references, not copied definitions.
+- Create personal Copilot agents from the UI, with validated names, standard
+  Markdown/YAML definitions, no-overwrite file creation, and a new chat.
+- Keep chat references and titles in Darbot preferences; message history stays
+  in Copilot CLI. Switching chats replays the real session and retains drafts
+  in memory.
+- Reveal the selected chat automatically in short sidebars and deduplicate
+  skills also advertised as runtime commands.
+- Reapply the recorded agent when loading a chat; ACP replay alone does not
+  restore the custom persona.
+- Defer container prerequisite checks until container installation and run
+  their blocking native probes off the UI thread.
+
+## 0.0.15
+
+- Put Agents above Conversations, with per-agent counts, title/folder search,
+  and all-folder history enabled by default.
+- Associate existing conversations with their recorded initial custom agent.
+  Sessions without a custom agent are named Copilot CLI. Session-scoped rendered
+  plugin prefixes are normalized so one agent's history is not fragmented.
+- Read all ACP history pages while rendering only 50 rows at a time. Agent
+  indexing reads bounded event headers, caches unchanged files, and never loads
+  or resumes conversations just to classify them.
+
+## 0.0.14
+
+- Give Copilot its own validated working folder and native folder picker instead
+  of inheriting a possibly nonexistent container installation directory.
+- Select agents through negotiated ACP session configuration; expose actual
+  model and reasoning choices without restarting the runtime.
+- Default the desktop to dark mode with persistent appearance and scrolling
+  preferences, and add searchable resources, profile details and secondary
+  conversation history.
+- Keep tool approval visible, preserve permission request IDs, and stop reporting
+  intentional runtime shutdown as a connection failure.
+- Keep closed dialogs out of the UI and accessibility tree, retain a visible
+  composer on high-DPI small windows, and expose only negotiated Agent/Plan modes.
+
+## 0.0.13
+
+- Add GitHub Copilot CLI as a first-class native desktop runtime.
+- Reuse Copilot CLI authentication, sessions, plugins, skills and MCP inventory through ACP.
+
 What changed, for somebody deciding whether to upgrade. Written for the person running darbot, not
 for the person who wrote the commit: a line belongs here when a deployment behaves differently
 afterwards, and does not when only the code moved.
@@ -7,6 +55,30 @@ afterwards, and does not when only the code moved.
 Newest first. `Unreleased` is what is on `main` and not yet tagged.
 
 ## Unreleased
+
+## 0.0.12
+
+### The native Windows app can inspect an already configured machine without elevation
+
+Windows setup now reads WSL and Virtual Machine Platform feature state through
+unelevated CIM queries. Inspecting an already configured machine no longer fails
+because DISM requires administrator rights; missing or unknown feature state still
+blocks setup, and no Windows feature is changed by the check.
+
+## 0.0.11
+
+### Both approved Swarm cohorts share one identity system
+
+All 128 Solid64 and Mint/Opal identities now carry their descriptive perspectives,
+stable keys, material metadata and exact artwork through one resolver. The
+existing 15 adapter IDs remain distinct and unchanged. The other 113 identities
+are available in the read-only catalog, not silently created as runnable Bots.
+Saved names, roles, endpoints, credentials and grants are preserved.
+
+Small marks use the source token rather than an illegible full portrait. The
+opal texture and approved geometry remain unchanged. Web and desktop builds
+verify the imported checksums and emit the original PNG bytes from `assets/swarm`.
+The local desktop installer version now matches the application version.
 
 ## 0.0.10
 

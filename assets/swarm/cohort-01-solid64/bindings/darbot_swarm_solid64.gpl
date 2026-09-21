@@ -1,0 +1,68 @@
+GIMP Palette
+Name: Darbot Swarm Solid64
+Columns: 8
+#
+  0 207 255	DSW64-01 azure_architect
+  0 192 246	DSW64-02 entra_identity
+  0 176 237	DSW64-03 teams_collaboration
+  0 161 227	DSW64-04 power_platform_maker
+  0 146 218	DSW64-05 power_apps_creator
+  0 131 209	DSW64-06 power_automate_orchestrator
+  0 116 199	DSW64-07 power_bi_analyst
+  0 102 190	DSW64-08 power_pages_portal
+  0  86 181	DSW64-09 m365_strategist
+  0  71 171	DSW64-10 copilot_studio_agent_builder
+ 57  74 176	DSW64-11 powerpoint_storyteller
+ 87  75 180	DSW64-12 excel_modeler
+113  76 185	DSW64-13 word_writer
+137  74 190	DSW64-14 outlook_communicator
+161  71 194	DSW64-15 sharepoint_knowledge
+185  66 199	DSW64-16 onedrive_sync
+208  57 203	DSW64-17 edge_browser
+231  42 208	DSW64-18 windows_os
+255   0 212	DSW64-19 dataverse_modeler
+254  36 196	DSW64-20 fabric_data_engineer
+254  52 180	DSW64-21 azure_ai_foundry
+254  62 163	DSW64-22 apim_integration
+254  70 146	DSW64-23 designer_creator
+254  76 128	DSW64-24 github_engineer
+254  81 109	DSW64-25 vscode_developer
+254  85  87	DSW64-26 devops_release
+255  88  60	DSW64-27 aks_platform
+255  90   0	DSW64-28 functions_serverless
+248  84   2	DSW64-29 cosmosdb_global
+242  78   4	DSW64-30 sql_database
+236  71   5	DSW64-31 graph_connector
+229  65   7	DSW64-32 defender_security
+223  58   8	DSW64-33 sentinel_soc
+216  51   9	DSW64-34 purview_governance
+210  44  10	DSW64-35 intune_endpoint
+203  35  10	DSW64-36 viva_employee_experience
+197  26  11	DSW64-37 loop_workflows
+206  60  16	DSW64-38 planner_coordination
+214  85  20	DSW64-39 dynamics_customer
+222 107  25	DSW64-40 finance_ops
+229 127  29	DSW64-41 healthcare_clinical
+235 147  34	DSW64-42 retail_personalization
+241 167  39	DSW64-43 manufacturing_iot
+246 186  43	DSW64-44 sustainability_greenops
+251 206  48	DSW64-45 privacy_trust
+255 225  53	DSW64-46 research_scientist
+255 208  48	DSW64-47 principal_architect
+255 190  43	DSW64-48 executive_briefing
+255 172  37	DSW64-49 agent_swarm_orchestrator
+255 154  32	DSW64-50 red_team_adversary
+255 135  26	DSW64-51 compliance_auditor
+255 114  20	DSW64-52 education_learning
+255  91  14	DSW64-53 legal_contracts
+255  63   6	DSW64-54 marketing_growth
+255   8   0	DSW64-55 sales_enablement
+255  69  53	DSW64-56 support_triage
+255 101  83	DSW64-57 observability_sre
+255 126 109	DSW64-58 storage_scale
+255 149 134	DSW64-59 network_edge
+255 171 158	DSW64-60 robotics_embodied
+255 191 182	DSW64-61 quantum_experiment
+255 212 206	DSW64-62 blockchain_decentralized
+251 231 231	DSW64-63 prompt_engineer
+244 251 255	DSW64-64 graphite_reviewer

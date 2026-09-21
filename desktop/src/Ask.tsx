@@ -28,6 +28,7 @@ export function Ask({
   const [question, setQuestion] = useState(suggestion);
   const [answer, setAnswer] = useState<string | null>(null);
   const [asking, setAsking] = useState(false);
+  const canAsk = question.trim().length > 0;
   /*
    * THE FAILURE IS THIS SCREEN'S TO SHOW, and it used to be nobody's.
    *
@@ -39,6 +40,7 @@ export function Ask({
   const [failure, setFailure] = useState<Problem | null>(null);
 
   async function ask() {
+    if (!canAsk || asking) return;
     setAsking(true);
     setFailure(null);
     setAnswer(null);
@@ -53,7 +55,7 @@ export function Ask({
   }
 
   return (
-    <div className="sheet">
+    <div className="sheet" aria-busy={asking}>
       <p className="steps-of">Last step</p>
       <h1>Ask it something.</h1>
       <p className="lede">
@@ -76,6 +78,7 @@ export function Ask({
             // instead sends it after compositionend with key code 229. Wait for either.
             if (
               event.key === "Enter" &&
+              canAsk &&
               !asking &&
               !event.nativeEvent.isComposing &&
               event.nativeEvent.keyCode !== 229
@@ -97,7 +100,7 @@ export function Ask({
 
       <div className="row">
         {answer === null ? (
-          <button type="button" onClick={ask} disabled={asking}>
+          <button type="button" onClick={ask} disabled={asking || !canAsk}>
             {asking ? "Asking…" : "Ask"}
           </button>
         ) : (

@@ -1,9 +1,8 @@
 //! The model provider screen's list, as data.
 //!
-//! Two providers are first-class and everything else is one row. That is not a shortlist waiting to
-//! be grown: it is the shape, and growing it is how this screen turns into a directory nobody
-//! maintains. Most people have a plan with one of two companies; everybody else has something that
-//! speaks the OpenAI wire format, because at this point everything does.
+//! Three subscription runtimes are first-class and everything else is one row. GitHub Copilot is
+//! distinct from the model providers: selecting it opens the ACP workspace rather than feeding a
+//! credential into the container stack.
 //!
 //! The row that asks for a URL is the last one, and it is the only one that asks. Keeping it there
 //! is what keeps a base URL off the main path, which the audience rule at the top of the build doc
@@ -24,6 +23,8 @@ pub enum Login {
     ApiKey,
     /// A base URL, a key and a model name. The developer row and the everything-else row at once.
     Endpoint,
+    /// Use the existing GitHub Copilot CLI identity and ACP runtime. No credential crosses Darbot.
+    Copilot,
 }
 
 /// One row on the model screen.
@@ -89,6 +90,15 @@ pub fn catalogue() -> Vec<Provider> {
             }),
         },
         Provider {
+            id: "github-copilot".into(),
+            name: "GitHub Copilot".into(),
+            summary: "Use Copilot Free, Pro, Pro+, Business or Enterprise through Copilot CLI."
+                .into(),
+            logins: vec![Login::Copilot],
+            mark: None,
+            caution: None,
+        },
+        Provider {
             id: "openai-compatible".into(),
             name: "Any OpenAI-compatible endpoint".into(),
             summary: "Azure, Bedrock, Mistral, DeepSeek, xAI, Ollama, vLLM or your own.".into(),
@@ -133,14 +143,16 @@ mod tests {
         }
     }
 
-    /// Two first-class providers and one escape hatch. Growing this list is how the screen becomes
-    /// a directory, so it fails here rather than in review.
+    /// Three subscription runtimes and one endpoint escape hatch.
     #[test]
-    fn two_named_providers_and_one_way_in_for_everything_else() {
+    fn three_named_runtimes_and_one_way_in_for_everything_else() {
         let rows = catalogue();
-        assert_eq!(rows.len(), 3, "the provider list grew");
+        assert_eq!(rows.len(), 4, "the provider list changed");
         assert_eq!(rows[0].id, "openai");
         assert_eq!(rows[1].id, "anthropic");
+        assert_eq!(rows[2].id, "github-copilot");
+        assert_eq!(rows[3].id, "openai-compatible");
+        assert_eq!(rows[2].logins, vec![Login::Copilot]);
     }
 
     /// Every row is readable without recognising a logo.

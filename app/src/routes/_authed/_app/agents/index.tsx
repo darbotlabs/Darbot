@@ -1,10 +1,11 @@
-import { IconPlus } from "@tabler/icons-react";
+import { IconId, IconPlus } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { AgentCard } from "@/components/agents/agent-card";
 import { AgentDialog } from "@/components/agents/agent-dialog";
 import { CreateAgentDialog } from "@/components/agents/create-agent-dialog";
+import { SwarmCatalogDialog } from "@/components/agents/swarm-catalog-dialog";
 import { SidebarToggleBar } from "@/components/layout/sidebar-toggle";
 import { StaggerItem } from "@/components/layout/stagger";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ import { agentListQueryOptions, isSharedWithYou } from "@/lib/agents/queries";
 const agentsSearchSchema = z.object({
   new: z.boolean().optional(),
   agent: z.string().optional(),
+  catalog: z.boolean().optional(),
 });
 
 export const Route = createFileRoute("/_authed/_app/agents/")({
@@ -47,7 +49,11 @@ export const Route = createFileRoute("/_authed/_app/agents/")({
  * position the roster.
  */
 function AgentsScreen() {
-  const { new: isCreating, agent: selectedAgentId } = Route.useSearch();
+  const {
+    new: isCreating,
+    agent: selectedAgentId,
+    catalog: isBrowsingCatalog,
+  } = Route.useSearch();
   const navigate = Route.useNavigate();
   /*
    * The two empty states below must not fire while the list is still arriving. `skills.tsx` learned
@@ -70,7 +76,9 @@ function AgentsScreen() {
 
   // Creating wins if both are somehow set: it is the more recent intent.
   const showCreate = isCreating === true;
-  const showProfile = !showCreate && selectedAgentId !== undefined;
+  const showCatalog = !showCreate && isBrowsingCatalog === true;
+  const showProfile =
+    !showCreate && !showCatalog && selectedAgentId !== undefined;
   const close = () => navigate({ search: {} });
 
   return (
@@ -192,6 +200,25 @@ function AgentsScreen() {
             </Empty>
           )}
         </div>
+        <div className="mt-8 w-full max-w-2xl">
+          <h2 className="font-bold text-lg">Identity registry</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Browse the full Swarm identity catalog — the packaged names,
+            perspectives, and artwork the roster above can draw on. This is a
+            descriptive reference, not a list of running coworkers.
+          </p>
+          <Button
+            className="mt-3"
+            render={(props) => (
+              <Link to="/agents" search={{ catalog: true }} {...props} />
+            )}
+            size="sm"
+            variant="ghost"
+          >
+            <IconId />
+            Browse identities
+          </Button>
+        </div>
       </div>
       <CreateAgentDialog
         onClose={close}
@@ -203,6 +230,7 @@ function AgentsScreen() {
         onClose={close}
         open={showProfile}
       />
+      <SwarmCatalogDialog onClose={close} open={showCatalog} />
     </>
   );
 }

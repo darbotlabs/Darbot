@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { ChannelAvatar } from "@/components/channels/avatar";
 import {
   PageEmpty,
   PageRows,
@@ -22,6 +23,7 @@ import {
   ItemActions,
   ItemContent,
   ItemDescription,
+  ItemMedia,
   ItemTitle,
 } from "@/components/ui/item";
 import { Separator } from "@/components/ui/separator";
@@ -157,6 +159,13 @@ function ComputersPage() {
             {computers.map((computer, index) => (
               <StaggerItem index={index} key={computer.botId}>
                 <Item size="sm">
+                  <ItemMedia>
+                    <ChannelAvatar
+                      agents={agents.data}
+                      participantIds={[computer.botId]}
+                      size={28}
+                    />
+                  </ItemMedia>
                   <ItemContent>
                     <ItemTitle title={computer.botId}>
                       {nameFor(computer.botId)}
