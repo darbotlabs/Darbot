@@ -2,8 +2,8 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Ask } from "./Ask";
-import { CopilotWorkspace } from "./CopilotWorkspace";
 import { CopilotAgentImport } from "./CopilotAgentImport";
+import { CopilotWorkspace } from "./CopilotWorkspace";
 import {
   readImportedAgentIds,
   readOpenCopilot,

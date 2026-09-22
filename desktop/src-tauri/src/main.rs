@@ -1375,7 +1375,7 @@ where
     Err(Problem::with(recording.said, detail))
 }
 
-#[cfg(test)]
+#[cfg(all(test, unix))]
 fn retire_host_processes<C>(shell: &Shell, root: &Path, cleanup: C) -> Result<usize, Problem>
 where
     C: FnOnce(&Path) -> Result<usize, Problem>,

@@ -19,27 +19,6 @@ import {
   previewAgentChats,
 } from "./copilot-conversations";
 import {
-  findConfigOption,
-  isConfigValueDisabled,
-  mergeToolActivity,
-  type ConfigOption,
-  type ConfigOptionValue,
-  type CopilotAgentSummary,
-  type CopilotAvailableCommand,
-  type CopilotInventory,
-  type CopilotHistory,
-  type CopilotHistoryProgress,
-  type CopilotHistorySession,
-  type CopilotPermissionRequest,
-  type CopilotPromptResult,
-  type CopilotSession,
-  type CopilotSessionUpdate,
-  type CopilotStatus,
-  type CopilotToolActivity,
-  type CopilotWorkspaceLocation,
-  type CopilotWorkspaceChat,
-} from "./copilot-types";
-import {
   applyTheme,
   readAutoScrollPreference,
   readImportedAgentIds,
@@ -47,26 +26,47 @@ import {
   readStoredAgentId,
   readStoredCwd,
   readThemePreference,
+  type ThemePreference,
   writeAutoScrollPreference,
   writeImportedAgentIds,
   writeSnapScrollPreference,
   writeStoredAgentId,
   writeStoredCwd,
   writeThemePreference,
-  type ThemePreference,
 } from "./copilot-preferences";
 import {
+  type ConfigOption,
+  type ConfigOptionValue,
+  type CopilotAgentSummary,
+  type CopilotAvailableCommand,
+  type CopilotHistory,
+  type CopilotHistoryProgress,
+  type CopilotHistorySession,
+  type CopilotInventory,
+  type CopilotPermissionRequest,
+  type CopilotPromptResult,
+  type CopilotSession,
+  type CopilotSessionUpdate,
+  type CopilotStatus,
+  type CopilotToolActivity,
+  type CopilotWorkspaceChat,
+  type CopilotWorkspaceLocation,
+  findConfigOption,
+  isConfigValueDisabled,
+  mergeToolActivity,
+} from "./copilot-types";
+import {
+  type ConversationWorkspace,
   conversationFromHistory,
   createConversationDraft,
   emptyConversationWorkspace,
   MAX_DRAFT_LENGTH,
   readConversationWorkspace,
   writeConversationWorkspace,
-  type ConversationWorkspace,
 } from "./copilot-workspace-store";
+import copilotIconLicense from "./marks/copilot.LICENSE.txt?raw";
 import { asProblem, Failure, InlineFailure, type Problem } from "./Problem";
 import { BrandLockup } from "./Welcome";
-import copilotIconLicense from "./marks/copilot.LICENSE.txt?raw";
 
 type Message = {
   id: number;

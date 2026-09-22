@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useState } from "react";
-import { InlineFailure, asProblem, type Problem } from "./Problem";
 import type { CopilotAgentSummary } from "./copilot-types";
+import { asProblem, InlineFailure, type Problem } from "./Problem";
 
 type Feature<T> =
   | { state: "available"; data: T }
