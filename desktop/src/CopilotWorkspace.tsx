@@ -2068,10 +2068,8 @@ export function CopilotWorkspace({
                   ))}
                 </ol>
               )}
+              {location && <CopilotExtensionsPanel cwd={location.cwd} />}
             </div>
-            {surface === "cli" && location && (
-              <CopilotExtensionsPanel cwd={location.cwd} />
-            )}
             <div className="copilot-composer">
               <label htmlFor="copilot-prompt">
                 Message{" "}
