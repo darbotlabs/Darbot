@@ -674,6 +674,7 @@ struct RuntimeCore {
 
 struct CopilotRuntime {
     child: Mutex<Child>,
+    opening: Mutex<()>,
     core: Arc<RuntimeCore>,
     capabilities: CopilotCapabilities,
 }
@@ -719,6 +720,7 @@ impl CopilotRuntime {
         };
         Ok(Self {
             child: Mutex::new(child),
+            opening: Mutex::new(()),
             core,
             capabilities,
         })
@@ -746,6 +748,8 @@ impl CopilotRuntime {
             &self.core,
             Problem::plain("GitHub Copilot was stopped before it answered."),
         );
+        self.core.sessions.lock().unwrap().clear();
+        self.core.permissions.lock().unwrap().clear();
     }
 
     fn sessions(
@@ -778,20 +782,21 @@ impl CopilotRuntime {
     }
 
     fn new_session(&self, cwd: String, agent: Option<String>) -> Result<CopilotSession, Problem> {
-        let result = self.open_session("session/new", json!({"cwd": cwd, "mcpServers": []}))?;
-        self.prepare_session(parse_session(result, cwd)?, agent)
+        let _opening = self.opening.lock().unwrap();
+        finish_session_open(
+            self.open_session("session/new", json!({"cwd": cwd, "mcpServers": []}))
+                .and_then(|result| parse_session(result, cwd))
+                .and_then(|session| self.prepare_session(session, agent)),
+            || self.stop(),
+        )
     }
 
     fn open_session(&self, method: &str, params: Value) -> Result<Value, Problem> {
         self.core
             .request_with_timeout(method, params, ACP_SESSION_OPEN_TIMEOUT, || {
-                // The CLI can finish creating or loading a session after our deadline. Retire
-                // this owned runtime before returning, rather than orphaning an active session.
-                self.stop();
                 Problem::with(
-                    "Copilot took too long to open the conversation. Darbot closed its runtime \
-                     to prevent an untracked session. Your message was not sent. Check unavailable \
-                     MCP servers in Resources, then start or reopen the conversation.",
+                    "Copilot took too long to open the conversation. Your message was not sent. \
+                     Check unavailable MCP servers in Resources before retrying.",
                     format!(
                         "ACP {method} exceeded {} seconds; the owned CLI runtime was stopped.",
                         ACP_SESSION_OPEN_TIMEOUT.as_secs()
@@ -835,13 +840,18 @@ impl CopilotRuntime {
         cwd: String,
         agent: Option<String>,
     ) -> Result<CopilotSession, Problem> {
+        let _opening = self.opening.lock().unwrap();
         let session_id = required_text(session_id, "session ID")?;
         let cwd = session_root(&cwd)?;
-        let result = self.open_session(
-            method,
-            json!({"sessionId": session_id, "cwd": cwd, "mcpServers": []}),
-        )?;
-        self.prepare_session(parse_session_setup(session_id, cwd, result)?, agent)
+        finish_session_open(
+            self.open_session(
+                method,
+                json!({"sessionId": session_id, "cwd": cwd, "mcpServers": []}),
+            )
+            .and_then(|result| parse_session_setup(session_id, cwd, result))
+            .and_then(|session| self.prepare_session(session, agent)),
+            || self.stop(),
+        )
     }
 
     fn prepare_session(
@@ -855,43 +865,36 @@ impl CopilotRuntime {
                 config_options: session.config_options.clone().unwrap_or_else(|| json!([])),
             },
         );
-        let configured = (|| {
-            // A resumed autopilot session must not silently bypass the native permission UI.
-            for (id, allowed) in [
-                ("allow_all", "off"),
-                (
-                    "mode",
-                    "https://agentclientprotocol.com/protocol/session-modes#agent",
-                ),
-            ] {
-                let should_reset = session
-                    .config_options
-                    .as_ref()
-                    .and_then(Value::as_array)
-                    .and_then(|options| options.iter().find(|option| option["id"] == id))
-                    .and_then(|option| option["currentValue"].as_str())
-                    .is_some_and(|current| {
-                        (id == "allow_all" && current != "off")
-                            || (id == "mode" && current.ends_with("#autopilot"))
-                    });
-                if should_reset {
-                    session.config_options = Some(
-                        self.configure(session.session_id.clone(), id.into(), allowed.into())?
-                            .config_options,
-                    );
-                }
-            }
-            if let Some(agent) = agent {
+        // A resumed autopilot session must not silently bypass the native permission UI.
+        for (id, allowed) in [
+            ("allow_all", "off"),
+            (
+                "mode",
+                "https://agentclientprotocol.com/protocol/session-modes#agent",
+            ),
+        ] {
+            let should_reset = session
+                .config_options
+                .as_ref()
+                .and_then(Value::as_array)
+                .and_then(|options| options.iter().find(|option| option["id"] == id))
+                .and_then(|option| option["currentValue"].as_str())
+                .is_some_and(|current| {
+                    (id == "allow_all" && current != "off")
+                        || (id == "mode" && current.ends_with("#autopilot"))
+                });
+            if should_reset {
                 session.config_options = Some(
-                    self.configure(session.session_id.clone(), "agent".into(), agent)?
+                    self.configure(session.session_id.clone(), id.into(), allowed.into())?
                         .config_options,
                 );
             }
-            Ok(())
-        })();
-        if let Err(problem) = configured {
-            let _ = self.close_session(session.session_id.clone());
-            return Err(problem);
+        }
+        if let Some(agent) = agent {
+            session.config_options = Some(
+                self.configure(session.session_id.clone(), "agent".into(), agent)?
+                    .config_options,
+            );
         }
         Ok(session)
     }
@@ -980,12 +983,15 @@ impl CopilotRuntime {
     }
 
     fn close_session(&self, session_id: String) -> Result<(), Problem> {
+        let session_id = required_text(session_id, "session ID")?;
+        if !self.core.sessions.lock().unwrap().contains_key(&session_id) {
+            return Ok(());
+        }
         if !self.capabilities.close_session {
             return Err(Problem::plain(
                 "This GitHub Copilot version does not support closing active sessions.",
             ));
         }
-        let session_id = self.known_session(session_id)?;
         self.core.cancel_permissions(&session_id)?;
         self.core.request(
             "session/close",
@@ -1160,6 +1166,20 @@ fn wait_for_runtime_response(
     }
 }
 
+fn finish_session_open<T>(result: Result<T, Problem>, retire: impl FnOnce()) -> Result<T, Problem> {
+    result.map_err(|problem| {
+        retire();
+        Problem {
+            said: format!(
+                "{} Darbot closed its owned CLI connection so opening can be retried. \
+                 Saved history and the local draft were kept.",
+                problem.said
+            ),
+            detail: problem.detail,
+        }
+    })
+}
+
 fn spawn_acp_child() -> Result<Child, Problem> {
     quiet::command("copilot")
         .args(["--acp", "--stdio", "--no-auto-update"])
@@ -1256,6 +1276,9 @@ fn start_runtime_stdout<R: Runtime>(
 }
 
 fn route_runtime_message<R: Runtime>(core: &Arc<RuntimeCore>, app: &AppHandle<R>, message: Value) {
+    if core.closed.load(Ordering::SeqCst) {
+        return;
+    }
     if message.get("result").is_some() || message.get("error").is_some() {
         if let Some(id) = message.get("id").and_then(json_id_key) {
             if let Some(sender) = core.pending.lock().unwrap().remove(&id) {
@@ -2340,6 +2363,48 @@ mod tests {
             ),
             Err(problem)
         );
+    }
+
+    #[test]
+    fn failed_open_configuration_retires_before_exposing_retry() {
+        let retired = AtomicBool::new(false);
+        let problem = Problem::with(
+            "The recorded agent could not be restored.",
+            "ACP session/set_config_option exceeded 120 seconds.",
+        );
+        let result: Result<(), Problem> = finish_session_open(Err(problem), || {
+            retired.store(true, Ordering::SeqCst);
+        });
+        let error = result.unwrap_err();
+        assert!(retired.load(Ordering::SeqCst));
+        assert!(error
+            .said
+            .contains("Saved history and the local draft were kept"));
+        assert_eq!(
+            error.detail.as_deref(),
+            Some("ACP session/set_config_option exceeded 120 seconds.")
+        );
+    }
+
+    #[test]
+    fn malformed_open_response_retires_even_without_a_usable_session_id() {
+        let retired = AtomicBool::new(false);
+        let result = finish_session_open(
+            parse_session(json!({"unexpected": true}), "C:\\workspace".into()),
+            || retired.store(true, Ordering::SeqCst),
+        );
+        assert!(result.is_err());
+        assert!(retired.load(Ordering::SeqCst));
+    }
+
+    #[test]
+    fn completed_open_keeps_its_runtime_and_exact_session_identity() {
+        let result = finish_session_open(
+            parse_session(json!({"sessionId": "runtime-id"}), "C:\\workspace".into()),
+            || panic!("A completed opening must not retire its connection."),
+        )
+        .unwrap();
+        assert_eq!(result.session_id, "runtime-id");
     }
 
     #[test]

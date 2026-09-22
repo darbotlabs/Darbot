@@ -1,16 +1,17 @@
 /**
  * Darbot-scoped preferences for the Copilot workspace: theme, last working folder, last selected
- * agent, imported agent references, chat metadata, last runtime, and scrolling.
- * Everything lives under one localStorage key so there is a
- * single read/write pair doing the validation, rather than several ad hoc keys each with their own
- * failure mode.
+ * agent, imported agent references, legacy chat metadata, last runtime, and scrolling.
+ * Versioned conversation identities and local drafts are owned by copilot-workspace-store.ts.
+ * Legacy references remain here for non-destructive migration.
  *
  * Chat entries contain session IDs, titles, agents and folders, never message bodies.
  * Never stores a Copilot token, credential, or transcript.
  */
 
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import type { CopilotWorkspaceChat } from "./copilot-types";
+import type { CopilotHistorySession } from "./copilot-types";
+
+type LegacyWorkspaceChat = CopilotHistorySession & { title: string };
 
 const STORAGE_KEY = "darbot:copilot:preferences";
 
@@ -24,7 +25,7 @@ type StoredPreferences = {
   snapScroll: boolean;
   openCopilot: boolean;
   importedAgentIds: string[] | null;
-  workspaceChats: CopilotWorkspaceChat[];
+  workspaceChats: LegacyWorkspaceChat[];
 };
 
 const DEFAULTS: StoredPreferences = {
@@ -38,7 +39,7 @@ const DEFAULTS: StoredPreferences = {
   workspaceChats: [],
 };
 
-function isWorkspaceChat(value: unknown): value is CopilotWorkspaceChat {
+function isWorkspaceChat(value: unknown): value is LegacyWorkspaceChat {
   if (!value || typeof value !== "object") return false;
   return (
     "sessionId" in value &&
@@ -178,11 +179,11 @@ export function writeImportedAgentIds(value: string[]): void {
   writeAll({ importedAgentIds: [...new Set(value)] });
 }
 
-export function readWorkspaceChats(): CopilotWorkspaceChat[] {
+export function readWorkspaceChats(): LegacyWorkspaceChat[] {
   return readAll().workspaceChats;
 }
 
-export function writeWorkspaceChats(value: CopilotWorkspaceChat[]): void {
+export function writeWorkspaceChats(value: LegacyWorkspaceChat[]): void {
   writeAll({
     workspaceChats: value.map(
       ({ sessionId, cwd, agentId, agentName, title, updatedAt }) => ({

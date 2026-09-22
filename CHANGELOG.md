@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- Persist versioned Darbot conversation identities and bounded local drafts
+  independently of CLI session IDs. New chat no longer allocates an empty CLI
+  session; existing agent ownership and import decisions survive migration.
+- Keep local drafts reachable in the sidebar, canvas and agent-filtered History,
+  including after reopening the app. Invalid saved state is reported without
+  replacing it; recorded-session retry never automatically resends a draft.
+- Retire the owned CLI connection after any failed opening transaction,
+  including response validation and agent/configuration restoration, and
+  discard late updates from retired connections.
+
 ## 0.0.20
 
 - Bound the canvas chat grid's intrinsic column size so long, single-line titles

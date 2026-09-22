@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import {
   CHAT_PREVIEW_LIMIT,
+  conversationHistoryRows,
   groupWorkspaceChats,
   mergeHistoryBatch,
   mergeLinkedConversations,
@@ -15,9 +16,11 @@ function chat(
   sessionId: string,
   agentId = "architect",
   updatedAt = "2026-09-21T00:00:00Z",
-): CopilotWorkspaceChat {
+): CopilotWorkspaceChat & { sessionId: string } {
   return {
+    conversationId: `copilot:${sessionId}`,
     sessionId,
+    draft: "",
     agentId,
     agentName: agentId || "Copilot CLI",
     cwd: "C:\\workspace",
@@ -70,7 +73,7 @@ test("relinking is idempotent and keeps existing and active chat references", ()
     existing,
     history,
     ["architect", "different"],
-    "active",
+    "copilot:active",
   );
   expect(linked[0]).toEqual(existing[0]);
   expect(linked.find((item) => item.sessionId === "draft")).toEqual(
@@ -84,7 +87,7 @@ test("relinking is idempotent and keeps existing and active chat references", ()
       linked,
       history,
       ["architect", "different"],
-      "active",
+      "copilot:active",
     ),
   ).toEqual(linked);
   expect(linked.map((item) => item.sessionId)).toEqual([
@@ -106,7 +109,9 @@ test("linked references contain metadata only and never copy extra runtime paylo
   expect(Object.keys(linked[0]).sort()).toEqual([
     "agentId",
     "agentName",
+    "conversationId",
     "cwd",
+    "draft",
     "sessionId",
     "title",
     "updatedAt",
@@ -148,7 +153,7 @@ test("large chat groups stay bounded while the active chat remains visible", () 
   const chats = Array.from({ length: 3000 }, (_, index) =>
     chat(`chat-${index}`),
   );
-  const preview = previewAgentChats(chats, "chat-2999");
+  const preview = previewAgentChats(chats, "copilot:chat-2999");
   expect(preview).toHaveLength(CHAT_PREVIEW_LIMIT);
   expect(preview[0].sessionId).toBe("chat-2999");
   expect(new Set(preview.map((item) => item.sessionId)).size).toBe(
@@ -158,4 +163,55 @@ test("large chat groups stay bounded while the active chat remains visible", () 
   expect(previewAgentChats(chats, null)).toEqual(
     chats.slice(0, CHAT_PREVIEW_LIMIT),
   );
+});
+
+test("multiple local drafts remain distinct while linking recorded history", () => {
+  const drafts: CopilotWorkspaceChat[] = [
+    {
+      ...chat("draft-one"),
+      conversationId: "local-one",
+      sessionId: null,
+      draft: "First unsent task",
+    },
+    {
+      ...chat("draft-two"),
+      conversationId: "local-two",
+      sessionId: null,
+      draft: "Second unsent task",
+    },
+  ];
+  const result = mergeLinkedConversations(
+    drafts,
+    [chat("recorded")],
+    ["architect"],
+    "local-two",
+  );
+  expect(result).toHaveLength(3);
+  expect(result[0]).toEqual(drafts[1]);
+  expect(result.filter((item) => item.sessionId === null)).toHaveLength(2);
+});
+
+test("history keeps local drafts and unavailable legacy references without duplicate sessions", () => {
+  const saved: CopilotWorkspaceChat[] = [
+    {
+      ...chat("recorded"),
+      conversationId: "local-id",
+      draft: "Unsent follow-up",
+    },
+    { ...chat("draft"), sessionId: null },
+    chat("legacy-missing"),
+  ];
+  const rows = conversationHistoryRows(saved, [
+    chat("recorded"),
+    chat("other", "other-agent"),
+  ]);
+  expect(rows).toHaveLength(4);
+  expect(rows.find((item) => item.sessionId === "recorded")).toMatchObject({
+    conversationId: "local-id",
+    draft: "Unsent follow-up",
+  });
+  expect(
+    rows.find((item) => item.sessionId === "legacy-missing"),
+  ).toBeDefined();
+  expect(rows.filter((item) => item.sessionId === null)).toHaveLength(1);
 });

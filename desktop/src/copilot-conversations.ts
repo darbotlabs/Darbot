@@ -3,8 +3,34 @@ import type {
   CopilotHistorySession,
   CopilotWorkspaceChat,
 } from "./copilot-types";
+import { conversationFromHistory } from "./copilot-workspace-store";
 
 export const CHAT_PREVIEW_LIMIT = 5;
+
+export function conversationHistoryRows(
+  chats: readonly CopilotWorkspaceChat[],
+  history: readonly CopilotHistorySession[],
+): CopilotWorkspaceChat[] {
+  const bySession = new Map(
+    chats
+      .filter((chat) => chat.sessionId !== null)
+      .map((chat) => [chat.sessionId, chat]),
+  );
+  const recorded = new Set(history.map((chat) => chat.sessionId));
+  return [
+    ...chats.filter(
+      (chat) => chat.sessionId === null || !recorded.has(chat.sessionId),
+    ),
+    ...history.map((chat) => {
+      const previous = bySession.get(chat.sessionId);
+      return {
+        ...conversationFromHistory(chat),
+        conversationId: previous?.conversationId ?? `copilot:${chat.sessionId}`,
+        draft: previous?.draft ?? "",
+      };
+    }),
+  ];
+}
 
 export function mergeHistoryBatch(
   current: CopilotHistory | null,
@@ -42,29 +68,35 @@ export function mergeLinkedConversations(
   current: readonly CopilotWorkspaceChat[],
   history: readonly CopilotHistorySession[],
   importedAgentIds: readonly string[],
-  activeSessionId: string | null,
+  activeConversationId: string | null,
 ): CopilotWorkspaceChat[] {
   const allowed = new Set(["", ...importedAgentIds]);
-  const chats = new Map(current.map((chat) => [chat.sessionId, chat]));
+  const chats = new Map(current.map((chat) => [chat.conversationId, chat]));
+  const bySession = new Map(
+    current
+      .filter((chat) => chat.sessionId !== null)
+      .map((chat) => [chat.sessionId, chat]),
+  );
   for (const item of history) {
     if (item.agentId === "__unavailable__" || !allowed.has(item.agentId)) {
       continue;
     }
-    const previous = chats.get(item.sessionId);
-    if (previous && item.sessionId === activeSessionId) continue;
-    chats.set(item.sessionId, {
-      sessionId: item.sessionId,
-      cwd: item.cwd,
-      agentId: item.agentId,
-      agentName: item.agentName,
+    const previous = bySession.get(item.sessionId);
+    if (previous?.conversationId === activeConversationId) continue;
+    const conversationId =
+      previous?.conversationId ?? `copilot:${item.sessionId}`;
+    chats.set(conversationId, {
+      ...conversationFromHistory(item),
+      conversationId,
+      draft: previous?.draft ?? "",
       title: item.title?.trim() || previous?.title || "Untitled conversation",
       updatedAt: item.updatedAt ?? previous?.updatedAt ?? null,
     });
   }
   return [...chats.values()].sort((left, right) => {
-    if (left.sessionId === right.sessionId) return 0;
-    if (left.sessionId === activeSessionId) return -1;
-    if (right.sessionId === activeSessionId) return 1;
+    if (left.conversationId === right.conversationId) return 0;
+    if (left.conversationId === activeConversationId) return -1;
+    if (right.conversationId === activeConversationId) return 1;
     return (right.updatedAt ?? "").localeCompare(left.updatedAt ?? "");
   });
 }
@@ -83,10 +115,12 @@ export function groupWorkspaceChats(
 
 export function previewAgentChats(
   chats: readonly CopilotWorkspaceChat[],
-  activeSessionId: string | null,
+  activeConversationId: string | null,
 ): CopilotWorkspaceChat[] {
   const preview = chats.slice(0, CHAT_PREVIEW_LIMIT);
-  const active = chats.find((chat) => chat.sessionId === activeSessionId);
+  const active = chats.find(
+    (chat) => chat.conversationId === activeConversationId,
+  );
   if (active && !preview.includes(active)) {
     return [active, ...preview.slice(0, CHAT_PREVIEW_LIMIT - 1)];
   }

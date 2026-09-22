@@ -16,6 +16,35 @@ The integration targets:
 
 ACP v2 is currently a draft and is not a release baseline.
 
+### Durable local drafts and opening recovery
+
+Darbot conversation IDs are independent of live CLI session IDs. **New chat**
+creates a local draft and does not start a CLI session. The first **Send** opens
+Copilot and associates the returned runtime session with the same conversation.
+Unsent text is saved per conversation, survives switching and application
+restarts, and is restored without sending or automatically reconnecting.
+
+Workspace storage has an explicit schema version. Existing session references
+migrate without changing agent ownership or copying transcripts, definitions or
+authentication material. The original preference blob and its distinction
+between an undecided import and **Import none** remain unchanged. Invalid,
+unsupported or duplicate stored records block workspace loading visibly rather
+than being replaced with empty data. Storage failures retain the in-window
+draft and warn the user to keep it open and copy the text.
+
+Local drafts appear in the sidebar, canvas and History, including drafts with no
+CLI session. A migrated reference remains a reference, not proof that the CLI
+persisted an empty session. Loading an unavailable legacy session reports the
+real error; it never silently opens a different conversation.
+
+The complete native opening transaction includes protocol response validation
+and negotiated configuration. Any failure retires Darbot's owned connection
+before returning, including configuration failures after a successful load.
+Late messages from a retired connection are discarded. Reopening is explicit
+and never resubmits the saved draft. This fixes the source-level orphan and
+empty-new-chat lifecycle; installed timeout injection is a separate acceptance
+requirement, not something established by contract or unit tests alone.
+
 ### Canvas bounds in desktop 0.0.20
 
 Chat preview grids use a zero-minimum, bounded column so ellipsized titles do not
@@ -52,8 +81,8 @@ leave an already-loaded session in that connection. Retrying starts a fresh
 connection; there is no automatic retry or duplicate prompt submission.
 
 A failed replay clears its incomplete display and reports that the conversation
-did not open. This improves timeout recovery in issue #6; it does not implement
-durable draft identities or change the CLI's empty-session persistence.
+did not open. The durable local draft and complete-opening recovery changes
+above supersede this version's runtime-ID-only draft handling.
 
 ### Agent conversation links and incremental history in desktop 0.0.18
 
@@ -109,10 +138,9 @@ The official GitHub Copilot mark is vendored from Primer Octicons under MIT;
 Profile includes its attribution and license. No private reference assets or
 implementation are included.
 
-Empty-session persistence and the remaining conversation-lifecycle work remain
-tracked in [issue #6](https://github.com/darbotlabs/Darbot/issues/6). Moving between
-tabs avoids runtime reloads; the 0.0.18 timeout handling above does not implement
-durable drafts.
+Remaining conversation-lifecycle acceptance is tracked in
+[issue #6](https://github.com/darbotlabs/Darbot/issues/6). Moving between tabs
+avoids runtime reloads. New local drafts no longer depend on empty CLI sessions.
 
 ### Optional agent import in desktop 0.0.16
 

@@ -4,6 +4,7 @@ import { listen } from "@tauri-apps/api/event";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CopilotAgentImport } from "./CopilotAgentImport";
 import {
+  conversationHistoryRows,
   groupWorkspaceChats,
   mergeHistoryBatch,
   mergeLinkedConversations,
@@ -38,16 +39,23 @@ import {
   readStoredAgentId,
   readStoredCwd,
   readThemePreference,
-  readWorkspaceChats,
   writeAutoScrollPreference,
   writeImportedAgentIds,
   writeSnapScrollPreference,
   writeStoredAgentId,
   writeStoredCwd,
   writeThemePreference,
-  writeWorkspaceChats,
   type ThemePreference,
 } from "./copilot-preferences";
+import {
+  conversationFromHistory,
+  createConversationDraft,
+  emptyConversationWorkspace,
+  MAX_DRAFT_LENGTH,
+  readConversationWorkspace,
+  writeConversationWorkspace,
+  type ConversationWorkspace,
+} from "./copilot-workspace-store";
 import { asProblem, Failure, InlineFailure, type Problem } from "./Problem";
 import { BrandLockup } from "./Welcome";
 import copilotIconLicense from "./marks/copilot.LICENSE.txt?raw";
@@ -233,7 +241,20 @@ export function CopilotWorkspace({
     () => readImportedAgentIds() ?? [],
   );
   const [createdAgents, setCreatedAgents] = useState<CopilotAgentSummary[]>([]);
-  const [chats, setChats] = useState(readWorkspaceChats);
+  const [savedWorkspace] = useState(readConversationWorkspace);
+  const [conversationWorkspace, setConversationWorkspace] =
+    useState<ConversationWorkspace>(() =>
+      savedWorkspace.ok
+        ? savedWorkspace.workspace
+        : emptyConversationWorkspace(),
+    );
+  const [workspaceProblem, setWorkspaceProblem] = useState<Problem | null>(
+    null,
+  );
+  const { chats, activeConversationId } = conversationWorkspace;
+  const activeConversation = chats.find(
+    (chat) => chat.conversationId === activeConversationId,
+  );
   const chatsByAgent = useMemo(() => groupWorkspaceChats(chats), [chats]);
   const [agentName, setAgentName] = useState("");
   const [agentDescription, setAgentDescription] = useState("");
@@ -241,18 +262,24 @@ export function CopilotWorkspace({
   const [creatingAgent, setCreatingAgent] = useState(false);
   const [agentProblem, setAgentProblem] = useState<Problem | null>(null);
 
-  const [selectedAgentId, setSelectedAgentId] = useState(() =>
-    readStoredAgentId(),
+  const [selectedAgentId, setSelectedAgentId] = useState(
+    () => activeConversation?.agentId ?? readStoredAgentId(),
   );
   const [session, setSession] = useState<CopilotSession | null>(null);
   const [sessionAgentId, setSessionAgentId] = useState("");
   const [configOptions, setConfigOptions] = useState<ConfigOption[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useState(activeConversation?.draft ?? "");
   const [busy, setBusy] = useState(false);
   const [openingSession, setOpeningSession] = useState(false);
   const [eventsReady, setEventsReady] = useState(false);
-  const [statusText, setStatusText] = useState("Ready");
+  const [statusText, setStatusText] = useState(
+    activeConversation?.sessionId
+      ? "Not opened"
+      : activeConversation
+        ? "Draft saved locally"
+        : "Ready",
+  );
   const [failure, setFailure] = useState<Problem | null>(null);
 
   const [permissions, setPermissions] = useState<CopilotPermissionRequest[]>(
@@ -304,7 +331,8 @@ export function CopilotWorkspace({
   const activeChatRef = useRef<HTMLButtonElement | null>(null);
   const nextMessageId = useRef(1);
   const toolCallMessageIds = useRef(new Map<string, number>());
-  const draftsRef = useRef(new Map<string, string>());
+  const conversationIdRef = useRef(activeConversationId);
+  const operationRef = useRef(false);
   const mountedRef = useRef(true);
   const settingsDialogRef = useRef<HTMLDialogElement | null>(null);
   const profileDialogRef = useRef<HTMLDialogElement | null>(null);
@@ -323,15 +351,85 @@ export function CopilotWorkspace({
   }, []);
 
   useEffect(() => {
-    writeWorkspaceChats(chats);
-  }, [chats]);
+    if (!savedWorkspace.ok) return;
+    try {
+      writeConversationWorkspace(conversationWorkspace);
+      setWorkspaceProblem(null);
+    } catch (error) {
+      setWorkspaceProblem({
+        said: "This conversation could not be saved on this device. Keep the window open and copy your draft before leaving.",
+        detail: asProblem(error).said,
+      });
+    }
+  }, [conversationWorkspace, savedWorkspace.ok]);
 
   useEffect(() => {
     activeChatRef.current?.scrollIntoView({
       block: "nearest",
       inline: "nearest",
     });
-  }, [session?.sessionId, chats.length]);
+  }, [activeConversationId, chats.length]);
+
+  function setChats(
+    update:
+      | CopilotWorkspaceChat[]
+      | ((current: CopilotWorkspaceChat[]) => CopilotWorkspaceChat[]),
+  ) {
+    setConversationWorkspace((current) => ({
+      ...current,
+      chats: typeof update === "function" ? update(current.chats) : update,
+    }));
+  }
+
+  function selectConversation(chat: CopilotWorkspaceChat | null) {
+    conversationIdRef.current = chat?.conversationId ?? null;
+    setConversationWorkspace((current) => ({
+      ...current,
+      activeConversationId: chat?.conversationId ?? null,
+      chats: chat
+        ? [
+            chat,
+            ...current.chats.filter(
+              (item) => item.conversationId !== chat.conversationId,
+            ),
+          ]
+        : current.chats,
+    }));
+    setPrompt(chat?.draft ?? "");
+    if (chat) {
+      setSelectedAgentId(chat.agentId);
+      writeStoredAgentId(chat.agentId);
+    }
+  }
+
+  function updateDraft(text: string) {
+    if (text.length > MAX_DRAFT_LENGTH) {
+      setFailure({
+        said: `Drafts are limited to ${MAX_DRAFT_LENGTH.toLocaleString()} characters. Shorten the draft before adding more text.`,
+      });
+      return;
+    }
+    setPrompt(text);
+    if (!savedWorkspace.ok || !location) return;
+    if (!activeConversation) {
+      const agent = inventory?.agents.find(
+        (item) => item.id === selectedAgentId,
+      );
+      const draft = createConversationDraft(
+        location.cwd,
+        selectedAgentId,
+        agent?.name ?? (selectedAgentId || "Copilot CLI"),
+      );
+      selectConversation({ ...draft, draft: text });
+      return;
+    }
+    const id = activeConversation.conversationId;
+    setChats((current) =>
+      current.map((chat) =>
+        chat.conversationId === id ? { ...chat, draft: text } : chat,
+      ),
+    );
+  }
 
   function addImportedAgents(ids: string[]) {
     const next = [...new Set([...importedAgentIds, ...ids])];
@@ -346,6 +444,7 @@ export function CopilotWorkspace({
   function rememberChat(
     next: CopilotSession,
     requestedAgent: string,
+    conversationId: string,
     title?: string | null,
   ) {
     const option = findConfigOption(next.configOptions, "agent");
@@ -357,9 +456,10 @@ export function CopilotWorkspace({
         agentId);
     setChats((current) => {
       const previous = current.find(
-        (chat) => chat.sessionId === next.sessionId,
+        (chat) => chat.conversationId === conversationId,
       );
       const chat: CopilotWorkspaceChat = {
+        conversationId,
         sessionId: next.sessionId,
         cwd: next.cwd,
         agentId,
@@ -369,10 +469,15 @@ export function CopilotWorkspace({
           previous?.title ||
           `Chat ${current.filter((item) => item.agentId === agentId).length + 1}`,
         updatedAt: new Date().toISOString(),
+        draft: previous?.draft ?? "",
       };
       return [
         chat,
-        ...current.filter((item) => item.sessionId !== next.sessionId),
+        ...current.filter(
+          (item) =>
+            item.conversationId !== conversationId &&
+            item.sessionId !== next.sessionId,
+        ),
       ];
     });
   }
@@ -383,6 +488,7 @@ export function CopilotWorkspace({
     if (recent) {
       await loadSession(recent);
     } else if (await closeSessionSafely()) {
+      selectConversation(null);
       setSelectedAgentId(agentId);
       writeStoredAgentId(agentId);
     }
@@ -407,7 +513,7 @@ export function CopilotWorkspace({
       setAgentDescription("");
       setAgentInstructions("");
       setOpenDialog(null);
-      await startSession(agent.id);
+      await startDraft(agent.id);
     } catch (error) {
       if (mountedRef.current) setAgentProblem(asProblem(error));
     } finally {
@@ -452,7 +558,6 @@ export function CopilotWorkspace({
         setFailure(asProblem(error));
         return false;
       }
-      draftsRef.current.set(current.sessionId, prompt);
     }
     setSession(null);
     setSessionAgentId("");
@@ -481,6 +586,7 @@ export function CopilotWorkspace({
       if (next.cwd !== location?.cwd && !(await closeSessionSafely())) return;
       if (!mountedRef.current) return;
       setLocation(next);
+      if (next.cwd !== location?.cwd) selectConversation(null);
       setLocationInput(next.cwd);
       writeStoredCwd(next.cwd);
     } catch (error) {
@@ -500,6 +606,7 @@ export function CopilotWorkspace({
       if (!picked || !mountedRef.current) return;
       const closed = await closeSessionSafely();
       if (!closed) return;
+      selectConversation(null);
       setLocation(picked);
       setLocationInput(picked.cwd);
       writeStoredCwd(picked.cwd);
@@ -511,6 +618,7 @@ export function CopilotWorkspace({
   async function useHomeLocation() {
     const closed = await closeSessionSafely();
     if (!closed) return;
+    selectConversation(null);
     await resolveLocation(null);
   }
 
@@ -634,12 +742,12 @@ export function CopilotWorkspace({
         break;
       }
       case "session_info_update": {
-        const id = sessionIdRef.current;
+        const id = conversationIdRef.current;
         if (id && typeof update.title === "string" && update.title.trim()) {
           const title = update.title.trim();
           setChats((current) =>
             current.map((chat) =>
-              chat.sessionId === id ? { ...chat, title } : chat,
+              chat.conversationId === id ? { ...chat, title } : chat,
             ),
           );
         }
@@ -677,6 +785,11 @@ export function CopilotWorkspace({
     );
     const runtimeErrors = listen<Problem>("copilot:runtime-error", (event) => {
       setFailure(event.payload);
+      sessionIdRef.current = null;
+      setSession(null);
+      setPermissions([]);
+      setConfigOptions([]);
+      setStatusText("Connection interrupted");
     });
     const historyUpdates = listen<CopilotHistoryProgress>(
       "copilot:history-progress",
@@ -700,7 +813,7 @@ export function CopilotWorkspace({
                 current,
                 batch,
                 agentIds,
-                sessionIdRef.current,
+                conversationIdRef.current,
               ),
             );
           }
@@ -755,31 +868,54 @@ export function CopilotWorkspace({
     }
   }
 
+  async function startDraft(agentId: string) {
+    if (!location || operationRef.current || !savedWorkspace.ok) return;
+    operationRef.current = true;
+    setBusy(true);
+    setFailure(null);
+    try {
+      if (!(await closeSessionSafely())) return;
+      const agent =
+        inventory?.agents.find((item) => item.id === agentId) ??
+        createdAgents.find((item) => item.id === agentId);
+      selectConversation(
+        createConversationDraft(
+          location.cwd,
+          agentId,
+          agent?.name ?? (agentId || "Copilot CLI"),
+        ),
+      );
+      setSurface("workspace");
+      setStatusText("Draft saved locally");
+    } finally {
+      operationRef.current = false;
+      if (mountedRef.current) setBusy(false);
+    }
+  }
+
   async function startSession(
-    agentId: string,
-    pendingPrompt?: string,
+    chat: CopilotWorkspaceChat,
   ): Promise<CopilotSession | null> {
-    if (!location) return null;
     setSurface("workspace");
     setBusy(true);
     setFailure(null);
     try {
       const closed = await closeSessionSafely();
       if (!closed) return null;
-      if (pendingPrompt !== undefined) setPrompt(pendingPrompt);
+      setPrompt(chat.draft);
       setOpeningSession(true);
       setStatusText("Opening conversation");
       creatingSessionRef.current = true;
       initialUpdatesRef.current = [];
       const next = await invoke<CopilotSession>("copilot_session_new", {
-        cwd: location.cwd,
-        agent: agentId || null,
+        cwd: chat.cwd,
+        agent: chat.agentId || null,
       });
       if (!mountedRef.current) return next;
       sessionIdRef.current = next.sessionId;
       setSession(next);
+      setSessionAgentId(chat.agentId);
       applySessionConfig(next.configOptions ?? []);
-      rememberChat(next, agentId);
       for (const event of initialUpdatesRef.current) {
         if (event.sessionId === next.sessionId)
           handleSessionUpdate(event.update);
@@ -802,42 +938,63 @@ export function CopilotWorkspace({
     }
   }
 
-  async function loadSession(target: CopilotHistorySession) {
+  async function loadSession(
+    target: CopilotHistorySession | CopilotWorkspaceChat,
+    sending = false,
+  ): Promise<CopilotSession | null> {
+    if (!savedWorkspace.ok || (operationRef.current && !sending)) return null;
+    if (!sending) operationRef.current = true;
+    const chat =
+      "conversationId" in target
+        ? target
+        : (chats.find((item) => item.sessionId === target.sessionId) ??
+          conversationFromHistory(target));
     setSurface("workspace");
-    if (target.sessionId === session?.sessionId) {
+    if (chat.sessionId !== null && chat.sessionId === session?.sessionId) {
       setOpenDialog(null);
       activeChatRef.current?.scrollIntoView({
         block: "nearest",
         inline: "nearest",
       });
-      return;
+      if (!sending) operationRef.current = false;
+      return session;
     }
     setBusy(true);
     setFailure(null);
     try {
       const closed = await closeSessionSafely();
-      if (!closed) return;
+      if (!closed) return null;
+      selectConversation(chat);
+      if (chat.sessionId === null) {
+        const nextLocation = await resolveLocation(chat.cwd, true);
+        if (!nextLocation) return null;
+        setOpenDialog(null);
+        setStatusText("Draft saved locally");
+        return null;
+      }
       setOpeningSession(true);
       setStatusText("Opening conversation");
       // Set before invoking so a replay burst starting mid-load is never missed.
-      sessionIdRef.current = target.sessionId;
+      sessionIdRef.current = chat.sessionId;
       // Cleared in `finally` below: replay for this sessionId only spans the invoke call.
-      replayingSessionIdRef.current = target.sessionId;
+      replayingSessionIdRef.current = chat.sessionId;
       const next = await invoke<CopilotSession>("copilot_session_load", {
-        sessionId: target.sessionId,
-        cwd: target.cwd,
-        agent: target.agentId === "__unavailable__" ? null : target.agentId,
+        sessionId: chat.sessionId,
+        cwd: chat.cwd,
+        agent: chat.agentId === "__unavailable__" ? null : chat.agentId,
       });
-      if (!mountedRef.current) return;
+      if (!mountedRef.current) return null;
       setSession(next);
+      setSessionAgentId(chat.agentId);
       applySessionConfig(next.configOptions ?? []);
-      rememberChat(next, target.agentId, target.title);
-      setPrompt(draftsRef.current.get(next.sessionId) ?? "");
+      rememberChat(next, chat.agentId, chat.conversationId, chat.title);
+      setPrompt(chat.draft);
       if (location) setLocation({ ...location, cwd: next.cwd });
       setLocationInput(next.cwd);
       writeStoredCwd(next.cwd);
       setOpenDialog(null);
       setStatusText("Ready");
+      return next;
     } catch (error) {
       if (mountedRef.current) {
         sessionIdRef.current = null;
@@ -848,7 +1005,9 @@ export function CopilotWorkspace({
         setStatusText("Conversation not opened");
         setFailure(asProblem(error));
       }
+      return null;
     } finally {
+      if (!sending) operationRef.current = false;
       replayingSessionIdRef.current = null;
       if (mountedRef.current) {
         setOpeningSession(false);
@@ -878,13 +1037,13 @@ export function CopilotWorkspace({
   function insertTextAtCursor(text: string) {
     const textarea = promptRef.current;
     if (!textarea) {
-      setPrompt((current) => `${current}${text}`);
+      updateDraft(`${prompt}${text}`);
       return;
     }
     const start = textarea.selectionStart ?? textarea.value.length;
     const end = textarea.selectionEnd ?? textarea.value.length;
     const next = `${textarea.value.slice(0, start)}${text}${textarea.value.slice(end)}`;
-    setPrompt(next);
+    updateDraft(next);
     requestAnimationFrame(() => {
       textarea.focus();
       const caret = start + text.length;
@@ -901,13 +1060,37 @@ export function CopilotWorkspace({
 
   async function sendPrompt() {
     const text = prompt.trim();
-    if (!text || busy || !eventsReady) return;
+    if (
+      !text ||
+      !location ||
+      busy ||
+      !eventsReady ||
+      operationRef.current ||
+      !savedWorkspace.ok
+    )
+      return;
+    operationRef.current = true;
+    const chat = activeConversation ?? {
+      ...createConversationDraft(
+        location.cwd,
+        selectedAgentId,
+        inventory?.agents.find((item) => item.id === selectedAgentId)?.name ??
+          (selectedAgentId || "Copilot CLI"),
+      ),
+      draft: text,
+    };
+    if (!activeConversation) selectConversation(chat);
     const activeSession =
-      session ?? (await startSession(selectedAgentId, text));
+      session ??
+      (chat.sessionId
+        ? await loadSession(chat, true)
+        : await startSession(chat));
     if (!activeSession) {
       setPrompt(text);
+      operationRef.current = false;
       return;
     }
+    rememberChat(activeSession, chat.agentId, chat.conversationId, chat.title);
     setSurface("workspace");
     const optimisticId = nextMessageId.current++;
     setPrompt("");
@@ -930,7 +1113,13 @@ export function CopilotWorkspace({
       );
       if (mountedRef.current) {
         setStatusText(describeStopReason(result.stopReason));
-        draftsRef.current.delete(activeSession.sessionId);
+        setChats((current) =>
+          current.map((item) =>
+            item.conversationId === chat.conversationId
+              ? { ...item, draft: "" }
+              : item,
+          ),
+        );
       }
     } catch (error) {
       if (mountedRef.current) {
@@ -941,6 +1130,7 @@ export function CopilotWorkspace({
         setPrompt(text);
       }
     } finally {
+      operationRef.current = false;
       if (mountedRef.current) setBusy(false);
     }
   }
@@ -983,6 +1173,10 @@ export function CopilotWorkspace({
 
   async function handleBack() {
     if (busy) return;
+    if (workspaceProblem) {
+      setFailure(workspaceProblem);
+      return;
+    }
     setPermissions([]);
     const closed = await closeSessionSafely();
     if (!closed) return;
@@ -1019,7 +1213,7 @@ export function CopilotWorkspace({
             current,
             page.sessions,
             linkAgentIds,
-            sessionIdRef.current,
+            conversationIdRef.current,
           ),
         );
         const allowed = new Set(["", ...linkAgentIds]);
@@ -1113,6 +1307,7 @@ export function CopilotWorkspace({
   // Resolves the working folder once at mount: the stored cwd if one validates, otherwise the
   // real OS user home the backend reports (never a container default).
   useEffect(() => {
+    if (!savedWorkspace.ok) return;
     void resolveLocation(readStoredCwd());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -1120,6 +1315,7 @@ export function CopilotWorkspace({
   useEffect(() => {
     if (
       !eventsReady ||
+      !savedWorkspace.ok ||
       !location ||
       initialLinkStartedRef.current ||
       initialConversationAgentIds.length === 0
@@ -1177,14 +1373,14 @@ export function CopilotWorkspace({
   // this workspace's inventory. Only applies before a session exists; once one does, the
   // negotiated configOptions become the sole authority over what "selected" means.
   useEffect(() => {
-    if (!inventory || session) return;
+    if (!inventory || session || activeConversationId !== null) return;
     const validIds = new Set([
       "",
       ...inventory.agents.map((agent) => agent.id),
       ...createdAgents.map((agent) => agent.id),
     ]);
     setSelectedAgentId((current) => (validIds.has(current) ? current : ""));
-  }, [inventory, session, createdAgents]);
+  }, [inventory, session, createdAgents, activeConversationId]);
 
   useEffect(() => {
     const entries: Array<
@@ -1219,6 +1415,19 @@ export function CopilotWorkspace({
     if (!container) return;
     container.scrollTop = container.scrollHeight;
   }, [messages, autoScrollEnabled, stickToBottom, surface]);
+
+  if (!savedWorkspace.ok) {
+    return (
+      <main className="copilot-main">
+        <div className="copilot-workspace copilot-repair">
+          <Failure problem={savedWorkspace.problem} />
+          <button type="button" onClick={onBack}>
+            Back
+          </button>
+        </div>
+      </main>
+    );
+  }
 
   if (!location) {
     return (
@@ -1326,13 +1535,23 @@ export function CopilotWorkspace({
         name: chats.find((chat) => chat.agentId === id)?.agentName ?? id,
       },
   );
-  const activeChat = chats.find(
-    (chat) => chat.sessionId === session?.sessionId,
-  );
+  const activeChat = activeConversation;
 
   const currentPermission = permissions[0] ?? null;
   const historyQuery = historySearch.trim().toLowerCase();
-  const filteredHistory = (sessionsPage?.sessions ?? []).filter(
+  const historyRows = conversationHistoryRows(
+    chats,
+    sessionsPage?.sessions ?? [],
+  ).filter((item) => sessionsAllFolders || item.cwd === workspace.cwd);
+  const historyAgents = Array.from(
+    groupWorkspaceChats(historyRows),
+    ([id, conversations]) => ({
+      id,
+      name: conversations[0].agentName,
+      count: conversations.length,
+    }),
+  ).sort((left, right) => left.name.localeCompare(right.name));
+  const filteredHistory = historyRows.filter(
     (item) =>
       (historyAgent === "__all__" || item.agentId === historyAgent) &&
       (!historyQuery ||
@@ -1434,7 +1653,7 @@ export function CopilotWorkspace({
                 disabled={
                   busy || !eventsReady || disabledAgentIds.has(effectiveAgentId)
                 }
-                onClick={() => void startSession(effectiveAgentId)}
+                onClick={() => void startDraft(effectiveAgentId)}
                 title={`New chat with ${currentAgent.name}`}
               >
                 New chat
@@ -1453,7 +1672,7 @@ export function CopilotWorkspace({
                 const agentChats = chatsByAgent.get(agent.id) ?? [];
                 const preview = previewAgentChats(
                   agentChats,
-                  session?.sessionId ?? null,
+                  activeConversationId,
                 );
                 return (
                   <li key={agent.id || "copilot-cli"} data-agent-id={agent.id}>
@@ -1475,7 +1694,7 @@ export function CopilotWorkspace({
                         disabled={
                           busy || !eventsReady || disabledAgentIds.has(agent.id)
                         }
-                        onClick={() => void startSession(agent.id)}
+                        onClick={() => void startDraft(agent.id)}
                       >
                         New
                       </button>
@@ -1483,17 +1702,17 @@ export function CopilotWorkspace({
                     {agentChats.length ? (
                       <ul className="copilot-sidebar-chats">
                         {preview.map((chat) => (
-                          <li key={chat.sessionId}>
+                          <li key={chat.conversationId}>
                             <button
                               ref={
-                                chat.sessionId === session?.sessionId
+                                chat.conversationId === activeConversationId
                                   ? activeChatRef
                                   : null
                               }
                               type="button"
                               className="quiet"
                               aria-current={
-                                chat.sessionId === session?.sessionId
+                                chat.conversationId === activeConversationId
                                   ? "true"
                                   : undefined
                               }
@@ -1501,7 +1720,9 @@ export function CopilotWorkspace({
                               title={chat.title}
                               onClick={() => void loadSession(chat)}
                             >
-                              {chat.title}
+                              {chat.sessionId === null
+                                ? `Draft: ${chat.title}`
+                                : chat.title}
                             </button>
                           </li>
                         ))}
@@ -1613,7 +1834,13 @@ export function CopilotWorkspace({
                 <div>
                   <h2>{activeChat?.title ?? currentAgent.name}</h2>
                   <p>
-                    {session ? currentAgent.name : "Start a new conversation"}
+                    {session
+                      ? currentAgent.name
+                      : activeChat?.sessionId
+                        ? "Open the saved conversation to continue"
+                        : activeChat
+                          ? "Draft saved locally; Copilot starts when you send"
+                          : "Start a new conversation"}
                   </p>
                 </div>
                 <span className="copilot-runtime-state" aria-live="polite">
@@ -1699,7 +1926,7 @@ export function CopilotWorkspace({
                   const agentChats = chatsByAgent.get(agent.id) ?? [];
                   const preview = previewAgentChats(
                     agentChats,
-                    session?.sessionId ?? null,
+                    activeConversationId,
                   );
                   return (
                     <li
@@ -1710,7 +1937,7 @@ export function CopilotWorkspace({
                       <p>{agent.description || "Copilot agent"}</p>
                       <ul className="copilot-canvas-chats">
                         {preview.map((chat) => (
-                          <li key={chat.sessionId}>
+                          <li key={chat.conversationId}>
                             <button
                               type="button"
                               className="quiet"
@@ -1718,7 +1945,9 @@ export function CopilotWorkspace({
                               disabled={busy || !eventsReady}
                               onClick={() => void loadSession(chat)}
                             >
-                              {chat.title}
+                              {chat.sessionId === null
+                                ? `Draft: ${chat.title}`
+                                : chat.title}
                             </button>
                           </li>
                         ))}
@@ -1740,7 +1969,7 @@ export function CopilotWorkspace({
                         disabled={
                           busy || !eventsReady || disabledAgentIds.has(agent.id)
                         }
-                        onClick={() => void startSession(agent.id)}
+                        onClick={() => void startDraft(agent.id)}
                       >
                         New chat
                       </button>
@@ -1810,7 +2039,8 @@ export function CopilotWorkspace({
                   ref={promptRef}
                   id="copilot-prompt"
                   value={prompt}
-                  onChange={(event) => setPrompt(event.target.value)}
+                  onChange={(event) => updateDraft(event.target.value)}
+                  maxLength={MAX_DRAFT_LENGTH}
                   onKeyDown={(event) => {
                     if (
                       event.key === "Enter" &&
@@ -1865,6 +2095,16 @@ export function CopilotWorkspace({
               </details>
             )}
             {failure && <Failure problem={failure} />}
+            {failure && activeChat?.sessionId && !session && !busy && (
+              <button
+                type="button"
+                className="quiet"
+                onClick={() => void loadSession(activeChat)}
+              >
+                Retry opening conversation
+              </button>
+            )}
+            {workspaceProblem && <InlineFailure problem={workspaceProblem} />}
           </section>
         </section>
       </div>
@@ -2376,19 +2616,17 @@ export function CopilotWorkspace({
               }}
             >
               <option value="__all__">
-                All agents (
-                {sessionsPage?.sessions.length.toLocaleString() ?? 0}{" "}
-                conversations)
+                All agents ({historyRows.length.toLocaleString()} conversations)
               </option>
-              {sessionsPage?.agents.map((agent) => (
+              {historyAgents.map((agent) => (
                 <option key={agent.id} value={agent.id}>
-                  {agent.name} ({agent.conversationCount.toLocaleString()})
+                  {agent.name} ({agent.count.toLocaleString()})
                 </option>
               ))}
             </select>
             <p className="hint">
-              Conversations are linked by their recorded initial agent. Sessions
-              without a custom agent use Copilot CLI.
+              Recorded conversations keep their initial agent. Local drafts stay
+              on this device and start Copilot only when you send.
             </p>
           </section>
           <h3 id="copilot-conversations-title">Conversations</h3>
@@ -2438,7 +2676,7 @@ export function CopilotWorkspace({
               <li>No conversations match this agent, folder and search.</li>
             ) : (
               filteredHistory.slice(0, visibleHistoryCount).map((item) => (
-                <li key={item.sessionId} className="copilot-session-row">
+                <li key={item.conversationId} className="copilot-session-row">
                   <div>
                     <span className="copilot-history-agent">
                       {item.agentName}
@@ -2448,10 +2686,19 @@ export function CopilotWorkspace({
                   </div>
                   <button
                     type="button"
-                    disabled={busy || item.sessionId === session?.sessionId}
+                    disabled={
+                      busy ||
+                      (item.sessionId !== null &&
+                        item.sessionId === session?.sessionId)
+                    }
                     onClick={() => void loadSession(item)}
                   >
-                    {item.sessionId === session?.sessionId ? "Active" : "Load"}
+                    {item.sessionId !== null &&
+                    item.sessionId === session?.sessionId
+                      ? "Active"
+                      : item.sessionId === null
+                        ? "Open draft"
+                        : "Load"}
                   </button>
                 </li>
               ))

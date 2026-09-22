@@ -134,8 +134,14 @@ export type CopilotHistorySession = CopilotSessionSummary & {
   agentName: string;
 };
 
-export type CopilotWorkspaceChat = CopilotHistorySession & {
+export type CopilotWorkspaceChat = Omit<
+  CopilotHistorySession,
+  "sessionId" | "title"
+> & {
+  conversationId: string;
+  sessionId: string | null;
   title: string;
+  draft: string;
 };
 
 export type CopilotHistory = {
