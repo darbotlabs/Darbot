@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 0.0.21
+
+- Add an explicit optional Copilot SDK background workspace panel with native
+  consent for tasks and plugin changes, read-only remote-session discovery, and
+  per-workspace runtime-memory opt-in.
+- Add bounded ACP text-file callbacks with canonical project-path validation,
+  one-shot permission review, UTF-8 limits, and atomic writes.
+- Trigger desktop verification when the shared Cargo build configuration changes.
+
 - Persist versioned Darbot conversation identities and bounded local drafts
   independently of CLI session IDs. New chat no longer allocates an empty CLI
   session; existing agent ownership and import decisions survive migration.

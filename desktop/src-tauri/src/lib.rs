@@ -2,6 +2,9 @@
 pub mod acquire;
 pub mod ask;
 pub mod copilot;
+pub mod copilot_client;
+pub mod copilot_extensions;
+pub mod copilot_files;
 pub mod deployment;
 pub mod deployment_release;
 pub mod engine;

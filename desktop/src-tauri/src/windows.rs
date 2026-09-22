@@ -342,7 +342,7 @@ fn decode_probe_text(bytes: &[u8]) -> Result<String, String> {
     // non-ASCII diagnostics; PowerShell's ASCII boolean results and modern UTF-8 also work here.
     if bytes.starts_with(&[0xff, 0xfe]) || bytes.contains(&0) {
         let bytes = bytes.strip_prefix(&[0xff, 0xfe]).unwrap_or(bytes);
-        if bytes.len() % 2 != 0 {
+        if !bytes.len().is_multiple_of(2) {
             return Err("Truncated UTF-16 probe output".into());
         }
         let units = bytes

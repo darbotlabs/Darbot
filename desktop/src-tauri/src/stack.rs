@@ -1714,7 +1714,7 @@ fn windows_process_output(output: &[u8]) -> Result<Vec<WindowsProcess>, Problem>
     // Windows PowerShell redirection can produce UTF-16LE, even though the script requests UTF-8.
     if output.starts_with(&[0xff, 0xfe]) || output.get(1) == Some(&0) {
         let bytes = output.strip_prefix(&[0xff, 0xfe]).unwrap_or(output);
-        if bytes.len() % 2 != 0 {
+        if !bytes.len().is_multiple_of(2) {
             return Err(invalid_encoding());
         }
         let units: Vec<u16> = bytes
@@ -1913,7 +1913,7 @@ fn belongs_to_any_root(pid: u32, roots: &[u32], processes: &[WindowsProcess]) ->
         // ParentProcessId can refer to a reused PID. A newer parent instance cannot have
         // created this child. Validate every link, including the final link to an owned root.
         // https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/win32-process
-        if !times.is_some_and(|(child, parent)| parent <= child) {
+        if times.is_none_or(|(child, parent)| parent > child) {
             return false;
         }
         if roots.contains(&parent) {

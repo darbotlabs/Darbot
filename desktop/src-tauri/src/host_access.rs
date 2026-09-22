@@ -1276,6 +1276,54 @@ fn validate_grant_root(path: &Path, configured_forbidden: &[PathBuf]) -> HostAcc
     validate_grant_root_with_forbidden(path, &forbidden_paths(configured_forbidden))
 }
 
+pub(crate) fn validated_client_file(
+    root: &Path,
+    requested: &Path,
+    write: bool,
+    copilot_home: &Path,
+) -> HostAccessResult<PathBuf> {
+    let root = validate_grant_root(root, &[copilot_home.to_path_buf()])?;
+    if !requested.is_absolute() {
+        return Err(HostAccessError::Denied(
+            "Client file paths must be absolute.".into(),
+        ));
+    }
+    let target = if write {
+        let parent = canonical(requested.parent().ok_or_else(|| {
+            HostAccessError::Denied("The requested file has no parent directory.".into())
+        })?)?;
+        let name = requested
+            .file_name()
+            .ok_or_else(|| HostAccessError::Denied("The requested path has no filename.".into()))?;
+        let target = parent.join(name);
+        match fs::symlink_metadata(&target) {
+            Ok(metadata) if !metadata.file_type().is_file() => {
+                return Err(HostAccessError::Denied(
+                    "Client writes cannot replace links, directories or special files.".into(),
+                ));
+            }
+            Ok(_) => {}
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Err(error) => return Err(HostAccessError::Denied(error.to_string())),
+        }
+        target
+    } else {
+        let target = canonical(requested)?;
+        if !target.is_file() {
+            return Err(HostAccessError::Denied(
+                "Client reads require a regular file.".into(),
+            ));
+        }
+        target
+    };
+    if !path_contains(&root, &target) {
+        return Err(HostAccessError::Denied(
+            "Client file access escaped its working folder.".into(),
+        ));
+    }
+    Ok(target)
+}
+
 fn validate_grant_root_with_forbidden(
     path: &Path,
     forbidden: &ForbiddenPaths,

@@ -1,0 +1,3 @@
+[env]
+# Darbot uses the explicitly selected installed CLI, never an SDK-managed runtime.
+COPILOT_SKIP_CLI_DOWNLOAD = { value = "1", force = true }

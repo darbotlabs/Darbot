@@ -173,6 +173,7 @@ export type CopilotPermissionOption = {
 export type CopilotPermissionRequest = {
   requestId: string;
   sessionId: string;
+  origin?: "conversation" | "background";
   toolCall: unknown;
   options: CopilotPermissionOption[];
 };

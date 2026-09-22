@@ -1362,6 +1362,110 @@ html[data-copilot-theme="dark"] {
   line-height: 1.55;
 }
 
+.copilot-extensions {
+  margin: 0.75rem 0;
+  padding: 0.85rem;
+  border: 1px solid var(--hair);
+  border-radius: var(--r-row);
+  background: var(--sunk);
+}
+
+.copilot-extensions-header,
+.copilot-extensions-toolbar,
+.copilot-extension-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.copilot-extensions-header {
+  align-items: flex-start;
+}
+
+.copilot-extensions-header h2,
+.copilot-extension-grid h3 {
+  margin: 0;
+}
+
+.copilot-extensions-header .hint {
+  margin: 0.25rem 0 0;
+}
+
+.copilot-extensions-connect,
+.copilot-extension-form {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.copilot-extensions-connect {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+}
+
+.copilot-extensions-toolbar {
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+}
+
+.copilot-extension-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 0.85rem;
+}
+
+.copilot-extension-grid > div {
+  min-width: 0;
+}
+
+.copilot-extension-form input,
+.copilot-extension-form select,
+.copilot-extension-form textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--hair);
+  border-radius: var(--r-row);
+  padding: 0.55rem 0.65rem;
+  background: var(--raised);
+  color: var(--ink);
+  font: inherit;
+}
+
+.copilot-extension-form textarea {
+  resize: vertical;
+}
+
+.copilot-extension-list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.65rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.copilot-extension-list li {
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--hair-soft);
+}
+
+.copilot-extension-list li > span {
+  min-width: 0;
+  display: grid;
+  gap: 0.1rem;
+  overflow-wrap: anywhere;
+}
+
+.copilot-extension-list small,
+.copilot-checkbox-row small {
+  display: block;
+  color: var(--ink-faint);
+  font-size: 0.72rem;
+}
+
 .copilot-runtime-warnings {
   margin: 0.5rem 0 0;
 }

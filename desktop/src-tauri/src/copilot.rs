@@ -18,6 +18,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use tauri::{AppHandle, Emitter, Runtime};
 
+use crate::copilot_client::{ClientConsent, ConsentDecision};
+use crate::copilot_files::{self, ReadTextFile, WriteTextFile};
 use crate::problem::Problem;
 use crate::quiet;
 
@@ -229,8 +231,16 @@ pub struct CopilotPermissionOption {
 pub struct CopilotPermissionRequest {
     pub request_id: String,
     pub session_id: String,
+    pub origin: CopilotPermissionOrigin,
     pub tool_call: Value,
     pub options: Vec<CopilotPermissionOption>,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum CopilotPermissionOrigin {
+    Conversation,
+    Background,
 }
 
 #[derive(Debug, Deserialize)]
@@ -256,6 +266,7 @@ struct SkillRecord {
 pub struct CopilotRuntimeState {
     runtime: Mutex<Option<Arc<CopilotRuntime>>>,
     history_agents: Mutex<HashMap<PathBuf, CachedHistoryAgent>>,
+    pub consent: Arc<ClientConsent>,
 }
 
 impl CopilotRuntimeState {
@@ -271,7 +282,7 @@ impl CopilotRuntimeState {
         if let Some(previous) = runtime.take() {
             previous.stop();
         }
-        let connection = Arc::new(CopilotRuntime::start(app)?);
+        let connection = Arc::new(CopilotRuntime::start(app, Arc::clone(&self.consent))?);
         *runtime = Some(Arc::clone(&connection));
         Ok(connection)
     }
@@ -572,6 +583,9 @@ impl CopilotRuntimeState {
         request_id: String,
         option_id: Option<String>,
     ) -> Result<(), Problem> {
+        if request_id.starts_with("client:") {
+            return self.consent.respond(&request_id, option_id.as_deref());
+        }
         self.current()?.respond_permission(request_id, option_id)
     }
 
@@ -658,10 +672,13 @@ struct PendingPermission {
 }
 
 struct SessionState {
+    cwd: String,
     config_options: Value,
 }
 
 struct RuntimeCore {
+    identity: String,
+    consent: Arc<ClientConsent>,
     stdin: Mutex<ChildStdin>,
     pending: Mutex<HashMap<String, Sender<Result<Value, Problem>>>>,
     permissions: Mutex<HashMap<String, PendingPermission>>,
@@ -680,7 +697,7 @@ struct CopilotRuntime {
 }
 
 impl CopilotRuntime {
-    fn start<R: Runtime>(app: &AppHandle<R>) -> Result<Self, Problem> {
+    fn start<R: Runtime>(app: &AppHandle<R>, consent: Arc<ClientConsent>) -> Result<Self, Problem> {
         let mut child = spawn_acp_child()?;
         let stdin = take_child_stdin(&mut child)?;
         let stdout = child.stdout.take().ok_or_else(|| {
@@ -692,6 +709,8 @@ impl CopilotRuntime {
             Problem::plain("GitHub Copilot CLI did not open its diagnostic output.")
         })?;
         let core = Arc::new(RuntimeCore {
+            identity: format!("acp-{:032x}", rand::random::<u128>()),
+            consent,
             stdin: Mutex::new(stdin),
             pending: Mutex::new(HashMap::new()),
             permissions: Mutex::new(HashMap::new()),
@@ -706,7 +725,7 @@ impl CopilotRuntime {
         start_runtime_stdout(stdout, Arc::downgrade(&core), app.clone());
 
         let capabilities = match core
-            .request("initialize", initialize_params(), ACP_TIMEOUT)
+            .request("initialize", initialize_params(true), ACP_TIMEOUT)
             .and_then(|initialized| parse_status(&initialized))
         {
             Ok(status) => status.capabilities,
@@ -741,6 +760,7 @@ impl CopilotRuntime {
     fn stop(&self) {
         self.core.stopping.store(true, Ordering::SeqCst);
         self.core.closed.store(true, Ordering::SeqCst);
+        self.core.consent.cancel(&self.core.identity, None);
         let mut child = self.child.lock().unwrap();
         let _ = child.kill();
         let _ = child.wait();
@@ -862,6 +882,7 @@ impl CopilotRuntime {
         self.core.sessions.lock().unwrap().insert(
             session.session_id.clone(),
             SessionState {
+                cwd: session.cwd.clone(),
                 config_options: session.config_options.clone().unwrap_or_else(|| json!([])),
             },
         );
@@ -1026,6 +1047,7 @@ impl Drop for CopilotRuntime {
     fn drop(&mut self) {
         self.core.stopping.store(true, Ordering::SeqCst);
         self.core.closed.store(true, Ordering::SeqCst);
+        self.core.consent.cancel(&self.core.identity, None);
         let child = self.child.get_mut().unwrap();
         let _ = child.kill();
         let _ = child.wait();
@@ -1121,6 +1143,7 @@ impl RuntimeCore {
     }
 
     fn cancel_permissions(&self, session_id: &str) -> Result<(), Problem> {
+        self.consent.cancel(&self.identity, Some(session_id));
         let cancelled = {
             let mut permissions = self.permissions.lock().unwrap();
             let request_ids = permissions
@@ -1326,6 +1349,9 @@ fn route_runtime_message<R: Runtime>(core: &Arc<RuntimeCore>, app: &AppHandle<R>
         Some("session/request_permission") => {
             route_permission_request(core, app, &message);
         }
+        Some("fs/read_text_file" | "fs/write_text_file") => {
+            route_file_request(core, app, &message);
+        }
         Some(method) if message.get("id").is_some() => {
             let _ = core.write(&json!({
                 "jsonrpc": "2.0",
@@ -1345,9 +1371,10 @@ fn route_permission_request<R: Runtime>(
     app: &AppHandle<R>,
     message: &Value,
 ) {
-    let Some(request_id) = message.get("id").and_then(json_id_key) else {
+    let Some(rpc_key) = message.get("id").and_then(json_id_key) else {
         return;
     };
+    let request_id = format!("{}:{rpc_key}", core.identity);
     let Some(params) = message.get("params") else {
         return;
     };
@@ -1380,6 +1407,7 @@ fn route_permission_request<R: Runtime>(
         CopilotPermissionRequest {
             request_id,
             session_id: session_id.to_string(),
+            origin: CopilotPermissionOrigin::Conversation,
             tool_call: params.get("toolCall").cloned().unwrap_or(Value::Null),
             options,
         },
@@ -1387,14 +1415,172 @@ fn route_permission_request<R: Runtime>(
 }
 
 fn fail_pending(core: &RuntimeCore, problem: Problem) {
+    core.consent.cancel(&core.identity, None);
     let pending = std::mem::take(&mut *core.pending.lock().unwrap());
     for (_, sender) in pending {
         let _ = sender.send(Err(problem.clone()));
     }
 }
 
-fn initialize_params() -> Value {
-    json!({
+enum ClientFileRequest {
+    Read(ReadTextFile),
+    Write(WriteTextFile),
+}
+
+impl ClientFileRequest {
+    fn session_id(&self) -> &str {
+        match self {
+            Self::Read(request) => &request.session_id,
+            Self::Write(request) => &request.session_id,
+        }
+    }
+
+    fn path(&self) -> &str {
+        match self {
+            Self::Read(request) => &request.path,
+            Self::Write(request) => &request.path,
+        }
+    }
+}
+
+fn route_file_request<R: Runtime>(core: &Arc<RuntimeCore>, app: &AppHandle<R>, message: &Value) {
+    let Some(id) = message
+        .get("id")
+        .filter(|id| json_id_key(id).is_some())
+        .cloned()
+    else {
+        return;
+    };
+    let params = message.get("params").cloned().unwrap_or(Value::Null);
+    let parsed = if message["method"] == "fs/read_text_file" {
+        serde_json::from_value(params).map(ClientFileRequest::Read)
+    } else {
+        serde_json::from_value(params).map(ClientFileRequest::Write)
+    };
+    let request = match parsed {
+        Ok(request) => request,
+        Err(error) => {
+            write_client_result(
+                core,
+                id,
+                Err(Problem::with(
+                    "Invalid ACP text-file request.",
+                    error.to_string(),
+                )),
+            );
+            return;
+        }
+    };
+    let cwd = core
+        .sessions
+        .lock()
+        .unwrap()
+        .get(request.session_id())
+        .map(|session| session.cwd.clone());
+    let Some(cwd) = cwd else {
+        write_client_result(
+            core,
+            id,
+            Err(Problem::plain(
+                "File access requires an active session owned by this Darbot connection.",
+            )),
+        );
+        return;
+    };
+    let core = Arc::clone(core);
+    let app = app.clone();
+    std::thread::spawn(move || {
+        let result = (|| {
+            let writing = matches!(request, ClientFileRequest::Write(_));
+            if let ClientFileRequest::Write(request) = &request {
+                if request.content.len() > copilot_files::MAX_FILE_BYTES {
+                    return Err(Problem::plain(
+                        "Client text-file writes are limited to 1 MiB.",
+                    ));
+                }
+            }
+            let home = copilot_home()?;
+            let path = copilot_files::resolve(&cwd, request.path(), writing, &home)?;
+            let mut details = json!({
+                "title": if writing { "Replace a project text file" } else { "Read a project text file" },
+                "path": display_path(&path),
+                "workingDirectory": cwd,
+            });
+            match &request {
+                ClientFileRequest::Read(request) => {
+                    if request.line == Some(0) || request.limit == Some(0) {
+                        return Err(Problem::plain(
+                            "File line and limit must be positive integers.",
+                        ));
+                    }
+                    details["line"] = json!(request.line);
+                    details["limit"] = json!(request.limit);
+                }
+                ClientFileRequest::Write(request) => {
+                    details["bytes"] = json!(request.content.len());
+                }
+            }
+            if core.consent.ask(
+                &app,
+                &core.identity,
+                request.session_id(),
+                CopilotPermissionOrigin::Conversation,
+                details,
+            )? != ConsentDecision::Allow
+            {
+                return Err(Problem::plain("The project file request was not approved."));
+            }
+            if core.closed.load(Ordering::SeqCst)
+                || !core
+                    .sessions
+                    .lock()
+                    .unwrap()
+                    .contains_key(request.session_id())
+            {
+                return Err(Problem::plain("The file request's session has closed."));
+            }
+            let current = copilot_files::resolve(&cwd, request.path(), writing, &home)?;
+            if current != path {
+                return Err(Problem::plain(
+                    "The requested file changed location during approval.",
+                ));
+            }
+            match request {
+                ClientFileRequest::Read(request) => {
+                    Ok(json!({"content": copilot_files::read(&path, request.line, request.limit)?}))
+                }
+                ClientFileRequest::Write(request) => {
+                    copilot_files::write(&path, &request.content)?;
+                    Ok(json!({}))
+                }
+            }
+        })();
+        write_client_result(&core, id, result);
+    });
+}
+
+fn write_client_result(core: &RuntimeCore, id: Value, result: Result<Value, Problem>) {
+    if core.closed.load(Ordering::SeqCst) {
+        return;
+    }
+    let message = match result {
+        Ok(result) => json!({"jsonrpc": "2.0", "id": id, "result": result}),
+        Err(problem) => json!({
+            "jsonrpc": "2.0",
+            "id": id,
+            "error": {"code": -32602, "message": problem.said, "data": problem.detail},
+        }),
+    };
+    if let Err(problem) = core.write(&message) {
+        eprintln!(
+            "Darbot could not answer a client operation: {}",
+            problem.said
+        );
+    }
+}
+
+fn initialize_params(client_files: bool) -> Value {
+    let mut params = json!({
         "protocolVersion": 1,
         "clientCapabilities": {
             "auth": {"terminal": true},
@@ -1404,7 +1590,14 @@ fn initialize_params() -> Value {
             "title": "Darbot",
             "version": env!("CARGO_PKG_VERSION"),
         },
-    })
+    });
+    if client_files {
+        params["clientCapabilities"]["fs"] = json!({
+            "readTextFile": true,
+            "writeTextFile": true,
+        });
+    }
+    params
 }
 
 pub fn workspace(cwd: Option<String>) -> Result<CopilotWorkspace, Problem> {
@@ -1675,7 +1868,7 @@ impl Drop for AcpConnection {
 
 pub fn status() -> Result<CopilotStatus, Problem> {
     let mut connection = AcpConnection::start()?;
-    let initialized = connection.request(0, "initialize", initialize_params())?;
+    let initialized = connection.request(0, "initialize", initialize_params(false))?;
     let mut status = parse_status(&initialized)?;
 
     if status.capabilities.list_sessions {
@@ -1907,7 +2100,7 @@ fn discover_agents() -> Result<(Vec<CopilotAgent>, Vec<String>), Problem> {
             || path
                 .extension()
                 .and_then(|extension| extension.to_str())
-                .map_or(true, |extension| !extension.eq_ignore_ascii_case("md"))
+                .is_none_or(|extension| !extension.eq_ignore_ascii_case("md"))
         {
             continue;
         }
@@ -2532,7 +2725,7 @@ mod tests {
 
     #[test]
     fn initialization_advertises_only_the_callbacks_darbot_implements() {
-        let capabilities = initialize_params()
+        let capabilities = initialize_params(false)
             .get("clientCapabilities")
             .cloned()
             .unwrap();
@@ -2540,6 +2733,12 @@ mod tests {
         assert!(capabilities.get("fs").is_none());
         assert!(capabilities.get("terminal").is_none());
         assert!(capabilities.get("elicitation").is_none());
+        let connected = initialize_params(true);
+        assert_eq!(
+            connected["clientCapabilities"]["fs"],
+            json!({"readTextFile": true, "writeTextFile": true})
+        );
+        assert!(connected["clientCapabilities"].get("terminal").is_none());
     }
 
     #[test]

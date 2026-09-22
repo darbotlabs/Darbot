@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import { CopilotAgentImport } from "./CopilotAgentImport";
+import { CopilotExtensionsPanel } from "./CopilotExtensionsPanel";
 import {
   conversationHistoryRows,
   groupWorkspaceChats,
@@ -792,8 +793,29 @@ export function CopilotWorkspace({
     const permissionRequests = listen<CopilotPermissionRequest>(
       "copilot:permission-request",
       (event) => {
-        if (event.payload.sessionId !== sessionIdRef.current) return;
-        setPermissions((current) => [...current, event.payload]);
+        if (
+          event.payload.sessionId !== sessionIdRef.current &&
+          !creatingSessionRef.current &&
+          event.payload.origin !== "background"
+        )
+          return;
+        setPermissions((current) =>
+          current.some(
+            (request) => request.requestId === event.payload.requestId,
+          )
+            ? current
+            : [...current, event.payload],
+        );
+      },
+    );
+    const permissionClosed = listen<{ requestId: string }>(
+      "copilot:permission-closed",
+      (event) => {
+        setPermissions((current) =>
+          current.filter(
+            (request) => request.requestId !== event.payload.requestId,
+          ),
+        );
       },
     );
     const runtimeErrors = listen<Problem>("copilot:runtime-error", (event) => {
@@ -836,6 +858,7 @@ export function CopilotWorkspace({
     Promise.all([
       sessionUpdates,
       permissionRequests,
+      permissionClosed,
       runtimeErrors,
       historyUpdates,
     ])
@@ -851,6 +874,7 @@ export function CopilotWorkspace({
       for (const registration of [
         sessionUpdates,
         permissionRequests,
+        permissionClosed,
         runtimeErrors,
         historyUpdates,
       ]) {
@@ -1012,7 +1036,9 @@ export function CopilotWorkspace({
       if (mountedRef.current) {
         sessionIdRef.current = null;
         setMessages([]);
-        setPermissions([]);
+        setPermissions((current) =>
+          current.filter((request) => request.origin === "background"),
+        );
         setAvailableCommands([]);
         toolCallMessageIds.current.clear();
         setStatusText("Conversation not opened");
@@ -1150,12 +1176,15 @@ export function CopilotWorkspace({
 
   async function cancelPrompt() {
     if (!session) return;
+    const cancelledSessionId = session.sessionId;
     try {
       await invoke("copilot_session_cancel", {
         sessionId: session.sessionId,
         agent: sessionAgentId || null,
       });
-      setPermissions([]);
+      setPermissions((current) =>
+        current.filter((request) => request.sessionId !== cancelledSessionId),
+      );
     } catch (error) {
       if (mountedRef.current) setFailure(asProblem(error));
     }
@@ -2040,9 +2069,15 @@ export function CopilotWorkspace({
                 </ol>
               )}
             </div>
+            {surface === "cli" && location && (
+              <CopilotExtensionsPanel cwd={location.cwd} />
+            )}
             <div className="copilot-composer">
               <label htmlFor="copilot-prompt">
-                Message {currentAgent.name}
+                Message{" "}
+                {currentAgent.name.replace(/^./, (letter) =>
+                  letter.toUpperCase(),
+                )}
               </label>
               <div className="copilot-composer-input">
                 <button

@@ -224,11 +224,23 @@ normalized to the recorded agent suffix so histories such as `dayour-swe` and
 - `COPILOT_HOME` support, non-blocking per-source inventory failures, and graceful
   runtime cleanup.
 
-Filesystem/terminal callbacks, elicitation, SDK-only fleet/memory management and
-remote-session extensions remain future work. Darbot does not advertise these
-client capabilities. Copilot's own tools, skills and configured MCP servers run
-inside the CLI, subject to its permissions; they do not require Darbot to claim
-filesystem or terminal callback support.
+The connected ACP runtime advertises bounded `fs/read_text_file` and
+`fs/write_text_file` callbacks. Each request is checked against the active
+working folder, reviewed with one-shot native consent, limited to 1 MiB of
+UTF-8 text, and written through an atomic replacement. The status-only probe
+does not advertise these callbacks.
+
+The optional SDK panel can explicitly connect a separate background workspace,
+opt into Copilot runtime memory, list and control runtime-reported tasks,
+enable or disable toggleable marketplace plugins, and discover remote sessions
+read-only. SDK memory is not Darbot lavamem; remote discovery does not export,
+create or connect sessions; plugin management does not install or uninstall
+plugins. Mutating SDK actions require native confirmation and do not alter the
+active ACP conversation.
+
+Terminal callbacks and elicitation/form callbacks remain future work. Copilot's
+own tools, skills and configured MCP servers run inside the CLI, subject to its
+permissions; Darbot does not claim unsupported client capabilities.
 
 ## Product model
 

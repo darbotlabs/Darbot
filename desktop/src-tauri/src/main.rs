@@ -11,9 +11,9 @@ mod desktop_telemetry;
 mod test_support;
 
 use darbot_desktop_lib::{
-    acquire, copilot, deployment, deployment_release, engine, env as darbot_env, harness,
-    host_access, install, problem::Problem, provider, pull_metrics, quiet, stack, supervise,
-    telemetry, tray, windows as win,
+    acquire, copilot, copilot_extensions, deployment, deployment_release, engine,
+    env as darbot_env, harness, host_access, install, problem::Problem, provider, pull_metrics,
+    quiet, stack, supervise, telemetry, tray, windows as win,
 };
 
 const QUIT_CLEANUP_NOTICE_FILE: &str = ".darbot-quit-cleanup-notice";
@@ -2786,6 +2786,25 @@ async fn copilot_permission_respond<R: tauri::Runtime>(
     .await
 }
 
+#[tauri::command]
+fn copilot_extensions_status(
+    extensions: tauri::State<'_, Arc<copilot_extensions::ExtensionState>>,
+) -> Option<copilot_extensions::ExtensionSnapshot> {
+    extensions.status()
+}
+
+#[tauri::command]
+async fn copilot_extensions_action<R: tauri::Runtime>(
+    app: tauri::AppHandle<R>,
+    runtime: tauri::State<'_, Arc<copilot::CopilotRuntimeState>>,
+    extensions: tauri::State<'_, Arc<copilot_extensions::ExtensionState>>,
+    request: copilot_extensions::ExtensionRequest,
+) -> Result<Option<copilot_extensions::ExtensionSnapshot>, Problem> {
+    let consent = Arc::clone(&runtime.consent);
+    let extensions = Arc::clone(&extensions);
+    extensions.execute(&app, consent, request).await
+}
+
 /// `bun` from PATH, or the places an installer puts it when PATH has not been reloaded.
 fn which_bun() -> Option<PathBuf> {
     if quiet::command("bun")
@@ -3116,6 +3135,7 @@ fn main() {
         .plugin(tauri_plugin_dialog::init())
         .manage(Shell::default())
         .manage(Arc::new(copilot::CopilotRuntimeState::default()))
+        .manage(Arc::new(copilot_extensions::ExtensionState::default()))
         .invoke_handler(tauri::generate_handler![
             record_setup_event,
             detect_engine,
@@ -3149,6 +3169,8 @@ fn main() {
             copilot_session_cancel,
             copilot_session_close,
             copilot_permission_respond,
+            copilot_extensions_status,
+            copilot_extensions_action,
             already_configured,
             begin_claude_sign_in,
             finish_claude_sign_in,
@@ -3263,6 +3285,9 @@ fn main() {
                         || api.prevent_exit(),
                         move || {
                             desktop_telemetry::shutdown(&cleaning_app);
+                            cleaning_app
+                                .state::<Arc<copilot_extensions::ExtensionState>>()
+                                .shutdown();
                             cleaning_app
                                 .state::<Arc<copilot::CopilotRuntimeState>>()
                                 .shutdown();
