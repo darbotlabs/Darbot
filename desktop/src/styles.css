@@ -799,6 +799,7 @@ html[data-copilot-theme="dark"] {
 .copilot-surface-tabs {
   display: flex;
   flex: 1;
+  min-width: 0;
   gap: 0.5rem;
 }
 
