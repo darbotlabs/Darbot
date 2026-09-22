@@ -516,6 +516,59 @@ details > summary:hover {
   line-height: 1.5;
 }
 
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.75rem;
+}
+
+.brand-mark {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(20, 28, 94, 0.16);
+}
+
+.lockup span {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.hint {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+}
+
+/* Machine output stays behind a disclosure, never in the failure headline. */
+.detail-of {
+  border: 0;
+  padding: 0.6rem 0 0;
+  margin: 0;
+}
+
+.detail-of > summary {
+  font-size: 0.78rem;
+}
+
+.detail-of pre {
+  margin: 0.5rem 0 0;
+  padding: 0.6rem 0.7rem;
+  background: var(--sunk);
+  border-radius: 8px;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 9rem;
+  overflow-y: auto;
+  color: var(--ink-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
 .copilot-main {
   height: 100dvh;
   min-height: 0;
@@ -630,7 +683,7 @@ html[data-copilot-theme="dark"] {
   padding: 0;
 }
 
-.copilot-sidebar-groups > li + li {
+.copilot-sidebar-groups > :where(li) + li {
   margin-top: 0.75rem;
 }
 
@@ -764,7 +817,7 @@ html[data-copilot-theme="dark"] {
   border-color: var(--focus);
 }
 
-.copilot-canvas > .copilot-conversation {
+:where(.copilot-canvas) > .copilot-conversation {
   flex: 1;
 }
 
@@ -869,7 +922,7 @@ html[data-copilot-theme="dark"] {
   margin: 0;
 }
 
-.copilot-cli-activity .detail-of pre {
+.copilot-cli-activity :where(.detail-of) pre {
   max-height: 20rem;
   overflow: auto;
   white-space: pre-wrap;
@@ -1056,7 +1109,7 @@ html[data-copilot-theme="dark"] {
   gap: 0.5rem;
 }
 
-.copilot-repair-body .row input[type="text"] {
+:where(.copilot-repair-body) .row input[type="text"] {
   flex: 1 1 14rem;
   min-height: 2.4rem;
   padding: 0.5rem 0.65rem;
@@ -1447,12 +1500,6 @@ html[data-copilot-theme="dark"] {
   color: var(--ink-faint);
   font-size: 0.72rem;
   overflow-wrap: anywhere;
-}
-
-.hint {
-  margin: 0;
-  color: var(--ink-faint);
-  font-size: 0.78rem;
 }
 
 .copilot-capability-list {
@@ -1935,54 +1982,6 @@ html[data-copilot-theme="dark"] {
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
-}
-
-.lockup {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1.75rem;
-}
-
-.brand-mark {
-  display: block;
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(20, 28, 94, 0.16);
-}
-
-.lockup span {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-/* The developer half of a failure: present, and never the headline. */
-.detail-of {
-  border: 0;
-  padding: 0.6rem 0 0;
-  margin: 0;
-}
-
-.detail-of > summary {
-  font-size: 0.78rem;
-}
-
-.detail-of pre {
-  margin: 0.5rem 0 0;
-  padding: 0.6rem 0.7rem;
-  background: var(--sunk);
-  border-radius: 8px;
-  font-size: 0.72rem;
-  line-height: 1.45;
-  white-space: pre-wrap;
-  word-break: break-word;
-  max-height: 9rem;
-  overflow-y: auto;
-  color: var(--ink-soft);
-  /* Monospace here is for machine output, which is what it is for. */
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 /*

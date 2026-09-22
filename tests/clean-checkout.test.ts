@@ -77,4 +77,15 @@ describe("a clone that has only run bun install", () => {
     expect(ignored).toContain(".env.*");
     expect(ignored).toContain("!.env.example");
   });
+
+  test("standalone server packaging includes and builds its local SDK workspaces", () => {
+    const dockerfile = readFileSync(join(root, "server", "Dockerfile"), "utf8");
+    expect(dockerfile).toContain("COPY packages packages");
+    expect(dockerfile).toContain("COPY assets/swarm assets/swarm");
+    expect(dockerfile).toContain("bun run build:sdk");
+    expect(dockerfile).toContain("COPY --from=app-build /built-sdk packages");
+    expect(dockerfile.indexOf("COPY packages packages")).toBeLessThan(
+      dockerfile.indexOf("RUN bun install --frozen-lockfile"),
+    );
+  });
 });

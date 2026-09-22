@@ -107,7 +107,11 @@ The Swarm registry is generated from the two approved manifests under
 `assets/swarm`, without transforming artwork. `bun run generate:swarm` regenerates
 it after verifying the packs; `bun run verify:swarm` verifies both checksums and
 freshness without writing anything. Web and desktop production builds perform the
-same validation automatically. Keep the immutable packs outside formatter runs.
+same validation automatically. Imported packs under `assets/`, including the
+original handoff directories, are immutable formatter inputs and are excluded
+from formatter runs. Authored integration code remains checked. Source text
+uses LF checkouts on every platform; the checksum-protected packs retain their
+explicit byte-preserving Git attributes.
 
 Run these before opening a pull request:
 

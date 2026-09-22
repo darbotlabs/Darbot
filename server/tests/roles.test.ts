@@ -255,9 +255,7 @@ describe("seedRole", () => {
   test("starts an address on the list as an administrator", async () => {
     const { database, written } = databaseWithUser("admin@darbot.test");
 
-    await seedRole(database, "u1", "admin@darbot.test", [
-      "admin@darbot.test",
-    ]);
+    await seedRole(database, "u1", "admin@darbot.test", ["admin@darbot.test"]);
 
     expect(written).toEqual(["admin"]);
   });
@@ -265,9 +263,7 @@ describe("seedRole", () => {
   test("starts everybody else as a user", async () => {
     const { database, written } = databaseWithUser("member@darbot.test");
 
-    await seedRole(database, "u1", "member@darbot.test", [
-      "admin@darbot.test",
-    ]);
+    await seedRole(database, "u1", "member@darbot.test", ["admin@darbot.test"]);
 
     expect(written).toEqual(["user"]);
   });

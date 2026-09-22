@@ -116,6 +116,8 @@ describe("approved Swarm source integration", () => {
       "tokens/../secret",
       "/absolute",
       "C:/secret",
+      "C:secret",
+      "tokens/file.png:stream",
       "tokens\\secret",
       "tokens/\0.png",
     ]) {

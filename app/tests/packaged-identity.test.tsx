@@ -1,7 +1,10 @@
 import { afterAll, afterEach, beforeAll, expect, test } from "bun:test";
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { cleanup, render } from "@testing-library/react";
-import type { AgentIconIdentity, DarbotAgentIdentity } from "@/lib/agents/icons";
+import type {
+  AgentIconIdentity,
+  DarbotAgentIdentity,
+} from "@/lib/agents/icons";
 import { swarmIdentities } from "@/lib/agents/icons";
 import {
   bindingKindLabel,
@@ -29,8 +32,12 @@ afterAll(() => GlobalRegistrator.unregister());
 const architect = swarmIdentities.find(
   (identity) => identity.agentId === "azure_architect",
 );
-const adk = swarmIdentities.find((identity) => identity.agentId === "agent-adk");
-const bot = swarmIdentities.find((identity) => identity.agentId === "agent-bot");
+const adk = swarmIdentities.find(
+  (identity) => identity.agentId === "agent-adk",
+);
+const bot = swarmIdentities.find(
+  (identity) => identity.agentId === "agent-bot",
+);
 if (!architect || !adk || !bot) {
   throw new Error(
     "Fixture identities missing from the generated registry \u2014 update this test's fixtures.",

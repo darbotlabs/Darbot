@@ -6,8 +6,7 @@ describe("TEST_DATABASE_URL isolation", () => {
   test("survives createDatabase deleting DATABASE_URL before a later connection opens", async () => {
     const databaseUrl = testDatabaseUrl();
     const databaseName = new URL(databaseUrl).pathname.replace(/^\//, "");
-    process.env.DATABASE_URL =
-      "postgres://darbot:darbot@localhost:5432/darbot";
+    process.env.DATABASE_URL = "postgres://darbot:darbot@localhost:5432/darbot";
 
     const first = createDatabase(databaseUrl, TEST_POOL);
     try {

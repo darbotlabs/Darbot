@@ -8,7 +8,9 @@ import { frameworkIdentityIds } from "../shared/swarm-frameworks";
 import type { DarbotAgentIdentity } from "../shared/swarm-types";
 
 // Vite preserves import.meta.url when bundling its config, but not Bun's import.meta.dir.
-export const swarmRoot = fileURLToPath(new URL("../assets/swarm", import.meta.url));
+export const swarmRoot = fileURLToPath(
+  new URL("../assets/swarm", import.meta.url),
+);
 export const swarmUrlPrefix = "/assets/swarm/";
 export const cohortDirectories = [
   "cohort-01-solid64",
@@ -18,6 +20,7 @@ export const cohortDirectories = [
 export function containedPath(root: string, relative: string): string {
   if (
     relative.includes("\\") ||
+    relative.includes(":") ||
     relative.includes("\0") ||
     relative.split("/").some((part) => !part || part === "." || part === "..")
   ) {

@@ -325,9 +325,7 @@ test("an unrelated customer endpoint receives no deployment token", async () => 
     target: "customer",
   });
   expect(result.requests.map((request) => request.status)).toEqual([200]);
-  expect(result.requests[0]?.headerNames).not.toContain(
-    "x-darbot-agent-token",
-  );
+  expect(result.requests[0]?.headerNames).not.toContain("x-darbot-agent-token");
 });
 
 test("a picked installed harness requires a token even when the bundled Bot is omitted", () => {
@@ -425,9 +423,7 @@ test("uppercase BYO endpoints keep customer auth without a deployment token", as
     customerAuth: true,
   });
   expect(result.requests.map((request) => request.status)).toEqual([200]);
-  expect(result.requests[0]?.headerNames).not.toContain(
-    "x-darbot-agent-token",
-  );
+  expect(result.requests[0]?.headerNames).not.toContain("x-darbot-agent-token");
   expect(result.failed).toBe(false);
 });
 

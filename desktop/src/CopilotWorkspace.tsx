@@ -1,7 +1,14 @@
 import { getVersion } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { CopilotAgentImport } from "./CopilotAgentImport";
 import {
   conversationHistoryRows,
@@ -363,6 +370,7 @@ export function CopilotWorkspace({
     }
   }, [conversationWorkspace, savedWorkspace.ok]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Selection and newly linked rows change the active row's scroll position.
   useEffect(() => {
     activeChatRef.current?.scrollIntoView({
       block: "nearest",
@@ -370,16 +378,19 @@ export function CopilotWorkspace({
     });
   }, [activeConversationId, chats.length]);
 
-  function setChats(
-    update:
-      | CopilotWorkspaceChat[]
-      | ((current: CopilotWorkspaceChat[]) => CopilotWorkspaceChat[]),
-  ) {
-    setConversationWorkspace((current) => ({
-      ...current,
-      chats: typeof update === "function" ? update(current.chats) : update,
-    }));
-  }
+  const setChats = useCallback(
+    (
+      update:
+        | CopilotWorkspaceChat[]
+        | ((current: CopilotWorkspaceChat[]) => CopilotWorkspaceChat[]),
+    ) => {
+      setConversationWorkspace((current) => ({
+        ...current,
+        chats: typeof update === "function" ? update(current.chats) : update,
+      }));
+    },
+    [],
+  );
 
   function selectConversation(chat: CopilotWorkspaceChat | null) {
     conversationIdRef.current = chat?.conversationId ?? null;
@@ -615,7 +626,7 @@ export function CopilotWorkspace({
     }
   }
 
-  async function useHomeLocation() {
+  async function resetLocationToHome() {
     const closed = await closeSessionSafely();
     if (!closed) return;
     selectConversation(null);
@@ -761,6 +772,8 @@ export function CopilotWorkspace({
     }
   }
 
+  const onSessionUpdate = useEffectEvent(handleSessionUpdate);
+
   // Registered once on mount. Session-scoped events are filtered by sessionIdRef, which callers
   // update before invoking session-new/session-load so replayed history is never missed.
   useEffect(() => {
@@ -773,7 +786,7 @@ export function CopilotWorkspace({
             initialUpdatesRef.current.push(event.payload);
           return;
         }
-        handleSessionUpdate(event.payload.update);
+        onSessionUpdate(event.payload.update);
       },
     );
     const permissionRequests = listen<CopilotPermissionRequest>(
@@ -851,7 +864,7 @@ export function CopilotWorkspace({
           });
       }
     };
-  }, []);
+  }, [setChats]);
 
   function sanitizeConfigOptions(options: ConfigOption[]): ConfigOption[] {
     return options.filter((option) => !HIDDEN_CONFIG_IDS.has(option.id));
@@ -1293,10 +1306,6 @@ export function CopilotWorkspace({
   function changeTheme(next: ThemePreference) {
     setThemeState(next);
     writeThemePreference(next);
-    setThemeSyncWarning(null);
-    applyTheme(next).catch((error) => {
-      if (mountedRef.current) setThemeSyncWarning(asProblem(error));
-    });
   }
 
   function changeAutoScroll(next: boolean) {
@@ -1304,12 +1313,16 @@ export function CopilotWorkspace({
     writeAutoScrollPreference(next);
   }
 
-  // Resolves the working folder once at mount: the stored cwd if one validates, otherwise the
-  // real OS user home the backend reports (never a container default).
-  useEffect(() => {
+  const resolveInitialLocation = useEffectEvent(() => {
     if (!savedWorkspace.ok) return;
     void resolveLocation(readStoredCwd());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  });
+  const linkInitialHistory = useEffectEvent((agentIds: readonly string[]) =>
+    fetchHistory(true, agentIds),
+  );
+
+  useEffect(() => {
+    resolveInitialLocation();
   }, []);
 
   useEffect(() => {
@@ -1323,19 +1336,22 @@ export function CopilotWorkspace({
       return;
     initialLinkStartedRef.current = true;
     setSurface("canvas");
-    void fetchHistory(true, initialConversationAgentIds);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventsReady, location, initialConversationAgentIds]);
+    void linkInitialHistory(initialConversationAgentIds);
+  }, [eventsReady, location, initialConversationAgentIds, savedWorkspace.ok]);
 
   // main.tsx already applied this theme before first paint, but had no UI yet to show a failure
   // in. Re-applying the same value here is a harmless no-op on success and, on failure, gives the
   // native window-sync problem an actual place to surface instead of staying silent.
   useEffect(() => {
+    let current = true;
+    setThemeSyncWarning(null);
     applyTheme(theme).catch((error) => {
-      if (mountedRef.current) setThemeSyncWarning(asProblem(error));
+      if (current && mountedRef.current) setThemeSyncWarning(asProblem(error));
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return () => {
+      current = false;
+    };
+  }, [theme]);
 
   useEffect(() => {
     getVersion()
@@ -1367,7 +1383,7 @@ export function CopilotWorkspace({
     return () => {
       current = false;
     };
-  }, [location?.cwd]);
+  }, [location]);
 
   // Falls back to the default Copilot agent if a previously stored choice no longer exists in
   // this workspace's inventory. Only applies before a session exists; once one does, the
@@ -1409,6 +1425,7 @@ export function CopilotWorkspace({
 
   // Follows new messages only while the reader is already at the bottom, so nobody scrolled up
   // to re-read something earlier gets yanked back down mid-read.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Appended messages and tab changes require remeasuring the scroll container.
   useEffect(() => {
     if (!autoScrollEnabled || !stickToBottom) return;
     const container = messagesRef.current;
@@ -1467,7 +1484,7 @@ export function CopilotWorkspace({
                   <button
                     type="button"
                     className="quiet"
-                    onClick={() => void useHomeLocation()}
+                    onClick={() => void resetLocationToHome()}
                   >
                     Use home folder
                   </button>
@@ -1828,6 +1845,7 @@ export function CopilotWorkspace({
               role="tabpanel"
               aria-labelledby="copilot-tab-workspace"
               hidden={surface !== "workspace"}
+              // biome-ignore lint/a11y/noNoninteractiveTabindex: ARIA tab panels need a keyboard entry point for their scrollable content.
               tabIndex={0}
             >
               <div className="copilot-conversation-title">
@@ -1913,6 +1931,7 @@ export function CopilotWorkspace({
               role="tabpanel"
               aria-labelledby="copilot-tab-canvas"
               hidden={surface !== "canvas"}
+              // biome-ignore lint/a11y/noNoninteractiveTabindex: ARIA tab panels need a keyboard entry point for their scrollable content.
               tabIndex={0}
             >
               <div className="copilot-surface-heading">
@@ -1984,6 +2003,7 @@ export function CopilotWorkspace({
               role="tabpanel"
               aria-labelledby="copilot-tab-cli"
               hidden={surface !== "cli"}
+              // biome-ignore lint/a11y/noNoninteractiveTabindex: ARIA tab panels need a keyboard entry point for their scrollable content.
               tabIndex={0}
             >
               <div className="copilot-surface-heading">
@@ -2088,8 +2108,8 @@ export function CopilotWorkspace({
               <details className="copilot-runtime-warnings">
                 <summary>Copilot resource warnings</summary>
                 <ul>
-                  {inventory.warnings.map((warning, index) => (
-                    <li key={index}>{warning}</li>
+                  {[...new Set(inventory.warnings)].map((warning) => (
+                    <li key={warning}>{warning}</li>
                   ))}
                 </ul>
               </details>
@@ -2455,8 +2475,8 @@ export function CopilotWorkspace({
                   <details className="copilot-runtime-warnings">
                     <summary>Warnings</summary>
                     <ul>
-                      {status.warnings.map((warning, index) => (
-                        <li key={index}>{warning}</li>
+                      {[...new Set(status.warnings)].map((warning) => (
+                        <li key={warning}>{warning}</li>
                       ))}
                     </ul>
                   </details>
@@ -2579,8 +2599,8 @@ export function CopilotWorkspace({
             <details className="copilot-runtime-warnings">
               <summary>Warnings</summary>
               <ul>
-                {inventory.warnings.map((warning, index) => (
-                  <li key={index}>{warning}</li>
+                {[...new Set(inventory.warnings)].map((warning) => (
+                  <li key={warning}>{warning}</li>
                 ))}
               </ul>
             </details>

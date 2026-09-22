@@ -2451,8 +2451,7 @@ describe("a dynamic client the vendor has evicted", () => {
     expect(
       registeredBy(registered, "someone@darbot.test", FRESH.clientId),
     ).toBe(
-      registeredBy(registeredBefore, "someone@darbot.test", FRESH.clientId) +
-        1,
+      registeredBy(registeredBefore, "someone@darbot.test", FRESH.clientId) + 1,
     );
   });
 

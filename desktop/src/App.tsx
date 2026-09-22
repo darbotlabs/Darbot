@@ -162,6 +162,7 @@ export function App() {
       ? null
       : step;
   const lastViewedStep = useRef<SetupStep | null>(null);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Changing setup screens must reset the window scroll position.
   useEffect(() => {
     window.scrollTo({
       top: 0,

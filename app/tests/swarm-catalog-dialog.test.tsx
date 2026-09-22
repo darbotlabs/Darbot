@@ -34,8 +34,12 @@ afterAll(() => GlobalRegistrator.unregister());
 const architect = swarmIdentities.find(
   (identity) => identity.agentId === "azure_architect",
 );
-const adk = swarmIdentities.find((identity) => identity.agentId === "agent-adk");
-const bot = swarmIdentities.find((identity) => identity.agentId === "agent-bot");
+const adk = swarmIdentities.find(
+  (identity) => identity.agentId === "agent-adk",
+);
+const bot = swarmIdentities.find(
+  (identity) => identity.agentId === "agent-bot",
+);
 if (!architect || !adk || !bot) {
   throw new Error(
     "Fixture identities missing from the generated registry \u2014 update this test's fixtures.",
@@ -66,7 +70,7 @@ test("matchesSearch matches on name, id, domain, perspective, role, group and co
   expect(matchesSearch(adk, "agent construction")).toBe(true);
 });
 
-test("matchesCohort filters to exactly one cohort or passes everything through for \"all\"", () => {
+test('matchesCohort filters to exactly one cohort or passes everything through for "all"', () => {
   expect(matchesCohort(architect, "all")).toBe(true);
   expect(matchesCohort(architect, "solid64")).toBe(true);
   expect(matchesCohort(architect, "mint-opal64")).toBe(false);
@@ -108,8 +112,12 @@ test("the registry list states the total, code-bound and perspective counts and 
   expect(view.getByText("Swarm identity registry")).toBeTruthy();
   const description = view.getByText(/packaged identities across both cohorts/);
   expect(description.textContent).toContain(`${swarmIdentities.length}`);
-  expect(description.textContent).toContain(`${CODE_BOUND_COUNT} are code-bound`);
-  expect(description.textContent).toContain(`${PERSPECTIVE_COUNT} are proposed perspectives`);
+  expect(description.textContent).toContain(
+    `${CODE_BOUND_COUNT} are code-bound`,
+  );
+  expect(description.textContent).toContain(
+    `${PERSPECTIVE_COUNT} are proposed perspectives`,
+  );
   expect(description.textContent).toContain("descriptive only, independent of");
   expect(description.textContent).toContain(
     "nothing here is added as a coworker on its own",
@@ -156,9 +164,7 @@ test("a search that matches nothing shows the empty state instead of an empty li
   await user.type(search, "no such identity in the registry");
 
   expect(view.getByText("No identities match")).toBeTruthy();
-  expect(
-    view.getByText(/no such identity in the registry/),
-  ).toBeTruthy();
+  expect(view.getByText(/no such identity in the registry/)).toBeTruthy();
   expect(view.queryByTestId(`swarm-identity-${architect.agentId}`)).toBeNull();
 });
 
@@ -176,17 +182,19 @@ test("selecting an identity opens its detail view with its own artwork and facts
   const title = view.baseElement.querySelector('[data-slot="dialog-title"]');
   expect(title?.textContent).toBe(architect.displayName);
   expect(
-    view.getByText(/descriptive catalog entry, independent of runtime configuration/),
+    view.getByText(
+      /descriptive catalog entry, independent of runtime configuration/,
+    ),
   ).toBeTruthy();
 
   const images = Array.from(view.baseElement.querySelectorAll("img"));
   expect(images.length).toBeGreaterThanOrEqual(2);
-  expect(images.some((image) => image.src.includes(architect.avatar.png512))).toBe(
-    true,
-  );
-  expect(images.some((image) => image.src.includes(architect.token.png256))).toBe(
-    true,
-  );
+  expect(
+    images.some((image) => image.src.includes(architect.avatar.png512)),
+  ).toBe(true);
+  expect(
+    images.some((image) => image.src.includes(architect.token.png256)),
+  ).toBe(true);
   // The registry's own words for the identity, surfaced through IdentityFacts.
   expect(view.baseElement.textContent).toContain(architect.domain);
   expect(view.baseElement.textContent).toContain(architect.role);

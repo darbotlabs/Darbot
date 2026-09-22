@@ -21,6 +21,7 @@ export function CopilotAgentImport({
   const [attempt, setAttempt] = useState(0);
   const existing = new Set(existingIds);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: The retry counter intentionally repeats native discovery.
   useEffect(() => {
     let active = true;
     setFailure(null);

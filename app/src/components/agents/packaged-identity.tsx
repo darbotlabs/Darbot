@@ -52,11 +52,7 @@ export function materialSummary(identity: DarbotAgentIdentity): string {
  * written for, the material its artwork was rendered in, and the framework it names if it names
  * one. Plain facts, not a form; nothing here is editable from this list.
  */
-export function IdentityFacts({
-  identity,
-}: {
-  identity: DarbotAgentIdentity;
-}) {
+export function IdentityFacts({ identity }: { identity: DarbotAgentIdentity }) {
   const facts: [string, string][] = [
     ["Identity", `${identity.displayName} \u2014 ${identity.identityCode}`],
     ["Cohort", cohortLabel(identity)],

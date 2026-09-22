@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const repositoryRoot = join(import.meta.dir, "..");
@@ -28,15 +28,37 @@ function packagesStartedBy(script: string, workspaces: string[]): string[] {
 }
 
 describe("darbot workspace", () => {
-  test("defines the app, server, and worker packages", () => {
+  test("defines the deployable packages and local SDK workspaces", () => {
     const manifest = rootManifest();
 
-    expect(manifest.workspaces).toEqual(["app", "server", "worker"]);
+    expect(manifest.workspaces).toEqual([
+      "app",
+      "server",
+      "worker",
+      "packages/*",
+    ]);
 
-    for (const packageName of manifest.workspaces) {
+    for (const packageName of ["app", "server", "worker"]) {
       expect(existsSync(join(repositoryRoot, packageName))).toBe(true);
       expect(packageManifest(packageName).name).toBe(packageName);
     }
+    const sdkPackages = readdirSync(join(repositoryRoot, "packages"), {
+      withFileTypes: true,
+    }).filter(
+      (entry) =>
+        entry.isDirectory() &&
+        existsSync(
+          join(repositoryRoot, "packages", entry.name, "package.json"),
+        ),
+    );
+    expect(sdkPackages.length).toBeGreaterThan(0);
+    const names = sdkPackages.map(
+      (entry) => packageManifest(join("packages", entry.name)).name,
+    );
+    expect(new Set(names).size).toBe(names.length);
+    expect(names).toContain("@darbotlm/runtime");
+    expect(names).toContain("@darbotlm/react-core");
+    expect(names).toContain("tsconfig");
   });
 
   test("dev starts the app and the server, and not the routines worker", () => {

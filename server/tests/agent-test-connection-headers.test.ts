@@ -191,17 +191,14 @@ describe("a header value that cannot be sent", () => {
       };
       const app = createAgentRoutes({} as never, requireUser, true);
 
-      const response = await app.request(
-        "http://darbot.test/test-connection",
-        {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            endpoint: `http://127.0.0.1:${agent.port}/ag-ui`,
-            headers: { Authorization: "Bearer abc\ndef" },
-          }),
-        },
-      );
+      const response = await app.request("http://darbot.test/test-connection", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          endpoint: `http://127.0.0.1:${agent.port}/ag-ui`,
+          headers: { Authorization: "Bearer abc\ndef" },
+        }),
+      });
 
       expect(response.status).toBe(400);
       // The agent is fine and was never asked. What is wrong is the value in the box, and that is

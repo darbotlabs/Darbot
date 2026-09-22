@@ -514,8 +514,11 @@ export function ProviderPicker({
       {row && (
         <div ref={selectedPanelRef} className="chosen-provider">
           {row.logins.length > 1 && (
-            <fieldset className="segmented" role="tablist">
-              <legend className="sr-only">Sign-in method</legend>
+            <div
+              className="segmented"
+              role="tablist"
+              aria-label="Sign-in method"
+            >
               {row.logins.map((option) => (
                 <button
                   type="button"
@@ -530,7 +533,7 @@ export function ProviderPicker({
                     : "Use an API key"}
                 </button>
               ))}
-            </fieldset>
+            </div>
           )}
 
           {login === "plan" &&
@@ -757,7 +760,7 @@ export function ProviderPicker({
                     existing GitHub Copilot sign-in and local Copilot resources
                     stay owned by the CLI.
                   </p>
-                  <div
+                  <section
                     className="copilot-counts"
                     aria-label="Copilot resources"
                   >
@@ -779,7 +782,7 @@ export function ProviderPicker({
                       </strong>{" "}
                       MCP servers
                     </span>
-                  </div>
+                  </section>
                   {(!copilotStatus.capabilities.listSessions ||
                     !copilotStatus.capabilities.loadSession) && (
                     <p className="caution">

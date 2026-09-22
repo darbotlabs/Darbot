@@ -134,8 +134,9 @@ function SwarmCatalogBrowser() {
   const selected = useMemo(
     () =>
       selectedId
-        ? (swarmIdentities.find((identity) => identity.agentId === selectedId) ??
-          null)
+        ? (swarmIdentities.find(
+            (identity) => identity.agentId === selectedId,
+          ) ?? null)
         : null,
     [selectedId],
   );
@@ -153,10 +154,7 @@ function SwarmCatalogBrowser() {
 
   if (selected) {
     return (
-      <IdentityDetail
-        identity={selected}
-        onBack={() => setSelectedId(null)}
-      />
+      <IdentityDetail identity={selected} onBack={() => setSelectedId(null)} />
     );
   }
 
@@ -167,11 +165,10 @@ function SwarmCatalogBrowser() {
         <DialogDescription>
           {swarmIdentities.length} packaged identities across both cohorts:{" "}
           {CODE_BOUND_COUNT} are code-bound (a framework adapter or a built-in
-          interaction) and {PERSPECTIVE_COUNT} are proposed perspectives with
-          no binding at all. This list is descriptive only, independent of
-          runtime configuration — browsing or opening an entry changes
-          nothing about any coworker, and nothing here is added as a
-          coworker on its own.
+          interaction) and {PERSPECTIVE_COUNT} are proposed perspectives with no
+          binding at all. This list is descriptive only, independent of runtime
+          configuration — browsing or opening an entry changes nothing about any
+          coworker, and nothing here is added as a coworker on its own.
         </DialogDescription>
       </DialogHeader>
       <DialogBody className="gap-3">
@@ -212,9 +209,7 @@ function SwarmCatalogBrowser() {
                 "code-bound": `Code-bound (${CODE_BOUND_COUNT})`,
                 perspective: `Perspectives (${PERSPECTIVE_COUNT})`,
               }}
-              onValueChange={(next) =>
-                setBindingFilter(next as BindingFilter)
-              }
+              onValueChange={(next) => setBindingFilter(next as BindingFilter)}
               value={bindingFilter}
             >
               <SelectTrigger className="w-40 shrink-0">
@@ -307,8 +302,8 @@ function IdentityDetail({
         </Button>
         <DialogTitle>{identity.displayName}</DialogTitle>
         <DialogDescription>
-          {bindingKindLabel(identity)} — descriptive catalog entry,
-          independent of runtime configuration.
+          {bindingKindLabel(identity)} — descriptive catalog entry, independent
+          of runtime configuration.
         </DialogDescription>
       </DialogHeader>
       <DialogBody className="gap-4">

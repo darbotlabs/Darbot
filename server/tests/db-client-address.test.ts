@@ -20,8 +20,7 @@ afterEach(() => {
 
 describe("the database address", () => {
   test("is taken out of the environment, so Bun cannot prefer it to the parts", () => {
-    process.env.DATABASE_URL =
-      "postgres://darbot:darbot@127.0.0.1:5432/darbot";
+    process.env.DATABASE_URL = "postgres://darbot:darbot@127.0.0.1:5432/darbot";
 
     createDatabase("postgres://darbot:darbot@127.0.0.1:5432/darbot");
 

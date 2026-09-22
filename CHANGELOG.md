@@ -13,6 +13,12 @@
   discard late updates from retired connections.
 - Add explicit CI/Desktop verification dispatches without removing push gates,
   and run frontend regressions in each native packaging matrix job.
+- Repair standalone desktop test dependencies and server image SDK workspace
+  packaging. Keep source formatting portable without rewriting imported assets,
+  and reject Windows drive/stream syntax in exported asset paths on every OS.
+- Keep native event subscriptions stable while reading current React state,
+  preserve deliberate retry/scroll triggers and keyboard-focusable tab panels,
+  and organize shared styles before their component overrides.
 
 ## 0.0.20
 

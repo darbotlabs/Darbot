@@ -803,9 +803,7 @@ describe("a remote Mastra Bot", () => {
       expect(JSON.stringify(darbotContext)).not.toContain("FORGED_ROLE");
       expect(JSON.stringify(darbotContext)).not.toContain("FORGED_GUIDANCE");
       expect(JSON.stringify(darbotContext)).not.toContain("FORGED_BOT_ID");
-      expect(JSON.stringify(darbotContext)).not.toContain(
-        "mcp__drive__tool_0",
-      );
+      expect(JSON.stringify(darbotContext)).not.toContain("mcp__drive__tool_0");
       expect(JSON.stringify(darbotContext)).not.toContain("FORGED_ASSERTION");
 
       sentToMastraAgent.length = 0;
@@ -859,9 +857,7 @@ describe("a remote Mastra Bot", () => {
       expect(JSON.stringify(darbotContext)).not.toContain("FORGED_ROLE");
       expect(JSON.stringify(darbotContext)).not.toContain("FORGED_GUIDANCE");
       expect(JSON.stringify(darbotContext)).not.toContain("FORGED_BOT_ID");
-      expect(JSON.stringify(darbotContext)).not.toContain(
-        "mcp__drive__tool_0",
-      );
+      expect(JSON.stringify(darbotContext)).not.toContain("mcp__drive__tool_0");
       expect(JSON.stringify(darbotContext)).not.toContain("FORGED_ASSERTION");
     } finally {
       MastraAgent.prototype.run = originalRun;

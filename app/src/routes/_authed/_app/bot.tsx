@@ -127,13 +127,7 @@ function RouteComponent() {
   return <BotChat agent={bot} agentId={agentId} key={agentId} />;
 }
 
-function BotChat({
-  agent,
-  agentId,
-}: {
-  agent: AgentProfile;
-  agentId: string;
-}) {
+function BotChat({ agent, agentId }: { agent: AgentProfile; agentId: string }) {
   // Tool calls here act on this Bot's own computer.
   useActiveBot(agentId);
   /*

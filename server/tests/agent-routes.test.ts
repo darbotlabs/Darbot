@@ -518,14 +518,11 @@ describe("agent lifecycle routes", () => {
       },
     });
 
-    const response = await appFor(store).request(
-      "http://darbot.test/agent-1",
-      {
-        method: "PATCH",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(validInput),
-      },
-    );
+    const response = await appFor(store).request("http://darbot.test/agent-1", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(validInput),
+    });
 
     expect(response.status).toBe(status);
     expect(await json(response)).toEqual({ error: message });
@@ -542,12 +539,9 @@ describe("agent lifecycle routes", () => {
       context.json({ sentinel: error.message }, 599),
     );
 
-    const response = await app.request(
-      "http://darbot.test/agent-1/duplicate",
-      {
-        method: "POST",
-      },
-    );
+    const response = await app.request("http://darbot.test/agent-1/duplicate", {
+      method: "POST",
+    });
 
     expect(response.status).toBe(599);
     expect(await json(response)).toEqual({ sentinel: "database disconnected" });

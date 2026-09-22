@@ -55,9 +55,7 @@ test("a participant absent from the roster still gets a stable generated avatar,
     <ChannelAvatar participantIds={["totally-unknown-id-1"]} size={32} />,
   );
 
-  expect(
-    view.getByRole("img", { name: "totally-unknown-id-1" }),
-  ).toBeTruthy();
+  expect(view.getByRole("img", { name: "totally-unknown-id-1" })).toBeTruthy();
   expect(view.container.querySelector("img")).toBeNull();
 });
 
@@ -65,7 +63,11 @@ test("a participant id missing from a non-empty roster still falls back, rather 
   const view = render(
     <ChannelAvatar
       agents={[
-        { id: "someone-else", name: "Someone Else", avatarSeed: "someone-else" },
+        {
+          id: "someone-else",
+          name: "Someone Else",
+          avatarSeed: "someone-else",
+        },
       ]}
       participantIds={["not-in-the-roster"]}
       size={32}
@@ -85,12 +87,14 @@ test("the typing badge overlays the drawn identity without replacing it", () => 
   );
   expect(typing.getByText(/Working/)).toBeTruthy();
   // The identity is still drawn underneath the badge, not swapped out for it.
-  expect(typing.getByRole("img", { name: "totally-unknown-id-1" })).toBeTruthy();
+  expect(
+    typing.getByRole("img", { name: "totally-unknown-id-1" }),
+  ).toBeTruthy();
 
   const notTyping = render(
     <ChannelAvatar participantIds={["totally-unknown-id-1"]} size={32} />,
   );
-  expect(notTyping.queryByText(/Working/)).toBeNull();
+  expect(notTyping.container.textContent).not.toContain("Working");
 });
 
 test("more than one participant draws each participant's own artwork, capped at three", () => {

@@ -1,5 +1,5 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Keep source checkouts consistent with the formatter on every platform.
+* text=auto eol=lf
 
 # The approved packs carry checksums for text and images alike; preserve their exact source bytes.
 assets/swarm/cohort-*/** -text
