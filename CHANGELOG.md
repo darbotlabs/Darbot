@@ -11,6 +11,8 @@
 - Retire the owned CLI connection after any failed opening transaction,
   including response validation and agent/configuration restoration, and
   discard late updates from retired connections.
+- Add explicit CI/Desktop verification dispatches without removing push gates,
+  and run frontend regressions in each native packaging matrix job.
 
 ## 0.0.20
 

@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseDocument } from "yaml";
+import { isMap, isSeq, parseDocument } from "yaml";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 
@@ -55,4 +55,24 @@ test("native release versions and chart metadata remain aligned", () => {
   const chart = parseDocument(read("charts", "darbot", "Chart.yaml"));
   expect(chart.errors).toEqual([]);
   expect(chart.get("appVersion")).toBe(expected);
+});
+
+test("CI and native packaging retain push triggers and support explicit verification", () => {
+  for (const name of ["ci.yml", "desktop.yml"]) {
+    const workflow = parseDocument(read(".github", "workflows", name));
+    expect(workflow.errors).toEqual([]);
+    expect(workflow.hasIn(["on", "workflow_dispatch"])).toBe(true);
+    expect(workflow.hasIn(["on", "workflow_call"])).toBe(true);
+    expect(workflow.getIn(["on", "push", "branches", 0])).toBe("main");
+    expect(workflow.getIn(["permissions", "contents"])).toBe("read");
+  }
+  const desktop = parseDocument(read(".github", "workflows", "desktop.yml"));
+  const steps = desktop.getIn(["jobs", "app", "steps"], true);
+  expect(isSeq(steps)).toBe(true);
+  if (!isSeq(steps)) throw new Error("Desktop app steps are missing.");
+  expect(
+    steps.items.some(
+      (step) => isMap(step) && step.get("run") === "bun test ./src",
+    ),
+  ).toBe(true);
 });

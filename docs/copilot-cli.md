@@ -45,6 +45,19 @@ and never resubmits the saved draft. This fixes the source-level orphan and
 empty-new-chat lifecycle; installed timeout injection is a separate acceptance
 requirement, not something established by contract or unit tests alone.
 
+### CI verification
+
+CI and Desktop retain their push-to-main and pull-request triggers and also
+support explicit verification with `gh workflow run ci.yml --ref main` and
+`gh workflow run desktop.yml --ref main`. Neither dispatch publishes a release.
+The Desktop matrix runs frontend regressions, builds actual Tauri bundles, and
+runs native library/binary regressions on Windows, macOS and Linux.
+
+An enabled workflow with no runs is not a passing check. Record the run URL,
+commit and conclusion; a fork or account execution restriction must be reported
+separately from local checks. Package builds on other operating systems are not
+evidence that their full interactive native journeys have been reviewed.
+
 ### Canvas bounds in desktop 0.0.20
 
 Chat preview grids use a zero-minimum, bounded column so ellipsized titles do not
