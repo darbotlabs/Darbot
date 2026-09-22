@@ -346,7 +346,7 @@ fn decode_probe_text(bytes: &[u8]) -> Result<String, String> {
             return Err("Truncated UTF-16 probe output".into());
         }
         let units = bytes
-            .chunks_exact(2)
+            .chunks(2)
             .map(|pair| u16::from_le_bytes([pair[0], pair[1]]))
             .collect::<Vec<_>>();
         String::from_utf16(&units).map_err(|error| error.to_string())

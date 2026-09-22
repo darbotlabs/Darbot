@@ -1718,7 +1718,7 @@ fn windows_process_output(output: &[u8]) -> Result<Vec<WindowsProcess>, Problem>
             return Err(invalid_encoding());
         }
         let units: Vec<u16> = bytes
-            .chunks_exact(2)
+            .chunks(2)
             .map(|pair| u16::from_le_bytes([pair[0], pair[1]]))
             .collect();
         let text = String::from_utf16(&units).map_err(|_| invalid_encoding())?;
