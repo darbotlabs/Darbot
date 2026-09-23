@@ -66,6 +66,14 @@ import {
 } from "./copilot-workspace-store";
 import copilotIconLicense from "./marks/copilot.LICENSE.txt?raw";
 import { asProblem, Failure, InlineFailure, type Problem } from "./Problem";
+import {
+  isSidepaneGroupExpanded,
+  readSidepaneDisclosure,
+  SIDEPANE_AGENT_LAYER,
+  type SidepaneDisclosure,
+  setSidepaneGroupExpanded,
+  writeSidepaneDisclosure,
+} from "./sidepane-layers";
 import { BrandLockup } from "./Welcome";
 
 type Message = {
@@ -308,6 +316,8 @@ export function CopilotWorkspace({
     readSnapScrollPreference,
   );
   const [stickToBottom, setStickToBottom] = useState(true);
+  const [sidepaneDisclosure, setSidepaneDisclosure] =
+    useState<SidepaneDisclosure>(() => readSidepaneDisclosure());
 
   const [openDialog, setOpenDialog] = useState<DialogKind>(null);
   const [resourceFilter, setResourceFilter] = useState("");
@@ -378,6 +388,26 @@ export function CopilotWorkspace({
       inline: "nearest",
     });
   }, [activeConversationId, chats.length]);
+
+  /** Sidepane disclosure is presentation only: a failed save must never block the workspace. */
+  useEffect(() => {
+    try {
+      writeSidepaneDisclosure(sidepaneDisclosure);
+    } catch {
+      // The column still renders; the choice simply will not survive a restart.
+    }
+  }, [sidepaneDisclosure]);
+
+  const toggleAgentChats = useCallback((agentId: string, expanded: boolean) => {
+    setSidepaneDisclosure((current) =>
+      setSidepaneGroupExpanded(
+        current,
+        SIDEPANE_AGENT_LAYER,
+        agentId || "copilot-cli",
+        expanded,
+      ),
+    );
+  }, []);
 
   const setChats = useCallback(
     (
@@ -1720,12 +1750,51 @@ export function CopilotWorkspace({
                   agentChats,
                   activeConversationId,
                 );
+                const groupId = agent.id || "copilot-cli";
+                const holdsActiveChat = agentChats.some(
+                  (chat) => chat.conversationId === activeConversationId,
+                );
+                // An agent normally runs one conversation, so groups stay collapsed
+                // until asked for. The group holding the open chat is never hidden.
+                const chatsExpanded =
+                  agentChats.length > 0 &&
+                  isSidepaneGroupExpanded(
+                    sidepaneDisclosure,
+                    SIDEPANE_AGENT_LAYER,
+                    groupId,
+                    holdsActiveChat,
+                  );
+                const chatsId = `copilot-agent-chats-${groupId}`;
                 return (
-                  <li key={agent.id || "copilot-cli"} data-agent-id={agent.id}>
+                  <li key={groupId} data-agent-id={agent.id}>
                     <div className="copilot-sidebar-agent">
                       <button
                         type="button"
-                        className="quiet"
+                        className="quiet copilot-disclosure"
+                        aria-expanded={chatsExpanded}
+                        aria-controls={chatsId}
+                        disabled={agentChats.length === 0}
+                        title={
+                          agentChats.length === 0
+                            ? `${agent.name} has no chats yet`
+                            : chatsExpanded
+                              ? `Hide ${agent.name} chats`
+                              : `Show ${agentChats.length.toLocaleString()} ${agent.name} chats`
+                        }
+                        onClick={() =>
+                          toggleAgentChats(agent.id, !chatsExpanded)
+                        }
+                      >
+                        <span aria-hidden="true">›</span>
+                        <span className="sr-only">
+                          {chatsExpanded
+                            ? `Hide ${agent.name} chats`
+                            : `Show ${agent.name} chats`}
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        className="quiet copilot-agent-name"
                         aria-pressed={effectiveAgentId === agent.id}
                         disabled={busy}
                         title={agent.description || agent.name}
@@ -1733,6 +1802,11 @@ export function CopilotWorkspace({
                       >
                         {agent.name}
                       </button>
+                      {agentChats.length > 0 && (
+                        <span className="copilot-chat-count" aria-hidden="true">
+                          {agentChats.length.toLocaleString()}
+                        </span>
+                      )}
                       <button
                         type="button"
                         className="quiet copilot-new-chat"
@@ -1745,49 +1819,51 @@ export function CopilotWorkspace({
                         New
                       </button>
                     </div>
-                    {agentChats.length ? (
-                      <ul className="copilot-sidebar-chats">
-                        {preview.map((chat) => (
-                          <li key={chat.conversationId}>
-                            <button
-                              ref={
-                                chat.conversationId === activeConversationId
-                                  ? activeChatRef
-                                  : null
-                              }
-                              type="button"
-                              className="quiet"
-                              aria-current={
-                                chat.conversationId === activeConversationId
-                                  ? "true"
-                                  : undefined
-                              }
-                              disabled={busy || !eventsReady}
-                              title={chat.title}
-                              onClick={() => void loadSession(chat)}
-                            >
-                              {chat.sessionId === null
-                                ? `Draft: ${chat.title}`
-                                : chat.title}
-                            </button>
-                          </li>
-                        ))}
-                        {agentChats.length > preview.length && (
-                          <li>
-                            <button
-                              type="button"
-                              className="quiet"
-                              onClick={() => openAgentHistory(agent.id)}
-                            >
-                              View all {agentChats.length.toLocaleString()}{" "}
-                              chats
-                            </button>
-                          </li>
-                        )}
-                      </ul>
-                    ) : (
+                    {agentChats.length === 0 && (
                       <p className="hint">No chats yet</p>
                     )}
+                    <ul
+                      className="copilot-sidebar-chats"
+                      id={chatsId}
+                      hidden={!chatsExpanded}
+                    >
+                      {preview.map((chat) => (
+                        <li key={chat.conversationId}>
+                          <button
+                            ref={
+                              chat.conversationId === activeConversationId
+                                ? activeChatRef
+                                : null
+                            }
+                            type="button"
+                            className="quiet"
+                            aria-current={
+                              chat.conversationId === activeConversationId
+                                ? "true"
+                                : undefined
+                            }
+                            disabled={busy || !eventsReady}
+                            title={chat.title}
+                            onClick={() => void loadSession(chat)}
+                          >
+                            {chat.sessionId === null
+                              ? `Draft: ${chat.title}`
+                              : chat.title}
+                          </button>
+                        </li>
+                      ))}
+                      {agentChats.length > preview.length && (
+                        <li>
+                          <button
+                            type="button"
+                            className="quiet"
+                            onClick={() => openAgentHistory(agent.id)}
+                          >
+                            View all {agentChats.length.toLocaleString()} chats
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                   </li>
                 );
               })}

@@ -693,14 +693,57 @@ html[data-copilot-theme="dark"] {
   align-items: center;
 }
 
-.copilot-sidebar-agent > button:first-child {
+.copilot-sidebar-agent > .copilot-agent-name {
   flex: 1;
+  min-width: 0;
   text-align: left;
   font-weight: 600;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   border-color: var(--hair);
+}
+
+/* Disclosure arrow for an agent's conversations. Collapsed points right, expanded points down. */
+.copilot-sidebar-agent .copilot-disclosure {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  padding: 0.2rem 0;
+  border-color: transparent;
+  background: none;
+  line-height: 1;
+}
+
+.copilot-sidebar-agent .copilot-disclosure > span[aria-hidden="true"] {
+  display: block;
+  font-size: 0.9rem;
+  transition: transform 120ms ease;
+}
+
+.copilot-sidebar-agent
+  .copilot-disclosure[aria-expanded="true"]
+  > span[aria-hidden="true"] {
+  transform: rotate(90deg);
+}
+
+.copilot-sidebar-agent .copilot-disclosure:disabled {
+  opacity: 0.35;
+}
+
+.copilot-chat-count {
+  flex: 0 0 auto;
+  font-size: 0.64rem;
+  color: var(--ink-faint);
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copilot-sidebar-agent .copilot-disclosure > span[aria-hidden="true"] {
+    transition: none;
+  }
 }
 
 .copilot-sidebar-agent .copilot-new-chat {
@@ -716,7 +759,12 @@ html[data-copilot-theme="dark"] {
 .copilot-sidebar-chats {
   padding-left: 0.5rem;
   border-left: 1px solid var(--hair);
-  margin-left: 0.5rem;
+  margin-left: 1.1rem;
+  margin-top: 0.3rem;
+}
+
+.copilot-sidebar-chats[hidden] {
+  display: none;
 }
 
 .copilot-sidebar-chats button {

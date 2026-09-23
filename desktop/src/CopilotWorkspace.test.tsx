@@ -333,6 +333,7 @@ test("all local drafts remain reachable through agent-filtered History", async (
     chats: drafts,
   });
   const view = await workspace();
+  fireEvent.click(view.getByRole("button", { name: "Show Architect chats" }));
   fireEvent.click(view.getByRole("button", { name: "View all 7 chats" }));
   const dialog = await view.findByRole("dialog", {
     name: "Agents Conversations",
@@ -348,6 +349,46 @@ test("all local drafts remain reachable through agent-filtered History", async (
   if (!(agent instanceof HTMLSelectElement))
     throw new Error("The agent selector is missing.");
   expect(agent.value).toBe("architect");
+});
+
+test("agent chats collapse behind a disclosure arrow and the choice persists", async () => {
+  const drafts = Array.from({ length: 2 }, (_, index) => ({
+    ...createConversationDraft("C:\\workspace", "architect", "Architect"),
+    title: `Draft ${index}`,
+  }));
+  writeConversationWorkspace({
+    ...emptyConversationWorkspace(),
+    chats: drafts,
+  });
+  const view = await workspace();
+  const toggle = view.getByRole("button", { name: "Show Architect chats" });
+  expect(toggle.getAttribute("aria-expanded")).toBe("false");
+  expect(view.queryByRole("button", { name: "Draft: Draft 0" })).toBeNull();
+
+  fireEvent.click(toggle);
+  await view.findByRole("button", { name: "Draft: Draft 0" });
+  expect(
+    view
+      .getByRole("button", { name: "Hide Architect chats" })
+      .getAttribute("aria-expanded"),
+  ).toBe("true");
+
+  cleanup();
+  const remounted = await workspace();
+  await remounted.findByRole("button", { name: "Draft: Draft 0" });
+  expect(
+    remounted
+      .getByRole("button", { name: "Hide Architect chats" })
+      .getAttribute("aria-expanded"),
+  ).toBe("true");
+});
+
+test("an agent with no chats cannot be expanded", async () => {
+  const view = await workspace();
+  const toggle = view.getByRole("button", { name: "Show Copilot CLI chats" });
+  expect(toggle.hasAttribute("disabled")).toBe(true);
+  expect(toggle.getAttribute("aria-expanded")).toBe("false");
+  expect(view.getByText("No chats yet")).toBeDefined();
 });
 
 test("invalid stored workspace is visible and not overwritten during mount", async () => {

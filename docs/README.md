@@ -7,6 +7,7 @@ Start with the root [README](../README.md), then use these references:
 - [Development](development.md): local setup, migrations, ports, and quality checks.
 - [Coworkers](coworkers.md): durable Bot profiles, channels, visibility, deletion, and external AG-UI registration.
 - [GitHub Copilot CLI runtime](copilot-cli.md): ACP, existing Copilot authentication and resources, session management, permissions, and the Copilot SDK extension boundary.
+- [Sidepane layers](sidepane-layers.md): the composable desktop sidepane spec, its regions and layers, and how agent conversations collapse.
 - [Routines](routines.md): standing instructions a Bot runs on a schedule, the worker that fires them, and who they run as.
 - Plugins, one connector per page — what an administrator registers, what each person consents to, and what the failures mean:
   - [Google Drive](plugins/google-drive.md)
