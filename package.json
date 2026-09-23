@@ -1,6 +1,6 @@
 {
   "name": "darbot",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "license": "MIT",
   "private": true,
   "packageManager": "bun@1.3.14",
