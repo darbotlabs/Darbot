@@ -229,6 +229,39 @@ function describeStopReason(reason: string): string {
   }
 }
 
+function parseRuntimeRpcError(problem: Problem): {
+  code: number;
+  message: string;
+} | null {
+  if (!problem.detail) return null;
+  try {
+    const parsed = JSON.parse(problem.detail);
+    if (
+      parsed &&
+      typeof parsed === "object" &&
+      typeof (parsed as { code?: unknown }).code === "number" &&
+      typeof (parsed as { message?: unknown }).message === "string"
+    ) {
+      return {
+        code: (parsed as { code: number }).code,
+        message: (parsed as { message: string }).message,
+      };
+    }
+  } catch {
+    // Runtime detail can be non-JSON in other failure paths.
+  }
+  return null;
+}
+
+function isMissingRuntimeSession(problem: Problem): boolean {
+  const runtime = parseRuntimeRpcError(problem);
+  if (runtime?.code === -32002) {
+    const text = runtime.message.toLowerCase();
+    return text.includes("session") && text.includes("not found");
+  }
+  return /session .* not found/i.test(problem.said);
+}
+
 function formatRawPayload(value: unknown): string {
   try {
     return JSON.stringify(value, null, 2);
@@ -1940,6 +1973,7 @@ export function CopilotWorkspace({
       return next;
     } catch (error) {
       if (mountedRef.current) {
+        const problem = asProblem(error);
         sessionIdRef.current = null;
         setMessages([]);
         setPermissions((current) =>
@@ -1951,9 +1985,22 @@ export function CopilotWorkspace({
         terminalSnapshots.current.clear();
         toolTerminals.current.clear();
         initialTerminalOutputs.current = [];
-        setStatusText("Conversation not opened");
-        setFailure(asProblem(error));
-        if (dashboardId !== null) setDashboardProblem(asProblem(error));
+        if (chat.sessionId !== null && isMissingRuntimeSession(problem)) {
+          selectConversation({
+            ...chat,
+            sessionId: null,
+          });
+          setStatusText("Draft saved locally");
+          setFailure({
+            said: "Copilot could not reopen that runtime session. Darbot kept this chat as a local draft; send to start a new session.",
+            detail: problem.detail ?? problem.said,
+          });
+          if (dashboardId !== null) setDashboardProblem(null);
+        } else {
+          setStatusText("Conversation not opened");
+          setFailure(problem);
+          if (dashboardId !== null) setDashboardProblem(problem);
+        }
       }
       return null;
     } finally {

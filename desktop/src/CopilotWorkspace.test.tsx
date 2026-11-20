@@ -892,6 +892,49 @@ test("recorded-agent replay can be retried without resubmitting its draft", asyn
   expect(saved().chats[0].draft).toBe("Unsent follow-up");
 });
 
+test("missing runtime session is converted into a local draft and can be resent", async () => {
+  const draft = {
+    ...createConversationDraft("C:\\workspace", "architect", "Architect"),
+    sessionId: "missing",
+    title: "Transient opening",
+    draft: "Keep this draft",
+  };
+  writeConversationWorkspace({
+    ...emptyConversationWorkspace(),
+    chats: [draft],
+    activeConversationId: draft.conversationId,
+  });
+  invokeHandler = async (command, args) => {
+    if (command === "copilot_session_load")
+      throw {
+        said: "GitHub Copilot returned a runtime error.",
+        detail:
+          '{"code":-32002,"message":"Resource not found: Session missing not found"}',
+      };
+    return standardInvoke(command, args);
+  };
+  const view = await workspace();
+  fireEvent.click(view.getByRole("button", { name: "Transient opening" }));
+  await view.findByText(
+    "Copilot could not reopen that runtime session. Darbot kept this chat as a local draft; send to start a new session.",
+  );
+  await waitFor(() => expect(saved().chats[0].sessionId).toBeNull());
+  expect(draftInput(view, "Architect").value).toBe("Keep this draft");
+  expect(
+    view.queryByRole("button", { name: "Retry opening conversation" }),
+  ).toBeNull();
+  fireEvent.click(view.getByRole("button", { name: "Send" }));
+  await view.findByText("Unit-test reply");
+  expect(
+    calls.filter((call) => call.command === "copilot_session_load"),
+  ).toHaveLength(1);
+  expect(
+    calls.filter((call) => call.command === "copilot_session_new"),
+  ).toHaveLength(1);
+  expect(saved().chats[0].sessionId).toBe("runtime-1");
+  expect(saved().chats[0].draft).toBe("");
+});
+
 test("all local drafts remain reachable through agent-filtered History", async () => {
   const drafts = Array.from({ length: 7 }, (_, index) => ({
     ...createConversationDraft("C:\\workspace", "architect", "Architect"),
