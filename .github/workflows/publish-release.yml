@@ -111,11 +111,21 @@ jobs:
     permissions:
       contents: read
 
+  # Desktop is a separate deployable: a server CI pass cannot prove that an NSIS installer,
+  # DMG, AppImage, deb or rpm still packages and launches. Gate every release on the same
+  # native macOS, Windows and Linux build matrix used by desktop pull requests.
+  desktop:
+    needs: [metadata, verify]
+    if: needs.metadata.outputs.is_release == 'true'
+    uses: ./.github/workflows/desktop.yml
+    permissions:
+      contents: read
+
   # One image, built once. Everything downstream refers to it by digest, so what was tested is what
   # is deployed and there is no second build to disagree with the first.
   image:
     name: image
-    needs: [metadata, verify, checks]
+    needs: [metadata, verify, checks, desktop]
     if: needs.metadata.outputs.is_release == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -174,7 +184,7 @@ jobs:
   # would be the slower and less reliable option at no saving.
   component-images:
     name: ${{ matrix.image }} ${{ matrix.platform.arch }}
-    needs: [metadata, verify, checks]
+    needs: [metadata, verify, checks, desktop]
     if: needs.metadata.outputs.is_release == 'true'
     runs-on: ${{ matrix.platform.runner }}
     permissions:
@@ -255,7 +265,7 @@ jobs:
   # the manifest list and gets its own architecture without being told which one it is.
   component-manifests:
     name: ${{ matrix.image }} manifest
-    needs: [metadata, verify, checks, component-images]
+    needs: [metadata, verify, checks, desktop, component-images]
     if: needs.metadata.outputs.is_release == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -345,7 +355,7 @@ jobs:
   # tag somebody could move.
   github-release:
     name: tag and release
-    needs: [metadata, verify, checks, image, component-manifests]
+    needs: [metadata, verify, checks, desktop, image, component-manifests]
     if: needs.metadata.outputs.is_release == 'true'
     runs-on: ubuntu-latest
     permissions:

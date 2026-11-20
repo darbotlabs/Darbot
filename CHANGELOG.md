@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Gate published releases on the native desktop macOS, Windows and Linux packaging
+  workflow, and recognize expired or unauthorized CLI authentication as requiring sign-in.
+
 ## 0.0.23
 
 - Implement the native ACP terminal lifecycle: create, bounded output,

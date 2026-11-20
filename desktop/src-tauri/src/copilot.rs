@@ -4799,6 +4799,12 @@ fn authentication_required(problem: &Problem) -> bool {
     )
     .to_lowercase();
     text.contains("auth_required")
+        || text.contains("expired")
+        || text.contains("expired_token")
+        || text.contains("invalid_token")
+        || text.contains("invalid_grant")
+        || text.contains("unauthorized")
+        || text.contains("401")
         || text.contains("authentication required")
         || text.contains("not authenticated")
         || text.contains("log in")
@@ -6488,6 +6494,13 @@ mod tests {
         )));
         assert!(authentication_required(&Problem::plain(
             "Log in to GitHub Copilot first."
+        )));
+        assert!(authentication_required(&Problem::plain(
+            "The authentication token expired."
+        )));
+        assert!(authentication_required(&Problem::with(
+            "GitHub Copilot returned an HTTP status.",
+            "401 Unauthorized"
         )));
         assert!(!authentication_required(&Problem::plain(
             "The session cursor was invalid."
