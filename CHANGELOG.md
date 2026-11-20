@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- **Unsigned alpha-build status:** the Windows executable and NSIS installer are
+  not yet covered by an approved Authenticode identity. SHA-256 checksums do not
+  replace a publisher signature; release packaging blocks publication until the
+  Windows signing identity is provisioned and both downloaded deliverables verify.
+
 ## 0.0.23
 
 - Implement the native ACP terminal lifecycle: create, bounded output,

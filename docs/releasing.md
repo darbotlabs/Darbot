@@ -71,6 +71,20 @@ wants the `build` sections overridden away rather than this variable alone.
 A tag can be moved to point at a different image; a digest cannot. The same digest that CI smoke
 tested is the one that runs, and rolling back is the same command with an earlier version.
 
+## Windows desktop signing
+
+Release builds sign the standalone `darbot-desktop.exe` and the NSIS installer with an approved
+Authenticode identity. The PFX is supplied to the Windows packaging job through the
+`WINDOWS_SIGNING_PFX_BASE64` and `WINDOWS_SIGNING_PASSWORD` GitHub Actions secrets; it is decoded only
+on the runner and is never written to the repository. Both files are timestamped with SHA-256 and
+verified with `signtool` after packaging. The release then downloads the Windows artifact and verifies
+its executable and installer again on a Windows runner before publishing it.
+
+Until an approved identity is provisioned, Windows release builds remain unsigned alpha builds.
+The release notes must state that the executable and installer are unsigned; SHA-256 checksums identify
+the artifacts but do not establish publisher identity. Do not advise users to bypass operating-system
+security controls.
+
 Before deploying, you can check an image is the one this repository built. Every published image
 carries its own attestation:
 
@@ -104,7 +118,9 @@ These checks run again, against the release commit, when the release PR is merge
 publish rather than the proposal, which is why the release PR arriving without its own checks does
 not matter: a pull request opened by a workflow does not trigger them.
 
-**No secrets are required.** Every workflow here uses only the built-in `GITHUB_TOKEN`.
+No secrets are required for the container release jobs; every one of those jobs uses only the built-in
+`GITHUB_TOKEN`. Desktop Windows release jobs additionally require the approved
+`WINDOWS_SIGNING_PFX_BASE64` and `WINDOWS_SIGNING_PASSWORD` secrets described above.
 
 ## The one thing CI cannot do
 

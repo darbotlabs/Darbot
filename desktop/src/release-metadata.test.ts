@@ -76,3 +76,33 @@ test("CI and native packaging retain push triggers and support explicit verifica
     ),
   ).toBe(true);
 });
+
+test("Windows release packaging signs and verifies both deliverables", () => {
+  const desktop = parseDocument(read(".github", "workflows", "desktop.yml"));
+  expect(desktop.errors).toEqual([]);
+  const steps = desktop.getIn(["jobs", "app", "steps"], true);
+  expect(isSeq(steps)).toBe(true);
+  if (!isSeq(steps)) throw new Error("Desktop app steps are missing.");
+  const runs = steps.items
+    .filter(isMap)
+    .map((step) => `${step.get("name") ?? ""}\n${step.get("run") ?? ""}`)
+    .join("\n");
+  expect(runs).toContain("WINDOWS_SIGNING_PFX_BASE64");
+  expect(runs).toContain("/tr");
+  expect(runs).toContain("darbot-desktop.exe");
+  expect(runs).toContain("bundle/nsis");
+  expect(runs).toContain("Get-AuthenticodeSignature");
+  expect(runs).toContain("SHA256SUMS.txt");
+
+  const release = parseDocument(
+    read(".github", "workflows", "publish-release.yml"),
+  );
+  expect(release.errors).toEqual([]);
+  expect(release.getIn(["jobs", "windows-desktop", "uses"])).toBe(
+    "./.github/workflows/desktop.yml",
+  );
+  expect(release.getIn(["jobs", "windows-desktop", "secrets"])).toBe("inherit");
+  expect(release.getIn(["jobs", "windows-verify", "runs-on"])).toBe(
+    "windows-latest",
+  );
+});

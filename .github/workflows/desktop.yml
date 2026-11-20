@@ -95,6 +95,79 @@ jobs:
       # which a compile would miss.
       - run: bun run tauri build
         working-directory: desktop
+      - name: Require release signing identity
+        if: matrix.platform.name == 'windows' && github.event_name == 'workflow_call'
+        env:
+          PFX: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+          PASSWORD: ${{ secrets.WINDOWS_SIGNING_PASSWORD }}
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:PFX) -or [string]::IsNullOrWhiteSpace($env:PASSWORD)) {
+            throw "A Windows release requires WINDOWS_SIGNING_PFX_BASE64 and WINDOWS_SIGNING_PASSWORD secrets."
+          }
+      - name: Sign Windows executable and NSIS installer
+        if: matrix.platform.name == 'windows'
+        env:
+          PFX: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+          PASSWORD: ${{ secrets.WINDOWS_SIGNING_PASSWORD }}
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:PFX) -or [string]::IsNullOrWhiteSpace($env:PASSWORD)) {
+            Write-Host "Signing secrets are not configured; retaining the unsigned desktop build."
+            exit 0
+          }
+          $pfx = Join-Path $env:RUNNER_TEMP "darbot-signing.pfx"
+          [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:PFX))
+          $root = Join-Path $env:GITHUB_WORKSPACE "desktop/src-tauri/target/release"
+          $deliverables = @(
+            (Join-Path $root "darbot-desktop.exe"),
+            (Get-ChildItem -Path (Join-Path $root "bundle/nsis") -Filter "*.exe" -File | Select-Object -First 1).FullName
+          )
+          $signTool = (Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin" -Filter signtool.exe -Recurse |
+            Sort-Object FullName -Descending | Select-Object -First 1).FullName
+          if ([string]::IsNullOrWhiteSpace($signTool)) { throw "signtool.exe was not found." }
+          foreach ($deliverable in $deliverables) {
+            if (-not (Test-Path $deliverable)) { throw "Missing Windows deliverable: $deliverable" }
+            & $signTool sign /fd SHA256 /f $pfx /p $env:PASSWORD /tr "http://timestamp.digicert.com" /td SHA256 /v $deliverable
+            if ($LASTEXITCODE -ne 0) { throw "Signing failed: $deliverable" }
+            & $signTool verify /pa /all /v $deliverable
+            if ($LASTEXITCODE -ne 0) { throw "Signature verification failed: $deliverable" }
+            $status = (Get-AuthenticodeSignature $deliverable).Status
+            if ($status -ne "Valid") { throw "Authenticode status for $deliverable is $status." }
+          }
+          Remove-Item -Force $pfx
+      - name: Verify Windows packages after packaging
+        if: matrix.platform.name == 'windows'
+        env:
+          PFX: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:PFX)) { exit 0 }
+          $root = Join-Path $env:GITHUB_WORKSPACE "desktop/src-tauri/target/release"
+          $deliverables = @(
+            (Join-Path $root "darbot-desktop.exe"),
+            (Get-ChildItem -Path (Join-Path $root "bundle/nsis") -Filter "*.exe" -File | Select-Object -First 1).FullName
+          )
+          foreach ($deliverable in $deliverables) {
+            $signature = Get-AuthenticodeSignature $deliverable
+            if ($signature.Status -ne "Valid") {
+              throw "Post-package Authenticode verification failed for $deliverable: $($signature.Status)"
+            }
+          }
+      - name: Record Windows package checksums
+        if: matrix.platform.name == 'windows'
+        shell: pwsh
+        run: |
+          $root = Join-Path $env:GITHUB_WORKSPACE "desktop/src-tauri/target/release"
+          $deliverables = @(
+            (Join-Path $root "darbot-desktop.exe"),
+            (Get-ChildItem -Path (Join-Path $root "bundle/nsis") -Filter "*.exe" -File | Select-Object -First 1).FullName
+          )
+          $lines = foreach ($deliverable in $deliverables) {
+            $hash = (Get-FileHash $deliverable -Algorithm SHA256).Hash.ToLower()
+            "{0}  {1}" -f $hash, (Split-Path $deliverable -Leaf)
+          }
+          $lines | Set-Content -Encoding ascii (Join-Path $root "SHA256SUMS.txt")
       # Frontend assets and platform dependencies are ready after the packaged build.
       # Include main.rs regressions as well as lib.rs; ignored live tests remain opt-in.
       - name: Rust regression tests
@@ -111,5 +184,7 @@ jobs:
             desktop/src-tauri/target/release/bundle/**/*.AppImage
             desktop/src-tauri/target/release/bundle/**/*.deb
             desktop/src-tauri/target/release/bundle/**/*.rpm
+            desktop/src-tauri/target/release/darbot-desktop.exe
+            desktop/src-tauri/target/release/SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 7
